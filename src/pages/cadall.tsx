@@ -1,8 +1,8 @@
 
 import { Box } from '@mui/material'
 import '../App.css'
-import CompleteCad from '../components/dadosuser.tsx'
-import CompleteCad2 from '../components/endereço.tsx'
+import CompleteCad from '../components/cadastro/dadosuser.tsx'
+import CompleteCad2 from '../components/cadastro/endereço.tsx'
 import Exit from '../components/buttonexit.tsx'
 
 function Cadall() {

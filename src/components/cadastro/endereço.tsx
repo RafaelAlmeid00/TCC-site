@@ -8,16 +8,16 @@ import SignpostIcon from '@mui/icons-material/Signpost';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
-import ModalContext from "../context/modalcontext";
+import ModalContext from "../../context/modalcontext";
 
 function CompleteCad2(){
     const {cep, setCep} = useContext(ModalContext);
     const {UF, setUF} = useContext(ModalContext);
-    const {bairro, setBairro} = useContext(ModalContext);
-    const {rua, setRua} = useContext(ModalContext);
+    const {district, setDistrict} = useContext(ModalContext);
+    const {street, setStreet} = useContext(ModalContext);
     const {num, setNum} = useContext(ModalContext);
     const {comp, setComp} = useContext(ModalContext);
-    const {cidade, setCidade} = useContext(ModalContext);
+    const {city, setCity} = useContext(ModalContext);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChangeCep = (event: { target: { value: string; }; }) => {
@@ -31,9 +31,9 @@ function CompleteCad2(){
         try {
             const response = await axios.get(url);
             setUF(response.data.state);
-            setCidade(response.data.city);
-            setBairro(response.data.district);
-            setRua(response.data.address);
+            setCity(response.data.city);
+            setDistrict(response.data.district);
+            setStreet(response.data.address);
             setIsLoading(true);
             
         } catch (error) {
@@ -82,7 +82,7 @@ return (
         inputProps={{ maxLength: 25 }}
         required
         id="input-with-icon-adornment"
-        value={cidade}
+        value={city}
         readOnly
         disabled={isLoading}
         startAdornment={
@@ -101,7 +101,7 @@ return (
         inputProps={{ maxLength: 45 }}
         required
         id="input-with-icon-adornment"
-        value={bairro}
+        value={district}
         readOnly
         disabled={isLoading}
         startAdornment={
@@ -120,7 +120,7 @@ return (
         inputProps={{ maxLength: 45 }}
         required
         id="input-with-icon-adornment"
-        value={rua}
+        value={street}
         readOnly
         disabled={isLoading}
         startAdornment={

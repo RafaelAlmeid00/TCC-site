@@ -1,4 +1,5 @@
 
+import { Fade } from 'react-awesome-reveal'
 import './App.css'
 import Footer from './components/footer'
 import MenuApp from './components/menuApp'
@@ -11,9 +12,11 @@ function App() {
   return (
     <>
       <MenuApp />
+      <Fade cascade damping={0.2}>
       <Section1 />
       <Section2 />
       <Section3 />
+      </Fade>
       <Footer />
     </>
   )

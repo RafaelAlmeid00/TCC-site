@@ -8,8 +8,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
-import ModalContext from "../context/modalcontext";
-import { EmailIncorrect, EmailPasswordNull } from "./errosvalidations";
+import ModalContext from "../../context/modalcontext";
+import { EmailIncorrect, EmailPasswordNull } from "../errosvalidations";
 import axios from "axios";
 
 function ContainerCad(){

@@ -52,7 +52,12 @@ export default function MenuApp(props: any) {
     
 
     return (
-    <AppBar position="static">
+    <AppBar sx={{
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      width: '100%'
+    }}>
     <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Typography
@@ -174,7 +179,7 @@ export default function MenuApp(props: any) {
         </Box>
 
         {showCad ? <Box sx={{ flexGrow: 0, marginRight: 13 }}>
-          <Button variant="contained" href="/cadastro" sx={{
+          <Button variant="contained" href="/opcoes" sx={{
             color: 'white',
             marginRight: 1,
             border: '2px solid transparent', // adiciona a borda inicialmente

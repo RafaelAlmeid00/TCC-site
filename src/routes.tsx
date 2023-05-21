@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalContext from './context/modalcontext';
 import React, { useState, lazy, Suspense } from "react";
 import Loading from "./components/loading";
+import { Provider } from 'react-wrap-balancer'
+import OptionsCad from "./components/cadastro/optioncad";
+import EasyPass from "./pages/EasyPass";
 
 
 const CadlogLazy = lazy(() => import('./pages/cadlog'));
@@ -12,25 +15,25 @@ const App = lazy(() => import('./App'));
 const Rota = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [cpf, setCpf] = useState('');
-  const [nome, setNome] = useState('');
-  const [data, setData] = useState('')
   const [cep, setCep] = useState('');
   const [UF, setUF] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [rua, setRua] = useState('');
+  const [district, setDistrict] = useState('');
+  const [street, setStreet] = useState('');
   const [num, setNum] = useState('');
   const [comp, setComp] = useState('');
-  const [cidade, setCidade] = useState('');
+  const [city, setCity] = useState('');
  // preencha com dados padrão
 
   return (
     <BrowserRouter>
+    <Provider>
       <Suspense fallback={<Loading/>}>
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/EasyPass" element={<EasyPass />}/>
+          <Route path="/opcoes" element={<OptionsCad />} />
           <Route path="/cadastro/*" element={<React.Fragment>
-            <ModalContext.Provider value={{email, password, cpf, nome, data, cep, UF, rua, bairro, num, comp, cidade, setEmail, setPassword, setCpf, setNome, setData, setCep, setUF, setRua, setBairro, setNum, setComp, setCidade}}>
+            <ModalContext.Provider value={{email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity}}>
               <Routes>
                 <Route path="" element={<CadlogLazy />} />
                 <Route path="/complemento" element={<CadallLazy />} />
@@ -39,6 +42,7 @@ const Rota = () => {
           </React.Fragment>} />
         </Routes>
       </Suspense>
+      </Provider>
     </BrowserRouter>
   );
 };

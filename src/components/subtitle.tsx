@@ -9,7 +9,7 @@ return (
         display: "flex",
         flexDirection: "row",
         ml: '110px',
-        color: colors.tc,
+        color: "white",
         fontWeight: 'bold',
     }}>Viage com a <Typography 
     component="span"
@@ -17,7 +17,7 @@ return (
         fontWeight: 'bold',
         fontSize: '30px',
         ml: '10px',
-        background: 'linear-gradient(to right, #0fcd88 50%, #1976d2 50%)',
+        background: 'linear-gradient(to right, #0fcd88 50%, white 50%)',
         '-webkit-background-clip': 'text',
         '-webkit-text-fill-color': 'transparent',
     }}>EasyPass</Typography>

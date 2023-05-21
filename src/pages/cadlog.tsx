@@ -1,7 +1,7 @@
 
 import '../App.css'
 import Exit from '../components/buttonexit'
-import ContainerCad from '../components/containercad'
+import ContainerCad from '../components/cadastro/containercad'
 
 function Cadlog() {
 
@@ -9,7 +9,7 @@ function Cadlog() {
 
   return (
     <>
-      <Exit previousRoute={'/'}/>
+      <Exit previousRoute={'/opcoes'}/>
       <ContainerCad/>
     </>
   )

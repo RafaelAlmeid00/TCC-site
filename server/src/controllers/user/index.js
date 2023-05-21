@@ -24,32 +24,42 @@ module.exports = {
 
     async createUser(req, res) {
         try {
-            const { user_email: email } = req.body;
-            const { user_password: password } = req.body;
             const { user_CPF: cpf } = req.body;
-            const { user_name: nome } = req.body;
-            const { user_nascimento: data } = req.body;
+            const { user_RG: rg } = req.body;
+            const { user_nome: name } = req.body;
+            const { user_email: email } = req.body;
+            const { user_senha: password } = req.body;
+            const { user_nascimento: date } = req.body;
             const { user_endCEP: cep } = req.body;
             const { user_endUF: UF } = req.body;
-            const { user_endbairro: bairro } = req.body;
-            const { user_endrua: rua } = req.body;
+            const { user_endbairro: district } = req.body;
+            const { user_endrua: street } = req.body;
             const { user_endnum: num } = req.body;
             const { user_endcomplemento: comp } = req.body;
-            const { user_endcidade: cidade } = req.body;
+            const { user_endcidade: city } = req.body;
+            const { user_tipo: type } = req.body;
+            const { list_worker_bussines_buss_CNPJ: bussinesCNPJ } = req.body;
+            const { list_students_stud_matricula: matriculation } = req.body;
+            const { list_students_schools_sch_CNPJ: schoolsCNPJ } = req.body;
 
     await knex("user").insert({
-        user_email: email,
-        user_password: password,
         user_CPF: cpf,
-        user_name: nome,
-        user_nascimento: data,
+        user_RG: rg,
+        user_nome: name,
+        user_email: email,
+        user_senha: password,
+        user_nascimento: date,
         user_endCEP: cep,
         user_endUF: UF,
-        user_endbairro: bairro,
-        user_endrua: rua,
+        user_endbairro: district,
+        user_endrua: street,
         user_endnum: num,
         user_endcomplemento: comp,
-        user_endcidade: cidade,
+        user_endcidade: city,
+        user_tipo: type,
+        list_worker_bussines_buss_CNPJ: bussinesCNPJ,
+        list_students_stud_matricula: matriculation,
+        list_students_schools_sch_CNPJ: schoolsCNPJ
     });
         return res.status(201).send("User registered");
     } catch (error) {

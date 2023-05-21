@@ -6,43 +6,50 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import { useContext, useState } from "react";
 import axios from "axios";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ModalContext from "../context/modalcontext";
-import { CPFError, DataError, NomeError, NumError, CEPError, Sucess } from "./errosvalidations";
-
+import ModalContext from "../../context/modalcontext";
+import { CPFError, DataError, NomeError, NumError, CEPError, Sucess } from "../errosvalidations";
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 function CompleteCad(){
     const {email} = useContext(ModalContext);
     const {password} = useContext(ModalContext);
-    const {cpf, setCpf} = useContext(ModalContext);
-    const {nome, setNome} = useContext(ModalContext);
-    const {data, setData} = useContext(ModalContext);
+    const [cpf, setCpf] = useState("");
+    const [rg, setRg] = useState("");
+    const [name, setName] = useState("");
+    const [date, setDate] = useState("");
     const {cep} = useContext(ModalContext);
     const {UF} = useContext(ModalContext);
-    const {bairro} = useContext(ModalContext);
-    const {rua} = useContext(ModalContext);
+    const {district} = useContext(ModalContext);
+    const {street} = useContext(ModalContext);
     const {num} = useContext(ModalContext);
     const {comp} = useContext(ModalContext);
-    const {cidade} = useContext(ModalContext);
+    const {city} = useContext(ModalContext);
     const [showErrorCPF, setShowErrorCPF] = useState(false);
     const [showErrorNome, setShowErrorNome] = useState(false);
     const [showErrorData, setShowErrorData] = useState(false);
     const [showErrorCEP, setShowErrorCEP] = useState(false);
     const [showErrorNum, setShowErrorNum] = useState(false);
     const [showSucess, setShowSucess] = useState(false);
+    const [type, setType] = useState("");
+    const [bussinesCNPJ, setBussinesCNPJ] = useState("");
+    const [matriculation, setMatriculation] = useState("");
+    const [schoolsCNPJ, setSchoolsCNPJ] = useState("");
 
     async function cadastrarUsuario(
         email: string, 
         password: string, 
         cpf: string, 
-        nome: string, 
-        data: string, 
+        name: string, 
+        date: string, 
         cep: string, 
         UF: string, 
-        bairro: string,
-        rua: string,
+        district: string,
+        street: string,
         num: string,
         comp: string,
-        cidade: string) { 
+        city: string,
+        rg: string
+        ){ 
 
         handleSubmitData()
         
@@ -57,17 +64,17 @@ function CompleteCad(){
             setShowErrorData(false)
             setShowErrorNome(false)
             setShowErrorCEP(false)
-        }else if (nome == '') {
+        }else if (name == '') {
             setShowErrorNome(true)
             setShowErrorCPF(false)
             setShowErrorData(false)
             setShowErrorCEP(false)
-        } else if (data == '') {
+        } else if (date == '') {
             setShowErrorData(true)
             setShowErrorCPF(false)
             setShowErrorNome(false)
             setShowErrorCEP(false)
-        } else if (/^\d{4}-\d{2}-\d{2}$/.test(data)){
+        } else if (/^\d{4}-\d{2}-\d{2}$/.test(date)){
             setShowErrorData(true)
             setShowErrorCPF(false)
             setShowErrorNome(false)
@@ -77,7 +84,7 @@ function CompleteCad(){
             setShowErrorData(false)
             setShowErrorCPF(false)
             setShowErrorNome(false)
-        } else if (cidade == '') {
+        } else if (city == '') {
             setShowErrorCEP(true)
             setShowErrorData(false)
             setShowErrorCPF(false)
@@ -97,18 +104,23 @@ function CompleteCad(){
         } 
 
         const dadosUsuario = {
-            user_email: email,
-            user_password: password,
-            user_CPF: cpf,
-            user_name: nome,
-            user_nascimento: data,
-            user_endCEP: cep,
-            user_endUF: UF,
-            user_endbairro: bairro,
-            user_endrua: rua,
-            user_endnum: num,
-            user_endcomplemento: comp,
-            user_endcidade: cidade,
+        user_CPF: cpf,
+        user_RG: rg,
+        user_nome: name,
+        user_email: email,
+        user_senha: password,
+        user_nascimento: date,
+        user_endCEP: cep,
+        user_endUF: UF,
+        user_endbairro: district,
+        user_endstreet: street,
+        user_endnum: num,
+        user_endcomplemento: comp,
+        user_endcidade: city,
+        user_tipo: type,
+        list_worker_bussines_buss_CNPJ: bussinesCNPJ,
+        list_students_stud_matricula: matriculation,
+        list_students_schools_sch_CNPJ: schoolsCNPJ
         };
         try {
             const response = await axios.post('http://localhost:3344/user', dadosUsuario);
@@ -128,7 +140,7 @@ function CompleteCad(){
     }
 
     const handleclick = () => {
-        cadastrarUsuario(email, password, cpf, nome, data, cep, UF, bairro, rua, num, comp, cidade)
+        cadastrarUsuario(email, password, cpf, name, date, cep, UF, district, street, num, comp, city, rg)
         console.log('testando');
         
     }
@@ -145,12 +157,13 @@ function CompleteCad(){
     }
 
     function handleSubmitData() {
-        const formattedDate = formatDateString(data);
+        const formattedDate = formatDateString(date);
         const parts = formattedDate.split('-');
         const yyyy = parts[2];
         const mm = parts[1];
         const dd = parts[0];
         const formattedDateForDatabase = `${yyyy}-${mm}-${dd}`;
+        return formattedDateForDatabase;
         // Submeta a data no formato yyyy-mm-dd para o banco de dados
     }
     
@@ -203,6 +216,29 @@ return (
         </FormControl>
         <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
+        RG
+        </InputLabel>
+        <Input
+        id="input-with-icon-adornment"
+        inputProps={{ maxLength: 7 }}
+        required
+        value={rg}
+        placeholder="Insira apenas os números do RG"
+        onChange={(event) => {
+            const { value } = event.target;
+            const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
+            setCpf(newValue);
+        }}
+        startAdornment={
+            <InputAdornment position="start">
+            <HowToRegIcon />
+            </InputAdornment>
+        }
+        sx={{ fontSize: '14px' }}
+        />
+        </FormControl>
+        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+        <InputLabel htmlFor="input-with-icon-adornment">
         Nome Completo
         </InputLabel>
         <Input
@@ -210,8 +246,8 @@ return (
         placeholder="Fulano da Silva Oliveira"
         required
         id="input-with-icon-adornment"
-        value={nome}
-        onChange={(event) => setNome(event.target.value)}
+        value={name}
+        onChange={(event) => setName(event.target.value)}
         startAdornment={
             <InputAdornment position="start">
             <BadgeIcon />
@@ -228,9 +264,9 @@ return (
         inputProps={{ maxLength: 10 }}
         required
         id="input-with-icon-adornment"
-        value={data}
+        value={date}
         placeholder="Use o formato: yyyy-MM-dd"
-        onChange={(event) => setData(formatDateString(event.target.value))}
+        onChange={(event) => setDate(formatDateString(event.target.value))}
         startAdornment={
             <InputAdornment position="start">
             <CalendarMonthIcon />
