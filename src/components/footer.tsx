@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import colors from "../assets/colors";
 import Img from "./img";
 
-export default function Cards() {
+export default function Footer() {
 
   const cardVariants = {
     hover: {

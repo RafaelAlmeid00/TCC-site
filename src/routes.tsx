@@ -10,6 +10,7 @@ import EasyPass from "./pages/EasyPass";
 const CadlogLazy = lazy(() => import('./pages/cadlog'));
 const CadallLazy = lazy(() => import('./pages/cadall'));
 const App = lazy(() => import('./App'));
+const EasyPassLazy = lazy(() => import('./pages/EasyPass'));
 
 
 const Rota = () => {
@@ -30,7 +31,7 @@ const Rota = () => {
       <Suspense fallback={<Loading/>}>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/EasyPass" element={<EasyPass />}/>
+            <Route path="/EasyPass" element={<EasyPassLazy />}/>
           <Route path="/opcoes" element={<OptionsCad />} />
           <Route path="/cadastro/*" element={<React.Fragment>
             <ModalContext.Provider value={{email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity}}>
