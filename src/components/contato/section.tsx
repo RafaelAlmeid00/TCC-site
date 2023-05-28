@@ -1,20 +1,24 @@
-import { Box, Button, Container, FormControl, FormControlLabel, FormHelperText, FormLabel, Input, InputAdornment, InputLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
-import { Fade } from "react-awesome-reveal";
+import { Box, Container, FormControl, FormControlLabel, FormLabel, Input, InputAdornment, InputLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { Fade, Slide } from "react-awesome-reveal";
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import emailjs from 'emailjs-com';
 import { useState, FormEvent } from "react";
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function SectionContato() {
     const [nome, setNome] = useState('')
-    const [cpf, setCPF] = useState(0)
+    const [cpf, setCPF] = useState(null)
     const [email, setEmail] = useState('')
     const [text, setText] = useState('')
     const [radio, setRadio] = useState('visitante')
     const [showErrorCPF, setShowErrorCPF] = useState(false);
     const [showErrorEmail, setShowErrorEmail] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const [sucess, setSucess] = useState(false)
 
     const Nulls = () => {
         return (
@@ -33,6 +37,17 @@ export default function SectionContato() {
                 fontSize: '11px',
                 mb: '10px'
             }}>O email deve ser valido</Typography></>
+        )
+    }
+
+    const Sucess = () => {
+        return (
+            <><Typography sx={{
+                color: 'green',
+                fontSize: '14px',
+                mb: '10px',
+                mt: '20px'
+            }}>Email enviado com sucesso! Aguarde o nosso retorno.</Typography></>
         )
     }
 
@@ -68,7 +83,7 @@ export default function SectionContato() {
                 setShowErrorCPF(false);
                 setShowError(false);
                 return; // Parar a execução da função
-            } else if (cpf.length < 11 || isNaN(Number(cpf))) {
+            } else if (cpf.toString().length < 11 || isNaN(Number(cpf))) {
                 setShowErrorCPF(true);
                 setShowErrorEmail(false);
                 setShowError(false);
@@ -78,17 +93,28 @@ export default function SectionContato() {
         setShowErrorCPF(false);
         setShowErrorEmail(false);
         setShowError(false);
+        setLoading(true)
+        setDisable(true)
 
         emailjs
             .send('service_jifdywp', 'template_bokzj1g', templateParams, 'kBx9_63Buee8bMrWC')
             .then(function (response) {
                 console.log('SUCCESS!', response.status, response.text);
+                setSucess(true)
+                setLoading(false);
+                setDisable(false);
+                setNome('');
+                setCPF('');
+                setEmail('');
+                setText('');
+                setRadio('visitante');
+                setTimeout(() => {
+                    setSucess(false)
+                }, 5000);
             }, function (error) {
                 console.log('FAILED...', error);
             });
     }
-
-   
 
 
     return (
@@ -101,6 +127,7 @@ export default function SectionContato() {
                 width: '100%',
                 background: 'white',
             }}>
+                <Slide direction="left">
                 <Container sx={{
                     width: '50%',
                     float: 'left',
@@ -135,6 +162,7 @@ export default function SectionContato() {
                     </Typography>
                     </Container>
                 </Container>
+                </Slide>
                     <Container sx={{
                         width: '50%',
                         float: 'right',
@@ -167,7 +195,7 @@ export default function SectionContato() {
                             </InputLabel>
                             <Input
                                 value={cpf}
-                                onChange={(event) => setCPF(event.target.value)}
+                                onChange={(event) => setCPF(parseInt((event.target.value)))}
                                 inputProps={{ maxLength: 11 }}
                                 required
                                 id="input-with-icon-adornment"
@@ -226,15 +254,27 @@ export default function SectionContato() {
                             />
                         </FormControl>
                                 {showError && <Nulls />}
-                            <Button type="submit" value="Send" variant="contained" sx={{
-                                color: 'white',
-                                border: '2px solid transparent', // adiciona a borda inicialmente
-                                transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                '&:hover': {
-                                    border: '2px solid #0fcd88', // muda a cor da borda na animação
-                                },
-
-                            }}>Enviar</Button>
+                                    <LoadingButton type="submit"
+                                        size="small"
+                                        loading={loading}
+                                        variant="contained"
+                                        disabled={disable}
+                                        sx={{
+                                            paddingTop: '8px',
+                                            paddingLeft: '15px',
+                                            paddingBottom: '8px',
+                                            paddingRight: '15px',
+                                            color: 'white',
+                                            border: '2px solid transparent', // adiciona a borda inicialmente
+                                            transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+                                            '&:hover': {
+                                                border: '2px solid #0fcd88', // muda a cor da borda na animação
+                                            },
+                                        }}
+                                    >
+                                    Enviar
+                                    </LoadingButton>
+                                {sucess && <Sucess />}
                             </form>
                         </FormControl>
                 </Container>

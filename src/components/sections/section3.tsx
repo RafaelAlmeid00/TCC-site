@@ -47,7 +47,7 @@ function Section3() {
                 borderRadius: '20px'
             }}>
               <Link href="https://www.google.com/maps/place/FAETEC+Volta+Redonda/@-22.487799,-44.0725387,17z/data=!4m14!1m7!3m6!1s0x9ebd1700000001:0xe7458888a0206e3b!2sFAETEC+Volta+Redonda!8m2!3d-22.487799!4d-44.07035!16s%2Fg%2F1tt0sbws!3m5!1s0x9ebd1700000001:0xe7458888a0206e3b!8m2!3d-22.487799!4d-44.07035!16s%2Fg%2F1tt0sbws" underline="none"> 
-                <Img image="https://i.imgur.com/g2wSiUC.png" height="100%" width="100%" />
+                <Img image="https://i.imgur.com/g2wSiUC.png" height="100%" width="100%" ml={undefined} mr={undefined} />
                 </Link>
             </Card>
           </Container>

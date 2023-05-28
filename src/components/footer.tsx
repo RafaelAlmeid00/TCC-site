@@ -31,7 +31,6 @@ export default function Footer() {
       const list = [
         {text: 'Quem Somos', route: '/EasyPass'},
         {text: 'Contatos', route: '/Contatos'},
-        {text: 'Localização', route: '/Localizacao'},
         {text: 'Trabalhe Conosco', route: '/Vagas'},
       ]
 
