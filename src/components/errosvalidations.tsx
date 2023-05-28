@@ -107,5 +107,19 @@ function Sucess() {
     );
 }
 
+function ContentNull() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                width: '200px',
+                position: 'absolute', top: -63, left: '35%', zIndex: 999, boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Não deixe campos <strong>em branco. </strong>
+            </Alert>
+        </>
+    );
+}
 
-export {EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};
+
+export {ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};

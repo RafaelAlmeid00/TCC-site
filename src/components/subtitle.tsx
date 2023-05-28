@@ -11,7 +11,7 @@ return (
         ml: '110px',
         color: "white",
         fontWeight: 'bold',
-    }}>Viage com a <Typography 
+    }}>Viaje com a <Typography 
     component="span"
     sx={{
         fontWeight: 'bold',

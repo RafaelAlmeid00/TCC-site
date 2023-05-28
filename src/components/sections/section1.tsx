@@ -26,10 +26,10 @@ function Section1() {
         }}>
             <Slide direction="left">
                 <Balancer>
-                    <Title title="Viage com a gente" textSize="58px" textColor="white">
+                    <Title title="Viaje com a gente" textSize="58px" textColor="white">
                         <Subtitle />
                     </Title>
-                <Frase textColor="white" textSize='20px' frase="Com o EasyPass tenha controle da sua viagem de forma autonoma e maior conforto para sair de casa. Será você no controle da sua viagem"/>
+                <Frase textColor="white" textSize='20px' frase="Com o EasyPass tenha controle da sua viajem de forma autonoma e maior conforto para sair de casa. Será você no controle da sua viagem"/>
                 </Balancer>
             </Slide>
             <Slide direction="up" >
