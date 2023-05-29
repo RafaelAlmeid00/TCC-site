@@ -24,6 +24,26 @@ module.exports = {
 
     async createUser(req, res) {
         try {
+            /* `user_CPF` VARCHAR(11) NOT NULL,
+            `user_RG` VARCHAR(45) NOT NULL,
+            `user_nome` VARCHAR(45) NOT NULL,
+            `user_email` VARCHAR(45) NOT NULL,
+            `user_senha` VARCHAR(45) NOT NULL,
+            `user_nascimento` DATE NOT NULL,
+            `user_FotoPerfil` BLOB NULL,
+            `user_RGFrente` BLOB NULL,
+            `user_RGTras` BLOB NULL,
+            `user_endCEP` VARCHAR(9) NOT NULL,
+            `user_endUF` VARCHAR(2) NOT NULL,
+            `user_endbairro` VARCHAR(45) NOT NULL,
+            `user_endrua` VARCHAR(45) NOT NULL,
+            `user_endnum` VARCHAR(45) NOT NULL,
+            `user_endcomplemento` VARCHAR(45) NOT NULL,
+            `user_endcidade` VARCHAR(45) NOT NULL,
+            `user_tipo` ENUM("student", "worker", "default") NOT NULL,
+            `list_CPF_list_id` INT NOT NULL,*/
+
+            
             const { user_CPF: cpf } = req.body;
             const { user_RG: rg } = req.body;
             const { user_nome: name } = req.body;
