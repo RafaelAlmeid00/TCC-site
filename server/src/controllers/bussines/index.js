@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line no-undef
 const knex = require("../../database/index");
+const { search } = require("../../routes");
 
 module.exports = {
     async root(req, res) {
@@ -9,6 +10,18 @@ module.exports = {
             return res.send("Response of Client Server");
         } catch (error) {
             return res.status(400).json({ error: error.message });
+        }
+    },
+
+    async SpecificBussines (req, res) {
+        try {
+            const { CNPJ: CNPJ } = req.params;
+
+            const info = await knex("bussines").where('buss_CNPJ', '=', CNPJ);
+
+            res.send(info);
+        } catch (error) {
+            console.log(error);
         }
     },
 
@@ -64,7 +77,9 @@ module.exports = {
 
     async deleteBussines(req, res) {
         try {
-            const result = await knex("bussines").del();
+            const { CNPJ: CNPJ } = req.params;
+
+            const result = await knex("bussines").where('buss_CNPJ', '=', CNPJ).del();
             res.status(201).json(result);
         } catch (error) {
             return res.status(400).json({ error: error.message });

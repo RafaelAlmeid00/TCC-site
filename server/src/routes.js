@@ -13,9 +13,10 @@ routes.get('/user/login', controllersUser.getLogin)
 routes.get('/user/verify', controllersUser.verifyJWT)
 routes.post('/user/login', controllersUser.Login)
 
+routes.get('/bussines/search/:CNPJ', controllersBussines.SpecificBussines)
 routes.get('/bussines', controllersBussines.searchBussines);
 routes.post('/bussines', controllersBussines.createBussines);
-routes.delete('/bussines', controllersBussines.deleteBussines);
+routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
 routes.get('/listworker', controllerListWorker.searchListWorker);
 routes.post('/listworker', controllerListWorker.createListWorker);
