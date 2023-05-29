@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
 const controllersUser = require('./controllers/user/index');
-const controllersBussines = require('./controllers/bussines/index')
-const controllerListWorker = require('./controllers/list_worker/index');
+const controllersBussines = require('./controllers/bussines/index');
+const controllerListCPF = require('./controllers/list_CPF/index');
 const routes = express.Router();
 
 routes.get('/user', controllersUser.searchUser);
@@ -18,8 +18,6 @@ routes.get('/bussines', controllersBussines.searchBussines);
 routes.post('/bussines', controllersBussines.createBussines);
 routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
-routes.get('/listworker', controllerListWorker.searchListWorker);
-routes.post('/listworker', controllerListWorker.createListWorker);
-routes.delete('/listworker', controllerListWorker.deleteListWorker);
+routes.post('/listCpf', controllerListCPF.createListCpf);
 
 module.exports = routes;

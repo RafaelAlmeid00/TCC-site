@@ -16,7 +16,6 @@ module.exports = {
     async SpecificBussines (req, res) {
         try {
             const { CNPJ: CNPJ } = req.params;
-
             const info = await knex("bussines").where('buss_CNPJ', '=', CNPJ);
 
             res.send(info);
