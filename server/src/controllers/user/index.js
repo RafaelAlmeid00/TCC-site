@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 module.exports = {
@@ -60,12 +61,15 @@ module.exports = {
             const { user_tipo: type } = req.body;
             const { list_CPF_list_id: id } = req.body;
 
+            const senha = await bcrypt.hash(password, 10);
+            const Email = await bcrypt.hash(email, 10);
+
             await knex("user").insert({
                 user_CPF: cpf,
                 user_RG: rg,
                 user_nome: name,
-                user_email: email,
-                user_senha: password,
+                user_email: Email,
+                user_senha: senha,
                 user_nascimento: date,
                 user_endCEP: cep,
                 user_endUF: UF,
