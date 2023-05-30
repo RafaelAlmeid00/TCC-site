@@ -43,7 +43,7 @@ module.exports = {
             `user_tipo` ENUM("student", "worker", "default") NOT NULL,
             `list_CPF_list_id` INT NOT NULL,*/
 
-            
+
             const { user_CPF: cpf } = req.body;
             const { user_RG: rg } = req.body;
             const { user_nome: name } = req.body;
@@ -58,29 +58,25 @@ module.exports = {
             const { user_endcomplemento: comp } = req.body;
             const { user_endcidade: city } = req.body;
             const { user_tipo: type } = req.body;
-            const { list_worker_bussines_buss_CNPJ: bussinesCNPJ } = req.body;
-            const { list_students_stud_matricula: matriculation } = req.body;
-            const { list_students_schools_sch_CNPJ: schoolsCNPJ } = req.body;
+            const { list_CPF_list_id: id } = req.body;
 
-    await knex("user").insert({
-        user_CPF: cpf,
-        user_RG: rg,
-        user_nome: name,
-        user_email: email,
-        user_senha: password,
-        user_nascimento: date,
-        user_endCEP: cep,
-        user_endUF: UF,
-        user_endbairro: district,
-        user_endrua: street,
-        user_endnum: num,
-        user_endcomplemento: comp,
-        user_endcidade: city,
-        user_tipo: type,
-        list_worker_bussines_buss_CNPJ: bussinesCNPJ,
-        list_students_stud_matricula: matriculation,
-        list_students_schools_sch_CNPJ: schoolsCNPJ
-    });
+            await knex("user").insert({
+                user_CPF: cpf,
+                user_RG: rg,
+                user_nome: name,
+                user_email: email,
+                user_senha: password,
+                user_nascimento: date,
+                user_endCEP: cep,
+                user_endUF: UF,
+                user_endbairro: district,
+                user_endrua: street,
+                user_endnum: num,
+                user_endcomplemento: comp,
+                user_endcidade: city,
+                user_tipo: type,
+                list_CPF_list_id: id
+            });
         return res.status(201).send("User registered");
     } catch (error) {
         return res.status(400).send({ error: error.message });
