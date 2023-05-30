@@ -19,5 +19,5 @@ routes.post('/bussines', controllersBussines.createBussines);
 routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
 routes.post('/listCpf', controllerListCPF.createListCpf);
-
+routes.delete('/listCpf/:CNPJ', controllerListCPF.listcpfDelete);
 module.exports = routes;

@@ -14,4 +14,15 @@ module.exports = {
             console.log(error);
         }
     },
+
+    async listcpfDelete (req, res){
+        try {
+            const { CNPJ:CNPJ } = req.params;
+            await knex("list_cpf").where("bussines_buss_CNPJ", "=", CNPJ).del();
+            res.status(201).send("executamos os caras!");
+        } catch (error) {
+            res.status(401).send(error);
+            console.log(error);
+        }
+    }
 }
