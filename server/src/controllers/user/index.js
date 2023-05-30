@@ -81,6 +81,7 @@ module.exports = {
                 user_tipo: type,
                 list_CPF_list_id: id
             });
+
         return res.status(201).send("User registered");
     } catch (error) {
         return res.status(400).send({ error: error.message });
@@ -89,7 +90,9 @@ module.exports = {
 
     async deleteUser(req, res) {
         try {
-            const result = await knex("user").del();
+            const { del:del } = req.params;
+
+            const result = await knex("user").where('user_CPF', '=', del).del();
             res.status(201).json(result);
         } catch (error) {
             return res.status(400).json({ error: error.message });
