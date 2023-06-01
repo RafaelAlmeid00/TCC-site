@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
+const jwt_decode = require('jwt-decode');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
@@ -25,26 +26,7 @@ module.exports = {
 
     async createUser(req, res) {
         try {
-            /* `user_CPF` VARCHAR(11) NOT NULL,
-            `user_RG` VARCHAR(45) NOT NULL,
-            `user_nome` VARCHAR(45) NOT NULL,
-            `user_email` VARCHAR(45) NOT NULL,
-            `user_senha` VARCHAR(45) NOT NULL,
-            `user_nascimento` DATE NOT NULL,
-            `user_FotoPerfil` BLOB NULL,
-            `user_RGFrente` BLOB NULL,
-            `user_RGTras` BLOB NULL,
-            `user_endCEP` VARCHAR(9) NOT NULL,
-            `user_endUF` VARCHAR(2) NOT NULL,
-            `user_endbairro` VARCHAR(45) NOT NULL,
-            `user_endrua` VARCHAR(45) NOT NULL,
-            `user_endnum` VARCHAR(45) NOT NULL,
-            `user_endcomplemento` VARCHAR(45) NOT NULL,
-            `user_endcidade` VARCHAR(45) NOT NULL,
-            `user_tipo` ENUM("student", "worker", "default") NOT NULL,
-            `list_CPF_list_id` INT NOT NULL,*/
-
-
+            
             const { user_CPF: cpf } = req.body;
             const { user_RG: rg } = req.body;
             const { user_nome: name } = req.body;
@@ -62,13 +44,12 @@ module.exports = {
             const { list_CPF_list_id: id } = req.body;
 
             const senha = await bcrypt.hash(password, 10);
-            const Email = await bcrypt.hash(email, 10);
 
             await knex("user").insert({
                 user_CPF: cpf,
                 user_RG: rg,
                 user_nome: name,
-                user_email: Email,
+                user_email: email,
                 user_senha: senha,
                 user_nascimento: date,
                 user_endCEP: cep,
@@ -98,71 +79,74 @@ module.exports = {
             return res.status(400).json({ error: error.message });
         }
     },
-
     
-    async verifyJWT(req, res, next) {
-        const token = req.headers['x-access-token'];
-        console.log(token)
-    if (!token) {
-        res.send({ auth: false, message: 'No token received' });
-    } else {
-        JWT.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                res.send({ auth: false, message: 'Failed to authenticate' });
-            } else {
-                req.userId = decoded.id;
-            res.status(201).json('Logado com o token: ' + token);
-                next();
-            }
-        });
-    }
-},
-
-async getLogin(req, res) {
-    const token = req.headers['x-access-token'];
-    console.log(token);
-
-    if (!token) {
-        res.send({ auth: false, message: 'No token received' });
-    } else {
-        JWT.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                res.send({ auth: false, message: 'Failed to authenticate' });
-            } else {
-                try {
-                    const user = await knex('user').where('user_id', decoded.id).first();
-                    if (!user) {
-                        res.send({ auth: false, message: 'User not found' });
-                    } else {
-                        res.send({ auth: true, user: user });
-                    }
-                } catch (error) {
-                    res.send({ auth: false, message: 'Database error' });
-                }
-            }
-        });
-    }
-},
-    
-    async Login(req, res) {
-        const { user_CPF: cpf, user_password: password } = req.body;
-    
+    async UserLogin(req, res) {
         try {
-        const user = await knex('user').where('user_CPF', cpf).first();
-    
-        if (!user) {
-            return res.json({ auth: false, message: 'User does not exist' });
-        } else {
-        console.log(process.env.JWT_SECRET)
-        const token = JWT.sign({ id: user.user_id }, process.env.JWT_SECRET, {
-            expiresIn: '1d',
-        });
-        req.session.user = user.user_name;
-        res.json({ auth: true, token: token, result: user.user_name });
-    }
+            const { user_nome: nome } = req.body;
+            const { user_email: email } = req.body;
+            const { user_senha: password } = req.body;
+            
+            const [ takeEmail ] = await knex("user").where("user_email", "=", email);
+            const takeNomerec = await knex("user").where("user_nome", "=", nome);
+            console.log(takeEmail);
+            if (takeEmail != undefined) {
+                bcrypt.compare(password, takeEmail.user_senha, function (err, comp) {
+                    if (err) {
+                        console.log(err);
+                    }else{
+                        console.log(comp);
+                        const token = JWT.sign({
+                            user_nome: takeEmail.user_nome,
+                            user_email: takeEmail.user_email,
+                            user_CPF: takeEmail.user_FotoPerfil
+                        }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
+
+                        return res.status(201).send({
+                            token: token,
+                            message: "ok!"
+                        });
+                        
+                }})
+            }
+          
         } catch (error) {
-            res.json({ message: error.message });
+            res.status(400).send(error);
+            console.log(error);
         }
     },
-    
+     //recuperação por nome protótipo
+    /*async UserNameLogin(req, res){
+        try {
+            const { user_nome: nome } = req.body;
+            const { user_endUF: UF } = req.body;
+            const { user_senha: password } = req.body;
+            
+            const takeNomerec = await knex("user").where("user_nome", "=", nome);
+            let index = 0;
+            for (index <= takeNomerec.length; index++;) {
+
+                bcrypt.compare(password, takeNomerec[index].user_senha, function (err, comp) {
+                    if (err) {
+                        console.log(err);
+                    }else{
+                        console.log('default', comp);
+                        switch (comp) {
+                            case true:
+                                console.log(index);
+                                const token = JWT.sign({
+                                    
+                                })
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                    }
+                })
+                
+            }
+        } catch (error) {
+            
+        }
+    } */
 };

@@ -19,7 +19,7 @@ app.use(session({
     cookie:{
     expires: 1000*60*60*24,
     }
-}));
+})); 
 
 app.use(cors());
 app.use(function(req, res, next) {
