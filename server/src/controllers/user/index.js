@@ -82,23 +82,21 @@ module.exports = {
     
     async UserLogin(req, res) {
         try {
-            const { user_nome: nome } = req.body;
-            const { user_email: email } = req.body;
+            const { user_CPF: cpf2 } = req.body;
             const { user_senha: password } = req.body;
             
-            const [ takeEmail ] = await knex("user").where("user_email", "=", email);
-            const takeNomerec = await knex("user").where("user_nome", "=", nome);
-            console.log(takeEmail);
-            if (takeEmail != undefined) {
-                bcrypt.compare(password, takeEmail.user_senha, function (err, comp) {
+            const [ takeCPF ] = await knex("user").where("user_CPF", "=", cpf2);
+            console.log(takeCPF);
+            if (takeCPF != undefined) {
+                bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
                     if (err) {
                         console.log(err);
                     }else{
                         console.log(comp);
                         const token = JWT.sign({
-                            user_nome: takeEmail.user_nome,
-                            user_email: takeEmail.user_email,
-                            user_CPF: takeEmail.user_FotoPerfil
+                            user_nome: takeCPF.user_nome,
+                            user_email: takeCPF.user_email,
+                            user_CPF: takeCPF.user_FotoPerfil
                         }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
 
                         return res.status(201).send({

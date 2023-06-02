@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`list_CPF` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_list_CPF_bussines_idx` ON `mydb`.`list_CPF` (`bussines_buss_CNPJ` ASC) VISIBLE;
+CREATE INDEX `fk_list_CPF_bussines_idx` ON `mydb`.`list_CPF` (`bussines_buss_CNPJ`);
 
 
 -- -----------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `user_RG` VARCHAR(45) NOT NULL,
   `user_nome` VARCHAR(45) NOT NULL,
   `user_email` VARCHAR(45) NOT NULL,
-  `user_senha` VARCHAR(45) NOT NULL,
+  `user_senha` VARCHAR(200) NOT NULL,
   `user_nascimento` DATE NOT NULL,
   `user_FotoPerfil` BLOB NULL,
   `user_RGFrente` BLOB NULL,
@@ -84,9 +84,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `user_RG_UNIQUE` ON `mydb`.`user` (`user_RG` ASC) VISIBLE;
+CREATE UNIQUE INDEX `user_RG_UNIQUE` ON `mydb`.`user` (`user_RG`);
 
-CREATE INDEX `fk_user_list_CPF1_idx` ON `mydb`.`user` (`list_CPF_list_id` ASC) VISIBLE;
+CREATE INDEX `fk_user_list_CPF1_idx` ON `mydb`.`user` (`list_CPF_list_id`);
 
 
 -- -----------------------------------------------------
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`admin` (
   PRIMARY KEY (`adm_id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `adm_email_UNIQUE` ON `mydb`.`admin` (`adm_email` ASC) VISIBLE;
+CREATE UNIQUE INDEX `adm_email_UNIQUE` ON `mydb`.`admin` (`adm_email`);
 
 
 -- -----------------------------------------------------
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`sac` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_sac_user1_idx` ON `mydb`.`sac` (`user_user_CPF` ASC) VISIBLE;
+CREATE INDEX `fk_sac_user1_idx` ON `mydb`.`sac` (`user_user_CPF`);
 
 
 -- -----------------------------------------------------
@@ -149,11 +149,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`sac_message` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_sac_message_admin1_idx` ON `mydb`.`sac_message` (`admin_adm_id` ASC) VISIBLE;
+CREATE INDEX `fk_sac_message_admin1_idx` ON `mydb`.`sac_message` (`admin_adm_id`);
 
-CREATE INDEX `fk_sac_message_user1_idx` ON `mydb`.`sac_message` (`user_user_CPF` ASC) VISIBLE;
+CREATE INDEX `fk_sac_message_user1_idx` ON `mydb`.`sac_message` (`user_user_CPF`);
 
-CREATE INDEX `fk_sac_message_sac1_idx` ON `mydb`.`sac_message` (`sac_sac_ticket` ASC) VISIBLE;
+CREATE INDEX `fk_sac_message_sac1_idx` ON `mydb`.`sac_message` (`sac_sac_ticket`);
 
 
 -- -----------------------------------------------------
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`driver_bus` (
   `driver_CPF` VARCHAR(11) NOT NULL,
   `driver_RG` VARCHAR(7) NOT NULL,
   `driver_nome` VARCHAR(45) NOT NULL,
-  `driver_nascimento` DATE NOT NULL,
+  `driver_imento` DATE NOT NULL,
   `driver_admissao` DATE NOT NULL,
   `driver_demissao` DATE NULL,
   PRIMARY KEY (`driver_CPF`))
@@ -208,9 +208,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`buss` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_buss_bussines1_idx` ON `mydb`.`buss` (`bussines_buss_CNPJ` ASC) VISIBLE;
+CREATE INDEX `fk_buss_bussines1_idx` ON `mydb`.`buss` (`bussines_buss_CNPJ`);
 
-CREATE INDEX `fk_buss_bus_route1_idx` ON `mydb`.`buss` (`bus_route_rote_id` ASC) VISIBLE;
+CREATE INDEX `fk_buss_bus_route1_idx` ON `mydb`.`buss` (`bus_route_rote_id`);
 
 
 -- -----------------------------------------------------
@@ -235,9 +235,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`turn_bus` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_turn_bus_driver_bus1_idx` ON `mydb`.`turn_bus` (`driver_bus_driver_CPF` ASC) VISIBLE;
+CREATE INDEX `fk_turn_bus_driver_bus1_idx` ON `mydb`.`turn_bus` (`driver_bus_driver_CPF`);
 
-CREATE INDEX `fk_turn_bus_buss1_idx` ON `mydb`.`turn_bus` (`buss_bus_id` ASC) VISIBLE;
+CREATE INDEX `fk_turn_bus_buss1_idx` ON `mydb`.`turn_bus` (`buss_bus_id`);
 
 
 -- -----------------------------------------------------
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`request_card` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_request_card_user1_idx` ON `mydb`.`request_card` (`user_user_CPF` ASC) VISIBLE;
+CREATE INDEX `fk_request_card_user1_idx` ON `mydb`.`request_card` (`user_user_CPF`);
 
 
 -- -----------------------------------------------------
@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`card` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_card_request_card1_idx` ON `mydb`.`card` (`request_card_req_id` ASC) VISIBLE;
+CREATE INDEX `fk_card_request_card1_idx` ON `mydb`.`card` (`request_card_req_id`);
 
 
 -- -----------------------------------------------------
@@ -306,9 +306,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`validation_card` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_validation_card_card1_idx` ON `mydb`.`validation_card` (`card_card_id` ASC) VISIBLE;
+CREATE INDEX `fk_validation_card_card1_idx` ON `mydb`.`validation_card` (`card_card_id`);
 
-CREATE INDEX `fk_validation_card_turn_bus1_idx` ON `mydb`.`validation_card` (`turn_bus_turn_id` ASC) VISIBLE;
+CREATE INDEX `fk_validation_card_turn_bus1_idx` ON `mydb`.`validation_card` (`turn_bus_turn_id`);
 
 
 -- -----------------------------------------------------
@@ -345,9 +345,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`routes` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_routes_bus_stop1_idx` ON `mydb`.`routes` (`bus_stop_stop_id` ASC) VISIBLE;
+CREATE INDEX `fk_routes_bus_stop1_idx` ON `mydb`.`routes` (`bus_stop_stop_id`);
 
-CREATE INDEX `fk_routes_bus_route1_idx` ON `mydb`.`routes` (`bus_route_rote_id` ASC) VISIBLE;
+CREATE INDEX `fk_routes_bus_route1_idx` ON `mydb`.`routes` (`bus_route_rote_id`);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

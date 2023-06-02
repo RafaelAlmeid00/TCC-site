@@ -45,36 +45,24 @@ function ContainerCad(){
         }
     }
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        console.log(token);
-        
-        if (token) {
-        axios.get('http://localhost:3344/user/verify', {
-            headers: { 'x-access-token': token }
-        })
-        .then((res) => {
-            if (res.data.auth) {
-            navigate('/profile');
-            }
-        })
-        .catch((err) => console.error(err));
-        }
-    });
+    
     
     const handleLogin = async () => {
         try {
         const res = await axios.post('http://localhost:3344/user/login', {
             user_CPF: cpf2,
-            user_password: password,
+            user_senha: password,
         });
         console.log(res.data);
         console.log(res.data.token);
+        console.log(res);
         
-        if (res.data.auth) {
+        if (res.data.token) {
             localStorage.setItem('token', res.data.token);
             handleGetUserData()
             navigate('/');
+            console.log('viado');
+            
         } else {
             console.log(res.data.message);
         }
@@ -89,15 +77,12 @@ function ContainerCad(){
             
         if (token) {
             try {
-                const res = await axios.get('http://localhost:3344/user/login', {
-                    headers: { 'x-access-token': token }
-                });
+                const res = await axios.get('http://localhost:3344/user/login');
                 console.log(res.data);
                     
                 if (res.data.auth) {
                     const userData = res.data.user;
                     console.log(userData);
-                    // Faça algo com os dados do usuário
                 } else {
                     console.log(res.data.message);
                 }

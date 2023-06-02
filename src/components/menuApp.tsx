@@ -16,7 +16,15 @@ import { useNavigate } from 'react-router-dom';
 
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
+  const token = localStorage.getItem('token');
 
+  useEffect(() => {
+  if (token) {
+    setShowCad(false)
+  } else {
+    setShowCad(true)
+  }
+}, [token])
     const pages = [
       {name: 'Quem Somos', route: '/EasyPass'},
       {name: 'Aplicativo', route: '/App'},
