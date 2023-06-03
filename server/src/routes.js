@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
+const cookie = require('cookie-parser')
 const controllersUser = require('./controllers/user/index');
 const controllersBussines = require('./controllers/bussines/index');
 const controllerListCPF = require('./controllers/list_CPF/index');
@@ -8,8 +9,11 @@ const controllersSac = require('./controllers/sac/index');
 const middleware = require('./controllers/Middleware');
 
 
+
 const routes = express.Router();
 
+
+routes.use(cookie())
 routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
 routes.delete('/user/:del', controllersUser.deleteUser);

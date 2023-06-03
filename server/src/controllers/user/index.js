@@ -4,6 +4,7 @@ const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
 const jwt_decode = require('jwt-decode');
 const bcrypt = require('bcrypt');
+
 require('dotenv').config();
 
 module.exports = {
@@ -100,10 +101,11 @@ module.exports = {
                                 user_email: takeCPF.user_email,
                                 user_CPF: takeCPF.user_FotoPerfil
                             }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
-
+                            res.cookie("token", token, {httpOnly: true})
+                            //res.redirect('http://localhost:3344/user/login')
                             return res.status(201).send({
                                 token: token,
-                                message: "ok!"
+                                message: "ok!",
                             })
                         
                         }
