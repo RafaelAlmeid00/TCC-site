@@ -1,22 +1,25 @@
-const jwt = require('jwt-decode');
+const jwt = require('jsonwebtoken');
+
 
 module.exports = {
     async mid (req, res, next){ 
-        
-        const token = req.headers.authorization;
-        console.log(req.headers.authorization);
+    const token = req.cookies.token;
+    console.log('tokão: ', token);
+    if (token) {
         try {
-            
-            if (token) {
-                await (jwt.verify)(token, 'Uz&Nxq6ifp*bqvBJgG$z')
-
-                return next();
-            }else{
-                res.status(400).send('erro');
-            }
+            jwt.verify(token, 'Uz&Nxq6ifp*bqvBJgG$z', (err, decoded) => {
+                if (err) {
+                  return res.status(401).json({ message: 'Token inválido' });
+                }
+                req.user = decoded;
+                console.log(req.user);
+                next();
+              });
         } catch (error) {
             console.log(error);
             res.status(400).send(error);
         }
+    }
+        
     }
 };
