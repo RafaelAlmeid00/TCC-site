@@ -220,14 +220,14 @@ return (
         </InputLabel>
         <Input
         id="input-with-icon-adornment"
-        inputProps={{ maxLength: 7 }}
+        inputProps={{ maxLength: 9 }}
         required
         value={rg}
         placeholder="Insira apenas os números do RG"
         onChange={(event) => {
             const { value } = event.target;
-            const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
-            setCpf(newValue);
+            const newValue2 = value.replace(/\D/g, ''); // remove tudo que não é número
+            setRg(newValue2);
         }}
         startAdornment={
             <InputAdornment position="start">

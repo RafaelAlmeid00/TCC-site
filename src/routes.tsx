@@ -10,6 +10,7 @@ const CadallLazy = lazy(() => import('./pages/cadall'));
 const App = lazy(() => import('./App'));
 const EasyPassLazy = lazy(() => import('./pages/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/Contato'));
+const HomeSistema = lazy(() => import('./pages/sistema/App'));
 
 
 const Rota = () => {
@@ -33,6 +34,7 @@ const Rota = () => {
           <Route path="/EasyPass" element={<EasyPassLazy />}/>
           <Route path="/Contatos" element={<ContatosLazy />} />
           <Route path="/opcoes" element={<OptionsCad />} />
+            <Route path="/Sistema" element={<HomeSistema />} />
           <Route path="/cadastro/*" element={<React.Fragment>
             <ModalContext.Provider value={{email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity}}>
               <Routes>

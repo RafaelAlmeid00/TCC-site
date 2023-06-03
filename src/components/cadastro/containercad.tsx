@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Button, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Tooltip, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
-import { Token, Visibility, VisibilityOff } from "@mui/icons-material";
+import {Visibility, VisibilityOff } from "@mui/icons-material";
 import FormControl from '@mui/material/FormControl';
 import React, { useContext, useEffect, useState } from "react";
 import EmailIcon from '@mui/icons-material/Email';
@@ -60,7 +60,7 @@ function ContainerCad(){
         if (res.data.token) {
             localStorage.setItem('token', res.data.token);
             handleGetUserData()
-            navigate('/');
+            navigate('/Sistema');
             console.log('viado');
             
         } else {
