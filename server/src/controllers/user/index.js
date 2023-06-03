@@ -83,28 +83,31 @@ module.exports = {
     async UserLogin(req, res) {
         try {
             const { user_CPF: cpf2 } = req.body;
+            console.log(cpf2);
             const { user_senha: password } = req.body;
+            console.log('this is the password: ', password);
             
-            const [ takeCPF ] = await knex("user").where("user_CPF", "=", cpf2);
+            const [ takeCPF ] = await knex("user").where("user_CPF", "=", String(cpf2));
             console.log(takeCPF);
             if (takeCPF != undefined) {
-                bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
-                    if (err) {
-                        console.log(err);
-                    }else{
-                        console.log(comp);
-                        const token = JWT.sign({
-                            user_nome: takeCPF.user_nome,
-                            user_email: takeCPF.user_email,
-                            user_CPF: takeCPF.user_FotoPerfil
-                        }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
+                    bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
+                        if (err || comp == false) {
+                            console.log(err);
+                        }else{
+                            console.log('this is comp: ', comp);
+                            const token = JWT.sign({
+                                user_nome: takeCPF.user_nome,
+                                user_email: takeCPF.user_email,
+                                user_CPF: takeCPF.user_FotoPerfil
+                            }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
 
-                        return res.status(201).send({
-                            token: token,
-                            message: "ok!"
-                        });
+                            return res.status(201).send({
+                                token: token,
+                                message: "ok!"
+                            })
                         
-                }})
+                        }
+                    })
             }
           
         } catch (error) {

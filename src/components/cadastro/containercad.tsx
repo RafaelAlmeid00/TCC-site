@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Button, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Tooltip, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Token, Visibility, VisibilityOff } from "@mui/icons-material";
 import FormControl from '@mui/material/FormControl';
 import React, { useContext, useEffect, useState } from "react";
 import EmailIcon from '@mui/icons-material/Email';
@@ -54,7 +54,7 @@ function ContainerCad(){
             user_senha: password,
         });
         console.log(res.data);
-        console.log(res.data.token);
+        console.log('test', res.data.token);
         console.log(res);
         
         if (res.data.token) {
@@ -284,6 +284,10 @@ return (
         <Input
             id="standard-adornment-password"
             type={showPassword ? 'text' : 'password'}
+            onChange={(event) => {
+                const { value } = event.target;
+                setPassword(value);
+            }}
             endAdornment={
                 <InputAdornment position="end">
                     <IconButton
@@ -344,4 +348,4 @@ return (
 )
 }
 
-export default ContainerCad
+export default ContainerCad;
