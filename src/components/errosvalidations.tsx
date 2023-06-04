@@ -26,6 +26,7 @@ function EmailIncorrect() {
     );
 }
 
+
 function CEPError() {
     return (
     <>
@@ -121,5 +122,17 @@ function ContentNull() {
     );
 }
 
+function ErrorLogin() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                position: 'absolute', top: 0, left: '35%', zIndex: 999, boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                CPF ou senha <strong>inválidos.</strong>
+            </Alert>
+        </>
+    );
+}
 
-export {ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};
+export {ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};

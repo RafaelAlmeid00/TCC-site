@@ -70,53 +70,58 @@ module.exports = {
     }
     },
 
-    async deleteUser(req, res) {
-        try {
-            const { del:del } = req.params;
-
-            const result = await knex("user").where('user_CPF', '=', del).del();
-            res.status(201).json(result);
-        } catch (error) {
-            return res.status(400).json({ error: error.message });
-        }
-    },
     
-    async UserLogin(req, res) {
-        try {
-            const { user_CPF: cpf2 } = req.body;
-            console.log(cpf2);
-            const { user_senha: password } = req.body;
-            console.log('this is the password: ', password);
-            
-            const [ takeCPF ] = await knex("user").where("user_CPF", "=", String(cpf2));
-            console.log(takeCPF);
-            if (takeCPF != undefined) {
-                    bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
-                        if (err || comp == false) {
-                            console.log(err);
-                        }else{
-                            console.log('this is comp: ', comp);
-                            const token = JWT.sign({
-                                user_nome: takeCPF.user_nome,
-                                user_email: takeCPF.user_email,
-                                user_CPF: takeCPF.user_FotoPerfil
-                            }, 'Uz&Nxq6ifp*bqvBJgG$z',{ expiresIn: '1h'});
-                            res.cookie("token", token, {httpOnly: true})
-                            //res.redirect('http://localhost:3344/user/login')
-                            return res.status(201).send({
-                                token: token,
-                                message: "ok!",
-                            })
-                        
-                        }
-                    })
-            }
-          
-        } catch (error) {
-            res.status(400).send(error);
-            console.log(error);
+async UserLogin(req, res) {
+  try {
+    const { user_CPF: cpf2 } = req.body;
+    console.log(cpf2);
+    const { user_senha: password } = req.body;
+    console.log('this is the password: ', password);
+
+    const [ takeCPF ] = await knex("user").where("user_CPF", "=", String(cpf2));
+    console.log(takeCPF);
+    if (takeCPF != undefined) {
+      bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
+        if (err || comp == false) {
+          console.log(err);
+        } else {
+          console.log('this is comp: ', comp);
+          const token = JWT.sign({
+            user_nome: takeCPF.user_nome,
+            user_email: takeCPF.user_email,
+            user_CPF: takeCPF.user_FotoPerfil
+          }, 'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1h' });
+
+          const userData = {
+  user_CPF: takeCPF.user_CPF,
+  user_nome: takeCPF.user_nome,
+  user_nascimento: takeCPF.user_nascimento,
+  user_endCEP: takeCPF.user_endCEP,
+  user_endUF: takeCPF.user_endUF,
+  user_endbairro: takeCPF.user_endbairro,
+  user_endrua: takeCPF.user_endrua,
+  user_endnum: takeCPF.user_endnum,
+  user_endcomplemento: takeCPF.user_endcomplemento,
+  user_endcidade: takeCPF.user_endcidade,
+  user_tipo: takeCPF.user_tipo
+};
+
+return res.status(201).send({
+  token: token,
+  user: userData,
+  message: "ok!"
+});
+
         }
-    },
+      });
+    } else {
+      res.status(401).send('erro, tente novamente!');
+    }
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+},
      //recuperação por nome protótipo
     /*async UserNameLogin(req, res){
         try {

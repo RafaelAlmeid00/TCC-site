@@ -14,14 +14,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `easypass` DEFAULT CHARACTER SET utf8 ;
+USE `easypass` ;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`bussines`
+-- Table `bussines`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`bussines` (
+CREATE TABLE IF NOT EXISTS `bussines` (
   `buss_CNPJ` VARCHAR(14) NOT NULL,
   `buss_nome` VARCHAR(45) NOT NULL,
   `buss_contato` VARCHAR(45) NOT NULL,
@@ -38,9 +38,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`list_CPF`
+-- Table `list_CPF`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`list_CPF` (
+CREATE TABLE IF NOT EXISTS `list_CPF` (
   `list_id` INT NOT NULL AUTO_INCREMENT,
   `bussines_buss_CNPJ` VARCHAR(14) NOT NULL,
   `list_tipo` ENUM("student", "worker") NOT NULL,
@@ -48,18 +48,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`list_CPF` (
   PRIMARY KEY (`list_id`),
   CONSTRAINT `fk_list_CPF_bussines`
     FOREIGN KEY (`bussines_buss_CNPJ`)
-    REFERENCES `mydb`.`bussines` (`buss_CNPJ`)
+    REFERENCES `bussines` (`buss_CNPJ`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_list_CPF_bussines_idx` ON `mydb`.`list_CPF` (`bussines_buss_CNPJ`);
+CREATE INDEX `fk_list_CPF_bussines_idx` ON `list_CPF` (`bussines_buss_CNPJ`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `user_CPF` VARCHAR(11) NOT NULL,
   `user_RG` VARCHAR(9) NOT NULL,
   `user_nome` VARCHAR(45) NOT NULL,
@@ -81,20 +81,20 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   PRIMARY KEY (`user_CPF`),
   CONSTRAINT `fk_user_list_CPF1`
     FOREIGN KEY (`list_CPF_list_id`)
-    REFERENCES `mydb`.`list_CPF` (`list_id`)
+    REFERENCES `list_CPF` (`list_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `user_RG_UNIQUE` ON `mydb`.`user` (`user_RG`);
+CREATE UNIQUE INDEX `user_RG_UNIQUE` ON `user` (`user_RG`);
 
-CREATE INDEX `fk_user_list_CPF1_idx` ON `mydb`.`user` (`list_CPF_list_id`);
+CREATE INDEX `fk_user_list_CPF1_idx` ON `user` (`list_CPF_list_id`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`admin`
+-- Table `admin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `adm_id` INT NOT NULL AUTO_INCREMENT,
   `adm_nome` VARCHAR(45) NOT NULL,
   `adm_email` VARCHAR(45) NOT NULL,
@@ -103,31 +103,31 @@ CREATE TABLE IF NOT EXISTS `mydb`.`admin` (
   PRIMARY KEY (`adm_id`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `adm_email_UNIQUE` ON `mydb`.`admin` (`adm_email`);
+CREATE UNIQUE INDEX `adm_email_UNIQUE` ON `admin` (`adm_email`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`sac`
+-- Table `sac`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`sac` (
+CREATE TABLE IF NOT EXISTS `sac` (
   `sac_ticket` VARCHAR(9) NOT NULL,
   `sac_data` DATE NOT NULL,
   `user_user_CPF` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`sac_ticket`),
   CONSTRAINT `fk_sac_user1`
     FOREIGN KEY (`user_user_CPF`)
-    REFERENCES `mydb`.`user` (`user_CPF`)
+    REFERENCES `user` (`user_CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_sac_user1_idx` ON `mydb`.`sac` (`user_user_CPF`);
+CREATE INDEX `fk_sac_user1_idx` ON `sac` (`user_user_CPF`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`sac_message`
+-- Table `sac_message`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`sac_message` (
+CREATE TABLE IF NOT EXISTS `sac_message` (
   `sacmen_id` INT NOT NULL AUTO_INCREMENT,
   `sacmen_texto` LONGTEXT NOT NULL,
   `admin_adm_id` INT NULL,
@@ -136,32 +136,32 @@ CREATE TABLE IF NOT EXISTS `mydb`.`sac_message` (
   PRIMARY KEY (`sacmen_id`),
   CONSTRAINT `fk_sac_message_admin1`
     FOREIGN KEY (`admin_adm_id`)
-    REFERENCES `mydb`.`admin` (`adm_id`)
+    REFERENCES `admin` (`adm_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_sac_message_user1`
     FOREIGN KEY (`user_user_CPF`)
-    REFERENCES `mydb`.`user` (`user_CPF`)
+    REFERENCES `user` (`user_CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_sac_message_sac1`
     FOREIGN KEY (`sac_sac_ticket`)
-    REFERENCES `mydb`.`sac` (`sac_ticket`)
+    REFERENCES `sac` (`sac_ticket`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_sac_message_admin1_idx` ON `mydb`.`sac_message` (`admin_adm_id`);
+CREATE INDEX `fk_sac_message_admin1_idx` ON `sac_message` (`admin_adm_id`);
 
-CREATE INDEX `fk_sac_message_user1_idx` ON `mydb`.`sac_message` (`user_user_CPF`);
+CREATE INDEX `fk_sac_message_user1_idx` ON `sac_message` (`user_user_CPF`);
 
-CREATE INDEX `fk_sac_message_sac1_idx` ON `mydb`.`sac_message` (`sac_sac_ticket`);
+CREATE INDEX `fk_sac_message_sac1_idx` ON `sac_message` (`sac_sac_ticket`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`driver_bus`
+-- Table `driver_bus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`driver_bus` (
+CREATE TABLE IF NOT EXISTS `driver_bus` (
   `driver_CPF` VARCHAR(11) NOT NULL,
   `driver_RG` VARCHAR(7) NOT NULL,
   `driver_nome` VARCHAR(45) NOT NULL,
@@ -173,9 +173,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`bus_route`
+-- Table `bus_route`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`bus_route` (
+CREATE TABLE IF NOT EXISTS `bus_route` (
   `rote_id` INT NOT NULL AUTO_INCREMENT,
   `route_nome` VARCHAR(45) NOT NULL,
   `route_num` VARCHAR(45) NOT NULL,
@@ -184,9 +184,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`buss`
+-- Table `buss`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`buss` (
+CREATE TABLE IF NOT EXISTS `buss` (
   `bus_id` INT NOT NULL,
   `bus_nome` VARCHAR(45) NOT NULL,
   `bus_num` VARCHAR(45) NOT NULL,
@@ -200,25 +200,25 @@ CREATE TABLE IF NOT EXISTS `mydb`.`buss` (
   PRIMARY KEY (`bus_id`),
   CONSTRAINT `fk_buss_bussines1`
     FOREIGN KEY (`bussines_buss_CNPJ`)
-    REFERENCES `mydb`.`bussines` (`buss_CNPJ`)
+    REFERENCES `bussines` (`buss_CNPJ`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_buss_bus_route1`
     FOREIGN KEY (`bus_route_rote_id`)
-    REFERENCES `mydb`.`bus_route` (`rote_id`)
+    REFERENCES `bus_route` (`rote_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_buss_bussines1_idx` ON `mydb`.`buss` (`bussines_buss_CNPJ`);
+CREATE INDEX `fk_buss_bussines1_idx` ON `buss` (`bussines_buss_CNPJ`);
 
-CREATE INDEX `fk_buss_bus_route1_idx` ON `mydb`.`buss` (`bus_route_rote_id`);
+CREATE INDEX `fk_buss_bus_route1_idx` ON `buss` (`bus_route_rote_id`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`turn_bus`
+-- Table `turn_bus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`turn_bus` (
+CREATE TABLE IF NOT EXISTS `turn_bus` (
   `turn_id` INT NOT NULL,
   `turn_inicio` DATETIME NOT NULL,
   `turn_fim` DATETIME NOT NULL,
@@ -227,25 +227,25 @@ CREATE TABLE IF NOT EXISTS `mydb`.`turn_bus` (
   PRIMARY KEY (`turn_id`),
   CONSTRAINT `fk_turn_bus_driver_bus1`
     FOREIGN KEY (`driver_bus_driver_CPF`)
-    REFERENCES `mydb`.`driver_bus` (`driver_CPF`)
+    REFERENCES `driver_bus` (`driver_CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_turn_bus_buss1`
     FOREIGN KEY (`buss_bus_id`)
-    REFERENCES `mydb`.`buss` (`bus_id`)
+    REFERENCES `buss` (`bus_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_turn_bus_driver_bus1_idx` ON `mydb`.`turn_bus` (`driver_bus_driver_CPF`);
+CREATE INDEX `fk_turn_bus_driver_bus1_idx` ON `turn_bus` (`driver_bus_driver_CPF`);
 
-CREATE INDEX `fk_turn_bus_buss1_idx` ON `mydb`.`turn_bus` (`buss_bus_id`);
+CREATE INDEX `fk_turn_bus_buss1_idx` ON `turn_bus` (`buss_bus_id`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`request_card`
+-- Table `request_card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`request_card` (
+CREATE TABLE IF NOT EXISTS `request_card` (
   `req_id` INT NOT NULL AUTO_INCREMENT,
   `req_data` DATE NOT NULL,
   `req_envio` DATE NULL,
@@ -254,18 +254,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`request_card` (
   PRIMARY KEY (`req_id`),
   CONSTRAINT `fk_request_card_user1`
     FOREIGN KEY (`user_user_CPF`)
-    REFERENCES `mydb`.`user` (`user_CPF`)
+    REFERENCES `user` (`user_CPF`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_request_card_user1_idx` ON `mydb`.`request_card` (`user_user_CPF`);
+CREATE INDEX `fk_request_card_user1_idx` ON `request_card` (`user_user_CPF`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`card`
+-- Table `card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`card` (
+CREATE TABLE IF NOT EXISTS `card` (
   `card_id` INT NOT NULL,
   `card_validade` VARCHAR(45) NOT NULL,
   `card_saldo` VARCHAR(45) NOT NULL,
@@ -277,18 +277,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`card` (
   PRIMARY KEY (`card_id`),
   CONSTRAINT `fk_card_request_card1`
     FOREIGN KEY (`request_card_req_id`)
-    REFERENCES `mydb`.`request_card` (`req_id`)
+    REFERENCES `request_card` (`req_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_card_request_card1_idx` ON `mydb`.`card` (`request_card_req_id`);
+CREATE INDEX `fk_card_request_card1_idx` ON `card` (`request_card_req_id`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`validation_card`
+-- Table `validation_card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`validation_card` (
+CREATE TABLE IF NOT EXISTS `validation_card` (
   `val_id` INT NOT NULL AUTO_INCREMENT,
   `val_onibus` INT NOT NULL,
   `val_horario` DATETIME NOT NULL,
@@ -298,25 +298,25 @@ CREATE TABLE IF NOT EXISTS `mydb`.`validation_card` (
   PRIMARY KEY (`val_id`),
   CONSTRAINT `fk_validation_card_card1`
     FOREIGN KEY (`card_card_id`)
-    REFERENCES `mydb`.`card` (`card_id`)
+    REFERENCES `card` (`card_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_validation_card_turn_bus1`
     FOREIGN KEY (`turn_bus_turn_id`)
-    REFERENCES `mydb`.`turn_bus` (`turn_id`)
+    REFERENCES `turn_bus` (`turn_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_validation_card_card1_idx` ON `mydb`.`validation_card` (`card_card_id`);
+CREATE INDEX `fk_validation_card_card1_idx` ON `validation_card` (`card_card_id`);
 
-CREATE INDEX `fk_validation_card_turn_bus1_idx` ON `mydb`.`validation_card` (`turn_bus_turn_id`);
+CREATE INDEX `fk_validation_card_turn_bus1_idx` ON `validation_card` (`turn_bus_turn_id`);
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`bus_stop`
+-- Table `bus_stop`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`bus_stop` (
+CREATE TABLE IF NOT EXISTS `bus_stop` (
   `stop_id` INT NOT NULL AUTO_INCREMENT,
   `stop_endCEP` VARCHAR(9) NOT NULL,
   `stop_endUF` VARCHAR(2) NOT NULL,
@@ -329,27 +329,27 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`routes`
+-- Table `routes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`routes` (
+CREATE TABLE IF NOT EXISTS `routes` (
   `bus_stop_stop_id` INT NOT NULL,
   `bus_route_rote_id` INT NOT NULL,
   PRIMARY KEY (`bus_stop_stop_id`, `bus_route_rote_id`),
   CONSTRAINT `fk_routes_bus_stop1`
     FOREIGN KEY (`bus_stop_stop_id`)
-    REFERENCES `mydb`.`bus_stop` (`stop_id`)
+    REFERENCES `bus_stop` (`stop_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_routes_bus_route1`
     FOREIGN KEY (`bus_route_rote_id`)
-    REFERENCES `mydb`.`bus_route` (`rote_id`)
+    REFERENCES `bus_route` (`rote_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_routes_bus_stop1_idx` ON `mydb`.`routes` (`bus_stop_stop_id`);
+CREATE INDEX `fk_routes_bus_stop1_idx` ON `routes` (`bus_stop_stop_id`);
 
-CREATE INDEX `fk_routes_bus_route1_idx` ON `mydb`.`routes` (`bus_route_rote_id`);
+CREATE INDEX `fk_routes_bus_route1_idx` ON `routes` (`bus_route_rote_id`);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -16,7 +16,6 @@ const routes = express.Router();
 routes.use(cookie())
 routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
-routes.delete('/user/:del', controllersUser.deleteUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
 

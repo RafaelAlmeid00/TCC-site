@@ -9,8 +9,9 @@ import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modalcontext";
-import { EmailIncorrect, EmailPasswordNull } from "../errosvalidations";
+import { EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
 import axios from "axios";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function ContainerCad(){
     const [showPassword, setShowPassword] = React.useState(false);
@@ -30,29 +31,38 @@ function ContainerCad(){
     const [Loginstatus, setLoginstatus] = useState("");
     const [state, setState] = useState(false);
     const { loginbool, setLog } = useContext(ModalContext);
-
+    const [loading, setLoading] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const [showErrorlog, setShowErrorlog] = useState(false);
 
     function verify() {
         if (email == '' || password == '') {
-            setShowError(true);
+            setTimeout(() => {
+                setShowError(true);
+            }, 5000);
             setShowErrorEmail(false);
+            setShowErrorlog(false)
         } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
             setShowErrorEmail(true);
             setShowError(false)
+            setShowErrorlog(false)
         } else {
             setShowErrorEmail(false)
             setShowErrorEmail(false)
+            setShowErrorlog(false)
             navigate('/cadastro/complemento');
         }
     }
 
-    useEffect(() => {
+    useEffect(() => {   
         if (loginbool) {
             setShowComponent(true);
         }
     }, [loginbool]);
     
     const handleLogin = async () => {
+        setLoading(true)
+        setDisable(true)
         try {
         const res = await axios.post('http://localhost:3344/user/login', {
             user_CPF: cpf2,
@@ -61,10 +71,12 @@ function ContainerCad(){
         console.log(res.data);
         console.log('test', res.data.token);
         console.log(res);
+        console.log(res.data.user);
         
-        if (res.data.token) {
-            localStorage.setItem('token', res.data.token);
-            handleGetUserData()
+            if (res.data.token) {
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                console.log(localStorage);
             navigate('/Sistema');
             console.log('viado');
             
@@ -72,28 +84,12 @@ function ContainerCad(){
             console.log(res.data.message);
         }
         } catch (err) {
-        console.error(err);
-        }
-    };
-
-    const handleGetUserData = async () => {
-        const token = localStorage.getItem('token');
-        console.log(token);
-            
-        if (token) {
-            try {
-                const res = await axios.get('http://localhost:3344/user/login');
-                console.log(res.data);
-                    
-                if (res.data) {
-                    const userData = res.data.user;
-                    console.log(userData);
-                } else {
-                    console.log(res.data.message);
-                }
-            } catch (err) {
-                console.error(err);
-            }
+        console.log(err);
+            setLoading(false)
+            setDisable(false)
+            setTimeout(() => {
+            setShowErrorlog(true)
+            }, 5000)
         }
     };
 
@@ -101,6 +97,8 @@ return (
     <>
     {showError && <EmailPasswordNull />}
     {showErrorEmail && <EmailIncorrect />}
+    {showErrorlog && <ErrorLogin />}
+
     <Box sx={{
         backgroundColor: "#F0F0FF",
         height: "80vh",
@@ -307,17 +305,23 @@ return (
             sx={{ fontSize: '14px' }}
         />
     </FormControl>
-    <Button 
+    <LoadingButton
+    size="small"
+    loading={loading}
+    variant="contained"
+    disabled={disable}
     onClick={handleLogin}
-    variant="contained" sx={{
+    sx={{
+    paddingTop: '8px',
+    paddingLeft: '15px',
+    paddingBottom: '8px',
+    paddingRight: '15px',
     color: 'white',
-    marginRight: 1,
     border: '2px solid transparent', // adiciona a borda inicialmente
     transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
     '&:hover': {
-      border: '2px solid #0fcd88', // muda a cor da borda na animação
-    },
-    }}>Entrar</Button>
+        border: '2px solid #0fcd88', // muda a cor da borda na animação
+    },}}>Enviar </LoadingButton>
     <Typography sx={{textAlign: 'center', mt: '20px', color: '#666666', fontSize: '15px'}}>
         Não possui um login? Clique <Link
     component="button"

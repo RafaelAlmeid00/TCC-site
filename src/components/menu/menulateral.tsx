@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, Typography, Toolbar, Divider } from "@mui/material";
+import { AppBar, Button, Container, Typography, Toolbar, Divider } from "@mui/material";
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
@@ -6,6 +6,7 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import colors from "../../assets/colors";
 
 export default function MenuLateral(props: any) {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function MenuLateral(props: any) {
                 boxShadow: '2px 0px 6px rgba(0, 0, 0, 0.6)'
             }}
         >
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" >
                 <Toolbar disableGutters sx={{
                     width: '100%',
                     height: '100%',
@@ -43,6 +44,7 @@ export default function MenuLateral(props: any) {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     mt: '25px',
+                    
                 }}>
                         {btnsmenu.map((btn, index) => (
                             <React.Fragment key={btn.route}>
@@ -69,7 +71,13 @@ export default function MenuLateral(props: any) {
                                         '&:hover': {
                                             background: '#e9e9e9e9',
                                             boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-                                        }
+                                            '& svg': {
+                                                fill: colors.sc, // Adicionado para mudar a cor do ícone
+                                            },
+                                            '& .MuiTypography-root': {
+                                                color: colors.sc, // Adicionado para mudar a cor do texto
+                                            }
+                                        },
                                     }}
                                 >
                                     {btn.icon}
@@ -78,7 +86,8 @@ export default function MenuLateral(props: any) {
                                             ml: '5px',
                                             fontSize: '14px',
                                             color: 'black',
-                                            fontWeight: '600'
+                                            fontWeight: '600',
+                                            
                                         }}
                                     >
                                         {btn.title}

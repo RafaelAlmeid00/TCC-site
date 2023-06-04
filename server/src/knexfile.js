@@ -3,11 +3,11 @@ module.exports = {
     development : {
         client : 'mysql',
         connection: {
-            host: '127.0.0.1',
+            host: 'mysqlserver.cpzldhdkowxy.us-east-2.rds.amazonaws.com',
             port: 3306,
-            user: 'root',
-            password: '',
-            database: 'mydb',
+            user: 'admin',
+            password: '01020304',
+            database: 'easypass',
         }
     }
 }
