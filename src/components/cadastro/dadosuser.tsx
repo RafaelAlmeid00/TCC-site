@@ -9,6 +9,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ModalContext from "../../context/modalcontext";
 import { CPFError, DataError, NomeError, NumError, CEPError, Sucess } from "../errosvalidations";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import { useNavigate } from "react-router-dom";
 
 function CompleteCad(){
     const {email} = useContext(ModalContext);
@@ -34,6 +35,11 @@ function CompleteCad(){
     const [bussinesCNPJ, setBussinesCNPJ] = useState("");
     const [matriculation, setMatriculation] = useState("");
     const [schoolsCNPJ, setSchoolsCNPJ] = useState("");
+    const [tipo, setTipo] = useState("");
+    const [listid, setListId] = useState('');
+    const { loginbool, setLog } = useContext(ModalContext);
+
+    const navigate = useNavigate()
 
     async function cadastrarUsuario(
         email: string, 
@@ -54,6 +60,8 @@ function CompleteCad(){
         handleSubmitData()
         
         //Verificação
+        console.log('aq ta indo');
+        
         if (cpf == '') {
             setShowErrorCPF(true)
             setShowErrorData(false)
@@ -102,7 +110,11 @@ function CompleteCad(){
             setShowErrorCPF(false)
             setShowErrorNome(false)
         } 
-
+        console.log('aq ta indo tbm');
+        handleGetListCpf()
+        console.log('aq ta indo tbm²');
+        
+        
         const dadosUsuario = {
         user_CPF: cpf,
         user_RG: rg,
@@ -113,18 +125,23 @@ function CompleteCad(){
         user_endCEP: cep,
         user_endUF: UF,
         user_endbairro: district,
-        user_endstreet: street,
+        user_endrua: street,
         user_endnum: num,
         user_endcomplemento: comp,
         user_endcidade: city,
-        user_tipo: type,
-        list_worker_bussines_buss_CNPJ: bussinesCNPJ,
-        list_students_stud_matricula: matriculation,
-        list_students_schools_sch_CNPJ: schoolsCNPJ
+        user_tipo: tipo,
         };
+        if (listid) {
+            dadosUsuario.list_CPF_list_id = listid;
+        }
+        console.log(dadosUsuario);
+        
         try {
             const response = await axios.post('http://localhost:3344/user', dadosUsuario);
             setShowSucess(true)
+            console.log('foi mlk');
+            setLog(true)
+            navigate('/cadastro')
         } catch (error) {
             if (error.response) {
                 // O servidor retornou um status diferente de 2xx
@@ -139,8 +156,28 @@ function CompleteCad(){
         }
     }
 
-    const handleclick = () => {
-        cadastrarUsuario(email, password, cpf, name, date, cep, UF, district, street, num, comp, city, rg)
+    const handleGetListCpf = async () => {
+        const responsecpf = await axios.get('http://localhost:3344/listCpf')
+        if (responsecpf) {
+            const type = responsecpf.data.list_tipo
+            const cpf_list = responsecpf.data.list_CPF
+            const idlist = responsecpf.data.list_id
+            console.log('aq ta indo tbm³');
+            if (cpf_list == cpf) {
+                setTipo(type)
+                setListId(idlist)
+                console.log('aq ta indo tbm4');
+            } else if (idlist == ''){
+                setTipo('default')
+            }
+        } else {
+            console.log('error');
+        }
+    };
+
+
+    const handleclick = async () => {
+        await cadastrarUsuario(email, password, cpf, name, date, cep, UF, district, street, num, comp, city, rg)
         console.log('testando');
         
     }

@@ -29,7 +29,8 @@ function ContainerCad(){
     const [open, setOpen] = useState(false);
     const [Loginstatus, setLoginstatus] = useState("");
     const [state, setState] = useState(false);
-    
+    const { loginbool, setLog } = useContext(ModalContext);
+
 
     function verify() {
         if (email == '' || password == '') {
@@ -45,7 +46,11 @@ function ContainerCad(){
         }
     }
 
-    
+    useEffect(() => {
+        if (loginbool) {
+            setShowComponent(true);
+        }
+    }, [loginbool]);
     
     const handleLogin = async () => {
         try {
@@ -80,7 +85,7 @@ function ContainerCad(){
                 const res = await axios.get('http://localhost:3344/user/login');
                 console.log(res.data);
                     
-                if (res.data.auth) {
+                if (res.data) {
                     const userData = res.data.user;
                     console.log(userData);
                 } else {

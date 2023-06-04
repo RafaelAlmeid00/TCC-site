@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`list_CPF` (
   `list_id` INT NOT NULL AUTO_INCREMENT,
   `bussines_buss_CNPJ` VARCHAR(14) NOT NULL,
   `list_tipo` ENUM("student", "worker") NOT NULL,
+  `list_CPF` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`list_id`),
   CONSTRAINT `fk_list_CPF_bussines`
     FOREIGN KEY (`bussines_buss_CNPJ`)
@@ -60,7 +61,7 @@ CREATE INDEX `fk_list_CPF_bussines_idx` ON `mydb`.`list_CPF` (`bussines_buss_CNP
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `user_CPF` VARCHAR(11) NOT NULL,
-  `user_RG` VARCHAR(45) NOT NULL,
+  `user_RG` VARCHAR(9) NOT NULL,
   `user_nome` VARCHAR(45) NOT NULL,
   `user_email` VARCHAR(45) NOT NULL,
   `user_senha` VARCHAR(200) NOT NULL,
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `user_endcomplemento` VARCHAR(45) NOT NULL,
   `user_endcidade` VARCHAR(45) NOT NULL,
   `user_tipo` ENUM("student", "worker", "default") NOT NULL,
-  `list_CPF_list_id` INT NOT NULL,
+  `list_CPF_list_id` INT NULL,
   PRIMARY KEY (`user_CPF`),
   CONSTRAINT `fk_user_list_CPF1`
     FOREIGN KEY (`list_CPF_list_id`)

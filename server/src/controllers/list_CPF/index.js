@@ -1,6 +1,16 @@
 const knex = require('../../database/index')
 
 module.exports = {
+
+    async searchListCpf(req, res) {
+        try {
+            const result = await knex("list_cpf");
+            res.status(201).json(result);
+        } catch (error) {
+            return res.status(400).json({ error: error.message });
+        }
+    },
+
     async createListCpf (req, res) {
         try {
             const { bussines_buss_CNPJ: bussines_buss_CNPJ } = req.body;

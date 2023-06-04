@@ -25,8 +25,9 @@ routes.get('/bussines', controllersBussines.searchBussines);
 routes.post('/bussines', controllersBussines.createBussines);
 routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
-routes.post('/listCpf', controllerListCPF.createListCpf);
-routes.delete('/listCpf/:CNPJ', controllerListCPF.listcpfDelete);
+routes.post('/listcpf', controllerListCPF.createListCpf);
+routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
+routes.get('/listcpf', controllerListCPF.searchListCpf);
 
 routes.use(middleware.mid);
 routes.post('/sac', controllersSac.CadSac);

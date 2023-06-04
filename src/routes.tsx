@@ -23,6 +23,8 @@ const Rota = () => {
   const [num, setNum] = useState('');
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
+  const [loginbool, setLog] = useState(false);
+
  // preencha com dados padrão
 
   return (
@@ -36,7 +38,7 @@ const Rota = () => {
           <Route path="/opcoes" element={<OptionsCad />} />
             <Route path="/Sistema" element={<HomeSistema />} />
           <Route path="/cadastro/*" element={<React.Fragment>
-            <ModalContext.Provider value={{email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity}}>
+              <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity}}>
               <Routes>
                 <Route path="" element={<CadlogLazy />} />
                 <Route path="/complemento" element={<CadallLazy />} />
