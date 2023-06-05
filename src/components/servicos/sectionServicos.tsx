@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
 
