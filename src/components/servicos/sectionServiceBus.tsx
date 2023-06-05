@@ -8,16 +8,18 @@ export default function sectionBus() {
         sx={{
           mt: "11vh",
           height: "50vh",
-          backgroundColor: colors.pm,
-          borderRadius: '200px 0px 0px 20px',
-          ml:10
+          background: colors.pm,
+          borderRadius: '500px 0px 0px 0px',
         }}
       >
-        <Container
-          sx={{
-            width: "100%",
-          }}
-        ></Container>
+        <Container sx={{
+          background: colors.sc,
+          height: '30%',
+          width:'200px',
+          borderRadius: '500px 0px 0px 0px',
+          float: 'left',
+          ml:'100px'
+        }}></Container>
       </Box>
     </>
   );
