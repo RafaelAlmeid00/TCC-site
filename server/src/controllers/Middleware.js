@@ -11,8 +11,10 @@ module.exports = {
                 if (err) {
                   return res.status(401).json({ message: 'Token inválido' });
                 }
-                req.user = decoded;
+                const userDt = req.user = decoded;
+                
                 console.log(req.user);
+                res.send(userDt);
                 next();
               });
         } catch (error) {
