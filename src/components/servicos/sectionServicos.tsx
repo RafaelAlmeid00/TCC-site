@@ -11,8 +11,7 @@ export default function SectionService1() {
           text: "Sistema de cadastro simples para as escolas e seus matriculados",
           mt: '120px',
           ml: "50px",
-          image: "",
-          src: "./rafael.jpg",
+          image: "https://i.imgur.com/DAZYM3U.jpg",
           hg: "170px",
           wd: "200px",
         },
@@ -21,8 +20,7 @@ export default function SectionService1() {
             text: "Sistema de cadastro simples para as escolas e seus matriculados",
             ml: "50px",
             mt: '120px',
-            image: "",
-            src: "./rafael.jpg",
+            image: "https://i.imgur.com/DAZYM3U.jpg",
             hg: "170px",
             wd: "200px",
           },
@@ -31,8 +29,7 @@ export default function SectionService1() {
             text: "Sistema de cadastro simples para as escolas e seus matriculados",
             ml: "50px",
             mt: '120px',
-            image: "",
-            src: "./rafael.jpg",
+            image: "https://i.imgur.com/DAZYM3U.jpg",
             hg: "170px",
             wd: "200px",
           },{
@@ -41,8 +38,7 @@ export default function SectionService1() {
             ml: "50px",
             mr: '50px',
             mt: '120px',
-            image: "",
-            src: "./rafael.jpg",
+            image: "https://i.imgur.com/DAZYM3U.jpg",
             hg: "170px",
             wd: "200px",
           }
@@ -89,7 +85,6 @@ export default function SectionService1() {
             >
               <Cards
                 image={card.image}
-                src={card.src}
                 mt={card.mt}
                 ml={card.ml}
                 hg={card.hg}
