@@ -6,6 +6,7 @@ const controllersUser = require('./controllers/user/index');
 const controllersBussines = require('./controllers/bussines/index');
 const controllerListCPF = require('./controllers/list_CPF/index');
 const controllersSac = require('./controllers/sac/index');
+const controllersRequestCard = require('./controllers/request_card/index')
 const middleware = require('./controllers/Middleware');
 
 
@@ -14,7 +15,7 @@ const routes = express.Router();
 
 
 routes.use(cookie())
-routes.get('/user', controllersUser.searchUser);
+
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
@@ -27,8 +28,11 @@ routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 routes.post('/listcpf', controllerListCPF.createListCpf);
 routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
 routes.get('/listcpf', controllerListCPF.searchListCpf);
-
+ 
 routes.use(middleware.mid);
+
+routes.post('/card', controllersRequestCard.CadReqCard)
 routes.post('/sac', controllersSac.CadSac);
+routes.get('/user', controllersUser.searchUser);
 
 module.exports = routes;

@@ -6,9 +6,7 @@ module.exports = {
             const { user_user_CPF: cpf } = req.body;
             const { sac_data: date } = req.body;
             
-            await knex("sac").insert({
-                user_user_CPF: cpf, sac_data: date
-            });
+            await knex("sac").insert({user_user_CPF: cpf, sac_data: date});
 
             res.status(201).send('mensagem envidada!');
         } catch (error) {

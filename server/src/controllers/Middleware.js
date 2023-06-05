@@ -8,13 +8,13 @@ module.exports = {
     if (token) {
         try {
             jwt.verify(token, 'Uz&Nxq6ifp*bqvBJgG$z', (err, decoded) => {
+                console.log('this is decoded and err: ', decoded, err);
                 if (err) {
                   return res.status(401).json({ message: 'Token inválido' });
                 }
-                const userDt = req.user = decoded;
+                req.user = decoded;
                 
                 console.log(req.user);
-                res.send(userDt);
                 next();
               });
         } catch (error) {

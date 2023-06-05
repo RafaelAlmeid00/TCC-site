@@ -4,7 +4,6 @@ const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
 const jwt_decode = require('jwt-decode');
 const bcrypt = require('bcrypt');
-
 require('dotenv').config();
 
 module.exports = {
@@ -18,9 +17,11 @@ module.exports = {
 
     async searchUser(req, res) {
         try {
+            console.log('aaaaaaaaaaaaaaaa');
             const result = await knex("user");
             res.status(201).json(result);
         } catch (error) {
+            console.log('error: ', error);
             return res.status(400).json({ error: error.message });
         }
     },
@@ -70,7 +71,7 @@ module.exports = {
     }
     },
 
-    
+  
 async UserLogin(req, res) {
   try {
     const { user_CPF: cpf2 } = req.body;
@@ -86,37 +87,39 @@ async UserLogin(req, res) {
           console.log(err);
         } else {
           console.log('this is comp: ', comp);
+
           const token = JWT.sign({
             user_nome: takeCPF.user_nome,
             user_email: takeCPF.user_email,
             user_CPF: takeCPF.user_FotoPerfil
-          }, 'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1h' });
+          },'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
+          console.log('this is req.headers: ', req.headers);
+          if (req.headers != '') {
+            res.cookie('token', token, {httpsOnly: true}) 
+          }
 
           const userData = {
-  user_CPF: takeCPF.user_CPF,
-  user_nome: takeCPF.user_nome,
-  user_nascimento: takeCPF.user_nascimento,
-  user_endCEP: takeCPF.user_endCEP,
-  user_endUF: takeCPF.user_endUF,
-  user_endbairro: takeCPF.user_endbairro,
-  user_endrua: takeCPF.user_endrua,
-  user_endnum: takeCPF.user_endnum,
-  user_endcomplemento: takeCPF.user_endcomplemento,
-  user_endcidade: takeCPF.user_endcidade,
-  user_tipo: takeCPF.user_tipo
-};
-
-return res.status(201).send({
-  token: token,
-  user: userData,
-  message: "ok!"
-});
-
+            user_CPF: takeCPF.user_CPF,
+            user_nome: takeCPF.user_nome,
+            user_nascimento: takeCPF.user_nascimento,
+            user_endCEP: takeCPF.user_endCEP,
+            user_endUF: takeCPF.user_endUF,
+            user_endbairro: takeCPF.user_endbairro,
+            user_endrua: takeCPF.user_endrua,
+            user_endnum: takeCPF.user_endnum,
+            user_endcomplemento: takeCPF.user_endcomplemento,
+            user_endcidade: takeCPF.user_endcidade,
+            user_tipo: takeCPF.user_tipo
+        };
+        
+        return res.status(201).send({
+          token: token,
+          user: userData,
+          message: "ok!"
+        });
         }
       });
-    } else {
-      res.status(401).send('erro, tente novamente!');
-    }
+    }else{res.status(400).send('email ou senha inválido')} 
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
