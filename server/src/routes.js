@@ -6,7 +6,8 @@ const controllersUser = require('./controllers/user/index');
 const controllersBussines = require('./controllers/bussines/index');
 const controllerListCPF = require('./controllers/list_CPF/index');
 const controllersSac = require('./controllers/sac/index');
-const controllersRequestCard = require('./controllers/request_card/index')
+const controllersRequestCard = require('./controllers/request_card/index');
+const controllerBusRoute = require('./controllers/buss_route/index');
 const middleware = require('./controllers/Middleware');
 
 
@@ -31,8 +32,13 @@ routes.get('/listcpf', controllerListCPF.searchListCpf);
  
 routes.use(middleware.mid);
 
-routes.post('/card', controllersRequestCard.CadReqCard)
+routes.post('/routes', controllerBusRoute.cadRoutes);
+routes.put('/routes', controllerBusRoute.attRoutes);
+routes.delete('/routes', controllerBusRoute.excldRoutes)
+
+routes.post('/card', controllersRequestCard.CadReqCard);
 routes.post('/sac', controllersSac.CadSac);
+routes.get('/sac', controllersSac.Search);
 routes.get('/user', controllersUser.searchUser);
 
 module.exports = routes;

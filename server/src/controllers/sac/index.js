@@ -14,6 +14,18 @@ module.exports = {
             console.log(error);
         }
     },
+    async Search(req, res) {
+        try {
+            
+            const take = await knex("sac")
+            console.log(take);
+            res.status(201).send(take);
+        } catch (error) {
+            res.status(400).send('deu ruim!');
+            console.log(error);
+        }
+    },
+
 
     async excludMessage(req, res) {
 
