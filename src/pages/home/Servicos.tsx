@@ -1,5 +1,6 @@
 import Footer from "../../components/footer"
 import MenuApp from "../../components/menu/menuApp"
+import SectionServiceBus from "../../components/servicos/sectionServiceBus"
 import SectionService1 from "../../components/servicos/sectionServicos"
 
 
@@ -9,6 +10,7 @@ export default function ServicosAll() {
         <>
         <MenuApp />
         <SectionService1 />
+        <SectionServiceBus />
         <Footer />
         </>
     )

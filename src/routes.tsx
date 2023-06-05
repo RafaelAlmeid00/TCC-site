@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense } from "react";
 import Loading from "./components/loading";
@@ -13,6 +12,8 @@ const App = lazy(() => import('./App'));
 const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const HomeSistema = lazy(() => import('./pages/sistema/App'));
+const ServiLazy = lazy(() => import('./pages/home/Servicos'));
+const AppLazy = lazy(() => import('./pages/home/App'));
 
 const Rota = () => {
   const [tokenChecked, setTokenChecked] = useState(false);
@@ -47,6 +48,8 @@ const Rota = () => {
           <Routes>
             <Route path="/Sistema" element={hasToken ? <HomeSistema /> : <Navigate to="/Cadastro" />} />
             <Route path="/" element={<App />} />
+            <Route path="/Servicos" element={<ServiLazy/>}/>
+            <Route path="/App" element={<AppLazy/>}/>
             <Route path="/EasyPass" element={<EasyPassLazy />} />
             <Route path="/Contatos" element={<ContatosLazy />} />
             <Route path="/opcoes" element={<OptionsCad />} />

@@ -135,7 +135,6 @@ function Section2() {
                 image={card.image}
                 mt={card.mt}
                 ml={card.ml}
-                image={card.image}
                 hg={card.hg}
                 wd={card.wd}
                 title={card.title}
