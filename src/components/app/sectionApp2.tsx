@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Img from "../img";
 
 export default function SectionApp2() {
+  const teste = '../../assets/playStore.svg'
   const CardsApp = [
     {
       card: [
@@ -108,8 +109,8 @@ export default function SectionApp2() {
         >
           <Link href="/">
             <Img
-              image='https://www.svgrepo.com/show/223032/playstore.svg'
-              height="50px"
+              image='[Img]https://imgur.com/Kar3By6.png[/Img]'
+              height="50"
               width="120px"
               ml={undefined}
               mr={undefined}
@@ -117,13 +118,13 @@ export default function SectionApp2() {
           </Link>
           <Link href="/">
             <Img
-              image="https://www.svgrepo.com/show/511327/apple-store-126.svg"
-              height="50px"
+              image='https://imgur.com/HOg5lFJ.png'
+              height="50"
               width="120px"
-              ml="30px"
+              ml={undefined}
               mr={undefined}
             />
-          </Link>
+          </Link> 
         </Container>
     </>
   );

@@ -13,12 +13,11 @@ export default function sectionBus() {
         }}
       >
         <Container sx={{
+          float: "left",
           background: colors.sc,
-          height: '30%',
-          width:'200px',
+          height: "100%",
+          width:'25%',
           borderRadius: '500px 0px 0px 0px',
-          float: 'left',
-          ml:'100px'
         }}></Container>
       </Box>
     </>
