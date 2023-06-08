@@ -68,6 +68,7 @@ function ContainerCad(){
             user_CPF: cpf2,
             user_senha: password,
         });
+        
         console.log(res.data);
         console.log('test', res.data.token);
         console.log(res);

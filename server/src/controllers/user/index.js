@@ -2,8 +2,9 @@
 /* eslint-disable no-undef */
 const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
-const jwt_decode = require('jwt-decode');
+const jwt_decoded = require('jwt-decode');
 const bcrypt = require('bcrypt');
+
 require('dotenv').config();
 
 module.exports = {
@@ -89,9 +90,20 @@ async UserLogin(req, res) {
           console.log('this is comp: ', comp);
 
           const token = JWT.sign({
+
             user_nome: takeCPF.user_nome,
             user_email: takeCPF.user_email,
-            user_CPF: takeCPF.user_FotoPerfil
+            user_FotoPerfil: takeCPF.user_FotoPerfil,
+            user_nascimento: takeCPF.user_nascimento,
+            user_endCEP: takeCPF.user_endCEP,
+            user_endUF: takeCPF.user_endUF,
+            user_endbairro: takeCPF.user_endbairro,
+            user_endrua: takeCPF.user_endrua,
+            user_endnum: takeCPF.user_endnum,
+            user_endcomplemento: takeCPF.user_endcomplemento,
+            user_endcidade: takeCPF.user_endcidade,
+            user_tipo: takeCPF.user_tipo
+
           },'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
           console.log('this is req.headers: ', req.headers);
           if (req.headers != '') {
@@ -111,6 +123,7 @@ async UserLogin(req, res) {
             user_endcidade: takeCPF.user_endcidade,
             user_tipo: takeCPF.user_tipo
         };
+  
         
         return res.status(201).send({
           token: token,

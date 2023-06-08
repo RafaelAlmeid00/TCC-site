@@ -12,10 +12,10 @@ module.exports = {
                 if (err) {
                   return res.status(401).json({ message: 'Token inválido' });
                 }
-                req.user = decoded;
+                const userDecoded = decoded;
                 
-                console.log(req.user);
-                next();
+                console.log(user);
+                return next().send({userDecoded});
               });
         } catch (error) {
             console.log(error);

@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import ModalContext from "./context/modalcontext";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
-import { Provider } from 'react-wrap-balancer'
 import OptionsCad from "./components/cadastro/optioncad";
 
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
@@ -16,8 +14,6 @@ const ServiLazy = lazy(() => import('./pages/home/Servicos'));
 const AppLazy = lazy(() => import('./pages/home/App'));
 
 const Rota = () => {
-  const [tokenChecked, setTokenChecked] = useState(false);
-  const [hasToken, setHasToken] = useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cep, setCep] = useState('');
@@ -28,46 +24,57 @@ const Rota = () => {
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
+  const token = localStorage.getItem('token');
+  const isAuthenticated = !!token;
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setHasToken(true);
-    }
-    setTokenChecked(true);
-  }, []);
-
-  if (!tokenChecked) {
-    return <Loading />; // Mostra um componente de carregamento enquanto verifica o token
-  }
 
   return (
     <BrowserRouter>
-      <Provider>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/Sistema" element={hasToken ? <HomeSistema /> : <Navigate to="/Cadastro" />} />
-            <Route path="/" element={<App />} />
-            <Route path="/Servicos" element={<ServiLazy/>}/>
-            <Route path="/App" element={<AppLazy/>}/>
-            <Route path="/EasyPass" element={<EasyPassLazy />} />
-            <Route path="/Contatos" element={<ContatosLazy />} />
-            <Route path="/opcoes" element={<OptionsCad />} />
-            <Route path="/cadastro/*" element={
-              <React.Fragment>
-                <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              {/* Rotas públicas */}
+          
+              <Route path="/*" element={
+            isAuthenticated ? <Navigate to = "/Sistema" /> :
+                <React.Fragment>
                   <Routes>
-                    <Route path="" element={<CadlogLazy />} />
-                    <Route path="/complemento" element={<CadallLazy />} />
+                    <Route path="/" element={<App />} />
+                    <Route path="/Servicos" element={<ServiLazy />} />
+                    <Route path="/App" element={<AppLazy />} />
+                    <Route path="/EasyPass" element={<EasyPassLazy />} />
+                    <Route path="/Contatos" element={<ContatosLazy />} />
+                    <Route path="/opcoes" element={<OptionsCad />} />
                   </Routes>
-                </ModalContext.Provider>
-              </React.Fragment>
-            } />
-          </Routes>
-        </Suspense>
-      </Provider>
+                </React.Fragment>
+              } />
+
+              {/* Rotas de autenticação */}
+              <Route path="/cadastro/*" element={
+            isAuthenticated ? <Navigate to="/Sistema" /> :
+                <React.Fragment>
+                  <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+                    <Routes>
+                      <Route path="/" element={<CadlogLazy />} />
+                      <Route path="/complemento" element={<CadallLazy />} />
+                    </Routes>
+                  </ModalContext.Provider>
+                </React.Fragment>
+              } />
+
+              {/* Rota do sistema */}
+              <Route path="/Sistema/*" element={
+              isAuthenticated ?
+                <React.Fragment>
+                  <Routes>
+                    <Route path="/" element={<HomeSistema />} />
+                  </Routes>
+                </React.Fragment>
+                : <Navigate to="/" />
+              } />
+            </Routes>
+          </Suspense>
     </BrowserRouter>
   );
 };
 
-export default Rota;
+export default Rota;
