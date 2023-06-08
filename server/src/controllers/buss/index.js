@@ -3,6 +3,7 @@ const knex = require("../../database/index");
 module.exports = {
     async cadBuss(req, res) {
         try {
+            const { bus_id: busid } = req.body;
             const { bus_nome: name } = req.body;
             const { bus_num: num } = req.body;
             const { bus_placa: placa } = req.body;
@@ -14,6 +15,7 @@ module.exports = {
             const { bus_route_rote_id: id } = req.body;
            
             await knex("buss").insert({
+                bus_id: busid,
                 bus_nome: name, 
                 bus_num: num, 
                 bus_placa: placa, 
