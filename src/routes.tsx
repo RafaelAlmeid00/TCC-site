@@ -12,6 +12,7 @@ const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const HomeSistema = lazy(() => import('./pages/sistema/App'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
 const AppLazy = lazy(() => import('./pages/home/App'));
+const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -26,7 +27,8 @@ const Rota = () => {
   const [loginbool, setLog] = useState(false);
   const token = localStorage.getItem('token');
   const isAuthenticated = !!token;
-
+  const userJson = localStorage.getItem('user');
+  const userData = userJson ? JSON.parse(userJson) : null;
 
   return (
     <BrowserRouter>
@@ -65,9 +67,12 @@ const Rota = () => {
               <Route path="/Sistema/*" element={
               isAuthenticated ?
                 <React.Fragment>
+                <ModalContext.Provider value={{ userData }}>
                   <Routes>
                     <Route path="/" element={<HomeSistema />} />
+                  <Route path="/Perfil" element={<PerfilLazy />} />
                   </Routes>
+                </ModalContext.Provider>
                 </React.Fragment>
                 : <Navigate to="/" />
               } />
@@ -77,4 +82,4 @@ const Rota = () => {
   );
 };
 
-export default Rota;
+export default Rota;

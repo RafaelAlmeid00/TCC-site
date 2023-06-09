@@ -5,13 +5,15 @@ import { Box, Card, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import ModalContext from '../../context/modalcontext';
 
 export default function MenuSistema() {
 
     console.log(localStorage);
-    const userJson = localStorage.getItem('user');
-    const userData = userJson ? JSON.parse(userJson) : null;
-
+    const { userData } = useContext(ModalContext)
+    const navigate = useNavigate()
 
     const cardVariants = {
         hover: {
@@ -130,21 +132,24 @@ export default function MenuSistema() {
                             </Typography>
                         </Box>
                     </Container>
-
-                    <Container sx={{
+                    
+                    <Container 
+                    onClick={() => navigate('/Sistema/Perfil')}
+                    sx={{
                         float: 'right',
                         width: '208px',
                         height: '50px',
                         mr: 10,
                     }}>
-                        <Card sx={{
+                        <Card 
+                        sx={{
                             mt: 0.55,
                             height: '40px',
                             background: 'rgba(255, 255, 255, 0.35)',
                             borderRadius: '20px',
                             '&:hover': { 
                                 cursor:'pointer',
-                                boxShadow: 'inset 0px 0px 2px 1px',
+                                boxShadow: '0px 0px 2px 1px',
                             }
                         }}>
                             <AccountCircleIcon sx={{
