@@ -22,7 +22,7 @@ const routes = express.Router();
 routes.use(cookie());
 
 routes.post('/user', controllersUser.createUser);
-routes.get('/user/login', controllersUser.UserLogin);
+routes.get('/user/login', controllersUser.UserLogin);""
 routes.post('/user/login', controllersUser.UserLogin);
 
 //👇 middlleware pra uma maior proteção do sistéma 👇
