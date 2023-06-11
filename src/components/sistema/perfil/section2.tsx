@@ -1,9 +1,20 @@
-import { Box, Button, Container, Divider, Typography } from "@mui/material"
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import { useContext } from "react";
+import ModalContext from "../../../context/modalcontext";
+import axios from "axios";
 
 
-function SectionPerfil2() {
-
-
+function SectionPerfil2() { 
+    const { userData } = useContext(ModalContext)
+    const data = userData.user_email
+    console.log('THIS IS DATA: ', data);
+    
+    async function excl (){
+        await axios.post('http://localhost:3344/user/delete', {
+            user_email: data
+        })
+    }
+    
     return (
         <>
             <Box sx={{
@@ -99,7 +110,7 @@ function SectionPerfil2() {
                     }}>Sempre verifique seu email antes de confirmar a atualização de dados.
                         Caso perca esse email e não tenha acesso a ele também,
                         não será possivel logar sua conta pelos métodos convencionais.</Typography>
-                    <Button variant="contained" href="/Perfil" sx={{
+                    <Button variant="contained" href="/Perfil"  sx={{
                         backgroundColor: 'red',
                         color: 'white',
                         ml: -50,
@@ -120,7 +131,7 @@ function SectionPerfil2() {
                             Sair da Conta
                         </Typography>
                     </Button>
-                    <Button variant="outlined" href="/Perfil" sx={{
+                    <Button variant="outlined" href="/Perfil" onClick={excl} sx={{
                         border: '2px solid red', // muda a cor da borda na animação
                         backgroundColor: 'white',
                         color: 'red',

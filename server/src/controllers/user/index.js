@@ -2,8 +2,9 @@
 /* eslint-disable no-undef */
 const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
-const jwt_decoded = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const localData = require('../Middleware');
 
 require('dotenv').config();
 
@@ -113,6 +114,7 @@ async UserLogin(req, res) {
           const userData = {
             user_CPF: takeCPF.user_CPF,
             user_nome: takeCPF.user_nome,
+            user_email: takeCPF.user_email,
             user_nascimento: takeCPF.user_nascimento,
             user_endCEP: takeCPF.user_endCEP,
             user_endUF: takeCPF.user_endUF,
@@ -136,6 +138,21 @@ async UserLogin(req, res) {
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
+  }
+},
+
+async DeleteUser (req, res) {
+  try {
+
+      const { user_email: data } = req.body;
+
+      console.log('this is cookies 2: ', data);
+     
+      const result = await knex("user").where('user_email', '=', data).del();
+      res.status(201).json(result);
+  } catch (error) {
+      console.log('error: ', error);
+      return res.status(400).json({ error: error.message });
   }
 },
      //recuperação por nome protótipo

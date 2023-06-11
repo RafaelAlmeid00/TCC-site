@@ -28,8 +28,9 @@ const Rota = () => {
   const token = localStorage.getItem('token');
   const isAuthenticated = !!token;
   const userJson = localStorage.getItem('user');
+  
   const userData = userJson ? JSON.parse(userJson) : null;
-
+ 
   return (
     <BrowserRouter>
           <Suspense fallback={<Loading />}>
@@ -80,6 +81,7 @@ const Rota = () => {
           </Suspense>
     </BrowserRouter>
   );
+ 
 };
 
 export default Rota;
