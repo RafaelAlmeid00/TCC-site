@@ -57,7 +57,7 @@ function CompleteCad(){
         rg: string
         ){ 
 
-        handleSubmitData()
+        date = handleSubmitData()
         
         //Verificação
         console.log('aq ta indo');
@@ -182,14 +182,16 @@ function CompleteCad(){
         
     }
 
-    function formatDateString(dateString: string): string {
-        let formattedString = dateString.replace(/\D/g, ''); // remove todos os caracteres não numéricos
+    function formatDateString(date: string): string {
+        let formattedString = date.replace(/\D/g, ''); // remove todos os caracteres não numéricos
         if (formattedString.length > 2) {
             formattedString = formattedString.slice(0, 2) + '-' + formattedString.slice(2);
         }
         if (formattedString.length > 5) {
             formattedString = formattedString.slice(0, 5) + '-' + formattedString.slice(5);
         }
+        console.log(formattedString);
+        
         return formattedString;
     }
 
@@ -200,6 +202,8 @@ function CompleteCad(){
         const mm = parts[1];
         const dd = parts[0];
         const formattedDateForDatabase = `${yyyy}-${mm}-${dd}`;
+        console.log(formattedDateForDatabase);
+        
         return formattedDateForDatabase;
         // Submeta a data no formato yyyy-mm-dd para o banco de dados
     }

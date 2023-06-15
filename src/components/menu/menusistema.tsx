@@ -6,14 +6,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import ModalContext from '../../context/modalcontext';
+import {useEffect, useState } from 'react';
+import Loading from '../loading';
 
 export default function MenuSistema() {
-
     console.log(localStorage);
-    const { userData } = useContext(ModalContext)
-    const navigate = useNavigate()
+    const userJson = localStorage.getItem('user');
+    const userData = userJson ? JSON.parse(userJson) : null;
+        const navigate = useNavigate()
 
     const cardVariants = {
         hover: {
@@ -119,7 +119,7 @@ export default function MenuSistema() {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                             }}>
-                                Olá {userData ? userData.user_nome : ''}!
+                                Olá {userData ? userData.user_nome.split(' ')[0] : ''}!
                                 <Typography sx={{
                                     fontSize: '11px',
                                     color: 'rgba(255, 255, 255, 0.35)',

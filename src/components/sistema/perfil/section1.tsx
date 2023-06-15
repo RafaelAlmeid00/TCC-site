@@ -23,6 +23,10 @@ function SectionPerfil1() {
         });
        
     };
+    const userJson = localStorage.getItem('user');
+    const userData = userJson ? JSON.parse(userJson) : null;
+        const birthDate = new Date(userData.user_nascimento);
+    const formattedBirthDate = birthDate.toISOString().substring(0, 10);
 
     return (
         <>
@@ -170,7 +174,7 @@ function SectionPerfil1() {
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Data de Nascimento</Typography>
                             </InputLabel>
-                            <Typography sx={{ color: 'white' }}>{userData.user_nascimento}</Typography>
+                            <Typography sx={{ color: 'white' }}>{formattedBirthDate}</Typography>
                             <Button variant="contained" href="/Perfil" sx={{
                                 color: 'white',
                                 float: 'right',

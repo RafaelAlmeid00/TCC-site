@@ -33,20 +33,22 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 ))}
             </Box>
             <Box sx={{
-                width: "auto",
+                width: "400px",
                 height: "2px",
                 backgroundColor: colors.scsd,
                 marginTop: "8px",
                 position: "relative",
+                ml: 10
             }}
             >
                 <Box
                     sx={{
-                        width: "32%",
+                        ml: -10,
+                        width: "52%",
                         height: "100%",
                         backgroundColor: colors.tcsd,
                         position: "absolute",
-                        left: selectedPage === "/Escolas" ? '18%' : "50%",
+                        left: selectedPage === "/Escolas" ? '18%' : "70%",
                         transition: "left 0.3s ease-out",
                     }}
                 />
