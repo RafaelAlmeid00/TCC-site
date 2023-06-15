@@ -11,9 +11,10 @@ function SectionPerfil2() {
     
     async function excl (){
         await axios.post('http://localhost:3344/user/delete', {
-            user_email: data
-        })
-    }
+                user_email: data
+        });
+       
+    };
     
     return (
         <>
