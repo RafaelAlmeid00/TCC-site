@@ -10,9 +10,9 @@ function SectionPerfil1() {
     const [dado, setPega] = useState('');
     const { userData } = useContext(ModalContext);
     const data = userData.user_email;
-    
+
     console.log('this is the verify: ', verify());
-    console.log('token removed: ', removeToken());
+    //console.log('token removed: ', removeToken());
     
     
     async function update (parame: String){

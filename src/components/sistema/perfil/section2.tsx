@@ -2,17 +2,19 @@ import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import { useContext } from "react";
 import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
+import { removeToken } from "../FrontDecoded";
 
-
-function SectionPerfil2() { 
+function SectionPerfil2() {
+    const userToken = localStorage.getItem('token');
     const { userData } = useContext(ModalContext)
     const data = userData.user_email
     console.log('THIS IS DATA: ', data);
-    
     async function excl (){
         await axios.post('http://localhost:3344/user/delete', {
-                user_email: data
-        });
+                user_email: data,
+                token: userToken
+        })
+        console.log('token removed: ', removeToken());
        
     };
     

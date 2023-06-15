@@ -25,7 +25,7 @@ routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
-routes.post('/user/delete', controllersUser.DeleteUser);
+
 routes.post('/user/update', controllersUser.UpdateUser);
 
 routes.post('/listcpf', controllerListCPF.createListCpf);
@@ -33,7 +33,7 @@ routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
 routes.get('/listcpf', controllerListCPF.searchListCpf);
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
-
+routes.post('/user/delete', controllersUser.DeleteUser);
 routes.get('/bussines/search/:CNPJ', controllersBussines.SpecificBussines)
 routes.get('/bussines', controllersBussines.searchBussines);
 routes.post('/bussines', controllersBussines.createBussines);
