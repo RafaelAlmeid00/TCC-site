@@ -148,6 +148,8 @@ async DeleteUser (req, res) {
       console.log('someone here??');
             
       const result = await knex("user").where('user_email', '=', data).del();
+      res.cookie('token', '', { expires: new Date(0), httpOnly: true, secure: true });
+
       res.status(201).json(result);
   } catch (error) {
       console.log('error: ', error);

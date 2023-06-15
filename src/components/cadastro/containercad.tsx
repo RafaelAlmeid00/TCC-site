@@ -78,6 +78,7 @@ function ContainerCad(){
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user', JSON.stringify(res.data.user));
                 console.log(localStorage);
+                
             navigate('/Sistema');
             console.log('viado');
             
@@ -260,6 +261,7 @@ return (
     <Typography sx={{textAlign: 'center', mb: '40px', color: '#666666', fontSize: '15px'}}>
         Entre com seu CPF e sua senha:
     </Typography>
+    <form>
     <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         CPF
@@ -306,6 +308,7 @@ return (
             sx={{ fontSize: '14px' }}
         />
     </FormControl>
+    </form>
     <LoadingButton
     size="small"
     loading={loading}
@@ -333,6 +336,7 @@ return (
     </Link>
     .
     </Typography>
+    
     </Container>
         <Container sx={{
             marginRight: "-22px",

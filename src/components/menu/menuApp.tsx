@@ -180,7 +180,7 @@ export default function MenuApp(props: any) {
             ))}
           </Box>
 
-          {showCad ? <Box sx={{ flexGrow: 0, marginRight: 13 }}>
+          <Box sx={{ flexGrow: 0, marginRight: 13 }}>
             <Button variant="contained" href="/opcoes" sx={{
               color: 'white',
               marginRight: 1,
@@ -192,20 +192,7 @@ export default function MenuApp(props: any) {
             }}>
               Cadastrar
             </Button>
-          </Box> :
-            <Box sx={{ flexGrow: 0, marginRight: 13 }}>
-              <IconButton>
-                <Button variant="contained" href="/Perfil" sx={{
-                  color: 'white',
-                  marginRight: 1,
-                  border: '2px solid transparent', // adiciona a borda inicialmente
-                  transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                  '&:hover': {
-                    border: '2px solid #0fcd88', // muda a cor da borda na animação
-                  },
-                }}><AccountCircleIcon sx={{ mr: '10px' }} /> Perfil</Button>
-              </IconButton>
-            </Box>}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

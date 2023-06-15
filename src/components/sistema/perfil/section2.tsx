@@ -1,21 +1,44 @@
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
-import { useContext } from "react";
-import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function SectionPerfil2() { 
-    const { userData } = useContext(ModalContext)
-    const data = userData.user_email
+    const userJson = localStorage.getItem('user');
+    const userData = userJson ? JSON.parse(userJson) : null;
+        const data = userData.user_email
     console.log('THIS IS DATA: ', data);
-    
+    const navigate = useNavigate()
+    console.log(localStorage);
+
     async function excl (){
+<<<<<<< Updated upstream
         await axios.post('http://localhost:3344/user/delete', {
                 user_email: data
         });
        
     };
     
+=======
+        console.log(localStorage);
+
+        try {
+            await axios.post('http://localhost:3344/user/delete', {
+                user_email: data
+            })
+            console.log('ta indo');
+            
+            localStorage.removeItem('token')
+            console.log(localStorage);
+            
+            navigate('/')
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    console.log(localStorage);
+
+>>>>>>> Stashed changes
     return (
         <>
             <Box sx={{
