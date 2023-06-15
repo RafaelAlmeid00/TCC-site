@@ -1,11 +1,38 @@
 import { Avatar, Box, Button, Container, IconButton, InputLabel, Typography } from "@mui/material"
-import { useContext } from "react";
+<<<<<<< Updated upstream
+import { useContext, useState } from "react";
 import ModalContext from "../../../context/modalcontext";
+=======
+>>>>>>> Stashed changes
 import EditIcon from '@mui/icons-material/Edit';
+import axios from "axios";
+import { removeToken, verify } from "../FrontDecoded";
+
 
 function SectionPerfil1() {
-    const { userData } = useContext(ModalContext)
-
+<<<<<<< Updated upstream
+    const [dado, setPega] = useState('');
+    const { userData } = useContext(ModalContext);
+    const data = userData.user_email;
+    
+    console.log('this is the verify: ', verify());
+    console.log('token removed: ', removeToken());
+    
+    
+    async function update (parame: String){
+        await axios.post('http://localhost:3344/user/update', {
+                user_email: data,
+                info: dado,
+                param: parame
+        });
+       
+    };
+=======
+    const userJson = localStorage.getItem('user');
+    const userData = userJson ? JSON.parse(userJson) : null;
+        const birthDate = new Date(userData.user_nascimento);
+    const formattedBirthDate = birthDate.toISOString().substring(0, 10);
+>>>>>>> Stashed changes
 
     return (
         <>
@@ -96,11 +123,11 @@ function SectionPerfil1() {
                             height: '25%',
                             borderRadius: 5,
                         }}>
-                            <InputLabel>
-                                <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2'}}>Nome de Usuário</Typography>
+                            <InputLabel >
+                                <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2'} } onChange={e => setPega(e.target.value)}>Nome de Usuário</Typography>
                             </InputLabel>
                             <Typography sx={{ color: 'white' }}>{userData.user_nome}</Typography>
-                            <Button variant="contained" href="/Perfil" sx={{
+                            <Button variant="contained" href="/Perfil" onClick={update('user_nome')} sx={{
                                 color: 'white',
                                 float: 'right', 
                                 mt: -5,                               
@@ -153,7 +180,7 @@ function SectionPerfil1() {
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Data de Nascimento</Typography>
                             </InputLabel>
-                            <Typography sx={{ color: 'white' }}>{userData.user_nascimento}</Typography>
+                            <Typography sx={{ color: 'white' }}>{formattedBirthDate}</Typography>
                             <Button variant="contained" href="/Perfil" sx={{
                                 color: 'white',
                                 float: 'right',

@@ -21,24 +21,24 @@ const routes = express.Router();
 
 routes.use(cookie());
 
+routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
+routes.post('/user/delete', controllersUser.DeleteUser);
+routes.post('/user/update', controllersUser.UpdateUser);
 
-routes.post('/user/delete', controllersUser.DeleteUser)
+routes.post('/listcpf', controllerListCPF.createListCpf);
+routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
+routes.get('/listcpf', controllerListCPF.searchListCpf);
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
-
 
 routes.get('/bussines/search/:CNPJ', controllersBussines.SpecificBussines)
 routes.get('/bussines', controllersBussines.searchBussines);
 routes.post('/bussines', controllersBussines.createBussines);
 routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
-routes.post('/listcpf', controllerListCPF.createListCpf);
-routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
-routes.get('/listcpf', controllerListCPF.searchListCpf);
- 
 routes.post('/routes', controllerBusRoute.cadRoutes);
 routes.put('/routes', controllerBusRoute.attRoutes);
 routes.delete('/routes', controllerBusRoute.excldRoutes);
@@ -61,7 +61,5 @@ routes.post('/card', controllersRequestCard.CadReqCard);
 
 routes.post('/sac', controllersSac.CadSac);
 routes.get('/sac', controllersSac.Search);
-
-routes.get('/user', controllersUser.searchUser);
 
 module.exports = routes;

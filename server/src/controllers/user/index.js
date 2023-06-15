@@ -2,9 +2,9 @@
 /* eslint-disable no-undef */
 const knex = require("../../database/index");
 const JWT = require('jsonwebtoken');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const localData = require('../Middleware');
+const cookie = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -82,16 +82,17 @@ async UserLogin(req, res) {
     console.log('this is the password: ', password);
 
     const [ takeCPF ] = await knex("user").where("user_CPF", "=", String(cpf2));
-    console.log(takeCPF);
+
     if (takeCPF != undefined) {
       bcrypt.compare(password, takeCPF.user_senha, function (err, comp) {
         if (err || comp == false) {
+          console.log('comp: ', comp);
           console.log(err);
         } else {
           console.log('this is comp: ', comp);
 
           const token = JWT.sign({
-
+            user_CPF: takeCPF.user_CPF,
             user_nome: takeCPF.user_nome,
             user_email: takeCPF.user_email,
             user_FotoPerfil: takeCPF.user_FotoPerfil,
@@ -107,9 +108,6 @@ async UserLogin(req, res) {
 
           },'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
           console.log('this is req.headers: ', req.headers);
-          if (req.headers != '') {
-            res.cookie('token', token, {httpsOnly: true}) 
-          }
 
           const userData = {
             user_CPF: takeCPF.user_CPF,
@@ -125,8 +123,8 @@ async UserLogin(req, res) {
             user_endcidade: takeCPF.user_endcidade,
             user_tipo: takeCPF.user_tipo
         };
-  
-        
+        res.cookie('token', token, {secure: true})  
+
         return res.status(201).send({
           token: token,
           user: userData,
@@ -147,14 +145,31 @@ async DeleteUser (req, res) {
       const { user_email: data } = req.body;
 
       console.log('this is cookies 2: ', data);
-     
+      console.log('someone here??');
+            
       const result = await knex("user").where('user_email', '=', data).del();
+      res.cookie('token', '', { expires: new Date(0), httpOnly: true, secure: true });
+
       res.status(201).json(result);
   } catch (error) {
       console.log('error: ', error);
       return res.status(400).json({ error: error.message });
   }
 },
+
+async UpdateUser(req, res){
+  try {
+      const { user_email: data } = req.body;
+      const { info: dado } = req.body;
+      const { param: parame } = req.body;
+
+      console.log('this is parame: ', parame);
+      await knex("user").where("user_email", "=", data).update(`${parame}`, dado);
+
+  } catch (error) {
+      console.log(error);
+  }
+}
      //recuperação por nome protótipo
     /*async UserNameLogin(req, res){
         try {

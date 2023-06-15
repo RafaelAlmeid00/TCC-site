@@ -1,8 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
 import OptionsCad from "./components/cadastro/optioncad";
+import { AuthProvider, AuthProviderHome } from './context/auth';
 
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
 const CadallLazy = lazy(() => import('./pages/home/cadall'));
@@ -25,21 +26,16 @@ const Rota = () => {
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
-  const token = localStorage.getItem('token');
-  const isAuthenticated = !!token;
-  const userJson = localStorage.getItem('user');
-  
-  const userData = userJson ? JSON.parse(userJson) : null;
- 
+
   return (
     <BrowserRouter>
           <Suspense fallback={<Loading />}>
             <Routes>
+
               {/* Rotas públicas */}
-          
               <Route path="/*" element={
-            isAuthenticated ? <Navigate to = "/Sistema" /> :
                 <React.Fragment>
+              <AuthProviderHome>
                   <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/Servicos" element={<ServiLazy />} />
@@ -48,40 +44,39 @@ const Rota = () => {
                     <Route path="/Contatos" element={<ContatosLazy />} />
                     <Route path="/opcoes" element={<OptionsCad />} />
                   </Routes>
+              </AuthProviderHome>
                 </React.Fragment>
               } />
 
               {/* Rotas de autenticação */}
               <Route path="/cadastro/*" element={
-            isAuthenticated ? <Navigate to="/Sistema" /> :
-                <React.Fragment>
-                  <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
-                    <Routes>
-                      <Route path="/" element={<CadlogLazy />} />
-                      <Route path="/complemento" element={<CadallLazy />} />
-                    </Routes>
-                  </ModalContext.Provider>
-                </React.Fragment>
+            <React.Fragment>
+              <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+                <Routes>
+                  <Route path="/" element={<CadlogLazy />} />
+                  <Route path="/complemento" element={<CadallLazy />} />
+                </Routes>
+              </ModalContext.Provider>
+            </React.Fragment>
               } />
 
               {/* Rota do sistema */}
               <Route path="/Sistema/*" element={
-              isAuthenticated ?
-                <React.Fragment>
-                <ModalContext.Provider value={{ userData }}>
+            <AuthProvider>
+              <React.Fragment>
                   <Routes>
                     <Route path="/" element={<HomeSistema />} />
-                  <Route path="/Perfil" element={<PerfilLazy />} />
+                    <Route path="/Perfil" element={<PerfilLazy />} />
                   </Routes>
-                </ModalContext.Provider>
-                </React.Fragment>
-                : <Navigate to="/" />
+              </React.Fragment>
+            </AuthProvider>
               } />
             </Routes>
           </Suspense>
     </BrowserRouter>
   );
- 
+
 };
 
-export default Rota;
+
+export { Rota };

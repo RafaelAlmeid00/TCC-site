@@ -11,11 +11,11 @@ function Section2EasyPass() {
 
     const items = [
         { id: '1', title: 'Equipe EasyPass', subtitle: 'Quem trabalha conosco' },
-        { id: '5', title: 'Agradecimentos', subtitle: 'Anderson Simeão' },
+        { id: '5', title: '', subtitle: ' ' },
         { id: '3', title: 'Porquê a EasyPass', subtitle: 'Nossos Motivos' },
-        { id: '4', title: 'Agradecimentos', subtitle: 'Luciane Jasmin' },
+        { id: '4', title: '', subtitle: '' },
         { id: '2', title: 'Objetivo', subtitle: 'Nossas Metas' },
-        { id: '6', title: 'Agradecimentos', subtitle: 'Henrique Barbosa Jr' },
+        { id: '6', title: '', subtitle: ' ' },
     ];
 
     const renderComponentById = (id: any) => {
