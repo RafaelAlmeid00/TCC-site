@@ -1,10 +1,11 @@
-import { Box, Container, Link } from "@mui/material";
+import { Box, Container, Link, Slider } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
 import Img from "../img";
+import Balancer from "react-wrap-balancer";
+import { Slide } from "react-awesome-reveal";
 
 export default function SectionApp2() {
-  const teste = '../../assets/playStore.svg'
   const CardsApp = [
     {
       card: [
@@ -75,57 +76,67 @@ export default function SectionApp2() {
         sx={{
           height: "89.99vh",
           width: "100%",
-          align: "center",
-          justifyContent: "center",
-          display: "flex",
-          flexDirection: "arrow",
         }}
       >
-        {CardsApp[0].card.map((card, index) => (
-          <motion.div
-            key={index}
-            variants={cardVariants}
-            whileHover="hover" // Aplica as animações ao passar o mouse
-          >
-            <Cards
-              image={card.image}
-              mt={card.mt}
-              ml={card.ml}
-              hg={card.hg}
-              wd={card.wd}
-              title={card.title}
-              text={card.text}
-            />
-          </motion.div>
-        ))}
-      </Box>
-      <Container
+        <Container
           sx={{
+            height: "80%",
+            width: "100%",
+            align: "center",
+            justifyContent: "center",
             display: "flex",
-            flexDirection: "row",
-            mt: "30px",
-            ml: "30px",
+            flexDirection: "arrow",
+            mb: "40px",
           }}
         >
-          <Link href="/">
-            <Img
-              image='[Img]https://imgur.com/Kar3By6.png[/Img]'
-              height="50"
-              width="120px"
-              ml={undefined}
-              mr={undefined}
-            />
-          </Link>
-          <Link href="/">
-            <Img
-              image='https://imgur.com/HOg5lFJ.png'
-              height="50"
-              width="120px"
-              ml={undefined}
-              mr={undefined}
-            />
-          </Link> 
+          {CardsApp[0].card.map((card, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              whileHover="hover" // Aplica as animações ao passar o mouse
+            >
+              <Cards
+                image={card.image}
+                mt={card.mt}
+                ml={card.ml}
+                hg={card.hg}
+                wd={card.wd}
+                title={card.title}
+                text={card.text}
+              />
+            </motion.div>
+          ))}
         </Container>
+        <Container
+          sx={{
+            align: "center",
+            justifyContent: "center",
+            display: "flex",
+            flexDirection: "arrow",
+          }}
+        >
+          <Slide direction="up">
+            <Link href="/">
+              <Img
+                image="https://imgur.com/Kar3By6.png"
+                height="60"
+                width="150px"
+                mr="7px"
+                ml={undefined}
+              />
+            </Link>
+            <Link href="/">
+              <Img
+                image="https://imgur.com/HOg5lFJ.png"
+                height="60"
+                width="150px"
+                ml="7px"
+                mr={undefined}
+              />
+            </Link>
+          </Slide>
+        </Container>
+      </Box>
     </>
   );
 }
