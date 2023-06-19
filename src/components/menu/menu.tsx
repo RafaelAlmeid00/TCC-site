@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import colors from "../../assets/colors";
+import theme from "../../assets/theme";
 
 export default function Menus({ sz, mt, ml, onClick }) {
     const pg = [
@@ -15,13 +16,21 @@ export default function Menus({ sz, mt, ml, onClick }) {
     }
 
     return (
-        <Box sx={{ mt: mt, ml: ml }}>
-            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+        <Box sx={{ mt: mt, ml: ml,
+            [theme.breakpoints.down('sm')]: {
+                ml: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+            }, }}>
+            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "center"
+         }}>
                 {pg.map((pg) => (
                     <Button
                         key={pg.route}
                         onClick={() => { setSelectedPage(pg.route); onClick() }}
-                        sx={{ margin: "0 16px", ...getPageStyles(pg.route) }}
+                        sx={{ margin: "0 16px", ...getPageStyles(pg.route), }}
                     >
                         <Typography
                             textAlign="center"
@@ -38,7 +47,11 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 backgroundColor: colors.scsd,
                 marginTop: "8px",
                 position: "relative",
-                ml: 10
+                ml: 10,
+                [theme.breakpoints.down('sm')]: {
+                    ml: 0,
+                    width: "100%",
+                },
             }}
             >
                 <Box

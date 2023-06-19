@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 import Title from "../frases/title";
 import Img from "../img";
 import { Balancer } from "react-wrap-balancer";
+import theme from "../../assets/theme";
 
 function Section3() {
 
@@ -58,8 +59,11 @@ function Section3() {
             fontWeight: 'bold',
             opacity: '0.5',
             color: 'black',
-            width: '1100px',
-            textAlign: 'center'
+            width: '100%',
+            textAlign: 'center',
+            [theme.breakpoints.down('sm')]: {
+              witdth: '100%'
+                    },
           }}>
             *EasyPass é um benefício individual, com os preços variando de acordo com cada tipo de usuário. Os envios dos cartões são referentes a localização cadastrada no seu perfil. Para alunos e trabalhadores, os usuários devem averiguar dúvidas e pedidos de registro com as instituições. Faça seu cadastro no nosso site ou em nosso app para ver nossos serviços.
           </Typography>

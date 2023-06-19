@@ -8,11 +8,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from "react-redux";
 import { openModal } from "../../redux/actions";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
+import { createTheme } from '@mui/material';
 
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
@@ -51,15 +51,26 @@ export default function MenuApp(props: any) {
 
   console.log(showCad);
 
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 601,
+        md: 901,
+        lg: 1201,
+        xl: 1501,
+      },
+    },
+  });
 
   return (
     <AppBar sx={{
       position: 'fixed',
       top: '0',
       left: '0',
-      width: '100%'
+      width: '100%',
     }}>
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <Typography
             variant="h4"

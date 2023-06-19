@@ -12,16 +12,6 @@ function SectionPerfil2() {
     console.log(localStorage);
 
     async function excl (){
-<<<<<<< Updated upstream
-        await axios.post('http://localhost:3344/user/delete', {
-                user_email: data
-        });
-       
-    };
-    
-=======
-        console.log(localStorage);
-
         try {
             await axios.post('http://localhost:3344/user/delete', {
                 user_email: data
@@ -38,7 +28,6 @@ function SectionPerfil2() {
     }
     console.log(localStorage);
 
->>>>>>> Stashed changes
     return (
         <>
             <Box sx={{

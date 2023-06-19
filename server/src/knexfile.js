@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 module.exports = {
     development : {
-        client : 'mysql',
+        client : 'mysql2',
         connection: {
             host: 'mysqlserver.cpzldhdkowxy.us-east-2.rds.amazonaws.com',
             port: 3306,

@@ -1,5 +1,5 @@
 
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Title from "../frases/title";
 import Subtitlepad from "../frases/subtitlepad";
@@ -8,6 +8,8 @@ import Cards from "../card";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
+import theme from "../../assets/theme";
+import Balancer from "react-wrap-balancer";
 
 function Section2() {
 
@@ -106,17 +108,58 @@ function Section2() {
       <Box sx={{
         height: '100vh',
         width: '100%',
-        backgroundColor: "#d9d9d9"
+        backgroundColor: "#d9d9d9",
+        [theme.breakpoints.down('sm')]: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        },
       }}>
         <Container sx={{
           width: '40%',
           height: '100%',
           float: 'left',
+          [theme.breakpoints.down('sm')]: {
+            float: 'none',
+            width: '100%',
+            ml: 0
+          },
         }}>
           <Menus sz="16px" mt="60px" ml="-80px" onClick={toggleShowEscolas} />
           <Slide direction="left">
-            <Title title={currentProps[0].title} textSize="30px" textColor={colors.tc} children={null} />
-            <Subtitlepad mt="50px" text={currentProps[0].subtitle} sz="20px" />
+            <Typography sx={{ 
+              color: colors.tc, 
+              fontSize: { xs: '2.0em', sm: '3.7em', md: '5em', lg: '3em', xl: '8em' }, 
+              mt: "50px", 
+              ml: "100px", 
+              fontWeight: 'bold', 
+              [theme.breakpoints.down('sm')]: {
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%'
+              },
+              }}>
+              {currentProps[0].title}
+            </Typography>
+            <Balancer>
+              <Typography sx={{ 
+                fontSize: { xs: '2.0em', sm: '3.7em', md: '5em', lg: '3em', xl: '8em' }, 
+                mt: '20px', 
+                fontWeight: 'bold', 
+                ml: '30px', 
+                width: '420px', 
+                textAlign: 'left',
+                [theme.breakpoints.down('sm')]: {
+                  ml: 0,
+
+                },
+                }}>
+                {currentProps[0].subtitle}
+              </Typography>
+            </Balancer>
           </Slide>
         </Container>
         <Container sx={{
