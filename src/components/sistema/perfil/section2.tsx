@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function SectionPerfil2() { 
     const userJson = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
     const userData = userJson ? JSON.parse(userJson) : null;
         const data = userData.user_email
     console.log('THIS IS DATA: ', data);
@@ -12,9 +13,12 @@ function SectionPerfil2() {
     console.log(localStorage);
 
     async function excl (){
+        console.log(localStorage);
+
         try {
             await axios.post('http://localhost:3344/user/delete', {
-                user_email: data
+                user_email: data,
+                token: token
             })
             console.log('ta indo');
             

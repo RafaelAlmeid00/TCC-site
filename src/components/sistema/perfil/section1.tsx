@@ -1,6 +1,5 @@
 import { Avatar, Box, Button, Container, IconButton, InputLabel, Typography } from "@mui/material"
 import { useState } from "react";
-
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import { removeToken, verify } from "../FrontDecoded";
@@ -11,9 +10,9 @@ function SectionPerfil1() {
     const userJson = localStorage.getItem('user');
     const userData = userJson ? JSON.parse(userJson) : null;
     const data = userData.user_email;
-    
+
     console.log('this is the verify: ', verify());
-    console.log('token removed: ', removeToken());
+    //console.log('token removed: ', removeToken());
     
     
     const update = async () => {
@@ -22,7 +21,7 @@ function SectionPerfil1() {
                 info: dado,
                 param: parame
         });
-       
+    
     };
 
         const birthDate = new Date(userData.user_nascimento);
