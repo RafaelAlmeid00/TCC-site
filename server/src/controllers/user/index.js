@@ -46,6 +46,7 @@ module.exports = {
             const { user_endcidade: city } = req.body;
             const { user_tipo: type } = req.body;
             const { list_CPF_list_id: id } = req.body;
+            console.log('teste rapidão: ', cpf);
 
             const senha = await bcrypt.hash(password, 10);
 

@@ -3,12 +3,15 @@ const idgenerated = require('uniqid')
 module.exports = {
     async CadSac(req, res) {
         try {
-            const income = idgenerated();
-            console.log('thi is income: ', income);
+           
             const { user_user_CPF: cpf } = req.body;
             const { sac_data: date } = req.body;
+
+            const income = idgenerated.time();
+            console.log('thi is income: ', income);
+            console.log('loga essa prr ai: ', cpf, date);
             
-            await knex("sac").insert({ sac_ticket: "3443", user_user_CPF: cpf, sac_data: date });
+            await knex("sac").insert({ sac_ticket: income, user_user_CPF: String(cpf), sac_data: date });
 
             res.status(201).send('mensagem envidada!');
         } catch (error) {
