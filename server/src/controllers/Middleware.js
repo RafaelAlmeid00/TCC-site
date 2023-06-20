@@ -4,7 +4,7 @@ module.exports = {
     async mid (req, res, next){ 
 
         const token = req.body.token;
-        const insominiaT = req.cookies.token
+        const insominiaT = req.cookies.token;
         console.log('tokão ew: ', token);
         if (token) {  
             try {

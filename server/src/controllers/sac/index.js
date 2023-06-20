@@ -12,8 +12,8 @@ module.exports = {
             console.log('loga essa prr ai: ', cpf, date);
             
             await knex("sac").insert({ sac_ticket: income, user_user_CPF: String(cpf), sac_data: date });
-
-            res.status(201).send('mensagem envidada!');
+            //dps colocar o "income" no localstorage do front pra ele ficar com o ticket da mensagem...
+            res.status(201).json({message: 'mensagem envidada!', income: income});
         } catch (error) {
             console.log(error);
             res.status(400).send('deu ruim!');

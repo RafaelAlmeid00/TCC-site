@@ -14,6 +14,7 @@ const controllerBuss = require('./controllers/buss/index');
 const controllerStop = require('./controllers/bus_stop/index');
 const controllerTurn = require('./controllers/turn_bus/index');
 const controllerDriver = require('./controllers/driver_bus/index');
+const controllerMessage = require('./controllers/sac_message/index')
 
 const middleware = require('./controllers/Middleware');
 
@@ -62,4 +63,6 @@ routes.post('/card', controllersRequestCard.CadReqCard);
 routes.post('/sac', controllersSac.CadSac);
 routes.get('/sac', controllersSac.Search);
 
+routes.post('/message', controllerMessage.CadMessage);
+routes.get('/message', controllerMessage.SearchMessage)
 module.exports = routes;
