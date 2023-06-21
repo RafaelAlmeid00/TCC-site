@@ -12,6 +12,7 @@ const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const HomeSistema = lazy(() => import('./pages/sistema/App'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
+const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'))
 const AppLazy = lazy(() => import('./pages/home/App'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 
@@ -39,6 +40,7 @@ const Rota = () => {
                   <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/Servicos" element={<ServiLazy />} />
+                    
                     <Route path="/App" element={<AppLazy />} />
                     <Route path="/EasyPass" element={<EasyPassLazy />} />
                     <Route path="/Contatos" element={<ContatosLazy />} />
@@ -66,6 +68,7 @@ const Rota = () => {
               <React.Fragment>
                   <Routes>
                     <Route path="/" element={<HomeSistema />} />
+                    <Route path="/rotas" element={<RoutesLazy />} />
                     <Route path="/Perfil" element={<PerfilLazy />} />
                   </Routes>
               </React.Fragment>
