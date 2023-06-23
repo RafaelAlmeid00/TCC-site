@@ -15,6 +15,7 @@ const ServiLazy = lazy(() => import('./pages/home/Servicos'));
 const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'))
 const AppLazy = lazy(() => import('./pages/home/App'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
+const SACLazy = lazy(() => import('./pages/sistema/SAC'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -70,6 +71,7 @@ const Rota = () => {
                     <Route path="/" element={<HomeSistema />} />
                     <Route path="/rotas" element={<RoutesLazy />} />
                     <Route path="/Perfil" element={<PerfilLazy />} />
+                    <Route path="/SAC" element={<SACLazy />} /> 
                   </Routes>
               </React.Fragment>
             </AuthProvider>
