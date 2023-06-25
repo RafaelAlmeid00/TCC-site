@@ -24,7 +24,8 @@ const options = {
 
 
 function SectionRota1() {
-    const [take, setTake] = useState('');
+    const [take, setTake] = useState();
+    const [value, setValue] = useState('');
     const [options, setAge] = useState('');
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value);
@@ -40,23 +41,23 @@ function SectionRota1() {
         );
 
     async function takeIt() {
+        
         setTake(await axios.post('http://localhost:3344/routes/search', 
-        {token: token}));
-        var algo = {take};
-
-        console.log(algo.take.data)
+        {token: token, route_num: value}));
+        
+        console.log(take.data[0].route_nome)
     }
 
     interface RenderTree {
-      take: string,
+      more: string,
       children?: readonly RenderTree[];
     }
     
     const data: RenderTree = {
-      take: '',
+      more: 'entendi',
       children: [
           {
-            take: take
+            more: take
           }
       ],
     };
@@ -98,20 +99,20 @@ function SectionRota1() {
                   
                 </Select>
               </FormControl>
-              <TextField label={options}></TextField><Button onClick={takeIt}>clica</Button>
+              <TextField label={options} type="input" onChange={i => setValue(i.target.value)}></TextField><Button onClick={takeIt}>clica</Button>
               <Timeline sx={{mr:55, mt: 5}}>
                     <TimelineItem>
                       <TimelineSeparator>
                         <TimelineDot />
                         <TimelineConnector />
                       </TimelineSeparator>
-                      <TimelineContent>a</TimelineContent>
+                      <TimelineContent>{take?.data[0].route_nome}</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>               
                       <TimelineSeparator>
                         <TimelineDot />
                       </TimelineSeparator>
-                      <TimelineContent>c</TimelineContent>
+                      <TimelineContent>{take?.data[0].route_nome}</TimelineContent>
                     </TimelineItem>
               </Timeline>
               <TreeView 

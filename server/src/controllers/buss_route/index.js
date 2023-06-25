@@ -18,8 +18,10 @@ module.exports = {
 
     async consultRoute(req, res) {
         try {
-           const consult = await knex("bus_route");
-           res.status(201).send(consult);
+            const { route_num: num } = req.body;
+
+            const consult = await knex("bus_route").where('route_num', '=', num);
+            res.status(201).send(consult);
         } catch (error) {
             console.log(error); 
         }
