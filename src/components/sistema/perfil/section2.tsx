@@ -7,7 +7,7 @@ function SectionPerfil2() {
     const userJson = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     const userData = userJson ? JSON.parse(userJson) : null;
-        const data = userData.user_email
+    const data = userData.user_email
     console.log('THIS IS DATA: ', data);
     const navigate = useNavigate()
     console.log(localStorage);
