@@ -1,24 +1,65 @@
 import {Fade,  Avatar, FormControl, MenuItem, Box, Button, Container, IconButton, InputLabel, Typography, TextField, colors, useMediaQuery } from "@mui/material"
 import  color from "../../../assets/colors";
-import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView } from "@mui/lab";
+import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem } from "@mui/lab";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import MenuLateral from "../../../components/menu/menulateral";
 import MenuSistema from "../../../components/menu/menusistema";
 import { useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
-import { Margin, Padding, WidthFull } from "@mui/icons-material";
+import { Margin, Padding, WidthFull} from "@mui/icons-material";
+const token = localStorage.getItem('token');
 
+const a = {
+  token: token
+};
 
-async function takeIt() {
-  return await axios.get('http://localhost:3344/routes');
-}
+const options = {
+  method: 'GET',
+  url: 'http://localhost:3344/routes/search',
+  params: a, 
+};
 
 
 function SectionRota1() {
+    const [take, setTake] = useState('');
     const [options, setAge] = useState('');
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value);
       };
+
+    
+        const renderTree = (nodes: RenderTree) => (
+          <TreeItem key={nodes.take} nodeId={nodes.take} label={nodes.take}>
+            {Array.isArray(nodes.children)
+              ? nodes.children.map((node) => renderTree(node))
+              : null}
+          </TreeItem>
+        );
+
+    async function takeIt() {
+        setTake(await axios.post('http://localhost:3344/routes/search', 
+        {token: token}));
+        var algo = {take};
+
+        console.log(algo.take.data)
+    }
+
+    interface RenderTree {
+      take: string,
+      children?: readonly RenderTree[];
+    }
+    
+    const data: RenderTree = {
+      take: '',
+      children: [
+          {
+            take: take
+          }
+      ],
+    };
     return (
         <>  
             <MenuSistema></MenuSistema>
@@ -57,7 +98,7 @@ function SectionRota1() {
                   
                 </Select>
               </FormControl>
-              <TextField label={options}></TextField>
+              <TextField label={options}></TextField><Button onClick={takeIt}>clica</Button>
               <Timeline sx={{mr:55, mt: 5}}>
                     <TimelineItem>
                       <TimelineSeparator>
@@ -73,8 +114,14 @@ function SectionRota1() {
                       <TimelineContent>c</TimelineContent>
                     </TimelineItem>
               </Timeline>
-              <TreeView>
-                
+              <TreeView 
+                aria-label="rich object"
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpanded={['root']}
+                defaultExpandIcon={<ChevronRightIcon />}
+                sx={{ height: 110, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+              >
+                {renderTree(data)}
               </TreeView>
               </Box>
 

@@ -43,7 +43,7 @@ routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 routes.post('/routes', controllerBusRoute.cadRoutes);
 routes.put('/routes', controllerBusRoute.attRoutes);
 routes.delete('/routes', controllerBusRoute.excldRoutes);
-routes.get('/routes', controllerBusRoute.consultRoute)
+routes.post('/routes/search', controllerBusRoute.consultRoute);
 
 routes.post('/buss', controllerBuss.cadBuss);
 routes.put('/buss', controllerBuss.attBuss);
