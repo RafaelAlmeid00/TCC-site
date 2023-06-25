@@ -16,6 +16,15 @@ module.exports = {
         }
     },
 
+    async consultRoute(req, res) {
+        try {
+           const consult = await knex("bus_route");
+           res.status(201).send(consult);
+        } catch (error) {
+            console.log(error); 
+        }
+    },
+
     async attRoutes(req, res){
         try {
             const { rote_id: id } = req.body;
