@@ -1,9 +1,11 @@
 
-import { Box, CardMedia, Container, Link, Typography, createTheme } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Img from "../img";
 import Balancer from 'react-wrap-balancer'
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
+import BtnsApp from "../buttons/app";
+
 
 function Section1() {
 
@@ -37,7 +39,13 @@ function Section1() {
                     <Slide direction="left">
                         <Balancer>
                             <Typography sx={{ color: 'white', 
-                                fontSize: { xs: '2.0em', sm: '3.7em', md: '5em', lg: '3em', xl: '8em' }, 
+                                fontSize: {
+                                    xs: '4vh',  // (7.5 / 1200) * 600
+                                    sm: '4vh',  // (7.5 / 1200) * 900
+                                    md: '6vh',  // (7.5 / 1200) * 1200
+                                    lg: '7.5vh',
+                                    xl: '7.5vh',  // Manter o mesmo tamanho de lg para xl
+                                }, 
                             mt: "50px", ml: "100px", 
                             fontWeight: 'bold', 
                                 [theme.breakpoints.down('sm')]: {
@@ -48,13 +56,19 @@ function Section1() {
                                 Viaje com a gente
                             </Typography>
                             <Typography sx={{
-                                fontSize: { xs: '1em', sm: '2em', md: '2em', lg: '1.5em', xl: '6em' }, 
+                                fontSize: {
+                                    xs: '2.5vh',  // (7.5 / 1200) * 600
+                                    sm: '3vh',  // (7.5 / 1200) * 900
+                                    md: '4vh',  // (7.5 / 1200) * 1200
+                                    lg: '5vh',
+                                    xl: '5vh',  // Manter o mesmo tamanho de lg para xl
+                                },
                                 display: "flex",
                                 flexDirection: "row",
                                 color: "white",
                                 fontWeight: 'bold',
-                                ml: 22,
-                                [theme.breakpoints.down('sm')]: {
+                                ml: "130px",
+                                [theme.breakpoints.down('md')]: {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
@@ -65,7 +79,13 @@ function Section1() {
                                 component="span"
                                 sx={{
                                     fontWeight: 'bold',
-                                    fontSize: { xs: '1em', sm: '2em', md: '2em', lg: '1em', xl: '6em' }, 
+                                    fontSize: {
+                                        xs: '2.5vh',  // (7.5 / 1200) * 600
+                                        sm: '3vh',  // (7.5 / 1200) * 900
+                                        md: '4vh',  // (7.5 / 1200) * 1200
+                                        lg: '5vh',
+                                        xl: '5vh',  // Manter o mesmo tamanho de lg para xl
+                                    },
                                     ml: '10px',
                                     background: 'linear-gradient(to right, #0fcd88 50%, white 50%)',
                                     '-webkit-background-clip': 'text',
@@ -73,13 +93,20 @@ function Section1() {
                                 }}>EasyPass</Typography>
                             </Typography>
                             <Typography sx={{ color: 'white',
-                                fontSize: { xs: '1em', sm: '2em', md: '2em', lg: '1em', xl: '6em' }, 
+                                fontSize: {
+                                    xs: '2vh',  // (7.5 / 1200) * 600
+                                    sm: '2.5vh',  // (7.5 / 1200) * 900
+                                    md: '2.5vh',  // (7.5 / 1200) * 1200
+                                    lg: '3vh',
+                                    xl: '3vh',  // Manter o mesmo tamanho de lg para xl
+                                }, 
                                 mt: "100px", 
                                 ml: "100px", 
                                 fontWeight: '600', 
                                 [theme.breakpoints.down('sm')]: {
                                     margin: '0 auto',
-                                    textAlign: 'center'
+                                    textAlign: 'center',
+                                    fontWeight: '100', 
                                 },
                                 }}>
                                 Com o EasyPass tenha controle da sua viajem de forma autonoma e maior conforto para sair de casa. Será você no controle da sua viagem 
@@ -87,40 +114,7 @@ function Section1() {
                         </Balancer>
                     </Slide>
                     <Slide direction="up" >
-                        <Container sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            mt: '60px',
-                            ml: '115px',
-                            [theme.breakpoints.down('sm')]: {
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    ml: 0,
-                                    mt: 10
-                                },
-                        }}>
-                            <Link href="/">
-                                <CardMedia component="img" 
-                                    image='https://www.gympass.com/mep-assets/images/commons/button_ios_store.svg'
-                                    sx={{
-                                        height: { xs: '4vh', sm: '3.7vh', md: '5vh', lg: '7.6vh', xl: '8vh' },
-                                        width: { xs: '30vw', sm: '8.5vw', md: '10vw', lg: '11.76vw', xl: '8vh' },
-                                    }}
-                                />
-                            </Link>
-                            <Link href="/">
-                                <CardMedia component="img" 
-                                    image='https://www.gympass.com/mep-assets/images/commons/button_android_store.svg'
-                                    sx={{
-                                        height: { xs: '4vh', sm: '3.7vh', md: '5vh', lg: '7.6vh', xl: '8vh' },
-                                        width: { xs: '30vw', sm: '8.5vw', md: '10vw', lg: '11.76vw', xl: '8vh' },
-                                        ml: '40px',
-                                    }}
-                                />
-                            </Link>
-                        </Container>
-
+                        <BtnsApp />
                     </Slide>
                 </Container>
                 <Container sx={{

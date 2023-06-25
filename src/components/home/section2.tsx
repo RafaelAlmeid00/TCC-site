@@ -1,8 +1,6 @@
 
 import { Box, Container, Typography } from "@mui/material";
 import colors from "../../assets/colors";
-import Title from "../frases/title";
-import Subtitlepad from "../frases/subtitlepad";
 import Menus from "../menu/menu";
 import Cards from "../card";
 import { useState } from "react";
@@ -10,8 +8,11 @@ import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
 import Balancer from "react-wrap-balancer";
+import localData from '../../exports/exports'
 
 function Section2() {
+
+  console.log(localData());
 
   const [showEscolas, setShowEscolas] = useState(true);
   const toggleShowEscolas = () => setShowEscolas(!showEscolas);
@@ -109,54 +110,59 @@ function Section2() {
         height: '100vh',
         width: '100%',
         backgroundColor: "#d9d9d9",
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
+          height: '100%',
         },
       }}>
         <Container sx={{
           width: '40%',
           height: '100%',
           float: 'left',
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             float: 'none',
             width: '100%',
-            ml: 0
+            ml: 0,
+            height: '30%'
           },
         }}>
           <Menus sz="16px" mt="60px" ml="-80px" onClick={toggleShowEscolas} />
           <Slide direction="left">
-            <Typography sx={{ 
-              color: colors.tc, 
-              fontSize: { xs: '2.0em', sm: '3.7em', md: '5em', lg: '3em', xl: '8em' }, 
-              mt: "50px", 
-              ml: "100px", 
-              fontWeight: 'bold', 
-              [theme.breakpoints.down('sm')]: {
+            <Typography sx={{
+              color: colors.tc,
+              fontSize: { xs: '1.5em', sm: '1em', md: '1.3em', lg: '2em', xl: '2.5em' },
+              mt: "50px",
+              ml: "100px",
+              fontWeight: 'bold',
+              [theme.breakpoints.down('md')]: {
                 textAlign: 'center',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '100%'
+                width: '100%',
+                ml: 0
               },
-              }}>
+            }}>
               {currentProps[0].title}
             </Typography>
             <Balancer>
-              <Typography sx={{ 
-                fontSize: { xs: '2.0em', sm: '3.7em', md: '5em', lg: '3em', xl: '8em' }, 
-                mt: '20px', 
-                fontWeight: 'bold', 
-                ml: '30px', 
-                width: '420px', 
+              <Typography sx={{
+                fontSize: { xs: '1.2em', sm: '1em', md: '1.3em', lg: '1.5em', xl: '2.5em' },
+                mt: '20px',
+                fontWeight: 'bold',
+                ml: '30px',
+                width: '420px',
                 textAlign: 'left',
-                [theme.breakpoints.down('sm')]: {
+                [theme.breakpoints.down('md')]: {
                   ml: 0,
-
+                  textAlign: 'center',
+                  width: '400px',
+                  mb: -10
                 },
-                }}>
+              }}>
                 {currentProps[0].subtitle}
               </Typography>
             </Balancer>
@@ -166,7 +172,13 @@ function Section2() {
           width: '60%',
           float: 'right',
           display: "flex",
-          flexDirection: "arrow"
+          flexDirection: "arrow",
+          [theme.breakpoints.down('md')]: {
+            float: 'none',
+            display: 'flex', 
+            flexDirection: 'row',
+            width: '100%'
+          },
         }}>
           {currentProps[0].cards.map((card, index) => (
             <motion.div

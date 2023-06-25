@@ -17,12 +17,13 @@ export default function Menus({ sz, mt, ml, onClick }) {
 
     return (
         <Box sx={{ mt: mt, ml: ml,
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 ml: 0,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
+                mt: 10
             }, }}>
             <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "center"
          }}>
@@ -48,7 +49,7 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 marginTop: "8px",
                 position: "relative",
                 ml: 10,
-                [theme.breakpoints.down('sm')]: {
+                [theme.breakpoints.down('md')]: {
                     ml: 0,
                     width: "100%",
                 },
