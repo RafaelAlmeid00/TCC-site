@@ -15,9 +15,9 @@ function Section1() {
             <Box sx={{
                 mt: "10vh",
                 height: '90vh',
-                width: '100%',
+                width: '100vw',
                 background: 'linear-gradient(to right, rgba(25, 118, 210, 1) 35%, rgba(25, 118, 210, 0.9) 40%, rgba(25, 118, 210, 0.8) 45%, rgba(25, 118, 210, 0.7) 50%, rgba(25, 118, 210, 0.6) 55%, rgba(25, 118, 210, 0.5) 60%, rgba(25, 118, 210, 0.4) 65%, rgba(25, 118, 210, 0.3) 70%, rgba(25, 118, 210, 0.2) 75%, rgba(25, 118, 210, 0.1) 80%)',
-                [theme.breakpoints.down('sm')]: {
+                [theme.breakpoints.down('md')]: {
                     mt: 0,
                     background: 'rgba(25, 118, 210, 1)',
                     height: '100vh',
@@ -27,7 +27,7 @@ function Section1() {
                     width: '50%',
                     height: '100%',
                     float: 'left',
-                    [theme.breakpoints.down('sm')]: {
+                    [theme.breakpoints.down('md')]: {
                         float: 'none',
                         width: '100%',
                         display: 'flex',
@@ -48,7 +48,7 @@ function Section1() {
                                 }, 
                             mt: "50px", ml: "100px", 
                             fontWeight: 'bold', 
-                                [theme.breakpoints.down('sm')]: {
+                                [theme.breakpoints.down('md')]: {
                                     margin: '0 auto',
                                     textAlign: 'center'
                                 },
@@ -103,7 +103,7 @@ function Section1() {
                                 mt: "100px", 
                                 ml: "100px", 
                                 fontWeight: '600', 
-                                [theme.breakpoints.down('sm')]: {
+                                [theme.breakpoints.down('md')]: {
                                     margin: '0 auto',
                                     textAlign: 'center',
                                     fontWeight: '100', 
@@ -123,7 +123,7 @@ function Section1() {
                     float: 'right',
                     display: 'flex',
                     alignItems: 'flex-end',
-                    [theme.breakpoints.down('sm')]: {
+                    [theme.breakpoints.down('md')]: {
                         display: 'none'
                     },
                 }}>

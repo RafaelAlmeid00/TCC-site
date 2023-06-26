@@ -58,10 +58,7 @@ export default function MenuApp(props: any) {
       position: 'fixed',
       top: '0',
       left: '0',
-      width: '100%',
-      [theme.breakpoints.down('sm')]: {
-        width: '100vw'
-      },
+      width: '100vw',
     }}>
       <Container>
         <Toolbar>
@@ -77,7 +74,7 @@ export default function MenuApp(props: any) {
               background: 'linear-gradient(to right, #0fcd88 52%, white 50%)',
               '-webkit-background-clip': 'text',
               '-webkit-text-fill-color': 'transparent',
-              display: { xs: 'none', sm: 'none', md: 'flex' },
+              display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex' },
               fontSize: '30px'
             }}
           >
@@ -138,39 +135,20 @@ export default function MenuApp(props: any) {
           <Box 
           sx={{
             display: { xs: 'flex', md: 'none'},
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
               alignItems: 'center',
               justifyContent: 'center',
             },
+              mr: 6,
+              ml: 8
           }}>
             <a href="/">
             <img src={Image} style={{
-              height: '5vh',
-              width: '10vw',
+              height: '4vh',
+              width: '7vw',
             }}></img>
             </a>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontSize: 35,
-              color: 'inherit',
-              fontFamily: 'Franklin Gothic Demi Cond',
-              fontWeight: 'bold',
-              textDecoration: 'none',
-              background: 'linear-gradient(to right, #0fcd88 50%, white 50%)',
-              '-webkit-background-clip': 'text',
-              '-webkit-text-fill-color': 'transparent',
-            }}
-          >
-            EasyPass
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

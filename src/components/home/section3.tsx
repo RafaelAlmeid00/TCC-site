@@ -1,7 +1,6 @@
 
 import { Box, Card, Container, Link, Typography } from "@mui/material";
 import colors from "../../assets/colors";
-import Title from "../frases/title";
 import Img from "../img";
 import { Balancer } from "react-wrap-balancer";
 import theme from "../../assets/theme";
@@ -13,28 +12,30 @@ function Section3() {
     <>
       <Box sx={{
         height: '100vh',
-        width: '100%',
+        width: '100vw',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
       }}>
         <Container sx={{
-          width: '100%',
+          width: '100vw',
           height: '100px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          ml: '25px',
-          mt: '-60px'
+          ml: -4,
+          mt: 5,
+          [theme.breakpoints.down('sm')]: {
+            ml: -13,
+          },
         }}>
           <Balancer> 
           <Typography sx={{ color: colors.tc, fontSize: '30px', mt: "50px", ml: "100px", fontWeight: 'bold', 
             [theme.breakpoints.down('sm')]: {
-              ml: -5,
               textAlign: 'center',
-              fontSize: { xs: '1.5em', sm: '1.5em'},
-              width: '90vw',
+              fontSize: { xs: '3.5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
+              width: '100vw',
             },
         }}>
             Ache polos do EasyPass perto de você
@@ -65,13 +66,14 @@ function Section3() {
         </Container>
         <Balancer>
           <Typography sx={{
-            fontSize: '12px',
+            fontSize: '10px',
             mt: '60px',
             fontWeight: 'bold',
             opacity: '0.5',
             color: 'black',
             width: '100%',
             textAlign: 'center',
+            mb: 10,
             [theme.breakpoints.down('sm')]: {
               witdth: '100%'
             },

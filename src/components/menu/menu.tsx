@@ -16,7 +16,8 @@ export default function Menus({ sz, mt, ml, onClick }) {
     }
 
     return (
-        <Box sx={{ mt: mt, ml: ml,
+        <Box sx={{
+            mt: mt, ml: ml,
             [theme.breakpoints.down('md')]: {
                 ml: 0,
                 display: 'flex',
@@ -24,9 +25,11 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 alignItems: 'center',
                 flexDirection: 'column',
                 mt: 10
-            }, }}>
-            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "center"
-         }}>
+            },
+        }}>
+            <Box sx={{
+                display: "flex", alignItems: "flex-end", justifyContent: "center"
+            }}>
                 {pg.map((pg) => (
                     <Button
                         key={pg.route}
@@ -57,12 +60,17 @@ export default function Menus({ sz, mt, ml, onClick }) {
             >
                 <Box
                     sx={{
-                        ml: -10,
-                        width: "52%",
+                        [theme.breakpoints.down('sm')]: {
+                            width: "47vw",
+                        },
+                        ml: {
+                            xs: '-20vw', sm: '-20vw', md: '-28vw', lg: -10
+                        },
+                        width: '50%',
                         height: "100%",
                         backgroundColor: colors.tcsd,
                         position: "absolute",
-                        left: selectedPage === "/Escolas" ? '18%' : "70%",
+                        left: selectedPage === "/Escolas" ? '20%' : "70%",
                         transition: "left 0.3s ease-out",
                     }}
                 />

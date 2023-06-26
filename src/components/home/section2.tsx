@@ -108,7 +108,7 @@ function Section2() {
     <>
       <Box sx={{
         height: '100vh',
-        width: '100%',
+        width: '100vw',
         backgroundColor: "#d9d9d9",
         [theme.breakpoints.down('md')]: {
           display: 'flex',
@@ -133,7 +133,7 @@ function Section2() {
           <Slide direction="left">
             <Typography sx={{
               color: colors.tc,
-              fontSize: { xs: '1.5em', sm: '1em', md: '1.3em', lg: '2em', xl: '2.5em' },
+              fontSize: { xs: '3.5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
               mt: "50px",
               ml: "100px",
               fontWeight: 'bold',
@@ -150,16 +150,19 @@ function Section2() {
             </Typography>
             <Balancer>
               <Typography sx={{
-                fontSize: { xs: '1.2em', sm: '1em', md: '1.3em', lg: '1.5em', xl: '2.5em' },
+                fontSize: { xs: '2vh', sm: '3vh', md: '4vh', lg: '4vh', xl: '5vh' },
                 mt: '20px',
                 fontWeight: 'bold',
                 ml: '30px',
                 width: '420px',
                 textAlign: 'left',
+                display: 'flex', 
+                alignItems: 'center',
+                justifyContent: 'center',
                 [theme.breakpoints.down('md')]: {
                   ml: 0,
                   textAlign: 'center',
-                  width: '400px',
+                  width: '90vw',
                   mb: -10
                 },
               }}>

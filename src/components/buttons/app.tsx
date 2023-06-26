@@ -26,19 +26,13 @@ export default function BtnsApp() {
                         border: '2px solid white',
                         borderRadius: 3,
                         padding: 3,
-                        height: {
-                            xs: '5vh',
-                            sm: '5vh',
-                            md: '5vh',
-                            lg: '5vh',
-                            xl: '5vh',
-                        },
+                        height: '5vh',
                         width: {
                             xs: '40vw',
                             sm: '20vw',
                             md: '15vw',
-                            lg: '12vw',
-                            xl: '12.5vw',
+                            lg: '13vw',
+                            xl: '13vw',
                         },
                         color: 'white',
                         display: 'flex',
@@ -52,11 +46,11 @@ export default function BtnsApp() {
                     }} />
                     <Box sx={{
                         width: {
-                            xs: '20vw',
+                            xs: '30vw',
                             sm: '15vw',
                             md: '12vw',
                             lg: '12vw',
-                            xl: '11.4vw',
+                            xl: '12vw',
                         },
                         overflow: 'hidden', // Evitar que o texto exceda o limite do botão
                         textOverflow: 'ellipsis', // Adicionar reticências caso o texto seja muito longo
@@ -78,19 +72,13 @@ export default function BtnsApp() {
                         border: '2px solid white',
                         borderRadius: 3,
                         padding: 3,
-                        height: {
-                            xs: '5vh',
-                            sm: '5vh',
-                            md: '5vh',
-                            lg: '7.5vh',
-                            xl: '8vh',
-                        },
+                        height: '5vh',
                         width: {
                             xs: '40vw',
                             sm: '20vw',
                             md: '15vw',
-                            lg: '11.4vw',
-                            xl: '11.4vw',
+                            lg: '13vw',
+                            xl: '13vw',
                         },
                         color: 'white',
                         display: 'flex',
@@ -106,8 +94,8 @@ export default function BtnsApp() {
                             xs: '20vw',
                             sm: '15vw',
                             md: '12vw',
-                            lg: '11.4vw',
-                            xl: '11.4vw',
+                            lg: '12vw',
+                            xl: '12vw',
                         },
                         overflow: 'hidden', // Evitar que o texto exceda o limite do botão
                         textOverflow: 'ellipsis', // Adicionar reticências caso o texto seja muito longo

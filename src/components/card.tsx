@@ -7,10 +7,10 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
         <>
             <Card sx={{
                 width: wd, mt: mt, ml: ml, borderRadius: "20px", border: '1px solid', borderColor: colors.sc,
-                [theme.breakpoints.down('sm')]: {
-                    maxWidth: '100px',
+                [theme.breakpoints.down('md')]: {
+                    maxWidth: '25vw',
                     maxHeight: '300px',
-                    ml: 2.5,
+                    ml: 2,
                     mb: 10
                 },
             }}>
@@ -21,7 +21,7 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                         image={image}
 
                         sx={{
-                            [theme.breakpoints.down('sm')]: {
+                            [theme.breakpoints.down('md')]: {
                                 height: '100px'
                             },
                         }}
@@ -29,7 +29,7 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div" sx={{
                             [theme.breakpoints.down('sm')]: {
-                                fontSize: { xs: '1em', sm: '1.2em'}, 
+                                fontSize: { xs: '1.5vh', sm: '2vh', md: '2.5vh', lg: '3vh', xl: '3vh' },
                             },
                         }}>
                             {title}

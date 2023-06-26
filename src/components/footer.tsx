@@ -22,18 +22,18 @@ export default function Footer() {
     },
   };
 
-      const listProd = [
-        {text: 'Para Escolas', route: '/Escolas'},
-        {text: 'Para Empresas', route: '/Empresas'},
-        {text: 'Aplicativo', route: '/Aplicativo'},
-        {text: 'Serviços', route: '/Servicos'},
-      ]
+  const listProd = [
+    { text: 'Para Escolas', route: '/Escolas' },
+    { text: 'Para Empresas', route: '/Empresas' },
+    { text: 'Aplicativo', route: '/Aplicativo' },
+    { text: 'Serviços', route: '/Servicos' },
+  ]
 
-      const list = [
-        {text: 'Quem Somos', route: '/EasyPass'},
-        {text: 'Contatos', route: '/Contatos'},
-        {text: 'Trabalhe Conosco', route: '/Vagas'},
-      ]
+  const list = [
+    { text: 'Quem Somos', route: '/EasyPass' },
+    { text: 'Contatos', route: '/Contatos' },
+    { text: 'Trabalhe Conosco', route: '/Vagas' },
+  ]
 
   return (
     <Box sx={{
@@ -61,7 +61,7 @@ export default function Footer() {
             '-webkit-background-clip': 'text',
             '-webkit-text-fill-color': 'transparent',
             [theme.breakpoints.down('sm')]: {
-              fontSize: { xs: '2em', sm: '2.2em'}, 
+              fontSize: { xs: '4vh', sm: '4.5vh', md: '5vh', lg: '5vh', xl: '4vh' },
               ml: 3
             },
           }}>EasyPass</Typography>
@@ -83,11 +83,11 @@ export default function Footer() {
               mr: '30px',
             }}>
               <InstagramIcon sx={{
-                fontSize: '30px',
+                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                    color: colors.pm, // Cor do ícone ao passar o mouse
-                  }
+                  color: colors.pm, // Cor do ícone ao passar o mouse
+                }
               }} />
             </Link>
           </motion.div>
@@ -100,11 +100,11 @@ export default function Footer() {
               mr: '30px',
             }}>
               <YouTubeIcon sx={{
-                fontSize: '30px',
+                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                    color: colors.pm, // Cor do ícone ao passar o mouse
-                  }
+                  color: colors.pm, // Cor do ícone ao passar o mouse
+                }
               }} />
             </Link>
           </motion.div>
@@ -116,88 +116,88 @@ export default function Footer() {
               cursor: 'pointer',
             }}>
               <TwitterIcon sx={{
-                fontSize: '30px',
+                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                    color: colors.pm, // Cor do ícone ao passar o mouse
-                  }
+                  color: colors.pm, // Cor do ícone ao passar o mouse
+                }
               }} />
             </Link>
           </motion.div>
         </Container>
         <Container sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            ml: '30px',
-            mt: '30px',
-            color: 'white',
-            textDecoration: 'none',
+          display: 'flex',
+          flexDirection: 'row',
+          ml: '30px',
+          mt: '30px',
+          color: 'white',
+          textDecoration: 'none',
           [theme.breakpoints.down('sm')]: {
             ml: 0
           },
         }}>
           <Link href="/" underline="hover">
             <Typography sx={{
-            fontSize: '12px',
-            fontWeight: 'bold',
-            color: 'white',
+              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '3vh' },
+              fontWeight: 'bold',
+              color: 'white',
             }}>
-                Privacidade
+              Privacidade
             </Typography>
-            </Link>
-            <Link href="/" underline="hover">
+          </Link>
+          <Link href="/" underline="hover">
             <Typography sx={{
-            fontSize: '12px',
-            ml: '30px',
-            fontWeight: 'bold',
-            color:'white',
+              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '3vh' },
+              ml: '30px',
+              fontWeight: 'bold',
+              color: 'white',
             }}>
-                Termos
+              Termos
             </Typography>
-            </Link>
-            <Link href="/" underline="hover">
+          </Link>
+          <Link href="/" underline="hover">
             <Typography sx={{
-            fontSize: '12px',
-            ml: '30px',
-            fontWeight: 'bold',
-            color:'white',
+              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '3vh' },
+              ml: '30px',
+              fontWeight: 'bold',
+              color: 'white',
               [theme.breakpoints.down('sm')]: {
                 display: 'none',
               },
             }}>
-                Preferências de Cookies
+              Preferências de Cookies
             </Typography>
-            </Link>
+          </Link>
         </Container>
         <Container>
-            <Typography sx={{
-                fontSize: '12px',
-                mt: '30px',
-                ml: '30px',
-                fontWeight: 'bold',
-                opacity: '0.5',
-                color: 'white',
+          <Typography sx={{
+            fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '3vh' },
+            mt: '30px',
+            ml: '30px',
+            fontWeight: 'bold',
+            opacity: '0.5',
+            color: 'white',
             [theme.breakpoints.down('sm')]: {
               ml: 0
             },
-            }}>
+          }}>
             © 2023, EasyPass BR, S.A
-            </Typography>
+          </Typography>
         </Container>
         <Container sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            mt: '30px',
-            ml: '30px',
+          display: 'flex',
+          flexDirection: 'row',
+          mt: '30px',
+          ml: '30px',
           [theme.breakpoints.down('sm')]: {
             display: 'none',
           },
         }}>
           <Link href="/">
-            <Img image='https://www.gympass.com/mep-assets/images/commons/button_ios_store.svg' height='50' width='160px' ml={undefined} mr={undefined}/>
+            <Img image='https://www.gympass.com/mep-assets/images/commons/button_ios_store.svg' height='50' width='160px' ml={undefined} mr={undefined} />
           </Link>
           <Link href="/">
-            <Img image='https://www.gympass.com/mep-assets/images/commons/button_android_store.svg' height='50' width='160px' ml='30px' mr={undefined}/>
+            <Img image='https://www.gympass.com/mep-assets/images/commons/button_android_store.svg' height='50' width='160px' ml='30px' mr={undefined} />
           </Link>
         </Container>
       </Container>
@@ -213,53 +213,53 @@ export default function Footer() {
         <Container>
           <Typography component='h3' sx={{
             fontWeight: 'bold',
-            fontSize: '20px',
+            fontSize: { xs: '2.5vh', sm: '3vh', md: '3.5vh', lg: '4vh', xl: '4vh' },
             color: 'white',
             mb: '20px',
           }}>
             Nosso Produto
           </Typography>
-          
+
           {listProd.map((listProd, index) => (
             <List sx={{
               display: 'flex',
               flexDirection: 'column',
             }}>
-            <Link href={listProd.route} underline="hover">
-          <Typography sx={{
-            color: 'white',
-            fontSize: '14px'
-          }}>
-            {listProd.text}
-          </Typography>
-          </Link>
-          </List>
+              <Link href={listProd.route} underline="hover">
+                <Typography sx={{
+                  color: 'white',
+                  fontSize: { xs: '1.3vh', sm: '2vh', md: '2.5vh', lg: '2.5vh', xl: '3vh' },
+                }}>
+                  {listProd.text}
+                </Typography>
+              </Link>
+            </List>
           ))}
         </Container>
         <Container>
-        <Typography component='h3' sx={{
+          <Typography component='h3' sx={{
             fontWeight: 'bold',
-            fontSize: '20px',
+            fontSize: { xs: '2.5vh', sm: '3vh', md: '3.5vh', lg: '4vh', xl: '4vh' },
             color: 'white',
             mb: '20px',
           }}>
             Quem Somos
           </Typography>
-          
+
           {list.map((list, index) => (
             <List sx={{
               display: 'flex',
               flexDirection: 'column',
             }}>
-            <Link href={list.route} underline="hover">
-          <Typography sx={{
-            color: 'white',
-            fontSize: '14px'
-          }}>
-            {list.text}
-          </Typography>
-          </Link>
-          </List>
+              <Link href={list.route} underline="hover">
+                <Typography sx={{
+                  color: 'white',
+                  fontSize: { xs: '1.3vh', sm: '2vh', md: '2.5vh', lg: '2.5vh', xl: '3vh' },
+                }}>
+                  {list.text}
+                </Typography>
+              </Link>
+            </List>
           ))}
         </Container>
       </Container>
