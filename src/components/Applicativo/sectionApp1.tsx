@@ -1,10 +1,9 @@
-import { Box, Container, Typography } from "@mui/material";
-import Balancer from "react-wrap-balancer";
+import { Box, Container } from "@mui/material";
 import { Slide } from "react-awesome-reveal";
 import Title from "../frases/title";
 import colors from "../../assets/colors";
 import Subtitlepad from "../frases/subtitlepad";
-import Img from "../img";
+import { url } from "./src/teste";
 
 export default function SectionApp1() {
   return (
@@ -13,6 +12,7 @@ export default function SectionApp1() {
         sx={{
           mt: "11vh",
           height: "89.99vh",
+          width: "100vw",
         }}
       >
         <Box
@@ -54,13 +54,13 @@ export default function SectionApp1() {
               alignItems: "end",
             }}
           >
-            <Img
-              height="300px"
-              image="https://i.imgur.com/hsKeJpX.png"
-              ml={undefined}
-              mr={undefined}
-              width="300px"
-            />
+            <img
+              src={url}
+              style={{
+                width: "300px",
+                height: "300px",
+              }}
+            ></img>
           </Container>
         </Box>
 
@@ -80,13 +80,13 @@ export default function SectionApp1() {
               width: "30%",
             }}
           >
-            <Img
-              height="290px"
-              image="https://i.imgur.com/rsZWA70.png"
-              ml={undefined}
-              mr={undefined}
-              width="150px"
-            />
+            <img
+              src={url}
+              style={{
+                width: "150px",
+                height: "290px",
+              }}
+            ></img>
           </Container>
           <Container>
             <Title
@@ -96,11 +96,13 @@ export default function SectionApp1() {
               children={null}
             />
           </Container>
-          <Box sx={{
-            background: "#black",
-            height: "50%",
-            width: "50%",
-          }}></Box>
+          <Box
+            sx={{
+              background: "#black",
+              height: "50%",
+              width: "50%",
+            }}
+          ></Box>
           <Container
             sx={{
               m: 0,
@@ -124,13 +126,13 @@ export default function SectionApp1() {
               width: "30%",
             }}
           >
-            <Img
-              height="290px"
-              image="https://i.imgur.com/Obaha94.png"
-              ml={undefined}
-              mr={undefined}
-              width="150px"
-            />
+            <img
+              src={url}
+              style={{
+                height:"290px",
+                width:"150px"
+              }}
+            ></img>
           </Container>
         </Box>
       </Box>
