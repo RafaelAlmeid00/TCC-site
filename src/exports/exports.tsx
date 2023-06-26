@@ -1,4 +1,6 @@
 
-export default class localData {
-    userData = localStorage.getItem('user')
+export default function localData() {
+        const userData = localStorage.getItem('user')
+        
+        return userData
 }

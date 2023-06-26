@@ -5,6 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { motion } from "framer-motion";
 import colors from "../assets/colors";
 import Img from "./img";
+import theme from "../assets/theme";
 
 export default function Footer() {
 
@@ -59,12 +60,19 @@ export default function Footer() {
             background: 'linear-gradient(to right, #0fcd88 52%, white 50%)',
             '-webkit-background-clip': 'text',
             '-webkit-text-fill-color': 'transparent',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: { xs: '2em', sm: '2.2em'}, 
+              ml: 3
+            },
           }}>EasyPass</Typography>
         <Container sx={{
           mt: '20px',
           ml: '35px',
           display: 'flex',
           alignItems: 'center',
+          [theme.breakpoints.down('sm')]: {
+            ml: 0
+          },
         }}>
           <motion.div
             variants={cardVariants}
@@ -124,6 +132,9 @@ export default function Footer() {
             mt: '30px',
             color: 'white',
             textDecoration: 'none',
+          [theme.breakpoints.down('sm')]: {
+            ml: 0
+          },
         }}>
           <Link href="/" underline="hover">
             <Typography sx={{
@@ -150,6 +161,9 @@ export default function Footer() {
             ml: '30px',
             fontWeight: 'bold',
             color:'white',
+              [theme.breakpoints.down('sm')]: {
+                display: 'none',
+              },
             }}>
                 Preferências de Cookies
             </Typography>
@@ -162,7 +176,10 @@ export default function Footer() {
                 ml: '30px',
                 fontWeight: 'bold',
                 opacity: '0.5',
-                color: 'white'
+                color: 'white',
+            [theme.breakpoints.down('sm')]: {
+              ml: 0
+            },
             }}>
             © 2023, EasyPass BR, S.A
             </Typography>
@@ -172,6 +189,9 @@ export default function Footer() {
             flexDirection: 'row',
             mt: '30px',
             ml: '30px',
+          [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          },
         }}>
           <Link href="/">
             <Img image='https://www.gympass.com/mep-assets/images/commons/button_ios_store.svg' height='50' width='160px' ml={undefined} mr={undefined}/>
@@ -182,7 +202,7 @@ export default function Footer() {
         </Container>
       </Container>
       <Container sx={{
-        width: '40%',
+        width: '50%',
         height: '100%',
         float: 'right',
         display: 'flex',

@@ -28,7 +28,18 @@ function Section3() {
           ml: '25px',
           mt: '-60px'
         }}>
-          <Title title="Ache polos do EasyPass perto de você" textSize="30px" textColor={colors.tc} children={null} />
+          <Balancer> 
+          <Typography sx={{ color: colors.tc, fontSize: '30px', mt: "50px", ml: "100px", fontWeight: 'bold', 
+            [theme.breakpoints.down('sm')]: {
+              ml: -5,
+              textAlign: 'center',
+              fontSize: { xs: '1.5em', sm: '1.5em'},
+              width: '90vw',
+            },
+        }}>
+            Ache polos do EasyPass perto de você
+          </Typography>
+          </Balancer>
         </Container>
         <Container sx={{
           width: '100%',
@@ -63,7 +74,7 @@ function Section3() {
             textAlign: 'center',
             [theme.breakpoints.down('sm')]: {
               witdth: '100%'
-                    },
+            },
           }}>
             *EasyPass é um benefício individual, com os preços variando de acordo com cada tipo de usuário. Os envios dos cartões são referentes a localização cadastrada no seu perfil. Para alunos e trabalhadores, os usuários devem averiguar dúvidas e pedidos de registro com as instituições. Faça seu cadastro no nosso site ou em nosso app para ver nossos serviços.
           </Typography>

@@ -2,11 +2,8 @@ import { Box, Container, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import { Fade, Slide } from "react-awesome-reveal";
 import Balancer from "react-wrap-balancer";
-import Title from "../frases/title";
-import Subtitle from "../frases/subtitle";
-import Frase from "../frases/frase";
-import Subtitlepad from "../frases/subtitlepad";
 import Img from "../img";
+import theme from "../../assets/theme";
 
 export default function Section1EasyPass() {
   return (
@@ -17,26 +14,64 @@ export default function Section1EasyPass() {
           height: '90vh',
           width: '100%',
           background: 'linear-gradient(to right, rgba(25, 118, 210, 1) 35%, rgba(25, 118, 210, 0.9) 40%, rgba(25, 118, 210, 0.8) 45%, rgba(25, 118, 210, 0.7) 50%, rgba(25, 118, 210, 0.6) 55%, rgba(25, 118, 210, 0.5) 60%, rgba(25, 118, 210, 0.4) 65%, rgba(25, 118, 210, 0.3) 70%, rgba(25, 118, 210, 0.2) 75%, rgba(25, 118, 210, 0.1) 80%)',
+          [theme.breakpoints.down('sm')]: {
+            mt: 0,
+            background: 'rgba(25, 118, 210, 1)',
+            height: '100vh'
+          },
         }}>
           <Container sx={{
             display: 'flex',
             alignItems: 'flex-start',
             ml: 0,
+            [theme.breakpoints.down('sm')]: {
+              float: 'none',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              textAlign: 'center',
+            },
           }}>
             <Slide direction="left">
               <Balancer>
-                <Title title="A EasyPass:" textSize="50px" textColor="white">
-                  <Typography sx={{
-                    fontSize: '20px',
-                    display: "flex",
-                    flexDirection: "row",
-                    ml: '100px',
-                    color: "white",
-                    fontWeight: 'bold',
-                  }}>TCC - FAETEC Amaury César Vieira, Volta Redonda
-                  </Typography>
-                </Title>
-                <Frase textColor="white" textSize='20px' frase="Essa empresa é um projeto de TCC do curso Informática para Internet da FAETEC Volta Redonda" />
+                <Typography sx={{
+                  color: 'white',
+                  fontSize: { xs: '2.0em', sm: '3em', md: '3.5em', lg: '3em', xl: '3.5em' },
+                  mt: "50px", ml: "100px",
+                  fontWeight: 'bold',
+                  [theme.breakpoints.down('sm')]: {
+                    margin: '0 auto',
+                    textAlign: 'center',
+                    mt: 20,
+                  },
+                }}>
+                  A EasyPass:
+                </Typography>
+                <Typography sx={{
+                  fontSize: '20px',
+                  display: "flex",
+                  flexDirection: "row",
+                  ml: '100px',
+                  color: "white",
+                  fontWeight: 'bold',
+                  [theme.breakpoints.down('sm')]: {
+                    margin: '0 auto',
+                    textAlign: 'center',
+                    mt: 10
+                  },
+                }}>TCC - FAETEC Amaury César Vieira, Volta Redonda
+                </Typography>
+                <Typography sx={{ color: 'white', fontSize: '20px', mt: "100px", ml: "100px", fontWeight: '600',
+                  [theme.breakpoints.down('sm')]: {
+                    margin: '0 auto',
+                    textAlign: 'center',
+                    mt: 5
+                  },
+              }}>
+                  Essa empresa é um projeto de TCC do curso Informática para Internet da FAETEC Volta Redonda
+                </Typography>
               </Balancer>
             </Slide>
             <Slide direction="up" >

@@ -12,7 +12,9 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import { openModal } from "../../redux/actions";
 import { useNavigate } from 'react-router-dom';
-import { createTheme } from '@mui/material';
+import theme from '../../assets/theme';
+import Image from '../../assets/logo.png';
+
 
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
@@ -51,47 +53,40 @@ export default function MenuApp(props: any) {
 
   console.log(showCad);
 
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 601,
-        md: 901,
-        lg: 1201,
-        xl: 1501,
-      },
-    },
-  });
-
   return (
     <AppBar sx={{
       position: 'fixed',
       top: '0',
       left: '0',
       width: '100%',
+      [theme.breakpoints.down('sm')]: {
+        width: '100vw'
+      },
     }}>
       <Container>
-        <Toolbar disableGutters>
+        <Toolbar>
           <Typography
-            variant="h4"
             noWrap
             component="a"
             href="/"
             sx={{
               mr: 20,
-              display: { xs: 'none', md: 'flex' },
               fontFamily: 'Franklin Gothic Demi Cond',
               fontWeight: 'bold',
               textDecoration: 'none',
               background: 'linear-gradient(to right, #0fcd88 52%, white 50%)',
               '-webkit-background-clip': 'text',
               '-webkit-text-fill-color': 'transparent',
+              display: { xs: 'none', sm: 'none', md: 'flex' },
+              fontSize: '30px'
             }}
           >
             EasyPass
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' },
+            
+        }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -114,6 +109,7 @@ export default function MenuApp(props: any) {
                 vertical: 'top',
                 horizontal: 'left',
               }}
+              
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
@@ -138,6 +134,21 @@ export default function MenuApp(props: any) {
                 </MenuItem>
               ))}
             </Menu>
+          </Box>
+          <Box 
+          sx={{
+            display: { xs: 'flex', md: 'none'},
+            [theme.breakpoints.down('sm')]: {
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          }}>
+            <a href="/">
+            <img src={Image} style={{
+              height: '5vh',
+              width: '10vw',
+            }}></img>
+            </a>
           </Box>
           <Typography
             variant="h5"

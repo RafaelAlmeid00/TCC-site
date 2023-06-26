@@ -4,7 +4,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import { removeToken, verify } from "../FrontDecoded";
 
-
 function SectionPerfil1() {
     const [dado, setPega] = useState('');
     const userJson = localStorage.getItem('user');
