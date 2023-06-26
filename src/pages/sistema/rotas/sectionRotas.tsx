@@ -41,9 +41,15 @@ function SectionRota1() {
         );
 
     async function takeIt() {
-        
-        setTake(await axios.post('http://localhost:3344/routes/search', 
-        {token: token, route_num: value}));
+        if (options == 'N ônibus') {
+          setTake(await axios.post('http://localhost:3344/routes/search', 
+          {token: token, route_num: value}));
+        }else
+        if (options == 'Rotas') {
+          setTake(await axios.post('http://localhost:3344/routes/search', 
+          {token: token, route_nome: value}));
+        }
+   
         
         console.log(take.data[0].route_nome)
     }
@@ -94,7 +100,7 @@ function SectionRota1() {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
+                  <MenuItem value={'N ônibus'}>Número do ônibus</MenuItem>
                   <MenuItem value={'Rotas'} >Rotas</MenuItem>
                   
                 </Select>

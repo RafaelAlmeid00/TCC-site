@@ -33,7 +33,6 @@ module.exports = {
             console.log(error);
         }
     },
-
     async attBuss (req, res){
         try {
             const { bus_id: id } = req.body;

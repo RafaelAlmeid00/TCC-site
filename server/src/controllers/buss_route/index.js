@@ -19,9 +19,15 @@ module.exports = {
     async consultRoute(req, res) {
         try {
             const { route_num: num } = req.body;
-
-            const consult = await knex("bus_route").where('route_num', '=', num);
-            res.status(201).send(consult);
+            const { route_nome: nome } = req.body
+            if (num != undefined) {
+                const consult = await knex("bus_route").where('route_num', '=', num);
+                return res.status(201).send(consult);
+            }else
+            if (nome != undefined) {
+                const consultName = await knex("bus_route").where('route_nome', 'like', `%${nome}%`);
+                return res.status(201).send(consultName);
+            }
         } catch (error) {
             console.log(error); 
         }
