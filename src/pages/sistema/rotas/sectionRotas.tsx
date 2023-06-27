@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import { Margin, Padding, WidthFull} from "@mui/icons-material";
+import Image from "../../../assets/busao.jpg";
 const token = localStorage.getItem('token');
 
 const a = {
@@ -64,11 +65,14 @@ function SectionRota1() {
                 marginTop: '10%',
                 marginLeft: '25%',
                 padding: '0%',
+                border: 1,
+                borderRadius: '2%',
                 width: '70vw',
                 height: '70vh',
             }}>
                 <Box id='box' component="div" sx={{
-                    border: 1,
+                    borderRight: 1,
+                    
                     width: '50%',
                     display: 'inline-block',
 
@@ -93,7 +97,7 @@ function SectionRota1() {
                 </Select>
               </FormControl>
               <TextField label={options} type="input" onChange={i => setValue(i.target.value)}></TextField><Button onClick={takeIt}>clica</Button>
-              <Timeline position="alternate" sx={{mr:25, mt: 5}}>
+              <Timeline position="alternate" sx={{padding: '10%'}}>
                     <TimelineItem>
                       <TimelineSeparator>
                         <TimelineDot variant="outlined" color="primary"/>
@@ -109,6 +113,14 @@ function SectionRota1() {
                     </TimelineItem>
               </Timeline>
               </Box>
+              <Box sx={{
+                width: '50%',
+                
+              }}>
+              <img src={Image} style={{
+                height: '70vh',
+                borderRadius: '2%',
+                width: '35vw',}}></img></Box>
 
             </Container>
         </>
