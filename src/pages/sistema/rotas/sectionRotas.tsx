@@ -27,18 +27,11 @@ function SectionRota1() {
     const [take, setTake] = useState();
     const [value, setValue] = useState('');
     const [options, setAge] = useState('');
+    const [textval, setTextval] = useState('');
+
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value);
       };
-
-    
-        const renderTree = (nodes: RenderTree) => (
-          <TreeItem key={nodes.take} nodeId={nodes.take} label={nodes.take}>
-            {Array.isArray(nodes.children)
-              ? nodes.children.map((node) => renderTree(node))
-              : null}
-          </TreeItem>
-        );
 
     async function takeIt() {
         if (options == 'N ônibus') {
@@ -49,24 +42,16 @@ function SectionRota1() {
           setTake(await axios.post('http://localhost:3344/routes/search', 
           {token: token, route_nome: value}));
         }
-   
-        
-        console.log(take.data[0].route_nome)
-    }
-
-    interface RenderTree {
-      more: string,
-      children?: readonly RenderTree[];
-    }
-    
-    const data: RenderTree = {
-      more: 'entendi',
-      children: [
-          {
-            more: take
-          }
-      ],
+        setTextval(String(take?.data[0].route_nome));
     };
+    
+    const regex = /[/]/; 
+    var Strcasa = textval.search(regex);
+    
+    console.log('this is take: ', take?.data[0]?.route_nome);
+    console.log('this is textval: ', textval);
+    
+    
     return (
         <>  
             <MenuSistema></MenuSistema>
@@ -112,24 +97,15 @@ function SectionRota1() {
                         <TimelineDot />
                         <TimelineConnector />
                       </TimelineSeparator>
-                      <TimelineContent>{take?.data[0].route_nome}</TimelineContent>
+                      <TimelineContent>{textval.slice(0, Strcasa - 1)}</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>               
                       <TimelineSeparator>
                         <TimelineDot />
                       </TimelineSeparator>
-                      <TimelineContent>{take?.data[0].route_nome}</TimelineContent>
+                      <TimelineContent>{textval.slice(Strcasa + 1)}</TimelineContent>
                     </TimelineItem>
               </Timeline>
-              <TreeView 
-                aria-label="rich object"
-                defaultCollapseIcon={<ExpandMoreIcon />}
-                defaultExpanded={['root']}
-                defaultExpandIcon={<ChevronRightIcon />}
-                sx={{ height: 110, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-              >
-                {renderTree(data)}
-              </TreeView>
               </Box>
 
             </Container>

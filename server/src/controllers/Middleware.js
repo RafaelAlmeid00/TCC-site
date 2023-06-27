@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config()
 module.exports = {
     async mid (req, res, next){ 
-
+        const test = process.env.JWT_SECRET
         const token = req.body.token;
         const insominiaT = req.cookies.token;
-        console.log('tokão ew: ', token);
+        console.log('tokão ew: ', token, ' and ', test);
         if (token) {  
             try {
                 jwt.verify(token, 'Uz&Nxq6ifp*bqvBJgG$z', (err, decoded) => {
