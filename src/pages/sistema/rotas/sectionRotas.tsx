@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import MenuLateral from "../../../components/menu/menulateral";
 import MenuSistema from "../../../components/menu/menusistema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import { Margin, Padding, WidthFull} from "@mui/icons-material";
@@ -27,7 +27,7 @@ function SectionRota1() {
     const [take, setTake] = useState();
     const [value, setValue] = useState('');
     const [options, setAge] = useState('');
-    const [textval, setTextval] = useState('');
+    const [textval, setTextval] = useState(' ');
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value);
@@ -42,10 +42,11 @@ function SectionRota1() {
           setTake(await axios.post('http://localhost:3344/routes/search', 
           {token: token, route_nome: value}));
         }
-        setTextval(String(take?.data[0].route_nome));
     };
-    
-    const regex = /[/]/; 
+    useEffect(() => {
+      setTextval(String(take?.data[0]?.route_nome));
+    }, [take])
+    const regex = /[/]/;
     var Strcasa = textval.search(regex);
     
     console.log('this is take: ', take?.data[0]?.route_nome);
