@@ -47,7 +47,8 @@ function SectionRota1() {
       setTextval(String(take?.data[0]?.route_nome));
     }, [take])
     const regex = /[/]/;
-    var Strcasa = textval.search(regex);
+    var Strcasa = () => { if (textval != undefined){return textval.search(regex)} };
+    console.log(Strcasa);
     
     console.log('this is take: ', take?.data[0]?.route_nome);
     console.log('this is textval: ', textval);
@@ -92,19 +93,19 @@ function SectionRota1() {
                 </Select>
               </FormControl>
               <TextField label={options} type="input" onChange={i => setValue(i.target.value)}></TextField><Button onClick={takeIt}>clica</Button>
-              <Timeline sx={{mr:55, mt: 5}}>
+              <Timeline position="alternate" sx={{mr:25, mt: 5}}>
                     <TimelineItem>
                       <TimelineSeparator>
-                        <TimelineDot />
+                        <TimelineDot variant="outlined" color="primary"/>
                         <TimelineConnector />
                       </TimelineSeparator>
-                      <TimelineContent>{textval.slice(0, Strcasa - 1)}</TimelineContent>
+                      <TimelineContent>{textval.slice(0, Strcasa() - 1)}</TimelineContent>
                     </TimelineItem>
                     <TimelineItem>               
                       <TimelineSeparator>
-                        <TimelineDot />
+                        <TimelineDot variant="outlined" color="secondary"/>
                       </TimelineSeparator>
-                      <TimelineContent>{textval.slice(Strcasa + 1)}</TimelineContent>
+                      <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
                     </TimelineItem>
               </Timeline>
               </Box>
