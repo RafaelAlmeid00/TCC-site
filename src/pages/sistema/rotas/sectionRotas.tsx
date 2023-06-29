@@ -3,7 +3,7 @@ import  color from "../../../assets/colors";
 import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem } from "@mui/lab";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import SendIcon from '@mui/icons-material/Send';
 import MenuLateral from "../../../components/menu/menulateral";
 import MenuSistema from "../../../components/menu/menusistema";
 import { useEffect, useState } from "react";
@@ -35,20 +35,23 @@ function SectionRota1() {
       };
 
     async function takeIt() {
-        if (options == 'N ônibus') {
+        if (options == 'Número do ônibus') {
           setTake(await axios.post('http://localhost:3344/routes/search', 
           {token: token, route_num: value}));
+
         }else
         if (options == 'Rotas') {
           setTake(await axios.post('http://localhost:3344/routes/search', 
           {token: token, route_nome: value}));
+
         }
+        
     };
     useEffect(() => {
       setTextval(String(take?.data[0]?.route_nome));
     }, [take])
     const regex = /[/]/;
-    var Strcasa = () => { if (textval != undefined){return textval.search(regex)} };
+    var Strcasa = () => { if (textval != undefined){return textval.search(regex)}else{setTextval(' ')} };
     console.log(Strcasa);
     
     console.log('this is take: ', take?.data[0]?.route_nome);
@@ -77,8 +80,9 @@ function SectionRota1() {
                     display: 'inline-block',
 
                     padding: '4%',
+                   
                 }}>
-                <FormControl sx={{mr: 1, minWidth: 80 }} >
+                <FormControl  sx={{mr: 0.5, minWidth: 80, padding: 0.1, width: '24%'}} >
                 <InputLabel id="demo-simple-select-autowidth-label">Opções</InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
@@ -91,12 +95,31 @@ function SectionRota1() {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={'N ônibus'}>Número do ônibus</MenuItem>
+                  <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
                   <MenuItem value={'Rotas'} >Rotas</MenuItem>
                   
                 </Select>
               </FormControl>
-              <TextField label={options} type="input" onChange={i => setValue(i.target.value)}></TextField><Button onClick={takeIt}>clica</Button>
+              <TextField label={options} type="input" onChange={i => setValue(i.target.value)} sx={{
+                mr: 0.1
+              }}></TextField><Button variant="outlined" id="btn" sx={{height: '8vh',  
+              '&:hover': {
+                background: '#e9e9e9e9',
+                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
+                '& svg': {
+                    fill: colors.sc, // Adicionado para mudar a cor do ícone
+                },
+                '& .MuiTypography-root': {
+                    color: colors.sc, // Adicionado para mudar a cor do texto
+                }}}} onClick={takeIt} endIcon={<SendIcon sx={{width: '100%', paddingRight: '2vh', 
+              '&:hover': {
+                  color: color.sc,
+                  '& svg': {
+                      fill: colors.sc, // Adicionado para mudar a cor do ícone
+                  },
+                  '& .MuiTypography-root': {
+                      color: colors.sc, // Adicionado para mudar a cor do texto
+                  }}}}/>}></Button>
               <Timeline position="alternate" sx={{padding: '10%'}}>
                     <TimelineItem>
                       <TimelineSeparator>
@@ -112,7 +135,9 @@ function SectionRota1() {
                       <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
                     </TimelineItem>
               </Timeline>
+              <Typography>{take?.data[0]?.path_routes}</Typography>
               </Box>
+
               <Box sx={{
                 width: '50%',
                 
