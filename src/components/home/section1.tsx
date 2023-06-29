@@ -114,7 +114,7 @@ function Section1() {
                         </Balancer>
                     </Slide>
                     <Slide direction="up" >
-                        <BtnsApp/>
+                        <BtnsApp cl="white" mt="60px" ml="100px" />
                     </Slide>
                 </Container>
                 <Container sx={{

@@ -1,10 +1,11 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import { Slide } from "react-awesome-reveal";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
 import app1 from "../../assets/app1.png";
 import app2 from "../../assets/app2.png";
 import app3 from "../../assets/app3.png";
+import BtnsApp from "../buttons/app";
 
 export default function SectionApp1() {
   return (
@@ -47,33 +48,40 @@ export default function SectionApp1() {
               >
                 Baixe o App
               </Typography>
-              <Typography
+              <Container
                 sx={{
-                  fontSize: {
-                    xs: "2vh", // (7.5 / 1200) * 600
-                    sm: "2.5vh", // (7.5 / 1200) * 900
-                    md: "2.5vh", // (7.5 / 1200) * 1200
-                    lg: "3vh",
-                    xl: "3vh", // Manter o mesmo tamanho de lg para xl
-                  },
+                  textAlign: "justify",
                 }}
               >
-                Traga mais praticidade para sua vida!
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: {
-                    xs: "2vh", // (7.5 / 1200) * 600
-                    sm: "2.5vh", // (7.5 / 1200) * 900
-                    md: "2.5vh", // (7.5 / 1200) * 1200
-                    lg: "3vh",
-                    xl: "3vh", // Manter o mesmo tamanho de lg para xl
-                  },
-                }}
-              >
-                recarregue seu cartão online
-              </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: "2vh", // (7.5 / 1200) * 600
+                      sm: "2.5vh", // (7.5 / 1200) * 900
+                      md: "2.5vh", // (7.5 / 1200) * 1200
+                      lg: "3vh",
+                      xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                    },
+                  }}
+                >
+                  Traga mais praticidade para sua vida!
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: "2vh", // (7.5 / 1200) * 600
+                      sm: "2.5vh", // (7.5 / 1200) * 900
+                      md: "2.5vh", // (7.5 / 1200) * 1200
+                      lg: "3vh",
+                      xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                    },
+                  }}
+                >
+                  Recarregue seu cartão online
+                </Typography>
+              </Container>
             </Slide>
+            <BtnsApp cl="black" mt="60px" ml="100px" />
           </Container>
           <Container
             sx={{
@@ -116,18 +124,19 @@ export default function SectionApp1() {
               style={{
                 width: "150px",
                 height: "290px",
+                marginLeft: "100px",
               }}
             ></img>
           </Container>
           <Container
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             <Typography
               sx={{
                 color: colors.tc,
+                mt: "10px",
                 fontSize: {
                   xs: "2.5vh",
                   sm: "3vh",
@@ -145,13 +154,14 @@ export default function SectionApp1() {
 
           <Container
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              display: "grid",
+              textAlign: "center",
             }}
           >
             <Typography
               sx={{
                 color: colors.tc,
+                mt: "10px",
                 fontSize: {
                   xs: "2.5vh",
                   sm: "3vh",
@@ -161,7 +171,22 @@ export default function SectionApp1() {
                 },
               }}
             >
-              Veja a rota do seu Ônibus
+              Veja suas rotas
+            </Typography>
+            <Typography
+              sx={{
+                textAlign: "justify",
+                fontSize: {
+                  xs: "2vh", // (7.5 / 1200) * 600
+                  sm: "2.5vh", // (7.5 / 1200) * 900
+                  md: "2.5vh", // (7.5 / 1200) * 1200
+                  lg: "3vh",
+                  xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                },
+              }}
+            >
+              Em nosso aplicativo os usuários possuem todos os recursos na palma
+              de sua mão, como o a verificação das rotas dos ônibus.
             </Typography>
           </Container>
           <Container
@@ -178,6 +203,7 @@ export default function SectionApp1() {
               style={{
                 height: "290px",
                 width: "150px",
+                marginRight: "100px",
               }}
             ></img>
           </Container>

@@ -117,7 +117,7 @@ export default function SectionApp2() {
           }}
         >
           <Slide direction="up">
-            <BtnsApp/>
+            <BtnsApp clr="black"/>
           </Slide>
         </Container>
       </Box>

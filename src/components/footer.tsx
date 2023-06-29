@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import colors from "../assets/colors";
 import Img from "./img";
 import theme from "../assets/theme";
+import BtnsApp from "./buttons/app";
 
 export default function Footer() {
 
@@ -193,12 +194,7 @@ export default function Footer() {
             display: 'none',
           },
         }}>
-          <Link href="/">
-            <Img image='https://www.gympass.com/mep-assets/images/commons/button_ios_store.svg' height='50' width='160px' ml={undefined} mr={undefined} />
-          </Link>
-          <Link href="/">
-            <Img image='https://www.gympass.com/mep-assets/images/commons/button_android_store.svg' height='50' width='160px' ml='30px' mr={undefined} />
-          </Link>
+          <BtnsApp cl="white" mt='0' ml="0" />
         </Container>
       </Container>
       <Container sx={{
