@@ -36,11 +36,13 @@ function SectionPerfil2() {
         <>
             <Box sx={{
                 height: '100vh',
+                width: '80vw',
+                float: 'right'
             }}>
                 <Divider variant="fullWidth" component="ul" sx={{
                     width: '58%',
-                    ml: 45,
                     borderBottom: '2px solid #ccc',
+                    ml: 25
                 }} />
                 <Container sx={{
                     display: 'flex',
@@ -101,7 +103,7 @@ function SectionPerfil2() {
                 </Container>
                 <Divider variant="fullWidth" component="ul" sx={{
                     width: '58%',
-                    ml: 45,
+                    ml: 25,
                     mt: 6,
                     borderBottom: '2px solid #ccc',
                 }} />

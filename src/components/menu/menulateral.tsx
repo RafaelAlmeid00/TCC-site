@@ -28,7 +28,7 @@ export default function MenuLateral(props: any) {
                 position: 'fixed',
                 top: '0',
                 left: '0',
-                width: '20%',
+                width: '20vw',
                 height: '100%',
                 marginTop: '10.3vh',
                 background: '#FFFFFF',
