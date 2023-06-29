@@ -68,13 +68,13 @@ function SectionRota1() {
                 marginTop: '10%',
                 marginLeft: '25%',
                 padding: '0%',
-                border: 1,
                 borderRadius: '2%',
                 width: '70vw',
                 height: '70vh',
+                boxShadow: ' 4px 4px 4px 4px rgba(0, 0, 0, 0.3)',
             }}>
                 <Box id='box' component="div" sx={{
-                    borderRight: 1,
+                 
                     
                     width: '50%',
                     display: 'inline-block',
