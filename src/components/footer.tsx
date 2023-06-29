@@ -38,7 +38,7 @@ export default function Footer() {
   return (
     <Box sx={{
       height: '400px',
-      width: '100%',
+      width: '100vw',
       backgroundColor: "black"
     }}>
       <Container sx={{

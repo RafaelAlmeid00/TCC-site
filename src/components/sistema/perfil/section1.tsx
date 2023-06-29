@@ -30,11 +30,12 @@ function SectionPerfil1() {
         <>
             <Box sx={{
                 mt: '10vh',
-                ml: '30vh',
                 height: '89.99vh',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                width: '80vw',
+                float: 'right'
             }}>
                 <Container sx={{
                     borderRadius: 6,
@@ -43,7 +44,7 @@ function SectionPerfil1() {
                     backgroundColor: '#141414'
                 }}>
                     <Container sx={{
-                        width: '106.25%',
+                        width: '106.8%',
                         height: '25%',
                         ml: -3,
                         backgroundColor: '#D3D3D3',
@@ -84,6 +85,7 @@ function SectionPerfil1() {
                             fontSize: 20,
                             fontWeight: 600,
                             color: 'white',
+                            width: '50%',
                         }}>
                             {userData.user_nome}
                         </Typography>
