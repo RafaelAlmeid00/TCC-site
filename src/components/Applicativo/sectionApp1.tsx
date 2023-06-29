@@ -1,9 +1,10 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { Slide } from "react-awesome-reveal";
-import Title from "../frases/title";
 import colors from "../../assets/colors";
-import Subtitlepad from "../frases/subtitlepad";
-import { url } from "./src/teste";
+import theme from "../../assets/theme";
+import app1 from "../../assets/app1.png";
+import app2 from "../../assets/app2.png";
+import app3 from "../../assets/app3.png";
 
 export default function SectionApp1() {
   return (
@@ -31,17 +32,47 @@ export default function SectionApp1() {
             }}
           >
             <Slide direction="left">
-              <Title
-                textColor={colors.tc}
-                textSize="36px"
-                title="Baixe o App"
-                children={null}
-              />
-              <Subtitlepad
-                sz="20px"
-                text="Traga mais praticidade para sua vida! recarregue seu cartão online"
-                mt="50px"
-              />
+              <Typography
+                sx={{
+                  color: colors.tc,
+                  fontSize: {
+                    xs: "2.5vh", // (7.5 / 1200) * 600
+                    sm: "3vh", // (7.5 / 1200) * 900
+                    md: "4vh", // (7.5 / 1200) * 1200
+                    lg: "5vh",
+                    xl: "5vh", // Manter o mesmo tamanho de lg para xl
+                  },
+                  mr: "100px",
+                }}
+              >
+                Baixe o App
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: "2vh", // (7.5 / 1200) * 600
+                    sm: "2.5vh", // (7.5 / 1200) * 900
+                    md: "2.5vh", // (7.5 / 1200) * 1200
+                    lg: "3vh",
+                    xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                  },
+                }}
+              >
+                Traga mais praticidade para sua vida!
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: {
+                    xs: "2vh", // (7.5 / 1200) * 600
+                    sm: "2.5vh", // (7.5 / 1200) * 900
+                    md: "2.5vh", // (7.5 / 1200) * 1200
+                    lg: "3vh",
+                    xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                  },
+                }}
+              >
+                recarregue seu cartão online
+              </Typography>
             </Slide>
           </Container>
           <Container
@@ -51,11 +82,11 @@ export default function SectionApp1() {
               height: "100%",
               display: "flex",
               justifyContent: "center",
-              alignItems: "end",
+              alignItems: "center",
             }}
           >
             <img
-              src={url}
+              src={app2}
               style={{
                 width: "300px",
                 height: "300px",
@@ -81,41 +112,57 @@ export default function SectionApp1() {
             }}
           >
             <img
-              src={url}
+              src={app1}
               style={{
                 width: "150px",
                 height: "290px",
               }}
             ></img>
           </Container>
-          <Container>
-            <Title
-              textColor={colors.tc}
-              textSize="25px"
-              title="Faça sua recarga"
-              children={null}
-            />
-          </Container>
-          <Box
-            sx={{
-              background: "#black",
-              height: "50%",
-              width: "50%",
-            }}
-          ></Box>
           <Container
             sx={{
-              m: 0,
               display: "flex",
               justifyContent: "center",
             }}
           >
-            <Title
-              textColor={colors.tc}
-              textSize="25px"
-              title="Veja a rota do seu Ônibus"
-              children={null}
-            />
+            <Typography
+              sx={{
+                color: colors.tc,
+                fontSize: {
+                  xs: "2.5vh",
+                  sm: "3vh",
+                  md: "4vh",
+                  lg: "4vh",
+                  xl: "4vh",
+                },
+              }}
+            >
+              Faça sua recarga
+            </Typography>
+          </Container>
+
+          <Divider orientation="vertical" variant="middle" flexItem></Divider>
+
+          <Container
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                color: colors.tc,
+                fontSize: {
+                  xs: "2.5vh",
+                  sm: "3vh",
+                  md: "4vh",
+                  lg: "4vh",
+                  xl: "4vh",
+                },
+              }}
+            >
+              Veja a rota do seu Ônibus
+            </Typography>
           </Container>
           <Container
             sx={{
@@ -127,10 +174,10 @@ export default function SectionApp1() {
             }}
           >
             <img
-              src={url}
+              src={app3}
               style={{
-                height:"290px",
-                width:"150px"
+                height: "290px",
+                width: "150px",
               }}
             ></img>
           </Container>

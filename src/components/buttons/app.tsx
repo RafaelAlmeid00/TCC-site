@@ -3,7 +3,8 @@ import theme from "../../assets/theme";
 import AppleIcon from '@mui/icons-material/Apple';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-export default function BtnsApp() {
+export default function BtnsApp(){
+    
     return (
         <Container
             sx={{

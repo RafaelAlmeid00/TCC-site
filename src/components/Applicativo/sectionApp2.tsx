@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Img from "../img";
 import Balancer from "react-wrap-balancer";
 import { Slide } from "react-awesome-reveal";
+import BtnsApp from "../buttons/app";
 
 export default function SectionApp2() {
   const CardsApp = [
@@ -116,24 +117,7 @@ export default function SectionApp2() {
           }}
         >
           <Slide direction="up">
-            <Link href="/">
-              <Img
-                image="https://imgur.com/Kar3By6.png"
-                height="60"
-                width="150px"
-                mr="7px"
-                ml={undefined}
-              />
-            </Link>
-            <Link href="/">
-              <Img
-                image="https://imgur.com/HOg5lFJ.png"
-                height="60"
-                width="150px"
-                ml="7px"
-                mr={undefined}
-              />
-            </Link>
+            <BtnsApp/>
           </Slide>
         </Container>
       </Box>

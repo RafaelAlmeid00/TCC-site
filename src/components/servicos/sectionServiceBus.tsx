@@ -4,7 +4,6 @@ import Img from "../img";
 import Card from "../card";
 import { motion } from "framer-motion";
 import Cards from "../card";
-import Subtitlepad from "../frases/subtitlepad";
 
 export default function sectionBus() {
   const CardsServ = [
@@ -107,12 +106,6 @@ export default function sectionBus() {
         ))}
         </Container>
         */}
-        <Subtitlepad
-          sz={undefined}
-          text="Teremos muito prazer em falar com você, entre em contato com nosso time e seja mais um cliente EasyPass.
-"
-          mt="55%"
-        />
         <Button
           variant="contained"
           href="/opcoes"
