@@ -1,10 +1,17 @@
-import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Link,
+  Typography,
+} from "@mui/material";
 import { Slide } from "react-awesome-reveal";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
-import app1 from "../../assets/app1.png";
+import app1 from "../../assets/app1.svg";
 import app2 from "../../assets/app2.png";
-import app3 from "../../assets/app3.png";
+import app3 from "../../assets/app3.svg";
 import BtnsApp from "../buttons/app";
 
 export default function SectionApp1() {
@@ -116,7 +123,7 @@ export default function SectionApp1() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "30%",
+              width: "16%",
             }}
           >
             <img
@@ -130,6 +137,10 @@ export default function SectionApp1() {
           </Container>
           <Container
             sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
               textAlign: "center",
             }}
           >
@@ -148,13 +159,85 @@ export default function SectionApp1() {
             >
               Faça sua recarga
             </Typography>
+            <Typography
+              sx={{
+                textAlign: "justify",
+                fontSize: {
+                  xs: "2vh", // (7.5 / 1200) * 600
+                  sm: "2.5vh", // (7.5 / 1200) * 900
+                  md: "2.5vh", // (7.5 / 1200) * 1200
+                  lg: "3vh",
+                  xl: "3vh", // Manter o mesmo tamanho de lg para xl
+                },
+                height: "190px",
+              }}
+            >
+              Otimize seu dia e realize sua recarga totalmente online pelo nosso
+              site e aplicativo
+            </Typography>
+            <Link
+              href="/"
+              sx={{
+                textDecoration: "none",
+              }}
+            >
+              <Button
+                sx={{
+                  border: "2px solid",
+                  borderColor: "black",
+                  borderRadius: 3,
+                  padding: 3,
+                  height: "5vh",
+                  width: {
+                    xs: "40vw",
+                    sm: "20vw",
+                    md: "15vw",
+                    lg: "13vw",
+                    xl: "13vw",
+                  },
+                  color: "black",
+                  display: "flex",
+                  alignItems: "center", // Alinhar verticalmente ícone e texto
+                  justifyContent: "center", // Alinhar horizontalmente ícone e texto
+                  mb:"50px"
+                }}
+              >
+                <Box
+                  sx={{
+                    width: {
+                      xs: "30vw",
+                      sm: "15vw",
+                      md: "12vw",
+                      lg: "12vw",
+                      xl: "12vw",
+                    },
+                    overflow: "hidden", // Evitar que o texto exceda o limite do botão
+                    textOverflow: "ellipsis", // Adicionar reticências caso o texto seja muito longo
+                    whiteSpace: "nowrap", // Evitar quebra de linha
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textTransform: "none",
+                      mr: 1,
+                      fontSize: "inherit", // Herdar tamanho de fonte do componente pai (Button)
+                    }}
+                  >
+                    Recarregar
+                  </Typography>
+                </Box>
+              </Button>
+            </Link>
           </Container>
 
           <Divider orientation="vertical" variant="middle" flexItem></Divider>
 
           <Container
             sx={{
-              display: "grid",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
               textAlign: "center",
             }}
           >
@@ -183,11 +266,65 @@ export default function SectionApp1() {
                   lg: "3vh",
                   xl: "3vh", // Manter o mesmo tamanho de lg para xl
                 },
+                height: "190px",
               }}
             >
               Em nosso aplicativo os usuários possuem todos os recursos na palma
               de sua mão, como o a verificação das rotas dos ônibus.
             </Typography>
+            <Link
+              href="/opcoes"
+              sx={{
+                textDecoration: "none",
+              }}
+            >
+              <Button
+                sx={{
+                  border: "2px solid",
+                  borderColor: "black",
+                  borderRadius: 3,
+                  padding: 3,
+                  height: "5vh",
+                  width: {
+                    xs: "40vw",
+                    sm: "20vw",
+                    md: "15vw",
+                    lg: "13vw",
+                    xl: "13vw",
+                  },
+                  color: "black",
+                  display: "flex",
+                  alignItems: "center", // Alinhar verticalmente ícone e texto
+                  justifyContent: "center", // Alinhar horizontalmente ícone e texto
+                  mb:"50px"
+                }}
+              >
+                <Box
+                  sx={{
+                    width: {
+                      xs: "30vw",
+                      sm: "15vw",
+                      md: "12vw",
+                      lg: "12vw",
+                      xl: "12vw",
+                    },
+                    overflow: "hidden", // Evitar que o texto exceda o limite do botão
+                    textOverflow: "ellipsis", // Adicionar reticências caso o texto seja muito longo
+                    whiteSpace: "nowrap", // Evitar quebra de linha
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textTransform: "none",
+                      mr: 1,
+                      fontSize: "inherit", // Herdar tamanho de fonte do componente pai (Button)
+                    }}
+                  >
+                    Rotas
+                  </Typography>
+                </Box>
+              </Button>
+            </Link>
           </Container>
           <Container
             sx={{
@@ -195,7 +332,7 @@ export default function SectionApp1() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "30%",
+              width: "15%",
             }}
           >
             <img

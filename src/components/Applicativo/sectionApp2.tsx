@@ -1,8 +1,11 @@
-import { Box, Container, Link, Slider } from "@mui/material";
+import { Box, Card, CardMedia, Container, Link, Slider } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
-import Img from "../img";
 import Balancer from "react-wrap-balancer";
+import simplicidade from "../../assets/simplicidade.svg";
+import pobre from "../../assets/pobre.svg";
+import net from "../../assets/internet.svg";
+import configs from "../../assets/configs.svg";
 import { Slide } from "react-awesome-reveal";
 import BtnsApp from "../buttons/app";
 
@@ -19,39 +22,39 @@ export default function SectionApp2() {
           wd: "200px",
         },
         {
-          title: "Cadastro Simples",
-          text: "Sistema de cadastro simples para as escolas e seus matriculados",
+          title: "Pedido de cartão Online",
+          text: "Peça seu cartão de forma 100% online sem nenhuma complicação",
           mt: "120px",
           ml: "50px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
+          image: simplicidade,
           hg: "170px",
           wd: "200px",
         },
         {
-          title: "Cadastro Simples",
-          text: "Sistema de cadastro simples para as escolas e seus matriculados",
+          title: "Gerenciamento de cartão",
+          text: "Gerencie facilmente seus cartões a hora que você quiser",
           ml: "50px",
           mt: "120px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
+          image: configs,
           hg: "170px",
           wd: "200px",
         },
         {
-          title: "Cadastro Simples",
-          text: "Sistema de cadastro simples para as escolas e seus matriculados",
+          title: "Recarga 100% online",
+          text: "Realize recargas a qualquer momento e de qualquer lugar",
           ml: "50px",
           mt: "120px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
+          image: net,
           hg: "170px",
           wd: "200px",
         },
         {
-          title: "Cadastro Simples",
-          text: "Sistema de cadastro simples para as escolas e seus matriculados",
+          title: "Pedido de cartão gratuito",
+          text: "Peça seu cartão sem se preucupar em gastar nada e seja feliz",
           ml: "50px",
           mr: "50px",
           mt: "120px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
+          image: pobre,
           hg: "170px",
           wd: "200px",
         },
@@ -75,7 +78,7 @@ export default function SectionApp2() {
     <>
       <Box
         sx={{
-          height: "89.99vh",
+          height: "99.99vh",
           width: "100%",
         }}
       >
@@ -117,7 +120,7 @@ export default function SectionApp2() {
           }}
         >
           <Slide direction="up">
-            <BtnsApp clr="black"/>
+            <BtnsApp cl="black" mt={undefined} ml={undefined} mb={undefined} />
           </Slide>
         </Container>
       </Box>

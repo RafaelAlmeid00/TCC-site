@@ -3,7 +3,7 @@ import theme from "../../assets/theme";
 import AppleIcon from "@mui/icons-material/Apple";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-export default function BtnsApp({ cl, mt, ml }) {
+export default function BtnsApp({ cl, mt, ml, mb }) {
   return (
     <Container
       sx={{
@@ -11,6 +11,7 @@ export default function BtnsApp({ cl, mt, ml }) {
         flexDirection: "row",
         mt: mt, //60 (exceção footer)
         ml: ml, //100 (exceção footer)
+        mb: mb, 
         [theme.breakpoints.down("md")]: {
           display: "flex",
           justifyContent: "center",

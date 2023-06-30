@@ -18,7 +18,7 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                     <CardMedia
                         component="img"
                         height={hg}
-                        image={image}
+                        src={image}
 
                         sx={{
                             [theme.breakpoints.down('md')]: {
