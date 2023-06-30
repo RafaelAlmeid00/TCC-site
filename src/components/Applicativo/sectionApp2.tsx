@@ -1,8 +1,8 @@
-import { Box, Card, CardMedia, Container, Link, Slider } from "@mui/material";
+import { Box,  Container} from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
-import Balancer from "react-wrap-balancer";
 import simplicidade from "../../assets/simplicidade.svg";
+import cad from "../../assets/cadastro.svg";
 import pobre from "../../assets/pobre.svg";
 import net from "../../assets/internet.svg";
 import configs from "../../assets/configs.svg";
@@ -17,8 +17,8 @@ export default function SectionApp2() {
           title: "Cadastro Simples",
           text: "Sistema de cadastro simples para as escolas e seus matriculados",
           mt: "120px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
-          hg: "170px",
+          image: cad,
+          hg: "100%",
           wd: "200px",
         },
         {
@@ -27,7 +27,7 @@ export default function SectionApp2() {
           mt: "120px",
           ml: "50px",
           image: simplicidade,
-          hg: "170px",
+          hg: "100%",
           wd: "200px",
         },
         {
@@ -36,7 +36,7 @@ export default function SectionApp2() {
           ml: "50px",
           mt: "120px",
           image: configs,
-          hg: "170px",
+          hg: "100%",
           wd: "200px",
         },
         {
@@ -45,7 +45,7 @@ export default function SectionApp2() {
           ml: "50px",
           mt: "120px",
           image: net,
-          hg: "170px",
+          hg: "100%",
           wd: "200px",
         },
         {
@@ -55,7 +55,7 @@ export default function SectionApp2() {
           mr: "50px",
           mt: "120px",
           image: pobre,
-          hg: "170px",
+          hg: "100%",
           wd: "200px",
         },
       ],
@@ -113,7 +113,6 @@ export default function SectionApp2() {
         </Container>
         <Container
           sx={{
-            align: "center",
             justifyContent: "center",
             display: "flex",
             flexDirection: "arrow",

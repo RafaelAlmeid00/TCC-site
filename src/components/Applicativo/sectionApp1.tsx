@@ -88,7 +88,7 @@ export default function SectionApp1() {
                 </Typography>
               </Container>
             </Slide>
-            <BtnsApp cl="black" mt="60px" ml="100px" />
+            <BtnsApp cl="black" mt="60px" ml="100px" mb={undefined} />
           </Container>
           <Container
             sx={{
@@ -199,7 +199,7 @@ export default function SectionApp1() {
                   display: "flex",
                   alignItems: "center", // Alinhar verticalmente ícone e texto
                   justifyContent: "center", // Alinhar horizontalmente ícone e texto
-                  mb:"50px"
+                  mb: "50px",
                 }}
               >
                 <Box
@@ -296,7 +296,7 @@ export default function SectionApp1() {
                   display: "flex",
                   alignItems: "center", // Alinhar verticalmente ícone e texto
                   justifyContent: "center", // Alinhar horizontalmente ícone e texto
-                  mb:"50px"
+                  mb: "50px",
                 }}
               >
                 <Box
@@ -342,7 +342,7 @@ export default function SectionApp1() {
                 width: "150px",
                 marginRight: "100px",
               }}
-            ></img>
+            />
           </Container>
         </Box>
       </Box>
