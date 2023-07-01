@@ -70,7 +70,7 @@ export default function MenuLateral(props: any) {
                                         color: 'black',
                                         '&:hover': {
                                             background: '#e9e9e9e9',
-                                            boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
+                                                
                                             '& svg': {
                                                 fill: colors.sc, // Adicionado para mudar a cor do ícone
                                             },

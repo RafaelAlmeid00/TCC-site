@@ -13,17 +13,6 @@ import { Margin, Padding, WidthFull} from "@mui/icons-material";
 import Image from "../../../assets/busao.jpg";
 const token = localStorage.getItem('token');
 
-const a = {
-  token: token
-};
-
-const options = {
-  method: 'GET',
-  url: 'http://localhost:3344/routes/search',
-  params: a, 
-};
-
-
 function SectionRota1() {
     const [take, setTake] = useState();
     const [vis, visState] = useState('hidden');
@@ -131,18 +120,18 @@ function SectionRota1() {
                 background: '#e9e9e9e9',
                 boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
                 '& svg': {
-                    fill: colors.sc, // Adicionado para mudar a cor do ícone
+                    fill: colors.sc, 
                 },
                 '& .MuiTypography-root': {
-                    color: colors.sc, // Adicionado para mudar a cor do texto
+                    color: colors.sc, 
                 }}}} onClick={takeIt} endIcon={<SendIcon sx={{width: '100%', paddingRight: '2vh', 
               '&:hover': {
                   color: color.sc,
                   '& svg': {
-                      fill: colors.sc, // Adicionado para mudar a cor do ícone
+                      fill: colors.sc,
                   },
                   '& .MuiTypography-root': {
-                      color: colors.sc, // Adicionado para mudar a cor do texto '#ff5252'
+                      color: colors.sc,
                   }}}}/>}></Button>
                   <Typography color={'#f9a825'}>{ex}</Typography>
               <Timeline position="alternate"  sx={{padding: '10%', visibility: `${vis}`, }}>
@@ -185,5 +174,4 @@ function SectionRota1() {
       {renderTree(data)}
     </TreeView>*/
 
-    //VAI TOMAR NO CU PIRANHA, CHUPA MINHA PIKA
 export default SectionRota1
