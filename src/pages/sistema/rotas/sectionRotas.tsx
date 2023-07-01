@@ -1,6 +1,6 @@
 import {Fade,  Avatar, FormControl, MenuItem, Box, Button, Container, IconButton, InputLabel, Typography, TextField, colors, useMediaQuery } from "@mui/material"
 import  color from "../../../assets/colors";
-import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem } from "@mui/lab";
+import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem, TimelineOppositeContent } from "@mui/lab";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SendIcon from '@mui/icons-material/Send';
@@ -95,61 +95,67 @@ function SectionRota1() {
                     padding: '4%',
                    
                 }}>
-                <FormControl  sx={{mr: 0.5, minWidth: 80, padding: 0.1, width: '24%'}} >
-                <InputLabel id="demo-simple-select-autowidth-label">Opções</InputLabel>
-                <Select
-                  labelId="demo-simple-select-autowidth-label"
-                  id="demo-simple-select-autowidth"
-                  value={options}
-                  onChange={handleChange}
-                  autoWidth
-                  label="Opções"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
-                  <MenuItem value={'Rotas'} >Rotas</MenuItem>
-                  
-                </Select>
-              </FormControl>
-              <TextField label={options} type="input" tabIndex={0} onKeyDown={keyEvent} onChange={i => setValue(i.target.value)} sx={{
-                mr: 0.1
-              }}></TextField><Button variant="outlined" id="btn" sx={{height: '8vh',  
-              '&:hover': {
-                background: '#e9e9e9e9',
-                boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-                '& svg': {
-                    fill: colors.sc, 
-                },
-                '& .MuiTypography-root': {
-                    color: colors.sc, 
-                }}}} onClick={takeIt} endIcon={<SendIcon sx={{width: '100%', paddingRight: '2vh', 
-              '&:hover': {
-                  color: color.sc,
+                  <FormControl  sx={{mr: 0.5, minWidth: 80, padding: 0.1, width: '40%', height: '10%'}} >
+                  <InputLabel id="demo-simple-select-autowidth-label">Opções</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={options}
+                    onChange={handleChange}
+                    autoWidth
+                    label="Opções"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
+                    <MenuItem value={'Rotas'} >Rotas</MenuItem>
+                    
+                  </Select>
+                </FormControl>
+                <TextField label={options} type="input" tabIndex={0} onKeyDown={keyEvent} onChange={i => setValue(i.target.value)} sx={{
+                  mr: 0.1, width: '40%', height: '10%'
+                }}></TextField><Button variant="outlined" id="btn" sx={{height: '8vh',  
+                '&:hover': {
+                  background: '#e9e9e9e9',
+                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
                   '& svg': {
-                      fill: colors.sc,
+                      fill: colors.sc, 
                   },
                   '& .MuiTypography-root': {
-                      color: colors.sc,
-                  }}}}/>}></Button>
-                  <Typography color={'#f9a825'}>{ex}</Typography>
-              <Timeline position="alternate"  sx={{padding: '10%', visibility: `${vis}`, }}>
-                    <TimelineItem>
-                      <TimelineSeparator>
-                        <TimelineDot variant="outlined" color="primary"/>
-                        <TimelineConnector />
-                      </TimelineSeparator>
-                      <TimelineContent>{textval.slice(0, Strcasa() - 1)}</TimelineContent>
-                    </TimelineItem>
-                    <TimelineItem>               
-                      <TimelineSeparator>
-                        <TimelineDot variant="outlined" color="secondary"/>
-                      </TimelineSeparator>
-                      <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
-                    </TimelineItem>
-              </Timeline>
-              <Typography>{take?.data[0]?.path_routes}</Typography>
+                      color: colors.sc, 
+                  }}}} onClick={takeIt} endIcon={<SendIcon sx={{width: '100%', paddingRight: '2vh',
+                '&:hover': {
+                    color: color.sc,
+                    '& svg': {
+                        fill: colors.sc,
+                    },
+                    '& .MuiTypography-root': {
+                        color: colors.sc,
+                    }}}}/>}></Button>
+                    <Typography color={'#f9a825'} sx={{width: '100%', height: '1%'}}>{ex}</Typography>
+                <Timeline position="alternate"  sx={{padding: '10%', visibility: `${vis}`,  height: '30%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)',}}>
+                      <TimelineItem sx={{paddingTop: '  5%'}}>
+                      <TimelineOppositeContent color="textSecondary">
+                        ponto inicial
+                      </TimelineOppositeContent>
+                        <TimelineSeparator>
+                          <TimelineDot variant="outlined" color="primary" />
+                          <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>{textval.slice(0, Strcasa() - 1)}</TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                      <TimelineOppositeContent color="textSecondary">
+                        ponto final
+                      </TimelineOppositeContent>              
+                        <TimelineSeparator>
+                          <TimelineDot variant="outlined" color="secondary" sx={{}}/>
+                        </TimelineSeparator>
+                        <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
+                      </TimelineItem>
+                </Timeline>
+                <Typography sx={{ width: '100%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', height: '5%', paddingBottom: '20%',}}>{take?.data[0]?.path_routes}</Typography>
               </Box>
 
               <Box sx={{
