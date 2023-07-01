@@ -26,9 +26,12 @@ const options = {
 
 function SectionRota1() {
     const [take, setTake] = useState();
+    const [vis, visState] = useState('hidden');
     const [value, setValue] = useState('');
     const [options, setAge] = useState('');
+    const [ex, setEx] = useState('');
     const [textval, setTextval] = useState(' ');
+    var [fax, setFax] = useState(0);
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value);
@@ -45,19 +48,42 @@ function SectionRota1() {
           {token: token, route_nome: value}));
 
         }
-        
+        fax = 0;
     };
+
     useEffect(() => {
       setTextval(String(take?.data[0]?.route_nome));
+      if (take != undefined) {
+        visState('visible')
+      }
     }, [take])
     const regex = /[/]/;
     var Strcasa = () => { if (textval != undefined){return textval.search(regex)}else{setTextval(' ')} };
     console.log(Strcasa);
     
-    console.log('this is take: ', take?.data[0]?.route_nome);
-    console.log('this is textval: ', textval);
+    //console.log('this is take: ', take?.data[0]?.route_nome);
+    //console.log('this is textval: ', textval);
     
-    
+    useEffect(() => {
+      if (options == 'Número do ônibus') {
+        console.log('oi kkkkkkkkkkkkkkkkk');
+        
+        setEx('Ex: 230, 720, 260*');
+      }else
+      if (options == 'Rotas') {
+        setEx('Ex: santo agostinho, conforto, aterrado*');
+      }else{setEx('')}
+      
+    }, [options])
+   
+    const keyEvent = param => {
+      
+        console.log(param.key);
+        if (param.key == 'Enter') {
+          takeIt()
+        }
+
+    }
     return (
         <>  
             <MenuSistema></MenuSistema>
@@ -75,10 +101,8 @@ function SectionRota1() {
             }}>
                 <Box id='box' component="div" sx={{
                  
-                    
                     width: '50%',
                     display: 'inline-block',
-
                     padding: '4%',
                    
                 }}>
@@ -100,7 +124,7 @@ function SectionRota1() {
                   
                 </Select>
               </FormControl>
-              <TextField label={options} type="input" onChange={i => setValue(i.target.value)} sx={{
+              <TextField label={options} type="input" tabIndex={0} onKeyDown={keyEvent} onChange={i => setValue(i.target.value)} sx={{
                 mr: 0.1
               }}></TextField><Button variant="outlined" id="btn" sx={{height: '8vh',  
               '&:hover': {
@@ -118,9 +142,10 @@ function SectionRota1() {
                       fill: colors.sc, // Adicionado para mudar a cor do ícone
                   },
                   '& .MuiTypography-root': {
-                      color: colors.sc, // Adicionado para mudar a cor do texto
+                      color: colors.sc, // Adicionado para mudar a cor do texto '#ff5252'
                   }}}}/>}></Button>
-              <Timeline position="alternate" sx={{padding: '10%'}}>
+                  <Typography color={'#f9a825'}>{ex}</Typography>
+              <Timeline position="alternate"  sx={{padding: '10%', visibility: `${vis}`, }}>
                     <TimelineItem>
                       <TimelineSeparator>
                         <TimelineDot variant="outlined" color="primary"/>
