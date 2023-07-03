@@ -1,4 +1,4 @@
-import { Box,  Container} from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
 import simplicidade from "../../assets/simplicidade.svg";
@@ -16,7 +16,6 @@ export default function SectionApp2() {
         {
           title: "Cadastro Simples",
           text: "Sistema de cadastro simples para as escolas e seus matriculados",
-          mt: "120px",
           image: cad,
           hg: "100%",
           wd: "200px",
@@ -24,7 +23,6 @@ export default function SectionApp2() {
         {
           title: "Pedido de cartão Online",
           text: "Peça seu cartão de forma 100% online sem nenhuma complicação",
-          mt: "120px",
           ml: "50px",
           image: simplicidade,
           hg: "100%",
@@ -34,7 +32,6 @@ export default function SectionApp2() {
           title: "Gerenciamento de cartão",
           text: "Gerencie facilmente seus cartões a hora que você quiser",
           ml: "50px",
-          mt: "120px",
           image: configs,
           hg: "100%",
           wd: "200px",
@@ -43,7 +40,6 @@ export default function SectionApp2() {
           title: "Recarga 100% online",
           text: "Realize recargas a qualquer momento e de qualquer lugar",
           ml: "50px",
-          mt: "120px",
           image: net,
           hg: "100%",
           wd: "200px",
@@ -53,7 +49,6 @@ export default function SectionApp2() {
           text: "Peça seu cartão sem se preucupar em gastar nada e seja feliz",
           ml: "50px",
           mr: "50px",
-          mt: "120px",
           image: pobre,
           hg: "100%",
           wd: "200px",
@@ -78,19 +73,23 @@ export default function SectionApp2() {
     <>
       <Box
         sx={{
-          height: "99.99vh",
-          width: "100%",
+          height: "89.9vh",
+          width: "100vw",
+          // backgroundColor: "green",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Container
           sx={{
             height: "80%",
-            width: "100%",
-            align: "center",
+            width: "100vw",
             justifyContent: "center",
+            alignItems: "center",
             display: "flex",
-            flexDirection: "arrow",
-            mb: "40px",
+            // backgroundColor: "blue",
           }}
         >
           {CardsApp[0].card.map((card, index) => (
@@ -101,7 +100,7 @@ export default function SectionApp2() {
             >
               <Cards
                 image={card.image}
-                mt={card.mt}
+                mt={undefined}
                 ml={card.ml}
                 hg={card.hg}
                 wd={card.wd}
@@ -114,12 +113,17 @@ export default function SectionApp2() {
         <Container
           sx={{
             justifyContent: "center",
+            alignItems: "center",
             display: "flex",
             flexDirection: "arrow",
+            // backgroundColor: "red",
+            height: "20%",
+            width: "100vw",
           }}
         >
           <Slide direction="up">
-            <BtnsApp cl="black" mt={undefined} ml={undefined} mb={undefined} />
+            <BtnsApp cl="black" mt="0" ml={undefined} mb={undefined} />
+            
           </Slide>
         </Container>
       </Box>
