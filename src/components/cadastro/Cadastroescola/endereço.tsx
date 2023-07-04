@@ -11,6 +11,7 @@ import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../../context/modalcontext";
 
 function CompleteCad2Escola(){
+    
     const {cep, setCep} = useContext(ModalContext);
     const {UF, setUF} = useContext(ModalContext);
     const {district, setDistrict} = useContext(ModalContext);

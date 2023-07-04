@@ -56,18 +56,29 @@ module.exports = {
             const { buss_endcidade: city } = req.body;
             const { buss_tipo: type } = req.body
 
-    await knex("bussines").insert({
-        buss_CNPJ: cnpj,
-        buss_nome: name,
-        buss_contato: contact,
-        buss_endCEP: cep,
-        buss_endUF: UF,
-        buss_endrua: street,
-        buss_endnum: num,
-        buss_endcomplemento: comp,
-        buss_endcidade: city,
-        buss_tipo: type
-    });
+            /*buss_CNPJ: cnpj,
+      buss_nome: name,
+      buss_contato: contato,
+      buss_endCEP: cep,
+      buss_endUF: UF,
+      buss_endbairro: district,
+      buss_endrua: street,
+      buss_endnum: num,
+      buss_endcomplemento: comp,
+      buss_endcidade: city,
+      buss_tipo: tipo,*/
+        await knex("bussines").insert({
+            buss_CNPJ: cnpj,
+            buss_nome: name,
+            buss_contato: contact,
+            buss_endCEP: cep,
+            buss_endUF: UF,
+            buss_endrua: street,
+            buss_endnum: num,
+            buss_endcomplemento: comp,
+            buss_endcidade: city,
+            buss_tipo: type
+        });
         return res.status(201).send("Bussines registered");
     } catch (error) {
         return res.status(400).send({ error: error.message });

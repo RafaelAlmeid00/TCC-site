@@ -96,7 +96,7 @@ function SectionRota1() {
                    
                 }}>
                   <FormControl  sx={{mr: 0.5, minWidth: 80, padding: 0.1, width: '40%', height: '10%'}} >
-                  <InputLabel id="demo-simple-select-autowidth-label">Opções</InputLabel>
+                  <InputLabel id="demo-simple-select-autowidth-label">Rotas disponiveis</InputLabel>
                   <Select
                     labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"

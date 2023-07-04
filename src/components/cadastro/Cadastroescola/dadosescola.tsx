@@ -28,6 +28,7 @@ function CompleteCadEscola() {
   const [contato, setContato] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [name, setName] = useState("");
+  const { setCep } = useContext(ModalContext);
   const { cep } = useContext(ModalContext);
   const { UF } = useContext(ModalContext);
   const { district } = useContext(ModalContext);

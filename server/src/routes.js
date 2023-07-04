@@ -27,6 +27,10 @@ routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
 
+
+routes.post('/bussines', controllersBussines.createBussines);
+routes.get('/bussines', controllersBussines.searchBussines);
+
 routes.post('/user/update', controllersUser.UpdateUser);
 
 routes.post('/listcpf', controllerListCPF.createListCpf);
@@ -36,8 +40,7 @@ routes.get('/listcpf', controllerListCPF.searchListCpf);
 routes.use(middleware.mid);
 routes.post('/user/delete', controllersUser.DeleteUser);
 routes.get('/bussines/search/:CNPJ', controllersBussines.SpecificBussines)
-routes.get('/bussines', controllersBussines.searchBussines);
-routes.post('/bussines', controllersBussines.createBussines);
+
 routes.delete('/bussines/:CNPJ', controllersBussines.deleteBussines);
 
 routes.post('/routes', controllerBusRoute.cadRoutes);

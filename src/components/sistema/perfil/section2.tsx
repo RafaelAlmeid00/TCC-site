@@ -30,8 +30,18 @@ function SectionPerfil2() {
             console.log(err);
         }
     }
-    console.log(localStorage);
+    async function exit (){
+        try {
+            console.log('ta indo');
+            localStorage.removeItem('token');
 
+            console.log(localStorage.token);
+            
+            navigate('/cadastro');
+        } catch (err) {
+            console.log(err);
+        }
+    }
     return (
         <>
             <Box sx={{
@@ -129,7 +139,7 @@ function SectionPerfil2() {
                     }}>Sempre verifique seu email antes de confirmar a atualização de dados.
                         Caso perca esse email e não tenha acesso a ele também,
                         não será possivel logar sua conta pelos métodos convencionais.</Typography>
-                    <Button variant="contained" href="/Perfil"  sx={{
+                    <Button variant="contained" href="/Perfil" onClick={exit}  sx={{
                         backgroundColor: 'red',
                         color: 'white',
                         ml: -50,
