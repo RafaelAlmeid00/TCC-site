@@ -36,7 +36,8 @@ export default function SectionApp1() {
               height: "100%",
               display: "flex",
               alignItems: "center",
-              flexDirection: "column",
+              justifyContent: "center",
+              flexDirection: "column",  
             }}
           >
             <Slide direction="left">
@@ -104,7 +105,7 @@ export default function SectionApp1() {
               src={app2}
               style={{
                 width: "300px",
-                height: "300px",
+                height: "280px",
               }}
             ></img>
           </Container>
@@ -141,7 +142,7 @@ export default function SectionApp1() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              textAlign: "center",
+              textAlign: "center",  
             }}
           >
             <Typography
@@ -155,6 +156,7 @@ export default function SectionApp1() {
                   lg: "4vh",
                   xl: "4vh",
                 },
+                fontWeight: "bold",
               }}
             >
               Faça sua recarga
@@ -163,13 +165,14 @@ export default function SectionApp1() {
               sx={{
                 textAlign: "justify",
                 fontSize: {
-                  xs: "2vh", // (7.5 / 1200) * 600
-                  sm: "2.5vh", // (7.5 / 1200) * 900
-                  md: "2.5vh", // (7.5 / 1200) * 1200
-                  lg: "3vh",
+                  xs: "1.5vh", // (7.5 / 1200) * 600
+                  sm: "2vh", // (7.5 / 1200) * 900
+                  md: "2vh", // (7.5 / 1200) * 1200
+                  lg: "2.5vh",
                   xl: "3vh", // Manter o mesmo tamanho de lg para xl
                 },
                 height: "190px",
+                fontWeight: "bold",
               }}
             >
               Otimize seu dia e realize sua recarga totalmente online pelo nosso
@@ -221,6 +224,7 @@ export default function SectionApp1() {
                       textTransform: "none",
                       mr: 1,
                       fontSize: "inherit", // Herdar tamanho de fonte do componente pai (Button)
+                      fontWeight: "bold",
                     }}
                   >
                     Recarregar
@@ -252,6 +256,7 @@ export default function SectionApp1() {
                   lg: "4vh",
                   xl: "4vh",
                 },
+                fontWeight: "bold",
               }}
             >
               Veja suas rotas
@@ -260,13 +265,14 @@ export default function SectionApp1() {
               sx={{
                 textAlign: "justify",
                 fontSize: {
-                  xs: "2vh", // (7.5 / 1200) * 600
-                  sm: "2.5vh", // (7.5 / 1200) * 900
-                  md: "2.5vh", // (7.5 / 1200) * 1200
-                  lg: "3vh",
+                  xs: "1.5vh", // (7.5 / 1200) * 600
+                  sm: "2vh", // (7.5 / 1200) * 900
+                  md: "2vh", // (7.5 / 1200) * 1200
+                  lg: "2.5vh",
                   xl: "3vh", // Manter o mesmo tamanho de lg para xl
                 },
                 height: "190px",
+                fontWeight: "bold",
               }}
             >
               Em nosso aplicativo os usuários possuem todos os recursos na palma

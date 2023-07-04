@@ -1,10 +1,13 @@
 import { Box, Container } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
+import { Slide } from "react-awesome-reveal";
 import moleza from "../../assets/moleza.svg";
 import appI from "../../assets/aplicativo.svg";
 import pag from "../../assets/pagamento.svg";
 import caminho from "../../assets/app3.svg";
+import Balancer from "react-wrap-balancer";
+import BtnsApp from "../buttons/app";
 
 export default function SectionService1() {
   const CardsServ = [
@@ -13,7 +16,6 @@ export default function SectionService1() {
         {
           title: "Sistema Simples",
           text: "Possuimos um sistema extremamente simples e acessível",
-          mt: "120px",
           ml: "50px",
           image: moleza,
           hg: "100%",
@@ -23,7 +25,6 @@ export default function SectionService1() {
           title: "Gerenciamento pelo Aplicativo",
           text: "Tenha o total controle de seus cartões na palma de sua mão!",
           ml: "50px",
-          mt: "120px",
           image: appI,
           hg: "100%",
           wd: "200px",
@@ -32,7 +33,6 @@ export default function SectionService1() {
           title: "Pagamento Online",
           text: "Faça suas recargas de forma totalmente online e segura!",
           ml: "50px",
-          mt: "120px",
           image: pag,
           hg: "100%",
           wd: "200px",
@@ -42,7 +42,6 @@ export default function SectionService1() {
           text: "Veja onde o ônibus está e por onde ele vai passar pelo sistema",
           ml: "50px",
           mr: "50px",
-          mt: "120px",
           image: caminho,
           hg: "100%",
           wd: "200px",
@@ -68,38 +67,55 @@ export default function SectionService1() {
     <>
       <Box
         sx={{
-          mt:"11vh",
+          mt: "11vh",
           height: "89.99vh",
-          width:"100vw"
+          width: "100vw",
         }}
       >
         <Container
           sx={{
-            height: "100%",
-            width: "100%",
+            height: "80%",
+            width: "100vw",
             align: "center",
             justifyContent: "center",
+            alignItems: "center",
             display: "flex",
             flexDirection: "arrow",
           }}
         >
-          {CardsServ[0].card.map((card, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover="hover" // Aplica as animações ao passar o mouse
-            >
-              <Cards
-                image={card.image}
-                mt={card.mt}
-                ml={card.ml}
-                hg={card.hg}
-                wd={card.wd}
-                title={card.title}
-                text={card.text}
-              />
-            </motion.div>
-          ))}
+          <Slide direction="left">
+            {CardsServ[0].card.map((card, index) => (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                whileHover="hover" // Aplica as animações ao passar o mouse
+              >
+                <Cards
+                  image={card.image}
+                  mt={undefined}
+                  ml={card.ml}
+                  hg={card.hg}
+                  wd={card.wd}
+                  title={card.title}
+                  text={card.text}
+                />
+              </motion.div>
+            ))}
+          </Slide>
+        </Container>
+        <Container
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "arrow",
+            height: "20%",
+            width: "100vw",
+          }}
+        >
+          <Slide direction="up">
+            <BtnsApp cl="black" mt="0" ml={undefined} mb={undefined} />
+          </Slide>
         </Container>
       </Box>
     </>

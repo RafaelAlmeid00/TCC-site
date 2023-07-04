@@ -14,7 +14,7 @@ export default function SectionApp2() {
     {
       card: [
         {
-          title: "Cadastro Simples",
+          title: "Cadastro Empresarial",
           text: "Sistema de cadastro simples para as escolas e seus matriculados",
           image: cad,
           hg: "100%",

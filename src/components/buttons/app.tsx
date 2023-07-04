@@ -69,6 +69,7 @@ export default function BtnsApp({ cl, mt, ml, mb }) {
             <Typography
               sx={{
                 textTransform: "none",
+                fontWeight: "bold",
                 mr: 1,
                 fontSize: "inherit", // Herdar tamanho de fonte do componente pai (Button)
               }}
@@ -121,6 +122,7 @@ export default function BtnsApp({ cl, mt, ml, mb }) {
             <Typography
               sx={{
                 textTransform: "none",
+                fontWeight: "bold",
                 mr: 1,
                 fontSize: "inherit", // Herdar tamanho de fonte do componente pai (Button)
               }}
