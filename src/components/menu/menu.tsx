@@ -3,8 +3,11 @@ import { Box, Button, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
 import React from "react";
+import ModalContext from "../../context/modalcontext";
 
 export default function Menus({ sz, mt, ml, onClick }) {
+
+    const { verify } = React.useContext(ModalContext);
     const pg = [
         { name: "Para Escolas", route: "/Escolas" },
         { name: "Para Empresas", route: "/Empresas" }
@@ -15,15 +18,6 @@ export default function Menus({ sz, mt, ml, onClick }) {
         const color = verify ? (isSelected ? colors.sc : 'white') : (isSelected ? colors.tc : colors.pm);
         return { color };
     }
-
-    const dark = localStorage.getItem('theme')
-    const [verify, setVerify] = React.useState(false);
-
-    React.useEffect(() => {
-        if (dark == 'dark') {
-            setVerify(true)
-        }
-    }, [dark])
 
 
     return (
@@ -39,17 +33,37 @@ export default function Menus({ sz, mt, ml, onClick }) {
             },
         }}>
             <Box sx={{
-                display: "flex", alignItems: "flex-end", justifyContent: "center"
+                display: "flex", alignItems: "flex-end", justifyContent: "center",
+                width: {
+                    xs: '1vw',  // (7.5 / 1200) * 600
+                    sm: '1.7vw',  // (7.5 / 1200) * 900
+                    md: '2vw',  // (7.5 / 1200) * 1200
+                    lg: '44vw',
+                    xl: '35vw',  // Manter o mesmo tamanho de lg para xl
+                }
             }}>
                 {pg.map((pg) => (
                     <Button
                         key={pg.route}
                         onClick={() => { setSelectedPage(pg.route); onClick() }}
-                        sx={{ margin: "0 16px", ...getPageStyles(pg.route), }}
+                        sx={{ margin: "0 16px", ...getPageStyles(pg.route), 
+                            [theme.breakpoints.only('sm')]: {
+                                margin: "0 100px"
+                            },
+                            [theme.breakpoints.only('xs')]: {
+                                margin: "0 50px"
+                            },
+                    }}
                     >
                         <Typography
                             textAlign="center"
-                            sx={{ fontWeight: "bold", fontSize: sz }}
+                            sx={{ fontWeight: "bold", fontSize: {
+                                xs: '2.5vw',  // (7.5 / 1200) * 600
+                                sm: '2vw',  // (7.5 / 1200) * 900
+                                md: '2vw',  // (7.5 / 1200) * 1200
+                                lg: '1.5vw',
+                                xl: '1vw', 
+                            } }}
                         >
                             {pg.name}
                         </Typography>

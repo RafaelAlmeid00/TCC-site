@@ -6,23 +6,11 @@ import { Balancer } from "react-wrap-balancer";
 import theme from "../../assets/theme";
 import { createTheme } from '@mui/material/styles';
 import React from "react";
+import ModalContext from "../../context/modalcontext";
 
 function Section3() {
-  const dark = localStorage.getItem('theme')
-  const [verify, setVerify] = React.useState(false);
-
-  React.useEffect(() => {
-    if (dark == 'dark') {
-      setVerify(true)
-    }
-  }, [dark])
-
-  const themes = createTheme({
-    palette: {
-      mode: dark ? 'dark' : 'light',
-    },
-  })
-  
+  const { verify } = React.useContext(ModalContext);
+  const { themes } = React.useContext(ModalContext);
 
   const fundo = themes.palette.background.default
 
@@ -44,16 +32,22 @@ function Section3() {
           justifyContent: 'center',
           alignItems: 'center',
           mt: 5,
+          [theme.breakpoints.down('md')]: {
+            mt: 5,
+          },
         }}>
           <Balancer> 
             <Typography sx={{ color: verify ? colors.sc : colors.tc, 
-            fontSize: { xs: '2.5vh', sm: '3vh', md: '5vh', lg: '5vh', xl: '4vh' }, 
+            fontSize: { xs: '2.5vh', sm: '4vh', md: '5vh', lg: '5vh', xl: '4vh' }, 
             fontWeight: 'bold', 
             textAlign: 'center',
             [theme.breakpoints.down('sm')]: {
               textAlign: 'center',
               width: '100vw',
             },
+              [theme.breakpoints.only('sm')]: {
+                mt: -25,
+              },
         }}>
             Ache polos do EasyPass perto de você
           </Typography>

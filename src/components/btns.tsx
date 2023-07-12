@@ -1,9 +1,9 @@
 import { Box, Button, Container, Link, Typography } from "@mui/material";
-import theme from "../../assets/theme";
+import theme from "../assets/theme";
 import AppleIcon from "@mui/icons-material/Apple";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-export default function BtnsApp({ cl, mt, ml, mb }) {
+function BtnsApp({ cl, mt, ml, mb }) {
   return (
     <Container
       sx={{
@@ -11,7 +11,7 @@ export default function BtnsApp({ cl, mt, ml, mb }) {
         flexDirection: "row",
         mt: mt, //60 (exceção footer)
         ml: ml, //100 (exceção footer)
-        mb: mb, 
+        mb: mb,
         zIndex: 1,
         [theme.breakpoints.down("md")]: {
           display: "flex",
@@ -136,3 +136,40 @@ export default function BtnsApp({ cl, mt, ml, mb }) {
     </Container>
   );
 }
+
+function Btn({name, route, cl, bc, bch}) {
+  return(
+    <>
+      <Button variant="contained" href={route} sx={{
+        color: cl,
+        marginRight: 1,
+        background: bc,
+        border: '2px solid transparent', // adiciona a borda inicialmente
+        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+        fontWeight: 'bold',
+        width: {
+          xs: '15vh',
+          sm: '15vh',
+          md: '20vh',
+          lg: '20vh',
+          xl: '20vh',
+        },
+        fontSize: {
+          xs: '1.5vh',  // (7.5 / 1200) * 600
+          sm: '1.5vh',  // (7.5 / 1200) * 900
+          md: '2vh',  // (7.5 / 1200) * 1200
+          lg: '2vh',
+          xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+        },
+        '&:hover': {
+          border: '2px solid #0fcd88', // muda a cor da borda na animação
+          background: bch
+        },
+      }}>
+        {name}
+      </Button>
+    </>
+  )
+}
+
+export {BtnsApp, Btn}

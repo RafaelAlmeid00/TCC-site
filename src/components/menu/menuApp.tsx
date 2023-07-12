@@ -14,12 +14,21 @@ import { openModal } from "../../redux/actions";
 import { useNavigate } from 'react-router-dom';
 import theme from '../../assets/theme';
 import Image from '../../assets/logo.png';
-
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ModalContext from '../../context/modalcontext';
+import { Btn } from '../btns';
+import colors from '../../assets/colors';
 
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
+  const { darkMode, setDarkMode } = React.useContext(ModalContext);
 
-
+  const toggleDarkMode = () => {
+    const newTheme = darkMode ? 'light' : 'dark';
+    localStorage.setItem('theme', newTheme);
+    setDarkMode(!darkMode);
+  };
   const pages = [
     { name: 'Home', route: '/' },
     { name: 'Quem Somos', route: '/EasyPass' },
@@ -55,6 +64,7 @@ export default function MenuApp(props: any) {
   console.log(showCad);
 
   return (
+    <>
     <AppBar sx={{
       position: 'sticky',
       top: '0',
@@ -62,7 +72,15 @@ export default function MenuApp(props: any) {
       width: '100vw',
     }}>
       <Container>
-        <Toolbar>
+        <Toolbar sx={{
+          width: {
+            xs: '100vw',  // (7.5 / 1200) * 600
+            sm: '100vw',  // (7.5 / 1200) * 900
+            md: '100vw',  // (7.5 / 1200) * 1200
+            lg: '90vw',
+            xl: '80vw',
+          }
+        }}>
           <Typography
             noWrap
             component="a"
@@ -75,7 +93,10 @@ export default function MenuApp(props: any) {
               background: 'linear-gradient(to right, #0fcd88 52%, white 50%)',
               '-webkit-background-clip': 'text',
               '-webkit-text-fill-color': 'transparent',
-              display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex' },
+              display: 'flex',
+              [theme.breakpoints.down('lg')]: {
+                display: 'none',
+              },
               fontSize: '30px'
             }}
           >
@@ -137,7 +158,7 @@ export default function MenuApp(props: any) {
           <Box
             sx={{
               display: { xs: 'flex', sm: 'none' },
-              [theme.breakpoints.down('sm')]: {
+              [theme.breakpoints.down('md')]: {
                 alignItems: 'center',
                 justifyContent: 'center',
               },
@@ -151,7 +172,8 @@ export default function MenuApp(props: any) {
               }}></img>
             </a>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'flex' },
+          }}>
             {pages.map((page) => (
               <Button
                 key={page.route}
@@ -189,35 +211,108 @@ export default function MenuApp(props: any) {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0, marginRight: 13 }}>
-            <Button variant="contained" href="/opcoes" sx={{
-              color: 'white',
-              marginRight: 1,
-              border: '2px solid transparent', // adiciona a borda inicialmente
-              transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-              width: {
-                xs: '15vh', 
-                sm: '15vh', 
-                md: '20vh',  
-                lg: '20vh',
-                xl: '20vh', 
+          <Box sx={{ flexGrow: 0,
+              [theme.breakpoints.up('md')]: {
+                marginRight: 13
               },
-              fontSize: {
-                xs: '1.5vh',  // (7.5 / 1200) * 600
-                sm: '1.5vh',  // (7.5 / 1200) * 900
-                md: '2vh',  // (7.5 / 1200) * 1200
-                lg: '2vh',
-                xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+              [theme.breakpoints.down('md')]: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               },
-              '&:hover': {
-                border: '2px solid #0fcd88', // muda a cor da borda na animação
+              [theme.breakpoints.only('sm')]: {
+                flexGrow: 1
               },
-            }}>
-              Cadastrar
-            </Button>
+          }}>
+            <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode && 'white'} bch={darkMode && 'white'} />
           </Box>
+          
+          <IconButton sx={{'&:hover': { color: colors.sc }, 
+            [theme.breakpoints.down('md')]: {
+              display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            float: 'none',
+            mr: 0
+              },
+              [theme.breakpoints.only('sm')]: {
+                flexGrow: 1
+              },
+        }} onClick={toggleDarkMode} color="inherit">
+            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>
+
+      <AppBar sx={{
+        position: 'sticky',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        display: 'none',
+        [theme.breakpoints.only('sm')]: {
+          display: 'block'
+        },
+      }}>
+        <Container>
+          <Toolbar sx={{
+            width: {
+              xs: '100vw',  // (7.5 / 1200) * 600
+              sm: '100vw',  // (7.5 / 1200) * 900
+              md: '100vw',  // (7.5 / 1200) * 1200
+              lg: '90vw',
+              xl: '80vw',
+            }
+          }}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' },
+              mr: 10,
+                [theme.breakpoints.only('sm')]: {
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexGrow: 'none'
+                }, }}>
+                {pages.map((page) => (
+                  <Button
+                    key={page.route}
+                    onClick={() => handleNavigate(page.route)}
+                    sx={{
+                      my: 2, mr: 3, color: 'white', fontFamily: 'Helvetica',
+                      position: 'relative',
+                      display: 'inline-block',
+                      fontSize: {
+                        xs: '1vh',  // (7.5 / 1200) * 600
+                        sm: '1.7vh',  // (7.5 / 1200) * 900
+                        md: '2vh',  // (7.5 / 1200) * 1200
+                        lg: '2vh',
+                        xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+                      },
+                      '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
+                        width: '100%',
+                        height: '2px',
+                        borderBottom: '2px solid #0fcd88',
+                        transform: 'scaleX(0)',
+                        transformOrigin: 'left',
+                        transition: 'transform 0.3s ease',
+                      },
+                      '&:hover::after': {
+                        transform: 'scaleX(1)',
+                      },
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+              </Box>
+              </Box>
+            </Toolbar>
+            </Container>
+            </AppBar>
+    </>
   )
 }

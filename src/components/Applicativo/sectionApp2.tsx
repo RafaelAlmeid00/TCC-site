@@ -7,7 +7,7 @@ import pobre from "../../assets/pobre.svg";
 import net from "../../assets/internet.svg";
 import configs from "../../assets/configs.svg";
 import { Slide } from "react-awesome-reveal";
-import BtnsApp from "../buttons/app";
+import BtnsApp from "../btns";
 
 export default function SectionApp2() {
   const CardsApp = [
@@ -123,7 +123,7 @@ export default function SectionApp2() {
         >
           <Slide direction="up">
             <BtnsApp cl="black" mt="0" ml={undefined} mb={undefined} />
-            
+
           </Slide>
         </Container>
       </Box>

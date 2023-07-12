@@ -5,7 +5,6 @@ import Loading from "./components/loading";
 import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
 const CadallLazy = lazy(() => import('./pages/home/cadall'));
@@ -31,7 +30,6 @@ const Rota = () => {
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
-  const [dark, setDark] = React.useState(false);
 
   function checkDevice() {
     if (navigator.userAgent.match(/Android/i)
@@ -49,27 +47,34 @@ const Rota = () => {
     }
   }
   console.log(checkDevice());
-
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const themes = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode]
-  )
-
-  const modo = themes.palette.mode
-  console.log(themes);
-  
+  const [darkMode, setDarkMode] = useState(false);
 
   React.useEffect(() => {
-      localStorage.setItem('theme', modo)
-  }, [modo]);
+    const themes = localStorage.getItem('theme');
+    setDarkMode(themes === 'dark');
+  }, []);
 
+  const themes = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    },
+  });
+
+  const [hasEntered, setHasEntered] = React.useState(false);
+  const dark = localStorage.getItem('theme')
+  const [verify, setVerify] = React.useState(false);
+
+  React.useEffect(() => {
+    if (dark == 'dark') {
+      setVerify(true)
+    } else {
+      setVerify(false)
+    }
+  }, [dark])
+
+  React.useEffect(() => {
+    setHasEntered(true);
+  }, []);
   
   return (
     <ThemeProvider theme={themes}>
@@ -82,6 +87,7 @@ const Rota = () => {
               <Route path="/*" element={
                 <React.Fragment>
               <AuthProviderHome>
+                  <ModalContext.Provider value={{ darkMode, setDarkMode, verify, themes, hasEntered }}>
                   <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/Servicos" element={<ServiLazy />} />
@@ -92,6 +98,7 @@ const Rota = () => {
                     <Route path="/opcoes" element={<OptionsCad />} />
                     <Route path="/areaescolas" element={<Escola />} />
                   </Routes>
+                  </ModalContext.Provider>
               </AuthProviderHome>
                 </React.Fragment>
               } />

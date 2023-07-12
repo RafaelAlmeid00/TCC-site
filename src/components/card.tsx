@@ -2,17 +2,10 @@ import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/m
 import colors from "../assets/colors";
 import theme from "../assets/theme";
 import React from "react";
+import ModalContext from "../context/modalcontext";
 
 export default function Cards({ image, title, text, wd, hg, mt, ml }) {
-    const dark = localStorage.getItem('theme')
-    const [verify, setVerify] = React.useState(false);
-
-    React.useEffect(() => {
-        if (dark == 'dark') {
-            setVerify(true)
-        }
-    }, [dark])
-
+    const { verify } = React.useContext(ModalContext);
 
     return (
         <>

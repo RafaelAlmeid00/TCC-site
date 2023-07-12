@@ -3,33 +3,18 @@ import Img from "../img";
 import Balancer from 'react-wrap-balancer'
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
-import BtnsApp from "../buttons/app";
+import { BtnsApp } from "../btns";
 import handcell from "../../assets/handcell.png";
 import colors from "../../assets/colors";
 import React from "react";
 import Bubbles from "../bubbles";
-import { createTheme } from '@mui/material/styles';
+import ModalContext from "../../context/modalcontext";
 
 function Section1() {
-  const [hasEntered, setHasEntered] = React.useState(false);
-  const dark = localStorage.getItem('theme')
-  const [verify, setVerify] = React.useState(false);
+  const { verify } = React.useContext(ModalContext);
+  const { themes } = React.useContext(ModalContext);
+  const { hasEntered } = React.useContext(ModalContext);
 
-  React.useEffect(() => {
-    if (dark == 'dark') {
-      setVerify(true)
-    }
-  }, [dark])
-
-  React.useEffect(() => {
-    setHasEntered(true);
-  }, []);
-
-  const themes = createTheme({
-    palette: {
-      mode: dark ? 'dark' : 'light',
-    },
-  })
 
   const fundo = themes.palette.background.default
 
@@ -160,11 +145,11 @@ function Section1() {
             <Img image={handcell} height="75%" ml="230px" width="auto" mr="auto" />
           </Slide>
         </Container>
-        
+
         <Bubbles />
       </Box>
     </>
   );
-        }
+}
 
 export default Section1;

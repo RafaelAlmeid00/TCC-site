@@ -8,28 +8,13 @@ import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
 import Balancer from "react-wrap-balancer";
 import React from "react";
-import { createTheme } from '@mui/material/styles';
+import ModalContext from "../../context/modalcontext";
 
 function Section2() {
 
-  const [hasEntered, setHasEntered] = React.useState(false);
+  const { verify } = React.useContext(ModalContext);
+  const { hasEntered } = React.useContext(ModalContext);
 
-  React.useEffect(() => {
-    setHasEntered(true);
-  }, []);
-
-  const dark = localStorage.getItem('theme')
-  const [verify, setVerify] = React.useState(false);
-
-  React.useEffect(() => {
-    if (dark == 'dark') {
-      setVerify(true)
-    }
-  }, [dark])
-
-  React.useEffect(() => {
-    setHasEntered(true);
-  }, []);
 
 
   const [showEscolas, setShowEscolas] = React.useState(true);
@@ -147,7 +132,7 @@ function Section2() {
             height: '30%'
           },
         }}>
-          <Menus sz="16px" mt="60px" ml="-80px" onClick={toggleShowEscolas} />
+          <Menus mt="60px" ml="-80px" onClick={toggleShowEscolas} />
           <Slide direction="left" triggerOnce={hasEntered}>
             <Typography sx={{
               color: verify ? colors.sc : colors.tc,
@@ -207,6 +192,11 @@ function Section2() {
               key={index}
               variants={cardVariants}
               whileHover="hover" // Aplica as animações ao passar o mouse
+              style={{
+                height: '100%',
+                width: '100%',
+                justifyContent: "center"
+              }}
             >
               <Cards
                 image={card.image}
