@@ -4,9 +4,27 @@ import colors from "../../assets/colors";
 import Img from "../img";
 import { Balancer } from "react-wrap-balancer";
 import theme from "../../assets/theme";
+import { createTheme } from '@mui/material/styles';
+import React from "react";
 
 function Section3() {
+  const dark = localStorage.getItem('theme')
+  const [verify, setVerify] = React.useState(false);
 
+  React.useEffect(() => {
+    if (dark == 'dark') {
+      setVerify(true)
+    }
+  }, [dark])
+
+  const themes = createTheme({
+    palette: {
+      mode: dark ? 'dark' : 'light',
+    },
+  })
+  
+
+  const fundo = themes.palette.background.default
 
   return (
     <>
@@ -17,6 +35,7 @@ function Section3() {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
+        background: verify ? fundo : 'white',
       }}>
         <Container sx={{
           width: '100vw',
@@ -24,17 +43,15 @@ function Section3() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          ml: -4,
           mt: 5,
-          [theme.breakpoints.down('sm')]: {
-            ml: -13,
-          },
         }}>
           <Balancer> 
-          <Typography sx={{ color: colors.tc, fontSize: '30px', mt: "50px", ml: "100px", fontWeight: 'bold', 
+            <Typography sx={{ color: verify ? colors.sc : colors.tc, 
+            fontSize: { xs: '2.5vh', sm: '3vh', md: '5vh', lg: '5vh', xl: '4vh' }, 
+            fontWeight: 'bold', 
+            textAlign: 'center',
             [theme.breakpoints.down('sm')]: {
               textAlign: 'center',
-              fontSize: { xs: '3.5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
               width: '100vw',
             },
         }}>
@@ -48,7 +65,7 @@ function Section3() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          mt: '40px',
+          mt: '20px',
 
         }}>
           <Card sx={{
@@ -70,7 +87,7 @@ function Section3() {
             mt: '60px',
             fontWeight: 'bold',
             opacity: '0.5',
-            color: 'black',
+            color: verify ? "white" : 'black',
             width: '100%',
             textAlign: 'center',
             mb: 10,

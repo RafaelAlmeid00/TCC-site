@@ -1,12 +1,23 @@
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import colors from "../assets/colors";
 import theme from "../assets/theme";
+import React from "react";
 
 export default function Cards({ image, title, text, wd, hg, mt, ml }) {
+    const dark = localStorage.getItem('theme')
+    const [verify, setVerify] = React.useState(false);
+
+    React.useEffect(() => {
+        if (dark == 'dark') {
+            setVerify(true)
+        }
+    }, [dark])
+
+
     return (
         <>
             <Card sx={{
-                width: wd, mt: mt, ml: ml, borderRadius: "20px", border: '1px solid', borderColor: colors.sc,
+                width: wd, mt: mt, ml: ml, borderRadius: "20px", border: '1px solid', borderColor: verify ? 'white' : colors.sc,
                 [theme.breakpoints.down('md')]: {
                     maxWidth: '25vw',
                     maxHeight: '300px',

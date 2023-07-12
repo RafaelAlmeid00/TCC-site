@@ -12,6 +12,7 @@ export default function BtnsApp({ cl, mt, ml, mb }) {
         mt: mt, //60 (exceção footer)
         ml: ml, //100 (exceção footer)
         mb: mb, 
+        zIndex: 1,
         [theme.breakpoints.down("md")]: {
           display: "flex",
           justifyContent: "center",

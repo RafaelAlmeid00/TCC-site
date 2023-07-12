@@ -3,18 +3,36 @@ import { Box, Container, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Menus from "../menu/menu";
 import Cards from "../card";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
 import Balancer from "react-wrap-balancer";
-import localData from '../../exports/exports'
+import React from "react";
+import { createTheme } from '@mui/material/styles';
 
 function Section2() {
 
-  console.log(localData());
+  const [hasEntered, setHasEntered] = React.useState(false);
 
-  const [showEscolas, setShowEscolas] = useState(true);
+  React.useEffect(() => {
+    setHasEntered(true);
+  }, []);
+
+  const dark = localStorage.getItem('theme')
+  const [verify, setVerify] = React.useState(false);
+
+  React.useEffect(() => {
+    if (dark == 'dark') {
+      setVerify(true)
+    }
+  }, [dark])
+
+  React.useEffect(() => {
+    setHasEntered(true);
+  }, []);
+
+
+  const [showEscolas, setShowEscolas] = React.useState(true);
   const toggleShowEscolas = () => setShowEscolas(!showEscolas);
 
   const escolasProps = [
@@ -109,7 +127,7 @@ function Section2() {
       <Box sx={{
         height: '100vh',
         width: '100vw',
-        backgroundColor: "#d9d9d9",
+        background: verify ? '#222222' : 'white',
         [theme.breakpoints.down('md')]: {
           display: 'flex',
           justifyContent: 'center',
@@ -130,9 +148,9 @@ function Section2() {
           },
         }}>
           <Menus sz="16px" mt="60px" ml="-80px" onClick={toggleShowEscolas} />
-          <Slide direction="left">
+          <Slide direction="left" triggerOnce={hasEntered}>
             <Typography sx={{
-              color: colors.tc,
+              color: verify ? colors.sc : colors.tc,
               fontSize: { xs: '3.5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
               mt: "50px",
               ml: "100px",
@@ -150,7 +168,7 @@ function Section2() {
             </Typography>
             <Balancer>
               <Typography sx={{
-                fontSize: { xs: '2vh', sm: '3vh', md: '4vh', lg: '4vh', xl: '5vh' },
+                fontSize: { xs: '2vh', sm: '3vh', md: '3vh', lg: '3vh', xl: '3.5vh' },
                 mt: '20px',
                 fontWeight: 'bold',
                 ml: '30px',
@@ -159,6 +177,7 @@ function Section2() {
                 display: 'flex', 
                 alignItems: 'center',
                 justifyContent: 'center',
+                color: verify ? "white" : "black",
                 [theme.breakpoints.down('md')]: {
                   ml: 0,
                   textAlign: 'center',

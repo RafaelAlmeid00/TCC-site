@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
+import React from "react";
 
 export default function Menus({ sz, mt, ml, onClick }) {
     const pg = [
@@ -11,9 +12,19 @@ export default function Menus({ sz, mt, ml, onClick }) {
     const [selectedPage, setSelectedPage] = useState(pg[0].route); // define a primeira página como selecionada
     function getPageStyles(pageRoute: string) {
         const isSelected = pageRoute === selectedPage;
-        const color = isSelected ? colors.tc : colors.pm;
+        const color = verify ? (isSelected ? colors.sc : 'white') : (isSelected ? colors.tc : colors.pm);
         return { color };
     }
+
+    const dark = localStorage.getItem('theme')
+    const [verify, setVerify] = React.useState(false);
+
+    React.useEffect(() => {
+        if (dark == 'dark') {
+            setVerify(true)
+        }
+    }, [dark])
+
 
     return (
         <Box sx={{
@@ -48,7 +59,7 @@ export default function Menus({ sz, mt, ml, onClick }) {
             <Box sx={{
                 width: "400px",
                 height: "2px",
-                backgroundColor: colors.scsd,
+                backgroundColor: verify ? 'black' : colors.scsd,
                 marginTop: "8px",
                 position: "relative",
                 ml: 10,
@@ -68,7 +79,7 @@ export default function Menus({ sz, mt, ml, onClick }) {
                         },
                         width: '50%',
                         height: "100%",
-                        backgroundColor: colors.tcsd,
+                        backgroundColor: verify ? colors.sc : colors.tcsd,
                         position: "absolute",
                         left: selectedPage === "/Escolas" ? '20%' : "70%",
                         transition: "left 0.3s ease-out",

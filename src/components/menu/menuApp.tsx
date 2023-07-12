@@ -19,8 +19,9 @@ import Image from '../../assets/logo.png';
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
 
-  
+
   const pages = [
+    { name: 'Home', route: '/' },
     { name: 'Quem Somos', route: '/EasyPass' },
     { name: 'Aplicativo', route: '/App' },
     { name: 'Servicos', route: '/Servicos' },
@@ -55,7 +56,7 @@ export default function MenuApp(props: any) {
 
   return (
     <AppBar sx={{
-      position: 'fixed',
+      position: 'sticky',
       top: '0',
       left: '0',
       width: '100vw',
@@ -67,7 +68,7 @@ export default function MenuApp(props: any) {
             component="a"
             href="/"
             sx={{
-              mr: 20,
+              mr: 10,
               fontFamily: 'Franklin Gothic Demi Cond',
               fontWeight: 'bold',
               textDecoration: 'none',
@@ -81,9 +82,10 @@ export default function MenuApp(props: any) {
             EasyPass
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' },
-            
-        }}>
+          <Box sx={{
+            flexGrow: 1, display: { xs: 'flex', sm: 'none' },
+
+          }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -106,7 +108,7 @@ export default function MenuApp(props: any) {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              
+
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
@@ -132,24 +134,24 @@ export default function MenuApp(props: any) {
               ))}
             </Menu>
           </Box>
-          <Box 
-          sx={{
-            display: { xs: 'flex', md: 'none'},
-            [theme.breakpoints.down('md')]: {
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
+          <Box
+            sx={{
+              display: { xs: 'flex', sm: 'none' },
+              [theme.breakpoints.down('sm')]: {
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
               mr: 6,
               ml: 8
-          }}>
+            }}>
             <a href="/">
-            <img src={Image} style={{
-              height: '4vh',
-              width: '7vw',
-            }}></img>
+              <img src={Image} style={{
+                height: '4vh',
+                width: '7vw',
+              }}></img>
             </a>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page.route}
@@ -158,6 +160,13 @@ export default function MenuApp(props: any) {
                   my: 2, mr: 3, color: 'white', fontFamily: 'Helvetica',
                   position: 'relative',
                   display: 'inline-block',
+                  fontSize: {
+                    xs: '1vh',  // (7.5 / 1200) * 600
+                    sm: '1.7vh',  // (7.5 / 1200) * 900
+                    md: '2vh',  // (7.5 / 1200) * 1200
+                    lg: '2vh',
+                    xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+                  },
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -186,6 +195,20 @@ export default function MenuApp(props: any) {
               marginRight: 1,
               border: '2px solid transparent', // adiciona a borda inicialmente
               transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+              width: {
+                xs: '15vh', 
+                sm: '15vh', 
+                md: '20vh',  
+                lg: '20vh',
+                xl: '20vh', 
+              },
+              fontSize: {
+                xs: '1.5vh',  // (7.5 / 1200) * 600
+                sm: '1.5vh',  // (7.5 / 1200) * 900
+                md: '2vh',  // (7.5 / 1200) * 1200
+                lg: '2vh',
+                xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+              },
               '&:hover': {
                 border: '2px solid #0fcd88', // muda a cor da borda na animação
               },

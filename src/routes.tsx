@@ -4,6 +4,8 @@ import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
 import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
 const CadallLazy = lazy(() => import('./pages/home/cadall'));
@@ -29,8 +31,49 @@ const Rota = () => {
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
+  const [dark, setDark] = React.useState(false);
 
+  function checkDevice() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+    ) {
+      return true; // está utilizando celular
+    }
+    else {
+      return false; // não é celular
+    }
+  }
+  console.log(checkDevice());
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const themes = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode]
+  )
+
+  const modo = themes.palette.mode
+  console.log(themes);
+  
+
+  React.useEffect(() => {
+      localStorage.setItem('theme', modo)
+  }, [modo]);
+
+  
   return (
+    <ThemeProvider theme={themes}>
+
     <BrowserRouter>
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -56,7 +99,7 @@ const Rota = () => {
               {/* Rotas de autenticação */}
               <Route path="/cadastro/*" element={
             <React.Fragment>
-              <ModalContext.Provider value={{ loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+                <ModalContext.Provider value={{loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
                   <Route path="/complemento" element={<CadallLazy />} />
@@ -81,6 +124,7 @@ const Rota = () => {
             </Routes>
           </Suspense>
     </BrowserRouter>
+    </ThemeProvider>
   );
 
 };
