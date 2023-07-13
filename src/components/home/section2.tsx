@@ -128,51 +128,69 @@ function Section2() {
           [theme.breakpoints.down('md')]: {
             float: 'none',
             width: '100%',
-            ml: 0,
             height: '30%'
           },
         }}>
-          <Menus mt="60px" ml="-80px" onClick={toggleShowEscolas} />
+          <Container sx={{
+            width: '100%',
+            maxHeight: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}>
+          <Menus mt="60px" ml="-80px"  onClick={toggleShowEscolas} />
+          </Container>
           <Slide direction="left" triggerOnce={hasEntered}>
+            <Container sx={{
+              display: 'block',
+              ml: -5,
+              [theme.breakpoints.down('lg')]: {
+                ml: 0,
+              },
+            }}>
             <Typography sx={{
               color: verify ? colors.sc : colors.tc,
-              fontSize: { xs: '3.5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
+              fontSize: { xs: '3.5vh', sm: '4vh', md: '4vh', lg: '5vh', xl: '5vh' },
               mt: "50px",
-              ml: "100px",
+              textAlign: 'center',
               fontWeight: 'bold',
+              
               [theme.breakpoints.down('md')]: {
                 textAlign: 'center',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100%',
-                ml: 0
               },
             }}>
               {currentProps[0].title}
             </Typography>
-            <Balancer>
+            </Container>
+              <Container sx={{
+                display: 'block',
+              }}>
               <Typography sx={{
-                fontSize: { xs: '2vh', sm: '3vh', md: '3vh', lg: '3vh', xl: '3.5vh' },
+                fontSize: { xs: '2vh', sm: '2.5vh', md: '2.5vh', lg: '3vh', xl: '3.5vh' },
                 mt: '20px',
                 fontWeight: 'bold',
-                ml: '30px',
-                width: '420px',
-                textAlign: 'left',
+                width: '100%',
+                textAlign: 'center',
                 display: 'flex', 
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: verify ? "white" : "black",
                 [theme.breakpoints.down('md')]: {
-                  ml: 0,
                   textAlign: 'center',
-                  width: '90vw',
-                  mb: -10
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
                 },
               }}>
                 {currentProps[0].subtitle}
               </Typography>
-            </Balancer>
+              </Container>
           </Slide>
         </Container>
         <Container sx={{

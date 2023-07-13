@@ -50,11 +50,11 @@ function Section1() {
               <Typography sx={{
                 color: verify ? "white" : colors.tc,
                 fontSize: {
-                  xs: '4vh',  // (7.5 / 1200) * 600
-                  sm: '4vh',  // (7.5 / 1200) * 900
-                  md: '5.5vh',  // (7.5 / 1200) * 1200
-                  lg: '7.5vh',
-                  xl: '7.5vh',  // Manter o mesmo tamanho de lg para xl
+                  xs: '8vw',  // (7.5 / 1200) * 600
+                  sm: '4vw',  // (7.5 / 1200) * 900
+                  md: '3.9vw',  // (7.5 / 1200) * 1200
+                  lg: '3vw',
+                  xl: '3vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 mt: "50px", ml: "100px",
                 fontWeight: 'bold',
@@ -67,11 +67,11 @@ function Section1() {
               </Typography>
               <Typography sx={{
                 fontSize: {
-                  xs: '2.5vh',  // (7.5 / 1200) * 600
-                  sm: '3vh',  // (7.5 / 1200) * 900
-                  md: '4vh',  // (7.5 / 1200) * 1200
-                  lg: '5vh',
-                  xl: '5vh',  // Manter o mesmo tamanho de lg para xl
+                  xs: '6vw',  // (7.5 / 1200) * 600
+                  sm: '3vw',  // (7.5 / 1200) * 900
+                  md: '2.8vw',  // (7.5 / 1200) * 1200
+                  lg: '2vw',
+                  xl: '2vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 display: "flex",
                 flexDirection: "row",
@@ -93,11 +93,11 @@ function Section1() {
                 sx={{
                   fontWeight: 'bold',
                   fontSize: {
-                    xs: '2.5vh',  // (7.5 / 1200) * 600
-                    sm: '3vh',  // (7.5 / 1200) * 900
-                    md: '4vh',  // (7.5 / 1200) * 1200
-                    lg: '5vh',
-                    xl: '5vh',  // Manter o mesmo tamanho de lg para xl
+                    xs: '6vw',  // (7.5 / 1200) * 600
+                    sm: '3vw',  // (7.5 / 1200) * 900
+                    md: '2.8vw',  // (7.5 / 1200) * 1200
+                    lg: '2vw',
+                    xl: '2vw',  // Manter o mesmo tamanho de lg para xl
                   },
                   ml: '10px',
                   background: '#0fcd88',
@@ -108,11 +108,11 @@ function Section1() {
               <Typography sx={{
                 color: verify ? "white" : "black",
                 fontSize: {
-                  xs: '2vh',  // (7.5 / 1200) * 600
-                  sm: '2.5vh',  // (7.5 / 1200) * 900
-                  md: '2.5vh',  // (7.5 / 1200) * 1200
-                  lg: '3vh',
-                  xl: '3vh',  // Manter o mesmo tamanho de lg para xl
+                  xs: '3.5vw',  // (7.5 / 1200) * 600
+                  sm: '2vw',  // (7.5 / 1200) * 900
+                  md: '2vw',  // (7.5 / 1200) * 1200
+                  lg: '1.2vw',
+                  xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 mt: "100px",
                 ml: "100px",

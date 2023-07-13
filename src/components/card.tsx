@@ -11,11 +11,14 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
         <>
             <Card sx={{
                 width: wd, mt: mt, ml: ml, borderRadius: "20px", border: '1px solid', borderColor: verify ? 'white' : colors.sc,
-                [theme.breakpoints.down('md')]: {
+                [theme.breakpoints.down('lg')]: {
                     maxWidth: '25vw',
                     maxHeight: '300px',
                     ml: 2,
                     mb: 10
+                },
+                [theme.breakpoints.only('md')]: {
+                    maxWidth: '15vw',
                 },
             }}>
                 <CardActionArea>
@@ -25,20 +28,21 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                         src={image}
 
                         sx={{
-                            [theme.breakpoints.down('md')]: {
+                            [theme.breakpoints.down('lg')]: {
                                 height: '100px'
                             },
                         }}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" sx={{
-                            [theme.breakpoints.down('sm')]: {
-                                fontSize: { xs: '1.5vh', sm: '2vh', md: '2.5vh', lg: '3vh', xl: '3vh' },
-                            },
+                        <Typography variant="body2" sx={{
+                                fontSize: { xs: '1.5vw', sm: '2vw', md: '2vw', lg: '1.5vw', xl: '3vw' },
+                                mb: 1.5,
+                                textAlign: 'center'
                         }}>
                             {title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{
+                            textAlign: 'center',
                             [theme.breakpoints.down('sm')]: {
                                 display: 'none'
                             },

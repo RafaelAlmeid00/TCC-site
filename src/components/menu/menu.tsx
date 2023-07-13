@@ -23,7 +23,7 @@ export default function Menus({ sz, mt, ml, onClick }) {
     return (
         <Box sx={{
             mt: mt, ml: ml,
-            [theme.breakpoints.down('md')]: {
+            [theme.breakpoints.down('lg')]: {
                 ml: 0,
                 display: 'flex',
                 justifyContent: 'center',
@@ -31,28 +31,21 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 flexDirection: 'column',
                 mt: 10
             },
+            maxHeight: '100%',
+            maxWidth: '100%',
+            textAlign: 'center',
         }}>
             <Box sx={{
-                display: "flex", alignItems: "flex-end", justifyContent: "center",
-                width: {
-                    xs: '1vw',  // (7.5 / 1200) * 600
-                    sm: '1.7vw',  // (7.5 / 1200) * 900
-                    md: '2vw',  // (7.5 / 1200) * 1200
-                    lg: '44vw',
-                    xl: '35vw',  // Manter o mesmo tamanho de lg para xl
-                }
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%'
             }}>
                 {pg.map((pg) => (
                     <Button
                         key={pg.route}
                         onClick={() => { setSelectedPage(pg.route); onClick() }}
-                        sx={{ margin: "0 16px", ...getPageStyles(pg.route), 
-                            [theme.breakpoints.only('sm')]: {
-                                margin: "0 100px"
-                            },
-                            [theme.breakpoints.only('xs')]: {
-                                margin: "0 50px"
-                            },
+                        sx={{ margin: '0 15px', ...getPageStyles(pg.route), 
                     }}
                     >
                         <Typography
@@ -60,10 +53,10 @@ export default function Menus({ sz, mt, ml, onClick }) {
                             sx={{ fontWeight: "bold", fontSize: {
                                 xs: '2.5vw',  // (7.5 / 1200) * 600
                                 sm: '2vw',  // (7.5 / 1200) * 900
-                                md: '2vw',  // (7.5 / 1200) * 1200
-                                lg: '1.5vw',
+                                md: '1.3vw',  // (7.5 / 1200) * 1200
+                                lg: '1.2vw',
                                 xl: '1vw', 
-                            } }}
+                            }, }}
                         >
                             {pg.name}
                         </Typography>
@@ -71,36 +64,28 @@ export default function Menus({ sz, mt, ml, onClick }) {
                 ))}
             </Box>
             <Box sx={{
-                width: "400px",
+                width: "100%",
                 height: "2px",
                 backgroundColor: verify ? 'black' : colors.scsd,
                 marginTop: "8px",
                 position: "relative",
-                ml: 10,
                 [theme.breakpoints.down('md')]: {
-                    ml: 0,
                     width: "100%",
                 },
             }}
             >
                 <Box
                     sx={{
-                        [theme.breakpoints.down('sm')]: {
-                            width: "47vw",
-                        },
-                        ml: {
-                            xs: '-20vw', sm: '-20vw', md: '-28vw', lg: -10
-                        },
+
                         width: '50%',
                         height: "100%",
                         backgroundColor: verify ? colors.sc : colors.tcsd,
                         position: "absolute",
-                        left: selectedPage === "/Escolas" ? '20%' : "70%",
+                        left: selectedPage === "/Escolas" ? '0%' : "50%",
                         transition: "left 0.3s ease-out",
                     }}
                 />
             </Box>
         </Box>
-
     );
 }

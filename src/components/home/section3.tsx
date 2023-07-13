@@ -25,6 +25,8 @@ function Section3() {
         flexDirection: 'column',
         background: verify ? fundo : 'white',
       }}>
+        <Balancer> 
+
         <Container sx={{
           width: '100vw',
           height: '100px',
@@ -33,15 +35,14 @@ function Section3() {
           alignItems: 'center',
           mt: 5,
           [theme.breakpoints.down('md')]: {
-            mt: 5,
+            mt: 0,
           },
         }}>
-          <Balancer> 
             <Typography sx={{ color: verify ? colors.sc : colors.tc, 
-            fontSize: { xs: '2.5vh', sm: '4vh', md: '5vh', lg: '5vh', xl: '4vh' }, 
+            fontSize: { xs: '2.5vh', sm: '4vh', md: '4vh', lg: '4.5vh', xl: '4vh' }, 
             fontWeight: 'bold', 
             textAlign: 'center',
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('md')]: {
               textAlign: 'center',
               width: '100vw',
             },
@@ -51,8 +52,9 @@ function Section3() {
         }}>
             Ache polos do EasyPass perto de você
           </Typography>
-          </Balancer>
         </Container>
+        </Balancer>
+
         <Container sx={{
           width: '100%',
           height: '300px',
@@ -60,7 +62,9 @@ function Section3() {
           justifyContent: 'center',
           alignItems: 'center',
           mt: '20px',
-
+          [theme.breakpoints.down('md')]: {
+            mt: 0
+          },
         }}>
           <Card sx={{
             backgroundColor: "#9d9d9d",

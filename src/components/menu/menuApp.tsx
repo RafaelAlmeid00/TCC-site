@@ -103,10 +103,7 @@ export default function MenuApp(props: any) {
             EasyPass
           </Typography>
 
-          <Box sx={{
-            flexGrow: 1, display: { xs: 'flex', sm: 'none' },
-
-          }}>
+          <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -163,7 +160,8 @@ export default function MenuApp(props: any) {
                 justifyContent: 'center',
               },
               mr: 6,
-              ml: 8
+              ml: 8,
+              
             }}>
             <a href="/">
               <img src={Image} style={{
@@ -211,7 +209,7 @@ export default function MenuApp(props: any) {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0,
+          <Box sx={{ flexGrow: 0, 
               [theme.breakpoints.up('md')]: {
                 marginRight: 13
               },
@@ -223,11 +221,14 @@ export default function MenuApp(props: any) {
               [theme.breakpoints.only('sm')]: {
                 flexGrow: 1
               },
+              [theme.breakpoints.down('sm')]: {
+                marginLeft: -2,
+              },
           }}>
             <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode && 'white'} bch={darkMode && 'white'} />
           </Box>
           
-          <IconButton sx={{'&:hover': { color: colors.sc }, 
+          <IconButton sx={{'&:hover': { color: colors.sc }, mr: 15,
             [theme.breakpoints.down('md')]: {
               display: 'flex',
             justifyContent: 'center',
