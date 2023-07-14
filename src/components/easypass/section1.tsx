@@ -8,6 +8,7 @@ import React from "react";
 import colors from "../../assets/colors";
 import { AgradecimentosAnderson, AgradecimentosHenrique, AgradecimentosLuciane, EquipeEasyPass, Objetivo, PorqueEasyPass } from "./cards";
 import CloseIcon from '@mui/icons-material/Close';
+import {Bubbles2} from "../bubbles";
 
 export default function Section1EasyPass() {
   const { verify } = React.useContext(ModalContext);
@@ -59,8 +60,7 @@ export default function Section1EasyPass() {
           width: '100vw',
           background: verify ? fundo : 'white',
           [theme.breakpoints.down('md')]: {
-            mt: 0,
-            height: '100vh',
+            height: 'auto',
           },
           position: "relative",
           overflow: "hidden",
@@ -71,20 +71,22 @@ export default function Section1EasyPass() {
             float: 'left',
             [theme.breakpoints.down('md')]: {
               float: 'none',
-              width: '100%',
+              width: '100vw',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',
             },
           }}>
-            <Slide direction="left">
+            <Slide direction="left" triggerOnce={hasEntered}>
               <Balancer>
                 <Typography sx={{
                   color: verify ? 'white' : colors.tc,
-                  fontSize: { xs: '2vw', sm: '4vw', md: '3vw', lg: '3.5vw', xl: '3.5vw' },
-                  mt: "50px", ml: "100px",
+                  fontSize: { xs: '6vw', sm: '4vw', md: '3vw', lg: '3.5vw', xl: '3.5vw' },
                   fontWeight: 'bold',
+                  margin: '0 auto',
+                  width: '60%',
+                  mt: 10,
                   [theme.breakpoints.down('md')]: {
                     display: 'flex',
                     justifyContent: 'center',
@@ -97,12 +99,14 @@ export default function Section1EasyPass() {
                   A EasyPass:
                 </Typography>
                 <Typography sx={{
-                  fontSize: { xs: '2vw', sm: '2.5vw', md: '1.5w', lg: '1.7vw', xl: '1.7vw' }, 
+                  fontSize: { xs: '3.5vw', sm: '2.5vw', md: '1.5w', lg: '1.7vw', xl: '1.5vw' }, 
                   display: "flex",
                   flexDirection: "row",
-                  ml: '100px',
                   color: verify ? 'white' : colors.tc,
                   fontWeight: 'bold',
+                  margin: '0 auto',
+                  width: '60%',
+                  mt: 2,
                   [theme.breakpoints.down('md')]: {
                     display: 'flex',
                     justifyContent: 'center',
@@ -114,8 +118,11 @@ export default function Section1EasyPass() {
                 }}>TCC - FAETEC Amaury César Vieira, Volta Redonda
                 </Typography>
                 <Typography sx={{ color: verify ? 'white' : 'black',
-                  fontSize: { xs: '2vw', sm: '2.5vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
-                mt: "100px", ml: "100px", fontWeight: '600',
+                  fontSize: { xs: '4vw', sm: '2.5vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
+                  fontWeight: '600',
+                  margin: '0 auto',
+                  width: '60%',
+                  mt: 10,
                   [theme.breakpoints.down('md')]: {
                     display: 'flex',
                     justifyContent: 'center',
@@ -134,7 +141,6 @@ export default function Section1EasyPass() {
                 display: 'flex',
                 flexDirection: 'row',
                 mt: '60px',
-                ml: '140px',
               }}>
               </Container>
             </Slide>
@@ -147,7 +153,13 @@ export default function Section1EasyPass() {
             justifyContent: 'center',
             alignItems: 'center',
             [theme.breakpoints.down('md')]: {
-              display: 'none'
+              float: 'none',
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
             },
           }}>
             <AnimatePresence>
@@ -230,6 +242,8 @@ export default function Section1EasyPass() {
               ))}
             </Box>
           </Container>
+          <Bubbles2 />
+
         </Box>
       </Fade>
     </>

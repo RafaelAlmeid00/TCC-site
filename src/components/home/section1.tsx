@@ -7,7 +7,7 @@ import { BtnsApp } from "../btns";
 import handcell from "../../assets/handcell.png";
 import colors from "../../assets/colors";
 import React from "react";
-import Bubbles from "../bubbles";
+import {Bubbles} from "../bubbles";
 import ModalContext from "../../context/modalcontext";
 
 function Section1() {
