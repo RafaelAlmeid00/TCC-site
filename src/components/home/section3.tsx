@@ -39,16 +39,13 @@ function Section3() {
           },
         }}>
             <Typography sx={{ color: verify ? colors.sc : colors.tc, 
-            fontSize: { xs: '2.5vh', sm: '4vh', md: '4vh', lg: '4.5vh', xl: '4vh' }, 
+            fontSize: { xs: '4vw', sm: '4vw', md: '4vw', lg: '3vw', xl: '3vw' }, 
             fontWeight: 'bold', 
             textAlign: 'center',
             [theme.breakpoints.down('md')]: {
               textAlign: 'center',
               width: '100vw',
             },
-              [theme.breakpoints.only('sm')]: {
-                mt: -25,
-              },
         }}>
             Ache polos do EasyPass perto de você
           </Typography>

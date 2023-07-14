@@ -20,6 +20,12 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                 [theme.breakpoints.only('md')]: {
                     maxWidth: '15vw',
                 },
+                [theme.breakpoints.only('xs')]: {
+                    maxWidth: '23vw',
+                },
+                [theme.breakpoints.only('xl')]: {
+                    maxWidth: '35vw',
+                },
             }}>
                 <CardActionArea>
                     <CardMedia
@@ -35,7 +41,7 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                     />
                     <CardContent>
                         <Typography variant="body2" sx={{
-                                fontSize: { xs: '1.5vw', sm: '2vw', md: '2vw', lg: '1.5vw', xl: '3vw' },
+                                fontSize: { xs: '3vw', sm: '2vw', md: '2vw', lg: '1.5vw', xl: '1.8vw' },
                                 mb: 1.5,
                                 textAlign: 'center'
                         }}>

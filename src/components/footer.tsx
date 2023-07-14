@@ -86,7 +86,7 @@ export default function Footer() {
                 fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                  color: colors.pm, // Cor do ícone ao passar o mouse
+                  color: colors.sc, // Cor do ícone ao passar o mouse
                 }
               }} />
             </Link>
@@ -103,7 +103,7 @@ export default function Footer() {
                 fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                  color: colors.pm, // Cor do ícone ao passar o mouse
+                  color: colors.sc, // Cor do ícone ao passar o mouse
                 }
               }} />
             </Link>
@@ -119,7 +119,7 @@ export default function Footer() {
                 fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
                 color: 'white',
                 '&:hover': {
-                  color: colors.pm, // Cor do ícone ao passar o mouse
+                  color: colors.sc, // Cor do ícone ao passar o mouse
                 }
               }} />
             </Link>

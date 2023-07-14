@@ -6,9 +6,14 @@ import Cards from "../card";
 import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
-import Balancer from "react-wrap-balancer";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
+import cad from "../../assets/cad.jpeg"
+import descount from "../../assets/disccount.jpeg"
+import free from "../../assets/free.jpeg"
+import exclusivo from "../../assets/exclusivo.png"
+import rotas from "../../assets/routes.png"
+import pratice from "../../assets/patice.jpeg"
 
 function Section2() {
 
@@ -30,7 +35,7 @@ function Section2() {
           text: "Sistema de cadastro simples para as escolas e seus matriculados",
           mt: "150px",
           ml: "20px",
-          image: "https://i.imgur.com/DAZYM3U.jpg",
+          image: cad,
           hg: "170px",
           wd: "200px",
         },
@@ -39,7 +44,7 @@ function Section2() {
           text: "Pague apenas meia passagem em seu cartão escolas",
           mt: "150px",
           ml: "40px",
-          image: "https://www.visa.com.br/content/dam/VCOM/regional/lac/brazil/media-kits/images/mao-aproximando-cartao-de-catraca-1600x900-200kb.jpg",
+          image: descount,
           hg: "170px",
           wd: "200px",
         },
@@ -48,7 +53,7 @@ function Section2() {
           text: "Obtenha cartões com 100% de gratuidade nas passagens",
           mt: "150px",
           ml: "40px",
-          image: "https://img.freepik.com/fotos-premium/compra-de-bilhetes-de-onibus-um-onibus-amarelo-de-passageiros-e-bilhetes-para-ele-em-um-fundo-azul-renderizacao-3d_407474-2984.jpg",
+          image: free,
           hg: "200px",
           wd: "200px",
         },
@@ -66,7 +71,7 @@ function Section2() {
           text: "Ofereça exclusividade para seus funcionários",
           mt: "150px",
           ml: "20px",
-          image: "https://cdn.stability.ai/assets/org-cFNsdL6HMK3VrCO5d3Xo3LSb/00000000-0000-0000-0000-000000000000/9b1ee6cb-71fe-e04d-5d29-b49e533b85a6",
+          image: exclusivo,
           hg: "190px",
           wd: "200px",
         },
@@ -75,7 +80,7 @@ function Section2() {
           text: "De mais opções de rotas e meios de transportes para eles",
           mt: "150px",
           ml: "40px",
-          image: "https://thumbs.dreamstime.com/b/rotas-com-pinos-vermelhos-em-um-mapa-da-cidade-conceito-sobre-temas-de-aventura-descoberta-navega%C3%A7%C3%A3o-comunica%C3%A7%C3%A3o-log%C3%ADstica-170749199.jpg",
+          image: rotas,
           hg: "170px",
           wd: "200px",
         },
@@ -84,7 +89,7 @@ function Section2() {
           text: "Recarregue em segundos o cartão de seu funcionário",
           mt: "150px",
           ml: "40px",
-          image: "https://brbnovo.brb.com.br/mobilidade/wp-content/uploads/sites/8/2022/12/BRB-Exemplus-Mobilidade-18-11-20-125-scaled.jpg",
+          image: pratice,
           hg: "170px",
           wd: "200px",
         },
@@ -151,7 +156,7 @@ function Section2() {
             }}>
             <Typography sx={{
               color: verify ? colors.sc : colors.tc,
-              fontSize: { xs: '3.5vh', sm: '4vh', md: '4vh', lg: '5vh', xl: '5vh' },
+              fontSize: { xs: '5vw', sm: '5vw', md: '2.5vw', lg: '3vw', xl: '2.5vw' },
               mt: "50px",
               textAlign: 'center',
               fontWeight: 'bold',
@@ -169,9 +174,15 @@ function Section2() {
             </Container>
               <Container sx={{
                 display: 'block',
+              [theme.breakpoints.down('md')]: {
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
               }}>
               <Typography sx={{
-                fontSize: { xs: '2vh', sm: '2.5vh', md: '2.5vh', lg: '3vh', xl: '3.5vh' },
+                fontSize: { xs: '3.5vw', sm: '2vw', md: '2.5vwh', lg: '1.5vw', xl: '1.5vw' },
                 mt: '20px',
                 fontWeight: 'bold',
                 width: '100%',
@@ -185,7 +196,10 @@ function Section2() {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  width: '100%',
+                  width: '60%',
+                },
+                [theme.breakpoints.only('xl')]: {
+                  width: '85%',
                 },
               }}>
                 {currentProps[0].subtitle}

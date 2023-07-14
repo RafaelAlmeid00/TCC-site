@@ -13,6 +13,11 @@ function BtnsApp({ cl, mt, ml, mb }) {
         ml: ml, //100 (exceção footer)
         mb: mb,
         zIndex: 1,
+        justifyContent: "center",
+          alignItems: "center",
+        [theme.breakpoints.only('xl')]: {
+          ml: "-40px",
+        },
         [theme.breakpoints.down("md")]: {
           display: "flex",
           justifyContent: "center",

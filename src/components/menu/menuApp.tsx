@@ -30,7 +30,7 @@ export default function MenuApp(props: any) {
     setDarkMode(!darkMode);
   };
   const pages = [
-    { name: 'Home', route: '/' },
+    { name: 'Home', route: '/#' },
     { name: 'Quem Somos', route: '/EasyPass' },
     { name: 'Aplicativo', route: '/App' },
     { name: 'Servicos', route: '/Servicos' },

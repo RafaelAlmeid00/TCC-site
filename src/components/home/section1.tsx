@@ -53,8 +53,8 @@ function Section1() {
                   xs: '8vw',  // (7.5 / 1200) * 600
                   sm: '4vw',  // (7.5 / 1200) * 900
                   md: '3.9vw',  // (7.5 / 1200) * 1200
-                  lg: '3vw',
-                  xl: '3vw',  // Manter o mesmo tamanho de lg para xl
+                  lg: '3.5vw',
+                  xl: '3.5vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 mt: "50px", ml: "100px",
                 fontWeight: 'bold',
@@ -70,8 +70,8 @@ function Section1() {
                   xs: '6vw',  // (7.5 / 1200) * 600
                   sm: '3vw',  // (7.5 / 1200) * 900
                   md: '2.8vw',  // (7.5 / 1200) * 1200
-                  lg: '2vw',
-                  xl: '2vw',  // Manter o mesmo tamanho de lg para xl
+                  lg: '2.5vw',
+                  xl: '2.5vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 display: "flex",
                 flexDirection: "row",
@@ -96,8 +96,8 @@ function Section1() {
                     xs: '6vw',  // (7.5 / 1200) * 600
                     sm: '3vw',  // (7.5 / 1200) * 900
                     md: '2.8vw',  // (7.5 / 1200) * 1200
-                    lg: '2vw',
-                    xl: '2vw',  // Manter o mesmo tamanho de lg para xl
+                    lg: '2.5vw',
+                    xl: '2.5vw',  // Manter o mesmo tamanho de lg para xl
                   },
                   ml: '10px',
                   background: '#0fcd88',
@@ -111,8 +111,8 @@ function Section1() {
                   xs: '3.5vw',  // (7.5 / 1200) * 600
                   sm: '2vw',  // (7.5 / 1200) * 900
                   md: '2vw',  // (7.5 / 1200) * 1200
-                  lg: '1.2vw',
-                  xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
+                  lg: '1.5vw',
+                  xl: '1.4vw',  // Manter o mesmo tamanho de lg para xl
                 },
                 mt: "100px",
                 ml: "100px",
@@ -128,7 +128,7 @@ function Section1() {
             </Balancer>
           </Slide>
           <Slide direction="up" triggerOnce={hasEntered}>
-            <BtnsApp cl={verify ? "white" : "black"} mt="60px" ml="100px" mb={undefined} />
+            <BtnsApp cl={verify ? "white" : "black"} mt="60px" mb={undefined} />
           </Slide>
         </Container>
         <Container sx={{

@@ -5,6 +5,7 @@ import Loading from "./components/loading";
 import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import "./App.css"
 
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
 const CadallLazy = lazy(() => import('./pages/home/cadall'));
