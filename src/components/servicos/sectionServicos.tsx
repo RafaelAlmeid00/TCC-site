@@ -7,7 +7,7 @@ import appI from "../../assets/aplicativo.svg";
 import pag from "../../assets/pagamento.svg";
 import caminho from "../../assets/app3.svg";
 import Balancer from "react-wrap-balancer";
-import BtnsApp from "../btns";
+import {BtnsApp} from "../btns";
 
 export default function SectionService1() {
   const CardsServ = [

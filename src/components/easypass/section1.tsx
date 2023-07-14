@@ -81,7 +81,7 @@ export default function Section1EasyPass() {
             <Slide direction="left" triggerOnce={hasEntered}>
               <Balancer>
                 <Typography sx={{
-                  color: verify ? 'white' : colors.tc,
+                  color: verify ? colors.sc : colors.tc,
                   fontSize: { xs: '6vw', sm: '4vw', md: '3vw', lg: '3.5vw', xl: '3.5vw' },
                   fontWeight: 'bold',
                   margin: '0 auto',
@@ -102,7 +102,7 @@ export default function Section1EasyPass() {
                   fontSize: { xs: '3.5vw', sm: '2.5vw', md: '1.5w', lg: '1.7vw', xl: '1.5vw' }, 
                   display: "flex",
                   flexDirection: "row",
-                  color: verify ? 'white' : colors.tc,
+                  color: verify ? colors.sc : colors.tc,
                   fontWeight: 'bold',
                   margin: '0 auto',
                   width: '60%',
@@ -118,7 +118,7 @@ export default function Section1EasyPass() {
                 }}>TCC - FAETEC Amaury César Vieira, Volta Redonda
                 </Typography>
                 <Typography sx={{ color: verify ? 'white' : 'black',
-                  fontSize: { xs: '4vw', sm: '2.5vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
+                  fontSize: { xs: '4vw', sm: '2vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
                   fontWeight: '600',
                   margin: '0 auto',
                   width: '60%',
@@ -177,6 +177,9 @@ export default function Section1EasyPass() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    zIndex: 2,
+                    overflow: "hidden",
+                    overflowY: "scroll",
                   }}
                   onClick={handleClose}
                 >
@@ -187,7 +190,7 @@ export default function Section1EasyPass() {
                       backgroundColor: 'white',
                       padding: '2rem',
                       borderRadius: '0.5rem',
-                      maxWidth: 950,
+                      maxWidth: '70vw',
                     }}
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -199,6 +202,7 @@ export default function Section1EasyPass() {
                       <CloseIcon
                         onClick={handleClose}
                         sx={{
+                          color: 'black',
                           fontSize: '1.5rem',
                         }}
                       />
@@ -230,10 +234,12 @@ export default function Section1EasyPass() {
                     padding: '1rem',
                     borderRadius: '0.5rem',
                     cursor: 'pointer',
+                    zIndex: 1,
+
                   }}
                 >
                   <motion.h5
-                    style={{ color: colors.tc, fontWeight: '900', fontSize: '15px' }}
+                    style={{ color: colors.tc, fontWeight: '900' }}
                   >
                     {item.subtitle}
                   </motion.h5>
@@ -242,8 +248,11 @@ export default function Section1EasyPass() {
               ))}
             </Box>
           </Container>
+          <Box sx={{
+            zIndex: -1
+          }}>
           <Bubbles2 />
-
+          </Box>
         </Box>
       </Fade>
     </>

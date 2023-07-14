@@ -144,23 +144,28 @@ function Section2() {
             alignItems: 'center',
             flexDirection: 'column',
           }}>
-          <Menus mt="60px" ml="-80px"  onClick={toggleShowEscolas} />
+          <Menus mt="60px" onClick={toggleShowEscolas} sz={undefined} ml={undefined} />
           </Container>
           <Slide direction="left" triggerOnce={hasEntered}>
             <Container sx={{
               display: 'block',
-              ml: -5,
-              [theme.breakpoints.down('lg')]: {
-                ml: 0,
+              [theme.breakpoints.down('md')]: {
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               },
             }}>
             <Typography sx={{
               color: verify ? colors.sc : colors.tc,
               fontSize: { xs: '5vw', sm: '5vw', md: '2.5vw', lg: '3vw', xl: '2.5vw' },
               mt: "50px",
-              textAlign: 'center',
+                width: '100%',
+                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               fontWeight: 'bold',
-              
               [theme.breakpoints.down('md')]: {
                 textAlign: 'center',
                 display: 'flex',

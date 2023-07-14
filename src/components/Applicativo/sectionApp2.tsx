@@ -7,7 +7,7 @@ import pobre from "../../assets/pobre.svg";
 import net from "../../assets/internet.svg";
 import configs from "../../assets/configs.svg";
 import { Slide } from "react-awesome-reveal";
-import BtnsApp from "../btns";
+import {BtnsApp} from "../btns";
 
 export default function SectionApp2() {
   const CardsApp = [

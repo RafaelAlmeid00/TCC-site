@@ -12,7 +12,7 @@ import theme from "../../assets/theme";
 import app1 from "../../assets/app1.svg";
 import app2 from "../../assets/app2.png";
 import app3 from "../../assets/app3.svg";
-import BtnsApp from "../btns";
+import {BtnsApp} from "../btns";
 
 export default function SectionApp1() {
   return (

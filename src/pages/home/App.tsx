@@ -3,7 +3,6 @@ import Footer from "../../components/footer";
 import MenuApp from "../../components/menu/menuApp";
 import SectionApp1 from "../../components/Applicativo/sectionApp1";
 import SectionApp2 from "../../components/Applicativo/sectionApp2";
-import '../../index.css'
 
 export default function AppAll() {
   return (
@@ -11,7 +10,6 @@ export default function AppAll() {
       <Box>
         <MenuApp />
         <SectionApp1 />
-        <SectionApp2 />
         <Footer />
       </Box>
     </>
