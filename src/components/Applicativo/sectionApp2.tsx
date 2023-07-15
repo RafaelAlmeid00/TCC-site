@@ -87,7 +87,7 @@ export default function SectionApp2() {
                 sx={{
                   mt: 5,
                   fontSize: {
-                    xs: "2vw", // (7.5 / 1200) * 600
+                    xs: "2.5vw", // (7.5 / 1200) * 600
                     sm: "1.5vw", // (7.5 / 1200) * 900
                     md: "1.5vw", // (7.5 / 1200) * 1200
                     lg: "1.2vw",
@@ -148,7 +148,7 @@ export default function SectionApp2() {
                 sx={{
                   textAlign: "center",
                   fontSize: {
-                    xs: "2vw", // (7.5 / 1200) * 600
+                    xs: "2.5vw", // (7.5 / 1200) * 600
                     sm: "1.5vw", // (7.5 / 1200) * 900
                     md: "1.5vw", // (7.5 / 1200) * 1200
                     lg: "1.2vw",

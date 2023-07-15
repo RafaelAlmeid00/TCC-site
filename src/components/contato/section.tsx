@@ -7,6 +7,9 @@ import emailjs from 'emailjs-com';
 import { useState, FormEvent } from "react";
 import LoadingButton from '@mui/lab/LoadingButton';
 import theme from "../../assets/theme";
+import ModalContext from "../../context/modalcontext";
+import React from "react";
+import colors from "../../assets/colors";
 
 export default function SectionContato() {
     const [nome, setNome] = useState('')
@@ -20,7 +23,12 @@ export default function SectionContato() {
     const [loading, setLoading] = useState(false)
     const [disable, setDisable] = useState(false)
     const [sucess, setSucess] = useState(false)
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const { hasEntered } = React.useContext(ModalContext);
 
+
+    const fundo = themes.palette.background.default
     const Nulls = () => {
         return (
             <><Typography sx={{
@@ -121,11 +129,9 @@ export default function SectionContato() {
     return (
         <>
             <Box sx={{
-                mt: "10vh",
-                height: '125vh',
+                height: '120vh',
                 width: '100vw',
-                background: 'white',
-                mb: 10,
+                background: verify ? fundo : 'white',
                 [theme.breakpoints.down('sm')]: {
                     display: 'flex',
                     alignItems: 'center',
@@ -134,11 +140,10 @@ export default function SectionContato() {
                     height: 'auto',
                 },
             }}>
-            <Fade cascade>
+            <Fade cascade triggerOnce={hasEntered}>
                         <Container sx={{
                             width: '50%',
                             float: 'left',
-                            position: 'absolute',
                             mt: '10vh',
                             [theme.breakpoints.down('sm')]: {
                                 float: 'none',
@@ -147,9 +152,8 @@ export default function SectionContato() {
                                 position: 'relative',
                             },
                         }}>
-                        <Slide direction="left">
+                        <Slide direction="left" triggerOnce={hasEntered}>
                             <Container sx={{
-                                float: "right",
                                 position: 'relative',
                                 width: '60%',
                                 [theme.breakpoints.down('sm')]: {
@@ -157,10 +161,10 @@ export default function SectionContato() {
                                     width: '80vw',
                                 },
                             }}>
-
                                 <Typography component="h1" sx={{
                                     fontSize: '30px',
                                     fontWeight: '700',
+                                    color: verify ? 'white' : 'black' 
                                 }}>
                                     Olá!
                                 </Typography>
@@ -169,11 +173,13 @@ export default function SectionContato() {
                                     fontWeight: '600',
                                     mt: '10px',
                                     mb: '10px',
+                                    color: verify ? 'white' : 'black' 
                                 }}>
-                                    Preencha seus dados ao lado e conte-nos sobre o seu problema.
+                                    Preencha seus dados ao lado e entre em contato conosco.
                                 </Typography>
                                 <Typography component="span" sx={{
                                     fontSize: '12px',
+                                    color: verify ? 'white' : 'black' 
                                 }}>
                                     Para te ajudar da melhor forma possível, o nosso atendimento do Fale Conosco precisa saber algumas informações sobre você, como nome e CPF – é só pra te localizar no sistema, ok? Não se preocupe: a segurança dos seus dados e a sua privacidade estão garantidas. Para saber mais sobre a nossa Política de Privacidade ou caso tenha alguma dúvida, clique aqui.
                                 </Typography>
@@ -239,12 +245,12 @@ export default function SectionContato() {
                                         defaultValue="visitante"
                                         onChange={(event) => setRadio(event.target.value)}
                                     >
-                                        <FormControlLabel value="cliente" control={<Radio />} label="Cliente" />
-                                        <FormControlLabel value="visitante" control={<Radio />} label="Visitante" />
+                                        <FormControlLabel value="cliente" control={<Radio />} label="Cliente" sx={{ color: verify ? 'white' : 'black' }} />
+                                        <FormControlLabel value="visitante" control={<Radio />} label="Visitante" sx={{ color: verify ? 'white' : 'black' }} />
                                     </RadioGroup>
                                 </FormControl>
                                 <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
-                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                    <InputLabel htmlFor="input-with-icon-adornment" >
                                         Email
                                     </InputLabel>
                                     <Input
@@ -282,16 +288,20 @@ export default function SectionContato() {
                                     variant="contained"
                                     disabled={disable}
                                     sx={{
+                                        background: verify && 'white',
+                                        color: verify ? colors.pm : 'white',
+                                        fontWeight: 'bold',
                                         paddingTop: '8px',
                                         paddingLeft: '15px',
                                         paddingBottom: '8px',
                                         paddingRight: '15px',
-                                        color: 'white',
                                         border: '2px solid transparent', // adiciona a borda inicialmente
                                         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
                                         '&:hover': {
                                             border: '2px solid #0fcd88', // muda a cor da borda na animação
+                                            background: verify && 'white',
                                         },
+                                        mb: 10
                                     }}
                                 >
                                     Enviar
