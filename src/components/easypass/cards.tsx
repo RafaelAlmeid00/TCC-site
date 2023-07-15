@@ -34,7 +34,7 @@ function EquipeEasyPass() {
                 },
             }}
         >
-            {cards.map((card, index) => (
+            {cards.map((card) => (
             <Card
                 sx={{
                     width: '20vw',
@@ -43,8 +43,11 @@ function EquipeEasyPass() {
                     mb: '20px',
                     [theme.breakpoints.down('md')]: {
                         maxHeight: '30vh',
-                        flexWrap: 'wrap'
+                        flexWrap: 'wrap',
                     },
+                        [theme.breakpoints.only('xs')]: {
+                            maxHeight: '20vh',
+                        },
                 }}
             >
                     <CardActionArea sx={{
@@ -57,6 +60,9 @@ function EquipeEasyPass() {
                     <CardMedia component="img" height="140" image={card.img} sx={{
                             [theme.breakpoints.down('md')]: {
                                 maxHeight: '15vh',
+                            },
+                            [theme.breakpoints.only('xs')]: {
+                                maxHeight: '10vh',
                             },
                     }} />
                     <CardContent sx={{
@@ -75,8 +81,8 @@ function EquipeEasyPass() {
                             <Typography
                                 sx={{
                                     fontWeight: 'bold',
-                                    color: verify ? colors.tc : 'white',
-                                        fontSize: { xs: '3vw', sm: '2.5vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
+                                    color: verify ? 'white' : 'black',
+                                        fontSize: { xs: '3vw', sm: '2vw', md: '1.5w', lg: '1vw', xl: '1.5vw' }, 
                                         textAlign: 'center',
                                         width: '90%',
                                 }}
@@ -94,27 +100,25 @@ function EquipeEasyPass() {
 
 
 function AgradecimentosAnderson() {
-    const { verify } = React.useContext(ModalContext);
 
     return (
         <Balancer>
             <Typography gutterBottom variant="h5" component="div">
             </Typography>
-            <Typography sx={{ color: verify ? 'black' : 'white' }}>
+            <Typography sx={{ color: 'black' }}>
             </Typography>
         </Balancer>
   );
 }
 
 function PorqueEasyPass() {
-    const { verify } = React.useContext(ModalContext);
 
     return (
         <Balancer>
-            <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', color: verify ? colors.tc : 'white' }}>
+            <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', color: colors.tc }}>
                 Volta Redonda,
             </Typography>
-            <Typography sx={{ color: verify ? 'black' : 'white' }}>
+            <Typography sx={{ color:'black' }}>
                 É uma cidade com grande problemas mobilísticos, o transporte publico é precário, as empresas estão falidas e se insistem em continuar a funcionar por apoio da prefeitura. O sistema do SindPass é retrógrado em relação as demais cidades, sendo pouco transparente, burocrático e sem atendimento ao cidadãos. Nisso nasce a EasyPass com o objetivo de desenvolver essa área de transporte.
             </Typography>
         </Balancer>
@@ -122,45 +126,43 @@ function PorqueEasyPass() {
 }
 
 function AgradecimentosLuciane() {
-    const { verify } = React.useContext(ModalContext);
 
     return (
         <Balancer>
             <Typography gutterBottom variant="h5" component="div">
             </Typography>
-            <Typography sx={{ color: verify ? 'black' : 'white' }}>
+            <Typography sx={{ color: 'black' }}>
             </Typography>
         </Balancer>
   );
 }
 
 function Objetivo() {
-    const { verify } = React.useContext(ModalContext);
 
     return (
         <>
         <Box sx={{ display: 'flex', flexDirection: 'column'}}> 
         <Balancer>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', mt: '40px', color: verify ? colors.tc : 'white' }}>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', mt: '40px', color: colors.tc }}>
                 Praticidade
             </Typography>
-                    <Typography sx={{ color: verify ? 'black' : 'white' }}>
+                    <Typography sx={{ color: 'black' }}>
                 Criar sistemas praticos de recargas, gerenciamento e atendimento ao usuário.
             </Typography>
         </Balancer>
             <Balancer>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', mt: '40px', color: verify ? colors.tc : 'white' }}>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold', mt: '40px', color:colors.tc}}>
                     Transparência
                 </Typography>
-                    <Typography sx={{color: verify ? 'black' : 'white' }}>
+                    <Typography sx={{color: 'black' }}>
                     Um gerenciamento transparente com o usuário sobre as suas informações.
                 </Typography>
             </Balancer>
             <Balancer>
-                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight: 'bold', mt: '40px', color: verify ? colors.tc : 'white' }}>
+                    <Typography gutterBottom variant="h5" component="div" sx={{fontWeight: 'bold', mt: '40px', color: colors.tc }}>
                     Avanços
                 </Typography>
-                    <Typography  sx={{ mb: '40px', color: verify ? 'black' : 'white' }}>
+                    <Typography  sx={{ mb: '40px', color: 'black' }}>
                     Trazer os avanços tecnológicos para desfruto dos nossos clientes.
                 </Typography>
                 </Balancer></Box>

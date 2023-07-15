@@ -39,7 +39,7 @@ function Section3() {
           },
         }}>
             <Typography sx={{ color: verify ? colors.sc : colors.tc, 
-            fontSize: { xs: '4vw', sm: '4vw', md: '4vw', lg: '3vw', xl: '3vw' }, 
+            fontSize: { xs: '4vw', sm: '3vw', md: '3vw', lg: '3vw', xl: '3vw' }, 
             fontWeight: 'bold', 
             textAlign: 'center',
             [theme.breakpoints.down('md')]: {

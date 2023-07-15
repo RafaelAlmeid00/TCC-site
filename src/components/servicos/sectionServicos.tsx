@@ -1,54 +1,56 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, useMediaQuery } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
-import moleza from "../../assets/moleza.svg";
-import appI from "../../assets/aplicativo.svg";
-import pag from "../../assets/pagamento.svg";
-import caminho from "../../assets/app3.svg";
+import history from "../../assets/history.png";
+import rota from "../../assets/map.jpg";
+import pag from "../../assets/pay.png";
+import order from "../../assets/order.png";
 import Balancer from "react-wrap-balancer";
 import {BtnsApp} from "../btns";
+import ModalContext from "../../context/modalcontext";
+import React from "react";
+import { Bubbles3 } from "../bubbles";
 
 export default function SectionService1() {
-  const CardsServ = [
+  const isMdOrBelow = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
+  const cards = [
     {
       card: [
         {
-          title: "Sistema Simples",
-          text: "Possuimos um sistema extremamente simples e acessível",
-          ml: "50px",
-          image: moleza,
-          hg: "100%",
-          wd: "200px",
+          title: 'Histórico',
+          text: 'Veja suas viagens feitas',
+          image: history,
+          wd: '200px',
         },
         {
-          title: "Gerenciamento pelo Aplicativo",
-          text: "Tenha o total controle de seus cartões na palma de sua mão!",
-          ml: "50px",
-          image: appI,
-          hg: "100%",
-          wd: "200px",
+          title: 'SAC',
+          text: 'Resolva qualquer problema',
+          ml: '50px',
+          image: order,
+          wd: '200px',
         },
         {
-          title: "Pagamento Online",
-          text: "Faça suas recargas de forma totalmente online e segura!",
-          ml: "50px",
+          title: 'Pagamento',
+          text: 'Faça suas recargas online',
+          ml: '50px',
           image: pag,
-          hg: "100%",
-          wd: "200px",
+          wd: '200px',
         },
         {
-          title: "Verifique suas Rotas",
-          text: "Veja onde o ônibus está e por onde ele vai passar pelo sistema",
-          ml: "50px",
-          mr: "50px",
-          image: caminho,
-          hg: "100%",
-          wd: "200px",
+          title: 'Rotas',
+          text: 'Veja onde o ônibus vai passar',
+          ml: '50px',
+          image: rota,
+          hg: '180px',
+          wd: '200px',
         },
       ],
     },
   ];
+
+  const cardsToRender = isMdOrBelow ? cards[0].card : cards[0].card.slice(0, -1);
 
   const cardVariants = {
     hover: {
@@ -62,43 +64,57 @@ export default function SectionService1() {
       },
     },
   };
+  const { verify } = React.useContext(ModalContext);
+  const { themes } = React.useContext(ModalContext);
+  const { hasEntered } = React.useContext(ModalContext);
 
+
+  const fundo = themes.palette.background.default
   return (
     <>
       <Box
         sx={{
-          mt: "11vh",
-          height: "89.99vh",
+          height: "88vh",
           width: "100vw",
+          background: verify ? fundo : 'white',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <Container
           sx={{
-            height: "80%",
+            height: {xs: '40%', sm: '40%', md: '60%', lg: "60%", xl: '60%'},
             width: "100vw",
             align: "center",
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
             flexDirection: "arrow",
+            flexWrap: 'wrap',
+            mt: {xs: 10, sm: 10, md: 10}
           }}
         >
-          <Slide direction="left">
-            {CardsServ[0].card.map((card, index) => (
+          <Slide direction="left" triggerOnce={hasEntered}>
+            {cardsToRender.map((card, index) => (
               <motion.div
                 key={index}
                 variants={cardVariants}
                 whileHover="hover" // Aplica as animações ao passar o mouse
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  justifyContent: "center",
+                }}
               >
                 <Cards
                   image={card.image}
-                  mt={undefined}
                   ml={card.ml}
-                  hg={card.hg}
                   wd={card.wd}
                   title={card.title}
-                  text={card.text}
-                />
+                  hg={card.hg}
+                  text={card.text} 
+                  mt={undefined}
+                  />
               </motion.div>
             ))}
           </Slide>
@@ -113,10 +129,11 @@ export default function SectionService1() {
             width: "100vw",
           }}
         >
-          <Slide direction="up">
-            <BtnsApp cl="black" mt="0" ml={undefined} mb={undefined} />
+          <Slide direction="up" triggerOnce={hasEntered}>
+            <BtnsApp cl={verify ? 'white' : 'black'} mt="0" ml={undefined} mb={undefined} />
           </Slide>
         </Container>
+        <Bubbles3 />
       </Box>
     </>
   );

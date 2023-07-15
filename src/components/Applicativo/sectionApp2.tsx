@@ -1,132 +1,189 @@
-import { Box, Container } from "@mui/material";
-import Cards from "../card";
-import { motion } from "framer-motion";
-import simplicidade from "../../assets/simplicidade.svg";
-import cad from "../../assets/cadastro.svg";
-import pobre from "../../assets/pobre.svg";
-import net from "../../assets/internet.svg";
-import configs from "../../assets/configs.svg";
-import { Slide } from "react-awesome-reveal";
-import {BtnsApp} from "../btns";
+
+import {
+  Box,
+  Container,
+  Typography,
+} from "@mui/material";
+import MapIcon from '@mui/icons-material/Map'; 
+import colors from "../../assets/colors";
+import ModalContext from "../../context/modalcontext";
+import React from "react";
+import { Balancer } from "react-wrap-balancer";
+import { BtnApp } from "../btns";
+import Divider from "../divider";
+import theme from "../../assets/theme";
+import AddCardIcon from '@mui/icons-material/AddCard';
 
 export default function SectionApp2() {
-  const CardsApp = [
-    {
-      card: [
-        {
-          title: "Cadastro Empresarial",
-          text: "Sistema de cadastro simples para as escolas e seus matriculados",
-          image: cad,
-          hg: "100%",
-          wd: "200px",
-        },
-        {
-          title: "Pedido de cartão Online",
-          text: "Peça seu cartão de forma 100% online sem nenhuma complicação",
-          ml: "50px",
-          image: simplicidade,
-          hg: "100%",
-          wd: "200px",
-        },
-        {
-          title: "Gerenciamento de cartão",
-          text: "Gerencie facilmente seus cartões a hora que você quiser",
-          ml: "50px",
-          image: configs,
-          hg: "100%",
-          wd: "200px",
-        },
-        {
-          title: "Recarga 100% online",
-          text: "Realize recargas a qualquer momento e de qualquer lugar",
-          ml: "50px",
-          image: net,
-          hg: "100%",
-          wd: "200px",
-        },
-        {
-          title: "Pedido de cartão gratuito",
-          text: "Peça seu cartão sem se preucupar em gastar nada e seja feliz",
-          ml: "50px",
-          mr: "50px",
-          image: pobre,
-          hg: "100%",
-          wd: "200px",
-        },
-      ],
-    },
-  ];
+  const { verify } = React.useContext(ModalContext);
+  const { themes } = React.useContext(ModalContext);
+  const { hasEntered } = React.useContext(ModalContext);
 
-  const cardVariants = {
-    hover: {
-      scale: 1.1, // Aumenta o tamanho em 10%
-      y: [0, -10, 0], // Movimento de flutuação para cima e para baixo
-      transition: {
-        y: {
-          repeat: Infinity, // Repete a animação infinitamente
-          duration: 1,
-        },
-      },
-    },
-  };
   return (
     <>
       <Box
         sx={{
-          height: "89.9vh",
+          height: "90vh",
           width: "100vw",
-          // backgroundColor: "green",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          background: verify ? '#222222' : 'white',
+          mt: -5
         }}
       >
-        <Container
-          sx={{
-            height: "80%",
-            width: "100vw",
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-            // backgroundColor: "blue",
-          }}
-        >
-          {CardsApp[0].card.map((card, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover="hover" // Aplica as animações ao passar o mouse
-            >
-              <Cards
-                image={card.image}
-                mt={undefined}
-                ml={card.ml}
-                hg={card.hg}
-                wd={card.wd}
-                title={card.title}
-                text={card.text}
-              />
-            </motion.div>
-          ))}
+        <Container sx={{
+          width: '50%',
+          height: '100%',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          float: 'left'
+        }}>
+          <Container
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "20%",
+              float: 'left',
+              [theme.breakpoints.down('lg')]: {
+                display: 'none'
+              },
+            }}
+          >
+            <AddCardIcon sx={{
+              fontSize: '10vw',
+              color: verify ? 'white' : 'black',
+            }}/>
+          </Container>
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              float: 'right',
+              width: '80%'
+            }}
+          >
+            <Balancer>
+              <Typography
+                sx={{
+                  color: verify ? colors.sc : colors.tc,
+                  mt: "10px",
+                  fontSize: {
+                    xs: "5vw", // (7.5 / 1200) * 600
+                    sm: "4vw", // (7.5 / 1200) * 900
+                    md: "3vw", // (7.5 / 1200) * 1200
+                    lg: "3vw",
+                    xl: "3vw", // Manter o mesmo tamanho de lg para xl
+                  },
+                  fontWeight: "bold",
+                  textAlign: 'center'
+                }}
+              >
+                Faça sua recarga
+              </Typography>
+              <Typography
+                sx={{
+                  mt: 5,
+                  fontSize: {
+                    xs: "2vw", // (7.5 / 1200) * 600
+                    sm: "1.5vw", // (7.5 / 1200) * 900
+                    md: "1.5vw", // (7.5 / 1200) * 1200
+                    lg: "1.2vw",
+                    xl: "1.2vw", // Manter o mesmo tamanho de lg para xl
+                  },
+                  height: "190px",
+                  fontWeight: "bold",
+                  textAlign: 'center',
+                  color: verify ? 'white' : 'black',
+                }}
+              >
+                Otimize seu dia e realize sua recarga totalmente online pelo nosso
+                site e aplicativo, seja por pix, boleto ou débito automático
+              </Typography>
+            </Balancer>
+            <BtnApp cl={verify ? 'white' : 'black'} title='Recarregar' />
+          </Container>
         </Container>
-        <Container
-          sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "arrow",
-            // backgroundColor: "red",
-            height: "20%",
-            width: "100vw",
-          }}
-        >
-          <Slide direction="up">
-            <BtnsApp cl="black" mt="0" ml={undefined} mb={undefined} />
 
-          </Slide>
+        <Divider />
+
+        <Container sx={{
+          width: '50%',
+          height: '100%',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          float: 'left',
+        }}>
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              width: '80%'
+            }}
+          >
+            <Balancer>
+              <Typography
+                sx={{
+                  color: verify ? colors.sc : colors.tc,
+                  mt: "10px",
+                  fontSize: {
+                    xs: "5vw", // (7.5 / 1200) * 600
+                    sm: "4vw", // (7.5 / 1200) * 900
+                    md: "3vw", // (7.5 / 1200) * 1200
+                    lg: "3vw",
+                    xl: "3vw", // Manter o mesmo tamanho de lg para xl
+                  },
+                  fontWeight: "bold",
+                }}
+              >
+                Veja suas rotas
+              </Typography>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontSize: {
+                    xs: "2vw", // (7.5 / 1200) * 600
+                    sm: "1.5vw", // (7.5 / 1200) * 900
+                    md: "1.5vw", // (7.5 / 1200) * 1200
+                    lg: "1.2vw",
+                    xl: "1.2vw", // Manter o mesmo tamanho de lg para xl
+                  },
+                  height: "190px",
+                  fontWeight: "bold",
+                  mt: 5,
+                  color: verify ? 'white' : 'black',
+                }}
+              >
+                Em nosso aplicativo os usuários possuem todos, como a verificação das rotas dos ônibus para melhor planejar suas viagens.
+              </Typography>
+            </Balancer>
+            <BtnApp cl={verify ? 'white' : 'black'} title='Rotas' />
+          </Container>
+          <Container
+            sx={{
+              mr: 10,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "20%",
+              [theme.breakpoints.down('lg')]: {
+                display: 'none'
+              },
+            }}
+          >
+            <MapIcon sx={{
+              fontSize: '10vw',
+              color: verify ? 'white' : 'black',
+            }}/>
+          </Container>
         </Container>
       </Box>
     </>
-  );
+  )
 }

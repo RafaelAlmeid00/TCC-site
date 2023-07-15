@@ -178,7 +178,9 @@ function Section2() {
             </Typography>
             </Container>
               <Container sx={{
-                display: 'block',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               [theme.breakpoints.down('md')]: {
                 textAlign: 'center',
                 display: 'flex',

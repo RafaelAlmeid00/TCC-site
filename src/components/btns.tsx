@@ -177,4 +177,66 @@ function Btn({name, route, cl, bc, bch}) {
   )
 }
 
-export {BtnsApp, Btn}
+
+function BtnApp({ cl, title}) {
+  return (
+    <Link
+      href="/"
+      sx={{
+        textDecoration: "none",
+      }}
+    >
+      <Button
+        sx={{
+          border: "2px solid",
+          borderColor: cl,
+          borderRadius: 3,
+          padding: 3,
+          height: "2vh",
+          width: {
+            xs: "30vw",
+            sm: "20vw",
+            md: "15vw",
+            lg: "13vw",
+            xl: "13vw",
+          },
+          color: cl,
+          display: "flex",
+          alignItems: "center", // Alinhar verticalmente ícone e texto
+          justifyContent: "center", // Alinhar horizontalmente ícone e texto
+          mb: "50px",
+        }}
+      >
+        <Box
+          sx={{
+            width: {
+              xs: "30vw",
+              sm: "15vw",
+              md: "12vw",
+              lg: "12vw",
+              xl: "12vw",
+            },
+            overflow: "hidden", // Evitar que o texto exceda o limite do botão
+            textOverflow: "ellipsis", // Adicionar reticências caso o texto seja muito longo
+            whiteSpace: "nowrap", // Evitar quebra de linha
+          }}
+        >
+          <Typography
+            sx={{
+              textTransform: "none",
+              mr: 1,
+              fontWeight: "bold",
+              color: cl,
+              fontSize: { xs: '3vw', sm: '2vw', md: '1.5vw', lg: '1vw', xl: '1vw' }
+            }}
+          >
+            {title}
+          </Typography>
+        </Box>
+      </Button>
+    </Link>
+  );
+}
+
+
+export {BtnsApp, Btn, BtnApp}

@@ -1,9 +1,7 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -19,6 +17,9 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ModalContext from '../../context/modalcontext';
 import { Btn } from '../btns';
 import colors from '../../assets/colors';
+import { Drawer } from '@mui/material';
+import CloseIcon from "@mui/icons-material/Close";
+import { IconButton } from "@mui/material";
 
 export default function MenuApp(props: any) {
   const [showCad, setShowCad] = React.useState(true)
@@ -103,18 +104,19 @@ export default function MenuApp(props: any) {
             EasyPass
           </Typography>
 
-          <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
+            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+            <Drawer
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -128,30 +130,74 @@ export default function MenuApp(props: any) {
               }}
 
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                '& .MuiDrawer-paper': {
+                  width: '100%',
+                },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.route} onClick={() => handleNavigate(page.route)}>
-                  <Typography textAlign="center" sx={{
-                    position: 'relative',
-                    '&:hover': {
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '100%',
-                        borderBottom: '2px solid #0fcd88',
-                        bottom: '-2px',
-                        left: 0
-                      }
-                    }
-                  }}>{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              <Box
+                sx={{
+                  width: 250,
+                  height: '100%',
+                  p: 2,
+                }}
+              >
+                <IconButton onClick={handleCloseNavMenu}>
+                  <CloseIcon />
+                </IconButton>
+                {pages.map((page) => (
+                  <MenuItem
+                    key={page.route}
+                    onClick={() => handleNavigate(page.route)}
+                    sx={{
+                      mt: 3,
+                      mb: 3,
+                      '&:hover': {
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          width: '100%',
+                          borderBottom: '2px solid #0fcd88',
+                          bottom: '-2px',
+                          left: 0,
+                        },
+                      },
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      sx={{
+                        position: 'relative',
+                        fontSize: {
+                          xs: "4vw",
+                        },
+                      }}
+                    >
+                      {page.name}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Box>
+              <Typography
+                noWrap
+                sx={{
+                  mb: 10,
+                  fontFamily: 'Franklin Gothic Demi Cond',
+                  fontWeight: 'bold',
+                  textDecoration: 'none',
+                  background: 'linear-gradient(to right, #0fcd88 51%, white 50%)',
+                  '-webkit-background-clip': 'text',
+                  '-webkit-text-fill-color': 'transparent',
+                  display: 'flex',
+                  fontSize: '30px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                EasyPass
+              </Typography>
+            </Drawer>
           <Box
             sx={{
               display: { xs: 'flex', sm: 'none' },

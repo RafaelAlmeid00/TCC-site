@@ -24,8 +24,10 @@ export default function Cards({ image, title, text, wd, hg, mt, ml }) {
                     maxWidth: '23vw',
                 },
                 [theme.breakpoints.only('xl')]: {
-                    maxWidth: '35vw',
+                    maxWidth: '50vw',
                 },
+                zIndex: 1
+
             }}>
                 <CardActionArea>
                     <CardMedia

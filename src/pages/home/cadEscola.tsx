@@ -4,8 +4,12 @@ import { Box } from '@mui/material'
 import Exit from '../../components/buttonexit.tsx'
 import CompleteCadEscola from '../../components/cadastro/Cadastroescola/dadosescola.tsx'
 import CompleteCad2Escola from '../../components/cadastro/Cadastroescola/endereço.tsx'
+import { Fade } from 'react-awesome-reveal';
+import ModalContext from "../../context/modalcontext";
+import React from "react";
 
 function CadallEscola() {
+    const { hasEntered } = React.useContext(ModalContext);
 
     return (
         <>
@@ -23,8 +27,10 @@ function CadallEscola() {
                 display: "flex",
                 flexDirection: "row",
             }}>
+                <Fade cascade damping={0.2} triggerOnce={hasEntered}>
                 <CompleteCadEscola/>
                 <CompleteCad2Escola/>
+                </Fade>
             </Box>
         </>
     )

@@ -164,6 +164,11 @@ export default function Section1EasyPass() {
           }}>
             <AnimatePresence>
               {selectedId && (
+                <Container sx={{
+                  [theme.breakpoints.only('xs')]: {
+                    top: 30
+                  },
+                }}>
                 <motion.div
                   key={selectedId}
                   layoutId={selectedId}
@@ -210,6 +215,7 @@ export default function Section1EasyPass() {
                     {renderComponentById(selectedId)}
                   </motion.div>
                 </motion.div>
+                </Container>
               )}
             </AnimatePresence>
 
