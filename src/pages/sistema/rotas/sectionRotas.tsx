@@ -3,6 +3,7 @@ import  color from "../../../assets/colors";
 import {  TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem, TimelineOppositeContent } from "@mui/lab";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import SendIcon from '@mui/icons-material/Send';
 import MenuLateral from "../../../components/menu/menulateral";
 import MenuSistema from "../../../components/menu/menusistema";
@@ -19,6 +20,8 @@ function SectionRota1() {
     const [value, setValue] = useState('');
     const [options, setAge] = useState('');
     const [ex, setEx] = useState('');
+    const [pass, setPass] = useState('');
+    var [alsopass, setAlsoPass] = useState([])
     const [textval, setTextval] = useState(' ');
     var [fax, setFax] = useState(0);
 
@@ -27,10 +30,13 @@ function SectionRota1() {
       };
 
     async function takeIt() {
+        
         if (options == 'Número do ônibus') {
           setTake(await axios.post('http://localhost:3344/routes/search', 
           {token: token, route_num: value}));
-
+          console.log('this is take: ', take);
+          
+          
         }else
         if (options == 'Rotas') {
           setTake(await axios.post('http://localhost:3344/routes/search', 
@@ -41,9 +47,21 @@ function SectionRota1() {
     };
 
     useEffect(() => {
-      setTextval(String(take?.data[0]?.route_nome));
+      setTextval(String(take?.data?.consultBus[0].route_nome))
+     
+      
       if (take != undefined) {
-        visState('visible')
+        visState('visible');
+        setPass('também passa por:');
+        alsopass.length = 0
+        for (let index = 0; index < take?.data?.consultStop.length; index++) {
+          console.log('foi fi');
+          
+          alsopass.push(String(take?.data?.consultStop[index].stop_endrua))
+          alsopass.push(' ')
+          console.log('this is alsopass: ', alsopass);
+          
+        }
       }
     }, [take])
     const regex = /[/]/;
@@ -155,7 +173,8 @@ function SectionRota1() {
                         <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
                       </TimelineItem>
                 </Timeline>
-                <Typography sx={{ width: '100%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', height: '5%', paddingBottom: '20%',}}>{take?.data[0]?.path_routes}</Typography>
+                <Typography>{pass}</Typography>
+                <Typography sx={{ width: '100%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', height: '5%', paddingBottom: '20%',}}>{alsopass}</Typography>
               </Box>
 
               <Box sx={{

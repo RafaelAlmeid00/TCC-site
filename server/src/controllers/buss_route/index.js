@@ -5,7 +5,7 @@ module.exports = {
         try {
             const { route_nome: name } = req.body;
             const { route_num: num } = req.body;
-           
+           //path_routes
             //user_user_CPF: cpf, req_data: date,  req_data: env, req_TipoCartao: card
             await knex("bus_route").insert({route_num: num, route_nome: name});
             
@@ -21,8 +21,31 @@ module.exports = {
             const { route_num: num } = req.body;
             const { route_nome: nome } = req.body
             if (num != undefined) {
-                const consult = await knex("bus_route").where('route_num', '=', num);
-                return res.status(201).send(consult);
+              /* const test = await knex.select('*').from('routes')
+                .join('bus_route').join('bus_stop').where('bus_route_rote_id', '=', consultBus[0].rote_id);
+                console.log('this is test: ', test);
+                return res.status(201).send(test);*/
+                
+                const consultBus = await knex("bus_route").where('route_num', '=', num);
+                const consultRoutes = await knex("routes").where('bus_route_rote_id', '=', consultBus[0].rote_id);
+                console.log('test consultRoutes: ', consultRoutes);
+                var consultStop = new Array
+                for (let index = 0; index < consultRoutes.length; index++) {
+                    const [ destruct ] = await knex("bus_stop").where('stop_id', '=', consultRoutes[index].bus_stop_stop_id)
+                    consultStop.push(destruct);
+                    console.log('this is consultStop: ', consultStop);
+                    console.log('teste index: ', index, ' and ', consultRoutes.length);
+                    
+                    if (consultRoutes.length == (index + 1)) {
+                        console.log('aaaaaaaaaaaaa');
+                        const relatory = {consultBus, consultStop}
+                        return res.status(201).send(relatory);
+                    }
+                }
+               
+               // const granArray = {consul: consultStop[0], consul2: consultBus[0]};
+               
+               
             }else
             if (nome != undefined) {
                 const consultName = await knex("bus_route").where('route_nome', 'like', `%${nome}%`);
