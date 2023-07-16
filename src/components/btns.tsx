@@ -156,16 +156,16 @@ function Btn({name, route, cl, bc, bch, fun}) {
         width: {
           xs: '15vw',
           sm: '15vw',
-          md: '20vw',
-          lg: '20vw',
-          xl: '20vw',
+          md: '10vw',
+          lg: '10vw',
+          xl: '10vw',
         },
         fontSize: {
           xs: '1.5vw',  // (7.5 / 1200) * 600
-          sm: '1.5vw',  // (7.5 / 1200) * 900
-          md: '2vw',  // (7.5 / 1200) * 1200
-          lg: '2vw',
-          xl: '2vw',  // Manter o mesmo tamanho de lg para xl
+          sm: '1.2vw',  // (7.5 / 1200) * 900
+          md: '1vw',  // (7.5 / 1200) * 1200
+          lg: '0.9vw',
+          xl: '0.0vw',  // Manter o mesmo tamanho de lg para xl
         },
         '&:hover': {
           border: '2px solid #0fcd88', // muda a cor da borda na animação
