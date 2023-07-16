@@ -164,7 +164,7 @@ export default function MenuApp() {
                   fontFamily: 'Franklin Gothic Demi Cond',
                   fontWeight: 'bold',
                   textDecoration: 'none',
-                  background: 'linear-gradient(to right, #0fcd88 51%, white 50%)',
+                  background: darkMode ? 'linear-gradient(to right, #0fcd88 51%, white 50%)' : '#0fcd88',
                   '-webkit-background-clip': 'text',
                   '-webkit-text-fill-color': 'transparent',
                   display: 'flex',

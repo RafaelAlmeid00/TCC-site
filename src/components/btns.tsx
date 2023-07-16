@@ -38,6 +38,7 @@ interface BtnLProps {
   cl: string;
   bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
   bch: string | undefined;
+  mb?: string;
 }
 interface BtnAppProps {
   cl?: string | undefined;
@@ -202,11 +203,11 @@ function Btn({ name, route, cl, bc, bch, fun }: BtnProps) {
           xl: '10vw',
         },
         fontSize: {
-          xs: '1.5vw',  // (7.5 / 1200) * 600
-          sm: '1.2vw',  // (7.5 / 1200) * 900
-          md: '1vw',  // (7.5 / 1200) * 1200
-          lg: '0.9vw',
-          xl: '0.0vw',  // Manter o mesmo tamanho de lg para xl
+          xs: '2vw',  // (7.5 / 1200) * 600
+          sm: '1.5vw',  // (7.5 / 1200) * 900
+          md: '1.2vw',  // (7.5 / 1200) * 1200
+          lg: '1vw',
+          xl: '1vw',  // Manter o mesmo tamanho de lg para xl
         },
         '&:hover': {
           border: '2px solid #0fcd88', // muda a cor da borda na animação
@@ -258,7 +259,7 @@ function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
 }
 
 
-function BtnL({ loading, dis, handleLogin, name, cl, bc, bch }: BtnLProps) {
+function BtnL({ loading, dis, handleLogin, name, cl, bc, bch, mb }: BtnLProps) {
   return (
     <>
       <LoadingButton
@@ -280,15 +281,16 @@ function BtnL({ loading, dis, handleLogin, name, cl, bc, bch }: BtnLProps) {
             xl: '10vw',
           },
           fontSize: {
-            xs: '1.5vw',  // (7.5 / 1200) * 600
-            sm: '1.2vw',  // (7.5 / 1200) * 900
-            md: '1vw',  // (7.5 / 1200) * 1200
-            lg: '0.9vw',
-            xl: '0.9vw',  // Manter o mesmo tamanho de lg para xl
+            xs: '2vw',  // (7.5 / 1200) * 600
+            sm: '1.5vw',  // (7.5 / 1200) * 900
+            md: '1.2vw',  // (7.5 / 1200) * 1200
+            lg: '1vw',
+            xl: '1vw',  // Manter o mesmo tamanho de lg para xl
           },
           '&:hover': {
             border: '2px solid #0fcd88', // muda a cor da borda na animação
-            background: bch
+            background: bch,
+            mb: mb
           },
         }}>
         {name}

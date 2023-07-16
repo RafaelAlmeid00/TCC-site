@@ -5,11 +5,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import emailjs from 'emailjs-com';
 import { useState, FormEvent } from "react";
-import LoadingButton from '@mui/lab/LoadingButton';
 import theme from "../../assets/theme";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import colors from "../../assets/colors";
+import { BtnL } from "../btns";
 
 export default function SectionContato() {
     const [nome, setNome] = useState('')
@@ -138,6 +138,12 @@ export default function SectionContato() {
             });
     }
 
+    // Função que lança um erro indicando que a função não foi definida corretamente
+    const throwNotImplementedError = () => {
+        throw new Error('Function not implemented');
+    };
+
+
 
     return (
         <>
@@ -222,6 +228,7 @@ export default function SectionContato() {
                         width: '50%',
                         float: 'right',
                         mt: '10vh',
+                        mb: 10,
                         [theme.breakpoints.down('sm')]: {
                             float: 'none',
                             width: '100vw',
@@ -319,31 +326,7 @@ export default function SectionContato() {
                                     />
                                 </FormControl>
                                 {showError && <Nulls />}
-                                <LoadingButton
-                                    type="submit"
-                                    size="small"
-                                    loading={loading}
-                                    variant="contained"
-                                    disabled={disable}
-                                    sx={{
-                                        background: verify ? 'white' : 'transparent',
-                                        color: verify ? colors.pm : 'white',
-                                        fontWeight: 'bold',
-                                        paddingTop: '8px',
-                                        paddingLeft: '15px',
-                                        paddingBottom: '8px',
-                                        paddingRight: '15px',
-                                        border: '2px solid transparent', // adiciona a borda inicialmente
-                                        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                        '&:hover': {
-                                            border: `2px solid ${verify ? '#0fcd88' : 'transparent'}`, // muda a cor da borda na animação
-                                            background: verify ? 'white' : 'transparent',
-                                        },
-                                        mb: 10,
-                                    }}
-                                >
-                                    Enviar
-                                </LoadingButton>
+                                <BtnL name="Enviar" loading={loading} dis={disable}  handleLogin={throwNotImplementedError} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
                                 {sucess && <Sucess />}
                             </form>
                         </FormControl>

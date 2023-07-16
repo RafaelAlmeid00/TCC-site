@@ -62,7 +62,7 @@ export default function OptionsCad() {
                                 lg: "3vw",
                                 xl: "3vw", // Manter o mesmo tamanho de lg para xl
                             },
-                            background: verify ? 'linear-gradient(to right, #0fcd88 52%, #ffffff 50%)' : 'linear-gradient(to right, #0fcd88 52%, #1976d2 50%)',
+                            background: verify ? 'linear-gradient(to right, #0fcd88 52%, #ffffff 50%)' : '#0fcd88',
                             '-webkit-background-clip': 'text',
                             '-webkit-text-fill-color': 'transparent',
                         }}>EasyPass</Typography>
