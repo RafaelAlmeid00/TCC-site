@@ -13,7 +13,7 @@ import colors from "../../assets/colors";
 
 export default function SectionContato() {
     const [nome, setNome] = useState('')
-    const [cpf, setCPF] = useState(null)
+    const [cpf, setCPF] = useState<string | null>(null);
     const [email, setEmail] = useState('')
     const [text, setText] = useState('')
     const [radio, setRadio] = useState('visitante')
@@ -82,6 +82,16 @@ export default function SectionContato() {
     function sendEmail(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        // Certifique-se de que "cpf" não é nulo antes de continuar
+        if (cpf === null) {
+            // Ou você pode tratar o caso em que "cpf" é nulo aqui, se necessário
+            return; // Parar a execução da função
+        }
+
+        // Usar assertiva de tipo "as" para informar que "cpf" é uma string
+        const cpfString = cpf as string;
+
+        // Agora, você pode realizar as validações
         if (text === '') {
             setShowError(true);
             setShowErrorCPF(false);
@@ -92,12 +102,15 @@ export default function SectionContato() {
             setShowErrorCPF(false);
             setShowError(false);
             return; // Parar a execução da função
-        } else if (cpf.toString().length < 11 || isNaN(Number(cpf))) {
+        } else if (cpfString.length < 11 || isNaN(Number(cpfString))) {
             setShowErrorCPF(true);
             setShowErrorEmail(false);
             setShowError(false);
             return; // Parar a execução da função
         }
+
+
+
 
         setShowErrorCPF(false);
         setShowErrorEmail(false);
@@ -239,9 +252,15 @@ export default function SectionContato() {
                                     <InputLabel htmlFor="input-with-icon-adornment">
                                         CPF
                                     </InputLabel>
+                                  // ...
                                     <Input
-                                        value={cpf}
-                                        onChange={(event) => setCPF(parseInt((event.target.value)))}
+                                        value={cpf === null ? '' : cpf.toString()} // Converte para string se cpf não for nulo
+                                        onChange={(event) => {
+                                            const value = event.target.value;
+                                            if (!isNaN(Number(value))) {
+                                                setCPF(value); // Define o cpf como string ou null
+                                            }
+                                        }}
                                         inputProps={{ maxLength: 11 }}
                                         required
                                         id="input-with-icon-adornment"
@@ -300,13 +319,14 @@ export default function SectionContato() {
                                     />
                                 </FormControl>
                                 {showError && <Nulls />}
-                                <LoadingButton type="submit"
+                                <LoadingButton
+                                    type="submit"
                                     size="small"
                                     loading={loading}
                                     variant="contained"
                                     disabled={disable}
                                     sx={{
-                                        background: verify && 'white',
+                                        background: verify ? 'white' : 'transparent',
                                         color: verify ? colors.pm : 'white',
                                         fontWeight: 'bold',
                                         paddingTop: '8px',
@@ -316,10 +336,10 @@ export default function SectionContato() {
                                         border: '2px solid transparent', // adiciona a borda inicialmente
                                         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
                                         '&:hover': {
-                                            border: '2px solid #0fcd88', // muda a cor da borda na animação
-                                            background: verify && 'white',
+                                            border: `2px solid ${verify ? '#0fcd88' : 'transparent'}`, // muda a cor da borda na animação
+                                            background: verify ? 'white' : 'transparent',
                                         },
-                                        mb: 10
+                                        mb: 10,
                                     }}
                                 >
                                     Enviar

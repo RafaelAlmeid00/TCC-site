@@ -128,7 +128,7 @@ function Section1() {
             </Balancer>
           </Slide>
           <Slide direction="up" triggerOnce={hasEntered}>
-            <BtnsApp cl={verify ? "white" : "black"} mt="60px" mb={undefined} />
+            <BtnsApp cl={verify ? "white" : "black"} mt="60px" mb={undefined} ml={undefined} />
           </Slide>
         </Container>
         <Container sx={{

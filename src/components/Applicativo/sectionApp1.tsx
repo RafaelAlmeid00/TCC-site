@@ -104,7 +104,7 @@ export default function SectionApp1() {
                 </Typography>
             </Balancer>
             </Slide>
-          <BtnsApp cl={verify ? 'white' : 'black'} mt="60px"mb={undefined} />
+          <BtnsApp cl={verify ? 'white' : 'black'} mt="60px" mb={undefined} ml={undefined} />
           </Container>
           <Container
             sx={{

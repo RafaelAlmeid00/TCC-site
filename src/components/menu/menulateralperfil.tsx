@@ -10,9 +10,9 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import colors from "../../assets/colors";
 import React from "react";
 
-export default function MenuPerfil(props: any) {
+export default function MenuPerfil() {
     const navigate = useNavigate();
-    const handleNavigate = (route: any) => {
+    const handleNavigate = (route: string) => {
         navigate(`/${route}`);
     };
 

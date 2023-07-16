@@ -34,7 +34,7 @@ function SectionBus() {
           ml: '10vw'
         }}>
           <Slide direction="right" triggerOnce={hasEntered}>
-        <Img image={bus} height='70%' width='100vw'/>
+        <Img image={bus} height='70%' width='100vw' ml={undefined} mr={undefined}/>
           </Slide>
         </Container>
       </Box>

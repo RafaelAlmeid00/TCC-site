@@ -218,7 +218,7 @@ export default function Footer() {
             Nosso Produto
           </Typography>
 
-          {listProd.map((listProd, index) => (
+          {listProd.map((listProd) => (
             <List sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -244,7 +244,7 @@ export default function Footer() {
             Quem Somos
           </Typography>
 
-          {list.map((list, index) => (
+          {list.map((list) => (
             <List sx={{
               display: 'flex',
               flexDirection: 'column',

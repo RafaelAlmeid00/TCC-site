@@ -88,11 +88,37 @@ const Rota = () => {
               <Route path="/*" element={
                 <React.Fragment>
               <AuthProviderHome>
-                  <ModalContext.Provider value={{ darkMode, setDarkMode, verify, themes, hasEntered }}>
+                  <ModalContext.Provider value={{
+                    verify,
+                    email,
+                    setEmail,
+                    password,
+                    setPassword,
+                    cep,
+                    setCep,
+                    UF,
+                    setUF,
+                    district,
+                    setDistrict,
+                    street,
+                    setStreet,
+                    num,
+                    setNum,
+                    comp,
+                    setComp,
+                    city,
+                    setCity,
+                    loginbool,
+                    setLog,
+                    darkMode,
+                    setDarkMode,
+                    themes, // ou o tema que você desejar usar
+                    hasEntered,
+                    setHasEntered,
+                  }}>
                   <Routes>
                     <Route path="/" element={<App />} />
                     <Route path="/Servicos" element={<ServiLazy />} />
-                    
                     <Route path="/App" element={<AppLazy />} />
                     <Route path="/EasyPass" element={<EasyPassLazy />} />
                     <Route path="/Contatos" element={<ContatosLazy />} />
@@ -107,7 +133,34 @@ const Rota = () => {
               {/* Rotas de autenticação */}
               <Route path="/cadastro/*" element={
             <React.Fragment>
-                <ModalContext.Provider value={{ verify, themes, hasEntered, loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+                <ModalContext.Provider value={{
+                  verify,
+                  email,
+                  setEmail,
+                  password,
+                  setPassword,
+                  cep,
+                  setCep,
+                  UF,
+                  setUF,
+                  district,
+                  setDistrict,
+                  street,
+                  setStreet,
+                  num,
+                  setNum,
+                  comp,
+                  setComp,
+                  city,
+                  setCity,
+                  loginbool,
+                  setLog,
+                  darkMode,
+                  setDarkMode,
+                  themes, // ou o tema que você desejar usar
+                  hasEntered,
+                  setHasEntered,
+                }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
                   <Route path="/complemento" element={<CadallLazy />} />
@@ -119,7 +172,34 @@ const Rota = () => {
               {/* Rota do sistema */}
               <Route path="/Sistema/*" element={
             <AuthProvider>
-                <ModalContext.Provider value={{ darkMode, setDarkMode, verify, themes, hasEntered }}>
+                <ModalContext.Provider value={{
+                  verify,
+                  email,
+                  setEmail,
+                  password,
+                  setPassword,
+                  cep,
+                  setCep,
+                  UF,
+                  setUF,
+                  district,
+                  setDistrict,
+                  street,
+                  setStreet,
+                  num,
+                  setNum,
+                  comp,
+                  setComp,
+                  city,
+                  setCity,
+                  loginbool,
+                  setLog,
+                  darkMode,
+                  setDarkMode,
+                  themes, // ou o tema que você desejar usar
+                  hasEntered,
+                  setHasEntered,
+                }}>
               <React.Fragment>
                   <Routes>
                     <Route path="/" element={<HomeSistema />} />

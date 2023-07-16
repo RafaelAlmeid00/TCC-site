@@ -33,7 +33,7 @@ function CompleteCad(){
     const [showSucess, setShowSucess] = useState(false);
     const [tipo, setTipo] = useState("");
     const [listid, setListId] = useState('');
-    const { loginbool, setLog } = useContext(ModalContext);
+    const { setLog } = useContext(ModalContext);
 
     const navigate = useNavigate()
 
@@ -109,45 +109,67 @@ function CompleteCad(){
         console.log('aq ta indo tbm');
         handleGetListCpf()
         console.log('aq ta indo tbm²');
+        interface UserData {
+            user_CPF: string;
+            user_RG: string;
+            user_nome: string;
+            user_email: string;
+            user_senha: string;
+            user_nascimento: string;
+            user_endCEP: string;
+            user_endUF: string;
+            user_endbairro: string;
+            user_endrua: string;
+            user_endnum: string;
+            user_endcomplemento: string;
+            user_endcidade: string;
+            user_tipo: string;
+            list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
+        }
         
-        
-        const dadosUsuario = {
-        user_CPF: cpf,
-        user_RG: rg,
-        user_nome: name,
-        user_email: email,
-        user_senha: password,
-        user_nascimento: date,
-        user_endCEP: cep,
-        user_endUF: UF,
-        user_endbairro: district,
-        user_endrua: street,
-        user_endnum: num,
-        user_endcomplemento: comp,
-        user_endcidade: city,
-        user_tipo: tipo,
+        const dadosUsuario: UserData = {
+            user_CPF: cpf,
+            user_RG: rg,
+            user_nome: name,
+            user_email: email,
+            user_senha: password,
+            user_nascimento: date,
+            user_endCEP: cep,
+            user_endUF: UF,
+            user_endbairro: district,
+            user_endrua: street,
+            user_endnum: num,
+            user_endcomplemento: comp,
+            user_endcidade: city,
+            user_tipo: tipo,
         };
+
         if (listid) {
             dadosUsuario.list_CPF_list_id = listid;
         }
+
         console.log(dadosUsuario);
         
         try {
-            const response = await axios.post('http://localhost:3344/user', dadosUsuario);
+            await axios.post('http://localhost:3344/user', dadosUsuario);
             setShowSucess(true)
             console.log('foi mlk');
             setLog(true)
             navigate('/cadastro')
         } catch (error) {
-            if (error.response) {
-                // O servidor retornou um status diferente de 2xx
-                console.error('Erro na requisição POST:', error.response.status);
-            } else if (error.request) {
-                // A requisição foi feita, mas não recebeu uma resposta
-                console.error('Erro na requisição POST:', error.request);
-            } else {
-                // Algo aconteceu durante a configuração da requisição
+            if (error instanceof Error) {
                 console.error('Erro na requisição POST:', error.message);
+            } else if (axios.isAxiosError(error)) {
+                // Verificar se o erro é do Axios (opcional)
+                if (error.response) {
+                    console.error('Erro na requisição POST:', error.response.status);
+                } else if (error.request) {
+                    console.error('Erro na requisição POST:', error.request);
+                } else {
+                    console.error('Erro desconhecido na requisição POST');
+                }
+            } else {
+                console.error('Erro desconhecido na requisição POST');
             }
         }
     }

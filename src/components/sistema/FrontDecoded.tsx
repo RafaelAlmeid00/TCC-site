@@ -4,7 +4,7 @@ const userToken = localStorage.getItem('token');
 
 export function verify (){
     return jwt_decode(String(userToken));
-};
+}
 
 export function removeToken() {
     return localStorage.removeItem('token');

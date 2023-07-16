@@ -28,7 +28,6 @@ function CompleteCadEscola() {
   const [contato, setContato] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [name, setName] = useState("");
-  const { setCep } = useContext(ModalContext);
   const { cep } = useContext(ModalContext);
   const { UF } = useContext(ModalContext);
   const { district } = useContext(ModalContext);
@@ -42,7 +41,7 @@ function CompleteCadEscola() {
   const [showErrorCEP, setShowErrorCEP] = useState(false);
   const [showErrorNum, setShowErrorNum] = useState(false);
   const [showSucess, setShowSucess] = useState(false);
-  const [tipo, setTipo] = useState("");
+  const [tipo] = useState("");
 
   const navigate = useNavigate();
 
@@ -117,7 +116,7 @@ function CompleteCadEscola() {
     console.log(dadosEscola);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3344/bussines",
         dadosEscola
       );
@@ -125,15 +124,19 @@ function CompleteCadEscola() {
       console.log("foi mlk");
       navigate("/cadAlunos");
     } catch (error) {
-      if (error.response) {
-        // O servidor retornou um status diferente de 2xx
-        console.error("Erro na requisição POST:", error.response.status);
-      } else if (error.request) {
-        // A requisição foi feita, mas não recebeu uma resposta
-        console.error("Erro na requisição POST:", error.request);
+      if (error instanceof Error) {
+        console.error('Erro na requisição POST:', error.message);
+      } else if (axios.isAxiosError(error)) {
+        // Verificar se o erro é do Axios (opcional)
+        if (error.response) {
+          console.error('Erro na requisição POST:', error.response.status);
+        } else if (error.request) {
+          console.error('Erro na requisição POST:', error.request);
+        } else {
+          console.error('Erro desconhecido na requisição POST');
+        }
       } else {
-        // Algo aconteceu durante a configuração da requisição
-        console.error("Erro na requisição POST:", error.message);
+        console.error('Erro desconhecido na requisição POST');
       }
     }
   }

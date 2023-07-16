@@ -1,4 +1,4 @@
-import { Box, Container, useMediaQuery } from "@mui/material";
+import { Box, Container, useMediaQuery, Theme } from "@mui/material";
 import Cards from "../card";
 import { motion } from "framer-motion";
 import { Slide } from "react-awesome-reveal";
@@ -6,15 +6,13 @@ import history from "../../assets/history.png";
 import rota from "../../assets/map.jpg";
 import pag from "../../assets/pay.png";
 import order from "../../assets/order.png";
-import Balancer from "react-wrap-balancer";
 import {BtnsApp} from "../btns";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { Bubbles3 } from "../bubbles";
 
 export default function SectionService1() {
-  const isMdOrBelow = useMediaQuery((theme) => theme.breakpoints.up('md'));
-
+  const isMdOrBelow = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
   const cards = [
     {
       card: [
@@ -113,7 +111,7 @@ export default function SectionService1() {
                   title={card.title}
                   hg={card.hg}
                   text={card.text} 
-                  mt={undefined}
+                  mt={''}
                   />
               </motion.div>
             ))}

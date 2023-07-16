@@ -2,25 +2,9 @@ import { Container } from "@mui/material";
 import { motion } from "framer-motion";
 import theme from "../assets/theme";
 import colors from "../assets/colors";
-import React from "react";
 
 function Bubbles() {
-  
 
-    const draw = {
-        hidden: { pathLength: 0, opacity: 0 },
-        visible: (i) => {
-            const delay = 1 + i * 0.5;
-            return {
-                pathLength: 1,
-                opacity: 1,
-                transition: {
-                    pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-                    opacity: { delay, duration: 0.01 }
-                }
-            };
-        }
-    };
     return(
         <>
             <Container sx={{
@@ -304,21 +288,6 @@ function Bubbles() {
 
 function Bubbles2() {
 
-
-    const draw = {
-        hidden: { pathLength: 0, opacity: 0 },
-        visible: (i) => {
-            const delay = 1 + i * 0.5;
-            return {
-                pathLength: 1,
-                opacity: 1,
-                transition: {
-                    pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-                    opacity: { delay, duration: 0.01 }
-                }
-            };
-        }
-    };
     return (
         <>
             <Container sx={{
@@ -603,21 +572,6 @@ function Bubbles2() {
 
 function Bubbles3() {
 
-
-    const draw = {
-        hidden: { pathLength: 0, opacity: 0 },
-        visible: (i) => {
-            const delay = 1 + i * 0.5;
-            return {
-                pathLength: 1,
-                opacity: 1,
-                transition: {
-                    pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-                    opacity: { delay, duration: 0.01 }
-                }
-            };
-        }
-    };
     return (
         <>
             <Container sx={{

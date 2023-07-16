@@ -1,9 +1,21 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const AuthContext = createContext({});
+interface AuthContextType {
+    isAuthenticated: boolean;
+}
 
-const AuthProvider = ({ children }) => {
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+interface AuthProviderHomeProps {
+    children: ReactNode;
+}
+
+const AuthContext = createContext<AuthContextType>({ isAuthenticated: false });
+
+const AuthProvider = ({ children }: AuthProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isTokenChecked, setIsTokenChecked] = useState(false);
 
@@ -11,7 +23,7 @@ const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         const userJson = localStorage.getItem('user');
         const userData = userJson ? JSON.parse(userJson) : null;
-        
+
         if (token || userData) {
             setIsAuthenticated(true);
         }
@@ -34,8 +46,7 @@ const AuthProvider = ({ children }) => {
     );
 };
 
-
-const AuthProviderHome = ({ children }) => {
+const AuthProviderHome = ({ children }: AuthProviderHomeProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isTokenChecked, setIsTokenChecked] = useState(false);
 
@@ -63,4 +74,4 @@ const AuthProviderHome = ({ children }) => {
     );
 };
 
-export { AuthProvider, AuthProviderHome };
+export { AuthProvider, AuthProviderHome, AuthContext };

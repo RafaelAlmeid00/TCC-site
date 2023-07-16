@@ -1,4 +1,4 @@
-import { Box, Button, Card, Container, Typography } from "@mui/material";
+import { Box, Card, Container, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -62,8 +62,8 @@ function Homesistema() {
                     alignItems: 'center',
                     mt: 12
                 }}>
-                    {buttonshome.map((buttons, index) => (
-                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' route={buttons.route} cl={verify ? colors.pm : "white"} bc={verify && 'white'} bch={verify && 'white'} fun={undefined} />
+                    {buttonshome.map((buttons) => (
+                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={undefined} route={""} />
                     ))}
                 </Container>
                 <Container sx={{

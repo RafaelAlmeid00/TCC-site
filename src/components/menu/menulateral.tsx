@@ -9,9 +9,9 @@ import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import colors from "../../assets/colors";
 import ModalContext from "../../context/modalcontext";
 
-export default function MenuLateral(props: any) {
+export default function MenuLateral() {
     const navigate = useNavigate();
-    const handleNavigate = (route: any) => {
+    const handleNavigate = (route: string) => {
         navigate(`/Sistema/${route}`);
     };
     const { verify } = React.useContext(ModalContext);

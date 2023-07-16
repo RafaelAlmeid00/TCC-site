@@ -17,7 +17,7 @@ export default function Section1EasyPass() {
 
   const fundo = themes.palette.background.default
 
-  const [selectedId, setSelectedId] = React.useState(null);
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
   const items = [
     { id: '1', title: 'Equipe EasyPass', subtitle: 'Quem trabalha conosco' },
@@ -28,7 +28,7 @@ export default function Section1EasyPass() {
     { id: '6', title: '', subtitle: ' ' },
   ];
 
-  const renderComponentById = (id: any) => {
+  const renderComponentById = (id: string) => {
     switch (id) {
       case '1':
         return <EquipeEasyPass />;

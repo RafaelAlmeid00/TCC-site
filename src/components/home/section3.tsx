@@ -4,7 +4,6 @@ import colors from "../../assets/colors";
 import Img from "../img";
 import { Balancer } from "react-wrap-balancer";
 import theme from "../../assets/theme";
-import { createTheme } from '@mui/material/styles';
 import React from "react";
 import ModalContext from "../../context/modalcontext";
 

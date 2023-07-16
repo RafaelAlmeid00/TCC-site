@@ -144,7 +144,7 @@ function Section2() {
             alignItems: 'center',
             flexDirection: 'column',
           }}>
-          <Menus mt="60px" onClick={toggleShowEscolas} sz={undefined} ml={undefined} />
+          <Menus mt="60px" onClick={toggleShowEscolas} ml={""} />
           </Container>
           <Slide direction="left" triggerOnce={hasEntered}>
             <Container sx={{

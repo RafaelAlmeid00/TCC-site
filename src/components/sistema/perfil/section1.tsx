@@ -1,8 +1,8 @@
-import { Avatar, Box, Button, Container, IconButton, InputLabel, Typography } from "@mui/material"
+import { Avatar, Box, Button, Container, IconButton, InputLabel, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
-import { removeToken, verify } from "../FrontDecoded";
+import { verify } from "../FrontDecoded";
 
 function SectionPerfil1() {
     const [dado, setPega] = useState('');
@@ -18,10 +18,15 @@ function SectionPerfil1() {
         await axios.post('http://localhost:3344/user/update', {
                 user_email: data,
                 info: dado,
-                param: parame
         });
     
     };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPega(event.target.value);
+        update(); // Atualiza diretamente após o usuário digitar algo
+    };
+
 
         const birthDate = new Date(userData.user_nascimento);
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
@@ -118,8 +123,14 @@ function SectionPerfil1() {
                             borderRadius: 5,
                         }}>
                             <InputLabel >
-                                <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2'} } onChange={e => setPega(e.target.value)}>Nome de Usuário</Typography>
-                            </InputLabel>
+                                <TextField
+                                    label="Nome de Usuário"
+                                    variant="outlined"
+                                    size="small"
+                                    sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}
+                                    value={dado}
+                                    onChange={handleChange}
+                                />                            </InputLabel>
                             <Typography sx={{ color: 'white' }}>{userData.user_nome}</Typography>
                             <Button variant="contained" href="/Perfil" sx={{
                                 color: 'white',

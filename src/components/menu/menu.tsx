@@ -5,7 +5,14 @@ import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
 
-export default function Menus({ sz, mt, ml, onClick }) {
+interface Props {
+    mt: string; // Propriedade 'mt' do tipo string
+    ml: string; // Propriedade 'ml' do tipo string
+    onClick: () => void; // Propriedade 'onClick' que é uma função sem parâmetros e sem retorno
+}
+
+
+export default function Menus({ mt, ml, onClick }: Props) {
 
     const { verify } = React.useContext(ModalContext);
     const pg = [

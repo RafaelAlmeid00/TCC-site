@@ -81,7 +81,7 @@ export default function OptionsCad() {
                         Acessar como:
                     </Typography>
                     <ButtonGroup orientation="vertical" variant="outlined">
-                        {buttons.map((buttons, index) => (
+                        {buttons.map((buttons) => (
                             <Link href={buttons.route}>
                                 <Button sx={{
                                     height: {

@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modalcontext";
 import { EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
 import axios from "axios";
-import LoadingButton from "@mui/lab/LoadingButton";
 import theme from "../../assets/theme";
 import { Btn, BtnL } from "../btns";
 import colors from "../../assets/colors";
@@ -30,7 +29,7 @@ function ContainerCad() {
     const navigate = useNavigate();
     const [showError, setShowError] = useState(false);
     const [showErrorEmail, setShowErrorEmail] = useState(false);
-    const { loginbool, setLog } = useContext(ModalContext);
+    const { loginbool } = useContext(ModalContext);
     const [loading, setLoading] = useState(false)
     const [disable, setDisable] = useState(false)
     const [showErrorlog, setShowErrorlog] = useState(false);
@@ -231,7 +230,7 @@ function ContainerCad() {
                                     sx={{ fontSize: '14px' }}
                                 />
                             </FormControl>
-                            <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify && 'white'} bch={verify && 'white'} />
+                            <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
                             <Typography sx={{
                                 textAlign: 'center', mt: '20px', color: '#666666', fontSize: {
                                     xs: "2.5vw", // (7.5 / 1200) * 600
@@ -363,7 +362,7 @@ function ContainerCad() {
                                     />
                                 </FormControl>
                             </form>
-                            <BtnL name="Enviar" loading={loading} dis={disable} handleLogin={handleLogin} cl={verify ? colors.pm : "white"} bc={verify && 'white'} bch={verify && 'white'} />
+                            <BtnL name="Enviar" loading={loading} dis={disable} handleLogin={handleLogin} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
                             <Typography sx={{
                                 textAlign: 'center', mt: '20px', color: '#666666', fontSize: {
                                     xs: "2.5vw", // (7.5 / 1200) * 600

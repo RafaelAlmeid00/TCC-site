@@ -4,7 +4,48 @@ import AppleIcon from "@mui/icons-material/Apple";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-function BtnsApp({ cl, mt, ml, mb }) {
+interface BtnsAppProps {
+  cl?: string | undefined;
+  mt?: string;
+  ml?: string;
+  mb?: string;
+}
+interface BtnProps {
+  name: string;
+  route: string;
+  cl?: string | undefined;
+  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  bch: string | undefined;
+  fun?: () => void;
+}
+
+interface BtnHomeProps {
+  name: string;
+  route: string;
+  cl?: string | undefined;
+  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  bch: string | undefined;
+  fun?: () => void;
+  ml?: string;
+  mr?: string;
+}
+interface BtnLProps {
+  loading: boolean;
+  dis: boolean;
+  handleLogin: () => void;
+  name: string;
+  route: string;
+  cl: string;
+  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  bch: string | undefined;
+}
+interface BtnAppProps {
+  cl?: string | undefined;
+  title: string;
+}
+
+
+function BtnsApp({ cl, mt, ml, mb }: BtnsAppProps) {
   return (
     <Container
       sx={{
@@ -15,7 +56,7 @@ function BtnsApp({ cl, mt, ml, mb }) {
         mb: mb,
         zIndex: 1,
         justifyContent: "center",
-          alignItems: "center",
+        alignItems: "center",
         [theme.breakpoints.only('xl')]: {
           ml: "-40px",
         },
@@ -143,8 +184,8 @@ function BtnsApp({ cl, mt, ml, mb }) {
   );
 }
 
-function Btn({name, route, cl, bc, bch, fun}) {
-  return(
+function Btn({ name, route, cl, bc, bch, fun }: BtnProps) {
+  return (
     <>
       <Button variant="contained" href={route} onClick={fun} sx={{
         color: cl,
@@ -179,7 +220,7 @@ function Btn({name, route, cl, bc, bch, fun}) {
 }
 
 
-function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }) {
+function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
   return (
     <>
       <Button variant="contained" href={route} onClick={fun} sx={{
@@ -217,7 +258,7 @@ function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }) {
 }
 
 
-function BtnL({ loading, dis, handleLogin, name, route, cl, bc, bch }) {
+function BtnL({ loading, dis, handleLogin, name, cl, bc, bch }: BtnLProps) {
   return (
     <>
       <LoadingButton
@@ -225,31 +266,31 @@ function BtnL({ loading, dis, handleLogin, name, route, cl, bc, bch }) {
         variant="contained"
         disabled={dis}
         onClick={handleLogin} sx={{
-        color: cl,
-        marginRight: 1,
-        background: bc,
-        border: '2px solid transparent', // adiciona a borda inicialmente
-        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-        fontWeight: 'bold',
-        width: {
-          xs: '15vw',
-          sm: '15vw',
-          md: '20vw',
-          lg: '20vw',
-          xl: '20vw',
-        },
-        fontSize: {
-          xs: '1.5vw',  // (7.5 / 1200) * 600
-          sm: '1.5vw',  // (7.5 / 1200) * 900
-          md: '2vw',  // (7.5 / 1200) * 1200
-          lg: '2vw',
-          xl: '2vw',  // Manter o mesmo tamanho de lg para xl
-        },
-        '&:hover': {
-          border: '2px solid #0fcd88', // muda a cor da borda na animação
-          background: bch
-        },
-      }}>
+          color: cl,
+          marginRight: 1,
+          background: bc,
+          border: '2px solid transparent', // adiciona a borda inicialmente
+          transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+          fontWeight: 'bold',
+          width: {
+            xs: '15vw',
+            sm: '15vw',
+            md: '10vw',
+            lg: '10vw',
+            xl: '10vw',
+          },
+          fontSize: {
+            xs: '1.5vw',  // (7.5 / 1200) * 600
+            sm: '1.2vw',  // (7.5 / 1200) * 900
+            md: '1vw',  // (7.5 / 1200) * 1200
+            lg: '0.9vw',
+            xl: '0.9vw',  // Manter o mesmo tamanho de lg para xl
+          },
+          '&:hover': {
+            border: '2px solid #0fcd88', // muda a cor da borda na animação
+            background: bch
+          },
+        }}>
         {name}
       </LoadingButton>
     </>
@@ -257,7 +298,7 @@ function BtnL({ loading, dis, handleLogin, name, route, cl, bc, bch }) {
 }
 
 
-function BtnApp({ cl, title}) {
+function BtnApp({ cl, title }: BtnAppProps) {
   return (
     <Link
       href="/"
@@ -318,4 +359,4 @@ function BtnApp({ cl, title}) {
 }
 
 
-export {BtnsApp, Btn, BtnApp, BtnL, BtnHome}
+export { BtnsApp, Btn, BtnApp, BtnL, BtnHome }

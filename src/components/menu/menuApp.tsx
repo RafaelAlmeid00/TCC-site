@@ -7,8 +7,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
-import { useDispatch } from "react-redux";
-import { openModal } from "../../redux/actions";
 import { useNavigate } from 'react-router-dom';
 import theme from '../../assets/theme';
 import Image from '../../assets/logo.png';
@@ -21,8 +19,8 @@ import { Drawer } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 
-export default function MenuApp(props: any) {
-  const [showCad, setShowCad] = React.useState(true)
+export default function MenuApp() {
+  const [showCad] = React.useState(true)
   const { darkMode, setDarkMode } = React.useContext(ModalContext);
 
   const toggleDarkMode = () => {
@@ -38,26 +36,16 @@ export default function MenuApp(props: any) {
     { name: 'Contatos', route: '/Contatos' },
   ];
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  const dispatch = useDispatch();
-  const handleOpen = () => dispatch(openModal());
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   const navigate = useNavigate();
-  const handleNavigate = (route: any) => {
+  const handleNavigate = (route: string) => {
     handleCloseNavMenu()
     navigate(route);
   };
@@ -118,17 +106,7 @@ export default function MenuApp(props: any) {
             </Box>
             <Drawer
               id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-
+              anchor={anchorElNav ? 'left' : undefined}
               open={Boolean(anchorElNav)}
               sx={{
                 '& .MuiDrawer-paper': {
@@ -271,7 +249,7 @@ export default function MenuApp(props: any) {
                 marginLeft: -2,
               },
           }}>
-            <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode && 'white'} bch={darkMode && 'white'} />
+              <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode ? 'white' : undefined} bch={darkMode ? 'white' : undefined} fun={undefined} />
           </Box>
           
           <IconButton sx={{'&:hover': { color: colors.sc }, mr: 15,
