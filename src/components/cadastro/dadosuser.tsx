@@ -31,10 +31,6 @@ function CompleteCad(){
     const [showErrorCEP, setShowErrorCEP] = useState(false);
     const [showErrorNum, setShowErrorNum] = useState(false);
     const [showSucess, setShowSucess] = useState(false);
-    const [type, setType] = useState("");
-    const [bussinesCNPJ, setBussinesCNPJ] = useState("");
-    const [matriculation, setMatriculation] = useState("");
-    const [schoolsCNPJ, setSchoolsCNPJ] = useState("");
     const [tipo, setTipo] = useState("");
     const [listid, setListId] = useState('');
     const { loginbool, setLog } = useContext(ModalContext);

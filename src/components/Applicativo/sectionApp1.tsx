@@ -7,7 +7,7 @@ import { Slide } from "react-awesome-reveal";
 import colors from "../../assets/colors";
 import app2 from "../../assets/app2.png";
 import {BtnsApp} from "../btns";
-import {Img} from "../img";
+import Img from "../img";
 import { Bubbles } from "../bubbles";
 import theme from "../../assets/theme";
 import { Balancer } from "react-wrap-balancer";

@@ -2,6 +2,7 @@ import { Box, Button, Container, Link, Typography } from "@mui/material";
 import theme from "../assets/theme";
 import AppleIcon from "@mui/icons-material/Apple";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function BtnsApp({ cl, mt, ml, mb }) {
   return (
@@ -142,10 +143,10 @@ function BtnsApp({ cl, mt, ml, mb }) {
   );
 }
 
-function Btn({name, route, cl, bc, bch}) {
+function Btn({name, route, cl, bc, bch, fun}) {
   return(
     <>
-      <Button variant="contained" href={route} sx={{
+      <Button variant="contained" href={route} onClick={fun} sx={{
         color: cl,
         marginRight: 1,
         background: bc,
@@ -153,18 +154,18 @@ function Btn({name, route, cl, bc, bch}) {
         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
         fontWeight: 'bold',
         width: {
-          xs: '15vh',
-          sm: '15vh',
-          md: '20vh',
-          lg: '20vh',
-          xl: '20vh',
+          xs: '15vw',
+          sm: '15vw',
+          md: '20vw',
+          lg: '20vw',
+          xl: '20vw',
         },
         fontSize: {
-          xs: '1.5vh',  // (7.5 / 1200) * 600
-          sm: '1.5vh',  // (7.5 / 1200) * 900
-          md: '2vh',  // (7.5 / 1200) * 1200
-          lg: '2vh',
-          xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+          xs: '1.5vw',  // (7.5 / 1200) * 600
+          sm: '1.5vw',  // (7.5 / 1200) * 900
+          md: '2vw',  // (7.5 / 1200) * 1200
+          lg: '2vw',
+          xl: '2vw',  // Manter o mesmo tamanho de lg para xl
         },
         '&:hover': {
           border: '2px solid #0fcd88', // muda a cor da borda na animação
@@ -173,6 +174,84 @@ function Btn({name, route, cl, bc, bch}) {
       }}>
         {name}
       </Button>
+    </>
+  )
+}
+
+
+function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }) {
+  return (
+    <>
+      <Button variant="contained" href={route} onClick={fun} sx={{
+        color: cl,
+        ml: ml,
+        mr: mr,
+        marginRight: 1,
+        background: bc,
+        border: '2px solid transparent', // adiciona a borda inicialmente
+        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+        fontWeight: 'bold',
+        width: {
+          xs: '18vw',
+          sm: '18vw',
+          md: '22vw',
+          lg: '15vw',
+          xl: '15vw',
+        },
+        fontSize: {
+          xs: '2vw',  // (7.5 / 1200) * 600
+          sm: '1.5vw',  // (7.5 / 1200) * 900
+          md: '1.5vw',  // (7.5 / 1200) * 1200
+          lg: '0.9vw',
+          xl: '0.9vw',  // Manter o mesmo tamanho de lg para xl
+        },
+        '&:hover': {
+          border: '2px solid #0fcd88', // muda a cor da borda na animação
+          background: bch
+        },
+      }}>
+        {name}
+      </Button>
+    </>
+  )
+}
+
+
+function BtnL({ loading, dis, handleLogin, name, route, cl, bc, bch }) {
+  return (
+    <>
+      <LoadingButton
+        loading={loading}
+        variant="contained"
+        disabled={dis}
+        onClick={handleLogin} sx={{
+        color: cl,
+        marginRight: 1,
+        background: bc,
+        border: '2px solid transparent', // adiciona a borda inicialmente
+        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+        fontWeight: 'bold',
+        width: {
+          xs: '15vw',
+          sm: '15vw',
+          md: '20vw',
+          lg: '20vw',
+          xl: '20vw',
+        },
+        fontSize: {
+          xs: '1.5vw',  // (7.5 / 1200) * 600
+          sm: '1.5vw',  // (7.5 / 1200) * 900
+          md: '2vw',  // (7.5 / 1200) * 1200
+          lg: '2vw',
+          xl: '2vw',  // Manter o mesmo tamanho de lg para xl
+        },
+        '&:hover': {
+          border: '2px solid #0fcd88', // muda a cor da borda na animação
+          background: bch
+        },
+      }}>
+        {name}
+      </LoadingButton>
     </>
   )
 }
@@ -239,4 +318,4 @@ function BtnApp({ cl, title}) {
 }
 
 
-export {BtnsApp, Btn, BtnApp}
+export {BtnsApp, Btn, BtnApp, BtnL, BtnHome}

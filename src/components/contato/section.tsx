@@ -162,14 +162,26 @@ export default function SectionContato() {
                                 },
                             }}>
                                 <Typography component="h1" sx={{
-                                    fontSize: '30px',
+                                    fontSize: {
+                                        xs: "3.5vw", // (7.5 / 1200) * 600
+                                        sm: "2.5vw", // (7.5 / 1200) * 900
+                                        md: "2vw", // (7.5 / 1200) * 1200
+                                        lg: "2.5vw",
+                                        xl: "3vw", // Manter o mesmo tamanho de lg para xl
+                                    },
                                     fontWeight: '700',
                                     color: verify ? 'white' : 'black' 
                                 }}>
                                     Olá!
                                 </Typography>
                                 <Typography component="h3" sx={{
-                                    fontSize: '20px',
+                                    fontSize: {
+                                        xs: "3vw", // (7.5 / 1200) * 600
+                                        sm: "2.5vw", // (7.5 / 1200) * 900
+                                        md: "2vw", // (7.5 / 1200) * 1200
+                                        lg: "1.5vw",
+                                        xl: "2vw", // Manter o mesmo tamanho de lg para xl
+                                    },
                                     fontWeight: '600',
                                     mt: '10px',
                                     mb: '10px',
@@ -178,7 +190,13 @@ export default function SectionContato() {
                                     Preencha seus dados ao lado e entre em contato conosco.
                                 </Typography>
                                 <Typography component="span" sx={{
-                                    fontSize: '12px',
+                                    fontSize: {
+                                        xs: "2.2vw", // (7.5 / 1200) * 600
+                                        sm: "1.5vw", // (7.5 / 1200) * 900
+                                        md: "1.2vw", // (7.5 / 1200) * 1200
+                                        lg: "1vw",
+                                        xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                                    },
                                     color: verify ? 'white' : 'black' 
                                 }}>
                                     Para te ajudar da melhor forma possível, o nosso atendimento do Fale Conosco precisa saber algumas informações sobre você, como nome e CPF – é só pra te localizar no sistema, ok? Não se preocupe: a segurança dos seus dados e a sua privacidade estão garantidas. Para saber mais sobre a nossa Política de Privacidade ou caso tenha alguma dúvida, clique aqui.

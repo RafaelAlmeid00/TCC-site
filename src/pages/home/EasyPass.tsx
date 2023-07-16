@@ -5,6 +5,7 @@ import MenuApp from "../../components/menu/menuApp";
 import { Fade } from "react-awesome-reveal";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
+import '../../App.css'
 
 export default function EasyPass() {
     const { hasEntered } = React.useContext(ModalContext);

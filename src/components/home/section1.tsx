@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import {Img} from "../img";
+import Img from "../img";
 import Balancer from 'react-wrap-balancer'
 import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";

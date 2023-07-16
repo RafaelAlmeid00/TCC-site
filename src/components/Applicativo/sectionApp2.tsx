@@ -16,8 +16,6 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 
 export default function SectionApp2() {
   const { verify } = React.useContext(ModalContext);
-  const { themes } = React.useContext(ModalContext);
-  const { hasEntered } = React.useContext(ModalContext);
 
   return (
     <>

@@ -7,6 +7,7 @@ import CompleteCad2Escola from '../../components/cadastro/Cadastroescola/endere√
 import { Fade } from 'react-awesome-reveal';
 import ModalContext from "../../context/modalcontext";
 import React from "react";
+import '../../App.css'
 
 function CadallEscola() {
     const { hasEntered } = React.useContext(ModalContext);

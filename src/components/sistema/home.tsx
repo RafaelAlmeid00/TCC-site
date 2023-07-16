@@ -2,34 +2,48 @@ import { Box, Button, Card, Container, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
+import ModalContext from "../../context/modalcontext";
+import React from "react";
+import { BtnHome } from "../btns";
 
 function Homesistema() {
-
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const fundo = themes.palette.background.default
     const userJson = localStorage.getItem('user');
     const userData = userJson ? JSON.parse(userJson) : null;
 
+    const buttonshome = [
+        {name: 'Histórico do Cartão'},
+        {name: 'Recarregar Cartão'},
+        {name: 'Cancelar Cartão'}
+    ]
+
     return (
         <>
-            <Box sx={{
-                mt: '10vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                width: '100vw',
+            <Box id="section1" sx={{
+                mt: '9.5vh',
+                height: '90.5vh',
+                width: '80vw',
+                float: "right",
+                background: verify ? fundo : 'white',
+                position: "relative",
+                overflow: "hidden",
             }}>
+
                 <Container sx={{
-                    width: '70%',
+                    width: '100%',
                     backgound: 'red',
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'center',
+                    justifyContent: 'start',
                     alignItems: 'center',
                     float: 'left',
                     mt: 3
                 }}>
                     <TuneIcon sx={{
-                        mr: 2
+                        mr: 2,
+                        color: verify ? 'white' : 'black'
                     }} />
                     <Typography sx={{
                         color: colors.tc,
@@ -44,60 +58,13 @@ function Homesistema() {
                     height: 'auto',
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'center',
+                    justifyContent: 'start',
                     alignItems: 'center',
-                    mt: 5
+                    mt: 12
                 }}>
-                    <Button variant="contained" sx={{
-                        color: 'white',
-                        borderRadius: 20,
-                        marginRight: 1,
-                        border: '2px solid transparent', // adiciona a borda inicialmente
-                        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                        '&:hover': {
-                            border: '2px solid #0fcd88', // muda a cor da borda na animação
-                        },
-                    }}>
-                        <Typography sx={{
-                            textTransform: 'none',
-                        }}>
-                            Histórico Cartão
-                        </Typography>
-                    </Button>
-                    <Button variant="contained" sx={{
-                        color: 'white',
-                        borderRadius: 20,
-                        marginRight: 1,
-                        border: '2px solid transparent', // adiciona a borda inicialmente
-                        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                        '&:hover': {
-                            border: '2px solid #0fcd88', // muda a cor da borda na animação
-                        },
-                        ml: 5,
-                    }}>
-                        <Typography sx={{
-                            textTransform: 'none',
-                        }}>
-                            Recarregar Cartão
-                        </Typography>
-                    </Button>
-                    <Button variant="contained" sx={{
-                        color: 'white',
-                        borderRadius: 20,
-                        marginRight: 1,
-                        border: '2px solid transparent', // adiciona a borda inicialmente
-                        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                        '&:hover': {
-                            border: '2px solid #0fcd88', // muda a cor da borda na animação
-                        },
-                        ml: 5
-                    }}>
-                        <Typography sx={{
-                            textTransform: 'none',
-                        }}>
-                            Cancelar Cartão
-                        </Typography>
-                    </Button>
+                    {buttonshome.map((buttons, index) => (
+                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' route={buttons.route} cl={verify ? colors.pm : "white"} bc={verify && 'white'} bch={verify && 'white'} fun={undefined} />
+                    ))}
                 </Container>
                 <Container sx={{
                     width: '100%',

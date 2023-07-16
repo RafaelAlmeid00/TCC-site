@@ -61,7 +61,7 @@ export default function Footer() {
             '-webkit-background-clip': 'text',
             '-webkit-text-fill-color': 'transparent',
             [theme.breakpoints.down('md')]: {
-              fontSize: { xs: '4vh', sm: '4.5vh', md: '5vh', lg: '5vh', xl: '4vh' },
+              fontSize: { xs: '6vw', sm: '4.5vw', md: '5vw', lg: '2vw', xl: '2vw' },
               ml: 3
             },
           }}>EasyPass</Typography>
@@ -83,7 +83,7 @@ export default function Footer() {
               mr: '30px',
             }}>
               <InstagramIcon sx={{
-                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
+                fontSize: { xs: '5vw', sm: '3.5vw', md: '3vw', lg: '2vw', xl: '2vw' },
                 color: 'white',
                 '&:hover': {
                   color: colors.sc, // Cor do ícone ao passar o mouse
@@ -100,7 +100,7 @@ export default function Footer() {
               mr: '30px',
             }}>
               <YouTubeIcon sx={{
-                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
+                fontSize: { xs: '5vw', sm: '3.5vw', md: '3vw', lg: '2vw', xl: '2vw' },
                 color: 'white',
                 '&:hover': {
                   color: colors.sc, // Cor do ícone ao passar o mouse
@@ -116,7 +116,7 @@ export default function Footer() {
               cursor: 'pointer',
             }}>
               <TwitterIcon sx={{
-                fontSize: { xs: '3vh', sm: '3.5vh', md: '4vh', lg: '5vh', xl: '5vh' },
+                fontSize: { xs: '5vw', sm: '3.5vw', md: '3vw', lg: '2vw', xl: '2vw' },
                 color: 'white',
                 '&:hover': {
                   color: colors.sc, // Cor do ícone ao passar o mouse
@@ -132,13 +132,14 @@ export default function Footer() {
           mt: '30px',
           color: 'white',
           textDecoration: 'none',
+          flexWrap: 'wrap',
           [theme.breakpoints.down('md')]: {
             ml: 0
           },
         }}>
           <Link href="/" underline="hover">
             <Typography sx={{
-              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '2vh' },
+              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
               fontWeight: 'bold',
               color: 'white',
             }}>
@@ -147,7 +148,7 @@ export default function Footer() {
           </Link>
           <Link href="/" underline="hover">
             <Typography sx={{
-              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '2vh' },
+              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
               ml: '30px',
               fontWeight: 'bold',
               color: 'white',
@@ -157,13 +158,15 @@ export default function Footer() {
           </Link>
           <Link href="/" underline="hover">
             <Typography sx={{
-              fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '2vh' },
+              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
               ml: '30px',
               fontWeight: 'bold',
               color: 'white',
-              [theme.breakpoints.down('md')]: {
-                display: 'none',
+              [theme.breakpoints.down('sm')]: {
+                mt: 2,
+                ml: 0
               },
+              
             }}>
               Preferências de Cookies
             </Typography>
@@ -171,7 +174,7 @@ export default function Footer() {
         </Container>
         <Container>
           <Typography sx={{
-            fontSize: { xs: '1.3vh', sm: '2vh', md: '2vh', lg: '2vh', xl: '2vh' },
+            fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
             mt: '30px',
             ml: '30px',
             fontWeight: 'bold',
@@ -208,7 +211,7 @@ export default function Footer() {
         <Container>
           <Typography component='h3' sx={{
             fontWeight: 'bold',
-            fontSize: { xs: '2.5vh', sm: '3vh', md: '3.5vh', lg: '4vh', xl: '3vh' },
+            fontSize: { xs: '2.5vw', sm: '2vw', md: '2vw', lg: '1.8vw', xl: '1.8vw' },
             color: 'white',
             mb: '20px',
           }}>
@@ -223,7 +226,7 @@ export default function Footer() {
               <Link href={listProd.route} underline="hover">
                 <Typography sx={{
                   color: 'white',
-                  fontSize: { xs: '1.3vh', sm: '2vh', md: '2.5vh', lg: '2.5vh', xl: '2.5vh' },
+                  fontSize: { xs: '2vw', sm: '1.5vw', md: '1.5vw', lg: '1.2vw', xl: '1.2vw' },
                 }}>
                   {listProd.text}
                 </Typography>
@@ -231,10 +234,10 @@ export default function Footer() {
             </List>
           ))}
         </Container>
-        <Container>
+        <Container sx={{ mr: 2 }}>
           <Typography component='h3' sx={{
             fontWeight: 'bold',
-            fontSize: { xs: '2.5vh', sm: '3vh', md: '3.5vh', lg: '4vh', xl: '3vh' },
+            fontSize: { xs: '2.5vw', sm: '2vw', md: '2vw', lg: '1.8vw', xl: '1.8vw' },
             color: 'white',
             mb: '20px',
           }}>
@@ -249,7 +252,7 @@ export default function Footer() {
               <Link href={list.route} underline="hover">
                 <Typography sx={{
                   color: 'white',
-                  fontSize: { xs: '1.3vh', sm: '2vh', md: '2.5vh', lg: '2.5vh', xl: '2.5vh' },
+                  fontSize: { xs: '2vw', sm: '1.5vw', md: '1.5vw', lg: '1.2vw', xl: '1.2vw' },
                 }}>
                   {list.text}
                 </Typography>

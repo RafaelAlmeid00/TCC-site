@@ -6,6 +6,7 @@ import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { Fade } from "react-awesome-reveal";
 import SectionApp2 from "../../components/Applicativo/sectionApp2";
+import '../../App.css'
 
 export default function AppAll() {
 

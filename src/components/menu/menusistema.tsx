@@ -1,19 +1,30 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, IconButton, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import {useEffect, useState } from 'react';
-import Loading from '../loading';
+import ModalContext from '../../context/modalcontext';
+import React from 'react';
+import colors from '../../assets/colors';
+import theme from '../../assets/theme';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export default function MenuSistema() {
     console.log(localStorage);
     const userJson = localStorage.getItem('user');
     const userData = userJson ? JSON.parse(userJson) : null;
         const navigate = useNavigate()
+    const { darkMode, setDarkMode } = React.useContext(ModalContext);
+
+    const toggleDarkMode = () => {
+        const newTheme = darkMode ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        setDarkMode(!darkMode);
+    };
 
     const cardVariants = {
         hover: {
@@ -172,6 +183,21 @@ export default function MenuSistema() {
                             </Typography>
                         </Card>
                     </Container>
+                    <IconButton sx={{
+                        '&:hover': { color: colors.sc }, mr: 15,
+                        [theme.breakpoints.down('md')]: {
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            float: 'none',
+                            mr: 0
+                        },
+                        [theme.breakpoints.only('sm')]: {
+                            flexGrow: 1
+                        },
+                    }} onClick={toggleDarkMode} color="inherit">
+                        {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
                 </Toolbar>
             </Container>
         </AppBar>

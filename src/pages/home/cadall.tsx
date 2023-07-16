@@ -6,6 +6,7 @@ import Exit from '../../components/buttonexit.tsx'
 import { Fade } from 'react-awesome-reveal';
 import ModalContext from "../../context/modalcontext";
 import React from "react";
+import '../../App.css'
 
 function Cadall() {
     const { hasEntered } = React.useContext(ModalContext);

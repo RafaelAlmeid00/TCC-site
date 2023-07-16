@@ -1,73 +1,125 @@
 import { Box, Button, ButtonGroup, Card, Link, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Exit from "../buttonexit";
+import ModalContext from "../../context/modalcontext";
+import React from "react";
 
 export default function OptionsCad() {
 
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const fundo = themes.palette.background.default
+
+
     const buttons = [
-        {text: "Escolas", route: "/areaescolas"},
-        {text: "Empresas", route: "/areaempresas"},
-        {text: "Usuário", route: "/cadastro"}
+        { text: "Escolas", route: "/areaescolas" },
+        { text: "Empresas", route: "/areaempresas" },
+        { text: "Usuário", route: "/cadastro" }
     ]
-return (
-    <>
-    <Exit previousRoute={'/'}/>
-    <Box sx={{
-        height: '87vh',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }}>
-    <Card sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        width: '35%',
-        boxShadow: '1px 1px 10px 1px',
-        flexDirection: 'column',
-        mt: '-60px',
-        borderRadius: 6
-    }}>
-        <Typography
-          component="h2"
-          sx={{
-            fontFamily: 'Franklin Gothic Demi Cond',
-            fontWeight: 'bold',
-            fontSize: '50px',
-            background: 'linear-gradient(to right, #0fcd88 52%, #1976d2 50%)',
-            '-webkit-background-clip': 'text',
-            '-webkit-text-fill-color': 'transparent',
-          }}>EasyPass</Typography>
-          <Typography sx={{
-            fontSize: '16px',
-            fontWeight: 'bold',
-            mt: '30px',
-            mb: '30px',
+    return (
+        <>
+            <Exit previousRoute={'/'} />
+            <Box sx={{
+                height: '85vh',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: verify ? fundo : 'white',
             }}>
-            Acessar como:
-            </Typography>
-    <ButtonGroup orientation="vertical" variant="outlined">
-        {buttons.map((buttons, index) => (
-            <Link href={buttons.route}>
-            <Button sx={{
-                height: '60px',
-                width: '200px',
-                fontWeight: 'bold',
-                fontSize: '16px',
-                '&:hover': {
-                    border: '2px solid',
-                    borderColor: colors.sc,
-                }
-            }}>
-                {buttons.text}
-            </Button>
-            </Link>
-        ))}
-    </ButtonGroup>   
-    </Card>
-    </Box>
-    </>
-)
+                <Card sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: {
+                        xs: "80%", // (7.5 / 1200) * 600
+                        sm: "80%", // (7.5 / 1200) * 900
+                        md: "80%", // (7.5 / 1200) * 1200
+                        lg: "100%",
+                        xl: "100%", // Manter o mesmo tamanho de lg para xl
+                    },
+                    width: {
+                        xs: "80vw", // (7.5 / 1200) * 600
+                        sm: "60vw", // (7.5 / 1200) * 900
+                        md: "50vw", // (7.5 / 1200) * 1200
+                        lg: "35vw",
+                        xl: "35vw", // Manter o mesmo tamanho de lg para xl
+                    },
+                    boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
+                    flexDirection: 'column',
+                    mt: '-60px',
+                    borderRadius: 6
+                }}>
+                    <Typography
+                        component="h2"
+                        sx={{
+                            fontFamily: 'Franklin Gothic Demi Cond',
+                            fontWeight: 'bold',
+                            fontSize: {
+                                xs: "7vw", // (7.5 / 1200) * 600
+                                sm: "4.5vw", // (7.5 / 1200) * 900
+                                md: "4vw", // (7.5 / 1200) * 1200
+                                lg: "3vw",
+                                xl: "3vw", // Manter o mesmo tamanho de lg para xl
+                            },
+                            background: verify ? 'linear-gradient(to right, #0fcd88 52%, #ffffff 50%)' : 'linear-gradient(to right, #0fcd88 52%, #1976d2 50%)',
+                            '-webkit-background-clip': 'text',
+                            '-webkit-text-fill-color': 'transparent',
+                        }}>EasyPass</Typography>
+                    <Typography sx={{
+                        fontSize: {
+                            xs: "3vw", // (7.5 / 1200) * 600
+                            sm: "2vw", // (7.5 / 1200) * 900
+                            md: "1.5vw", // (7.5 / 1200) * 1200
+                            lg: "1vw",
+                            xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                        },
+                        fontWeight: 'bold',
+                        mt: '30px',
+                        mb: '30px',
+                    }}>
+                        Acessar como:
+                    </Typography>
+                    <ButtonGroup orientation="vertical" variant="outlined">
+                        {buttons.map((buttons, index) => (
+                            <Link href={buttons.route}>
+                                <Button sx={{
+                                    height: {
+                                        xs: "5.5vh", // (7.5 / 1200) * 600
+                                        sm: "6vh", // (7.5 / 1200) * 900
+                                        md: "7vh", // (7.5 / 1200) * 1200
+                                        lg: "8vh",
+                                        xl: "8vh", // Manter o mesmo tamanho de lg para xl
+                                    },
+                                    width: {
+                                        xs: "25.5vw", // (7.5 / 1200) * 600
+                                        sm: "20vw", // (7.5 / 1200) * 900
+                                        md: "18vw", // (7.5 / 1200) * 1200
+                                        lg: "15vw",
+                                        xl: "15vw", // Manter o mesmo tamanho de lg para xl
+                                    },
+                                    fontWeight: 'bold',
+                                    fontSize: {
+                                        xs: "2.5vw", // (7.5 / 1200) * 600
+                                        sm: "1.5vw", // (7.5 / 1200) * 900
+                                        md: "1.2vw", // (7.5 / 1200) * 1200
+                                        lg: "1vw",
+                                        xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                                    },
+                                    '&:hover': {
+                                        border: '2px solid',
+                                        borderColor: colors.sc,
+                                    },
+                                    mt: 0.5,
+                                    mb: 0.5
+                                }}>
+                                    {buttons.text}
+                                </Button>
+                            </Link>
+                        ))}
+                    </ButtonGroup>
+                </Card>
+            </Box>
+        </>
+    )
 }

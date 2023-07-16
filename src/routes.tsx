@@ -107,7 +107,7 @@ const Rota = () => {
               {/* Rotas de autenticação */}
               <Route path="/cadastro/*" element={
             <React.Fragment>
-                <ModalContext.Provider value={{loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
+                <ModalContext.Provider value={{ verify, themes, hasEntered, loginbool, setLog, email, password, cep, UF, street, district, num, comp, city, setEmail, setPassword, setCep, setUF, setStreet, setDistrict, setNum, setComp, setCity }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
                   <Route path="/complemento" element={<CadallLazy />} />
@@ -119,6 +119,7 @@ const Rota = () => {
               {/* Rota do sistema */}
               <Route path="/Sistema/*" element={
             <AuthProvider>
+                <ModalContext.Provider value={{ darkMode, setDarkMode, verify, themes, hasEntered }}>
               <React.Fragment>
                   <Routes>
                     <Route path="/" element={<HomeSistema />} />
@@ -127,6 +128,7 @@ const Rota = () => {
                     <Route path="/SAC" element={<SACLazy />} /> 
                   </Routes>
               </React.Fragment>
+                </ModalContext.Provider>
             </AuthProvider>
               } />
             </Routes>
