@@ -26,8 +26,8 @@ module.exports = {
                 console.log('this is test: ', test);
                 return res.status(201).send(test);*/
                 
-                const consultBus = await knex("bus_route").where('route_num', '=', num);
-                const consultRoutes = await knex("routes").where('bus_route_rote_id', '=', consultBus[0].rote_id);
+                const consultName = await knex("bus_route").where('route_num', '=', num);
+                const consultRoutes = await knex("routes").where('bus_route_rote_id', '=', consultName[0].rote_id);
                 console.log('test consultRoutes: ', consultRoutes);
                 var consultStop = new Array
                 for (let index = 0; index < consultRoutes.length; index++) {
@@ -38,7 +38,7 @@ module.exports = {
                     
                     if (consultRoutes.length == (index + 1)) {
                         console.log('aaaaaaaaaaaaa');
-                        const relatory = {consultBus, consultStop}
+                        const relatory = {consultName, consultStop}
                         return res.status(201).send(relatory);
                     }
                 }
@@ -49,8 +49,22 @@ module.exports = {
             }else
             if (nome != undefined) {
                 const consultName = await knex("bus_route").where('route_nome', 'like', `%${nome}%`);
-                return res.status(201).send(consultName);
-            }
+                const consultRoutes = await knex("routes").where('bus_route_rote_id', '=', consultName[0].rote_id);
+                console.log('test consultRoutes: ', consultRoutes);
+                var consultStop = new Array
+                for (let index = 0; index < consultRoutes.length; index++) {
+                    const [ destruct ] = await knex("bus_stop").where('stop_id', '=', consultRoutes[index].bus_stop_stop_id)
+                    consultStop.push(destruct);
+                    console.log('this is consultStop: ', consultStop);
+                    console.log('teste index: ', index, ' and ', consultRoutes.length);
+                    
+                    if (consultRoutes.length == (index + 1)) {
+                        console.log('aaaaaaaaaaaaa');
+                        console.log('this is consul Name: ', consultName);
+                        const relatory = {consultName, consultStop}
+                        return res.status(201).send(relatory);
+                    }
+            }}
         } catch (error) {
             console.log(error); 
         }
