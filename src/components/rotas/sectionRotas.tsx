@@ -1,14 +1,10 @@
 import { Fade, Avatar, FormControl, MenuItem, Box, Button, Container, IconButton, InputLabel, Typography, TextField, colors, useMediaQuery } from "@mui/material"
 import color from "../../assets/colors";
 import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem, TimelineOppositeContent } from "@mui/lab";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import SendIcon from '@mui/icons-material/Send';
 import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
-import { Margin, Padding, WidthFull } from "@mui/icons-material";
 import Image from "../../assets/busao.jpg";
 import MenuSistema from "../sistema/menu/menusistema";
 import MenuLateral from "../sistema/menu/menulateral";
@@ -35,8 +31,6 @@ function SectionRota1() {
       setTake(await axios.post('http://localhost:3344/routes/search',
         { token: token, route_num: value }));
       console.log('this is take: ', take);
-
-
     } else
       if (options == 'Rotas') {
         setTake(await axios.post('http://localhost:3344/routes/search',
@@ -47,10 +41,12 @@ function SectionRota1() {
   };
 
   useEffect(() => {
-    setTextval(String(take?.data?.consultBus[0].route_nome))
+   
 
-
+      setTextval(String(take?.data?.consultName[0].route_nome))
+   
     if (take != undefined) {
+      console.log('this is textval: ', textval);
       visState('visible');
       setPass('também passa por:');
       alsopass.length = 0
