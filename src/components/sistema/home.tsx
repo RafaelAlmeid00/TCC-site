@@ -21,15 +21,16 @@ function Homesistema() {
         {name: 'Cancelar Cartão'}
     ]
 
-    const HandleCard = () => {
-        setModal(true),
-        console.log('ok');
-        
-    }
+    const handleModalClose = () => {
+        setModal(false);
+    };
 
+    const handleOpenModal = () => {
+        setModal(true);
+    };
     return (
         <>
-        {modal ? <Pedido userData={userData} /> :
+            {modal ? <Pedido userData={userData} onCloseModal={handleModalClose} /> :
             <Box id="section1" sx={{
                 mt: '9.5vh',
                 height: '90.5vh',
@@ -90,7 +91,7 @@ function Homesistema() {
                         style={{ x: 100, height: '100%', width: '7vw' }}
                         >
 
-                    <Card onClick={HandleCard} sx={{
+                    <Card onClick={handleOpenModal} sx={{
                         width: '7vw',
                         height: '20vh',
                         cursor: 'pointer',

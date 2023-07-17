@@ -36,8 +36,11 @@ routes.post('/user/update', controllersUser.UpdateUser);
 routes.post('/listcpf', controllerListCPF.createListCpf);
 routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
 routes.get('/listcpf', controllerListCPF.searchListCpf);
-routes.post('/listcpf', controllerListCPF.searchCpf);
+routes.post('/listcpf/search', controllerListCPF.searchCpf);
 
+
+routes.post('/card', controllersRequestCard.CadReqCard);
+routes.get('/card', controllersRequestCard.searchReqCard);
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
 routes.post('/user/delete', controllersUser.DeleteUser);
@@ -64,7 +67,6 @@ routes.delete('/turn', controllerTurn.exlcdTurn);
 routes.post('/driver', controllerDriver.cadDriver);
 routes.delete('/driver', controllerDriver.attDriver);
 
-routes.post('/card', controllersRequestCard.CadReqCard);
 
 routes.post('/sac', controllersSac.CadSac);
 routes.get('/sac', controllersSac.Search);
