@@ -7,7 +7,7 @@ import StyleIcon from '@mui/icons-material/Style';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import colors from "../../assets/colors";
+import colors from "../../../assets/colors";
 import React from "react";
 
 export default function MenuPerfil() {

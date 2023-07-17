@@ -1,4 +1,4 @@
-/* import SectionRota1  from "./rotas/sectionRotas";
+import SectionRota1  from "../../components/rotas/sectionRotas";
 
 
 function BussRotas() {
@@ -9,5 +9,4 @@ function BussRotas() {
     )
 }
 
-//export default BussRotas 
-*/
+export default BussRotas 

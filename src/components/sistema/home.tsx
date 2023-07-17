@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { BtnHome } from "../btns";
+import Pedido from "./modal/pedidocard";
 
 function Homesistema() {
+    const [modal, setModal] = React.useState(false)
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
@@ -19,8 +21,15 @@ function Homesistema() {
         {name: 'Cancelar Cartão'}
     ]
 
+    const HandleCard = () => {
+        setModal(true),
+        console.log('ok');
+        
+    }
+
     return (
         <>
+        {modal ? <Pedido userData={userData} /> :
             <Box id="section1" sx={{
                 mt: '9.5vh',
                 height: '90.5vh',
@@ -33,7 +42,6 @@ function Homesistema() {
 
                 <Container sx={{
                     width: '100%',
-                    backgound: 'red',
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'start',
@@ -60,7 +68,8 @@ function Homesistema() {
                     flexDirection: 'row',
                     justifyContent: 'start',
                     alignItems: 'center',
-                    mt: 12
+                    mt: 12,
+                    ml: 4.5
                 }}>
                     {buttonshome.map((buttons) => (
                         <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={undefined} route={""} />
@@ -69,22 +78,23 @@ function Homesistema() {
                 <Container sx={{
                     width: '100%',
                     height: 'auto',
-                    display: 'flex',
                     flexDirection: 'row',
-                    mt: 6
+                    justifyContent: 'start',
+                    alignItems: 'center',
+                    float: "left",
+                    mt: 6,
                 }}>
                     <motion.div
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.97 }}
-                        style={{ x: 100 }}
+                        style={{ x: 100, height: '100%', width: '7vw' }}
                         >
 
-                    <Card sx={{
+                    <Card onClick={HandleCard} sx={{
                         width: '7vw',
                         height: '20vh',
-                        boxShadow: '1px 1px 8px 1px',
                         cursor: 'pointer',
-                        ml: 25
+                            boxShadow: verify ? '1px 0px 4px 1px white' : '1px 1px 8px 1px',
                     }}>
                         <Typography variant="h3" sx={{
                             color: 'black',
@@ -104,6 +114,7 @@ function Homesistema() {
                     </motion.div>
                 </Container>
             </Box>
+            }
         </>
     )
 }

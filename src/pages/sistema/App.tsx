@@ -1,5 +1,5 @@
-import MenuLateral from '../../components/menu/menulateral'
-import MenuSistema from '../../components/menu/menusistema'
+import MenuLateral from '../../components/sistema/menu/menulateral'
+import MenuSistema from '../../components/sistema/menu/menusistema'
 import Homesistema from '../../components/sistema/home'
 
 function Sistema() {

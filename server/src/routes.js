@@ -36,6 +36,8 @@ routes.post('/user/update', controllersUser.UpdateUser);
 routes.post('/listcpf', controllerListCPF.createListCpf);
 routes.delete('/listcpf/:CNPJ', controllerListCPF.listcpfDelete);
 routes.get('/listcpf', controllerListCPF.searchListCpf);
+routes.post('/listcpf', controllerListCPF.searchCpf);
+
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
 routes.post('/user/delete', controllersUser.DeleteUser);

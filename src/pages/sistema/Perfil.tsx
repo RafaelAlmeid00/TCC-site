@@ -1,5 +1,5 @@
-import MenuPerfil from '../../components/menu/menulateralperfil'
-import MenuSistema from '../../components/menu/menusistema'
+import MenuPerfil from '../../components/sistema/menu/menulateralperfil'
+import MenuSistema from '../../components/sistema/menu/menusistema'
 import SectionPerfil1 from '../../components/sistema/perfil/section1'
 import SectionPerfil2 from '../../components/sistema/perfil/section2'
 
