@@ -1,17 +1,17 @@
 import { Fade, Avatar, FormControl, MenuItem, Box, Button, Container, IconButton, InputLabel, Typography, TextField, colors, useMediaQuery } from "@mui/material"
-import color from "../../../assets/colors";
+import color from "../../assets/colors";
 import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem, TimelineOppositeContent } from "@mui/lab";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import SendIcon from '@mui/icons-material/Send';
-import MenuLateral from "../../../components/menu/menulateral";
-import MenuSistema from "../../../components/menu/menusistema";
 import { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
 import { Margin, Padding, WidthFull } from "@mui/icons-material";
-import Image from "../../../assets/busao.jpg";
+import Image from "../../assets/busao.jpg";
+import MenuSistema from "../sistema/menu/menusistema";
+import MenuLateral from "../sistema/menu/menulateral";
 const token = localStorage.getItem('token');
 
 function SectionRota1() {
