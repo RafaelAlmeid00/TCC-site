@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, IconButton, InputLabel, TextField, Typography } from "@mui/material"
+import { Avatar, Box, Button, Container, IconButton, Input, InputLabel, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
@@ -6,12 +6,12 @@ import { verify } from "../FrontDecoded";
 
 function SectionPerfil1() {
     const [dado, setPega] = useState('');
-    const userJson = localStorage.getItem('user');
-    const userData = userJson ? JSON.parse(userJson) : null;
+    const userData = verify();
     const data = userData.user_email;
 
     console.log('this is the verify: ', verify());
     //console.log('token removed: ', removeToken());
+    console.log(userData, data);
     
     
     const update = async () => {
@@ -123,7 +123,7 @@ function SectionPerfil1() {
                             borderRadius: 5,
                         }}>
                             <InputLabel >
-                                <TextField
+                                <Input
                                     label="Nome de Usuário"
                                     variant="outlined"
                                     size="small"

@@ -6,6 +6,7 @@ import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { BtnHome } from "../btns";
 import Pedido from "./modal/pedidocard";
+import { PedidosAberto } from "../errosvalidations";
 
 function Homesistema() {
     const [modal, setModal] = React.useState(false)
@@ -14,6 +15,7 @@ function Homesistema() {
     const fundo = themes.palette.background.default
     const userJson = localStorage.getItem('user');
     const userData = userJson ? JSON.parse(userJson) : null;
+    const [alert, setAlert] = React.useState(false); // Novo estado para o alert
 
     const buttonshome = [
         {name: 'Histórico do Cartão'},
@@ -28,9 +30,17 @@ function Homesistema() {
     const handleOpenModal = () => {
         setModal(true);
     };
+
+    const handleAlertChange = (value) => {
+        setAlert(value);
+        setTimeout(() => {
+            setAlert(false)
+        }, 5000)
+    };
     return (
         <>
-            {modal ? <Pedido userData={userData} onCloseModal={handleModalClose} /> :
+        {alert && <PedidosAberto />}
+            {modal ? <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} /> :
             <Box id="section1" sx={{
                 mt: '9.5vh',
                 height: '90.5vh',

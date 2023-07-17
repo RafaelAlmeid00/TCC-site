@@ -135,4 +135,17 @@ function ErrorLogin() {
     );
 }
 
-export {ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};
+function PedidosAberto() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                position: 'absolute', top: 100, left: '35%', zIndex: 999, boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Você já possui pedidos de cartão em <strong>aberto.</strong>
+            </Alert>
+        </>
+    );
+}
+
+export {PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess};

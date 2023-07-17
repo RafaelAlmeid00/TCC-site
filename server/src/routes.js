@@ -41,6 +41,8 @@ routes.post('/listcpf/search', controllerListCPF.searchCpf);
 
 routes.post('/card', controllersRequestCard.CadReqCard);
 routes.get('/card', controllersRequestCard.searchReqCard);
+routes.post('/card/search', controllersRequestCard.searchReqCPF);
+
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
 routes.post('/user/delete', controllersUser.DeleteUser);

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
+import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography, styled } from "@mui/material"
 import Box from "@mui/material/Box"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FormControl from '@mui/material/FormControl';
@@ -14,6 +14,7 @@ import axios from "axios";
 import theme from "../../assets/theme";
 import { Btn, BtnL } from "../btns";
 import colors from "../../assets/colors";
+import buscad from "../../assets/buscad.jpg"
 
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -96,6 +97,12 @@ function ContainerCad() {
         }
     };
 
+    const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
+        width: "120%",
+        height: "100%",
+        objectFit: "cover",
+    }));
+
     return (
         <>
             {showError && <EmailPasswordNull />}
@@ -146,13 +153,12 @@ function ContainerCad() {
                                 display: 'none'
                             }
                         }}>
-                            <CardMedia sx={{
-                                width: "115%",
-                                height: "100%",
-                                objectFit: "cover",
-                            }}
-                                component="img"
-                                image="https://images4.alphacoders.com/117/1175759.jpg"
+                            <StyledCardMedia
+                                image={buscad}
+                                sx={{
+                                    backgroundPosition: "left",
+                                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                                }}
                             />
                         </Container>
                         <Container sx={{
@@ -404,13 +410,12 @@ function ContainerCad() {
                                 display: 'none'
                             }
                         }}>
-                            <CardMedia sx={{
-                                width: "115%",
-                                height: "100%",
-                                objectFit: "cover",
-                            }}
-                                component="img"
-                                image="https://images8.alphacoders.com/435/435772.jpg"
+                            <StyledCardMedia
+                                image={buscad}
+                                sx={{
+                                    backgroundPosition: "right",
+                                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                                }}
                             />
                         </Container>
                     </Container>}
