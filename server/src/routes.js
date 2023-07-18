@@ -26,6 +26,8 @@ routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
+routes.post('/user/email', controllersUser.searchUserEmail);
+routes.post('/user/cpf', controllersUser.searchUserCPF);
 
 
 routes.post('/bussines', controllersBussines.createBussines);

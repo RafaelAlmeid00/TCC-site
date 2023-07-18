@@ -46,15 +46,14 @@ function CompleteCad2(){
 return (
     <>
         <Container sx={{
-            marginLeft: "-22px",
-            width: "110%",
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
         }}>
-            <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+            <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         CEP
         </InputLabel>
@@ -74,7 +73,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '60%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         Cidade
         </InputLabel>
@@ -93,7 +92,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '60%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         Bairro
         </InputLabel>
@@ -112,7 +111,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '60%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         Rua
         </InputLabel>
@@ -131,7 +130,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '60%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         Complemento
         </InputLabel>
@@ -150,7 +149,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '20%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         Número
         </InputLabel>
@@ -168,7 +167,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
-        <FormControl variant="standard" sx={{ width: '25%', mb: '20px' }}>
+        <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
         <InputLabel htmlFor="input-with-icon-adornment">
         UF
         </InputLabel>

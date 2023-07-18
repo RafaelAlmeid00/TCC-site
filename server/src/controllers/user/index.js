@@ -27,6 +27,40 @@ module.exports = {
             return res.status(400).json({ error: error.message });
         }
     },
+    
+async searchUserEmail(req, res) {
+  const { user_email: email } = req.body;
+  
+  try {
+    const takeEmail = await knex("user").where("user_email", "=", email).first();
+
+    if (!takeEmail) {
+      return res.status(404).json({ error: "E-mail não encontrado." });
+    }
+
+    res.status(200).send(takeEmail);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+},
+
+async searchUserCPF(req, res) {
+  const { user_CPF: cpf } = req.body;
+  
+  try {
+    const takeCPF = await knex("user").where("user_CPF", "=", cpf).first();
+
+    if (!takeCPF) {
+      return res.status(404).json({ error: "CPF não encontrado." });
+    }
+
+    res.status(200).send(takeCPF);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+},
+
+
 
     async createUser(req, res) {
         try {

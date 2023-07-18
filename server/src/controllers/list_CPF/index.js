@@ -12,7 +12,7 @@ module.exports = {
     },
 
 async searchCpf(req, res) {
-  const { list_CPF } = req.body;
+  const { list_CPF: list_CPF } = req.body;
   
   try {
     const takeCPF = await knex("list_CPF").where("list_CPF", list_CPF);

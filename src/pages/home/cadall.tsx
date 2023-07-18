@@ -18,7 +18,6 @@ function Cadall() {
             <Box sx={{
                 backgroundColor: "#F0F0FF",
                 height: "80vh",
-                width: "65vw",
                 position: "absolute",
                 top: "50%",
                 left: "50%",
@@ -26,7 +25,13 @@ function Cadall() {
                 borderRadius: 5,
                 boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
                 display: "flex",
+                alignItems: 'center',
+                justifyContente: 'center',
                 flexDirection: "row",
+                flexGrow: 1,
+                gap: 2,
+                paddingRight: 5,
+                paddingLeft: 5
             }}>
                 <Fade cascade damping={0.2} triggerOnce={hasEntered}>
                 <CompleteCad />
