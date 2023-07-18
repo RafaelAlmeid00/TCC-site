@@ -11,6 +11,9 @@ import { CPFError, DataError, NomeError, NumError, CEPError, Sucess, RGError, CP
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { useNavigate } from "react-router-dom";
 import Tipo from "./tipouser";
+import { Btn } from "../btns";
+import { verify } from "jsonwebtoken";
+import colors from "../../assets/colors";
 
 function CompleteCad(){
     const {email} = useContext(ModalContext);
@@ -36,6 +39,7 @@ function CompleteCad(){
     const [CPFexiste, setCPFexiste] = useState(false);
     const [showTipo, setShowTipo] = useState(false);
     const [dadosU, setDados] = useState({});
+    const { verify } = React.useContext(ModalContext);
 
 
     async function VerifyCPF(cpf: string): Promise<boolean> {
@@ -196,6 +200,8 @@ function CompleteCad(){
             user_endnum: num,
             user_endcomplemento: comp,
             user_endcidade: city,
+            user_tipo: undefined,
+            list_CPF_list_id: undefined
         };
 
         const cpfError = await VerifyCPF(cpf);
@@ -273,10 +279,23 @@ return (
                 alignItems: "center",
                 height: "100%",
             }}>
-                <Typography sx={{ textAlign: 'center', mb: '30px', color: '#222222', fontSize: '18px', fontWeight: 'bold' }}>
+                <Typography sx={{ textAlign: 'center', mb: '30px', color: '#222222', fontSize: {
+                                xs: '2.5vw',  // (7.5 / 1200) * 600
+                                sm: '2vw',  // (7.5 / 1200) * 900
+                                md: '2vw',  // (7.5 / 1200) * 1200
+                                lg: '1vw',
+                                xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                            }, fontWeight: 'bold' }}>
                     Dados Pessoais e Endereço
                 </Typography>
-                <Typography sx={{ textAlign: 'center', mb: '40px', color: '#444444', fontSize: '15px' }}>
+                <Typography sx={{
+                    textAlign: 'center', mb: '40px', color: '#444444', fontSize: {
+                        xs: '2vw',  // (7.5 / 1200) * 600
+                        sm: '1.5vw',  // (7.5 / 1200) * 900
+                        md: '1vw',  // (7.5 / 1200) * 1200
+                        lg: '1vw',
+                        xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                    }, }}>
                     Coloque o seu CPF e CEP para obter os dados:
                 </Typography>
                 <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
@@ -362,12 +381,7 @@ return (
                         sx={{ fontSize: '14px' }}
                     />
                 </FormControl>
-                <Button variant="contained"
-                    onClick={handleclick}
-                    sx={{
-                        mt: '40px',
-                    }} >
-                    Finalizar</Button>
+                <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} mt={50} bch={verify ? 'white' : undefined} />
             </Container>
     }
         </>

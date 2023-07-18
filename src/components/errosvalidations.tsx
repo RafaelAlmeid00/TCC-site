@@ -202,7 +202,7 @@ function ContentNull() {
                 height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
                 position: 'absolute',
                 top: 10,
-                left: '10%',
+                left: '35vw',
                 right: 0,
                 bottom: 0,
                 display: 'flex',

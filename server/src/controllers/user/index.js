@@ -192,19 +192,38 @@ async DeleteUser (req, res) {
   }
 },
 
-async UpdateUser(req, res){
+async UpdateUser(req, res) {
   try {
-      const { user_email: data } = req.body;
-      const { info: dado } = req.body;
-      const { param: parame } = req.body;
+    const { user_CPF: cpf } = req.body;
+    const { info: dado } = req.body;
+    const { parame: parame } = req.body;
 
-      console.log('this is parame: ', parame);
-      await knex("user").where("user_email", "=", data).update(`${parame}`, dado);
+    // Mapeamento dos parâmetros para os campos do banco de dados
+    const paramToField = {
+      nome: 'user_nome',
+      email: 'user_email',
+      senha: 'user_senha',
+      data: 'user_nascimento'
+      // Adicione outros campos do banco de dados conforme necessário
+    };
+    console.log('Valor de parame:', parame);
 
+    // Verifica se o parâmetro fornecido é válido
+    // eslint-disable-next-line no-prototype-builtins
+    if (paramToField.hasOwnProperty(parame)) {
+      const updateFields = { [paramToField[parame]]: dado };
+
+      // Faça a atualização no banco de dados
+      await knex("user").where("user_CPF", "=", cpf).update(updateFields);
+      res.status(200).send('foi negada');
+    } else {
+      res.status(400).send('Parâmetro inválido.');
+    }
   } catch (error) {
-      console.log(error);
+    console.log(error);
+    res.status(500).send('Erro interno do servidor.');
   }
-}
+},
      //recuperação por nome protótipo
     /*async UserNameLogin(req, res){
         try {

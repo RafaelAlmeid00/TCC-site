@@ -167,8 +167,8 @@ function Tipo({ dados }: Props) {
                     }}>
                         <Typography sx={{
                             fontSize: {
-                                xs: '2.5vw',  // (7.5 / 1200) * 600
-                                sm: '2vw',  // (7.5 / 1200) * 900
+                                xs: '3vw',  // (7.5 / 1200) * 600
+                                sm: '2.5vw',  // (7.5 / 1200) * 900
                                 md: '2vw',  // (7.5 / 1200) * 1200
                                 lg: '1vw',
                                 xl: '1vw',  // Manter o mesmo tamanho de lg para xl
@@ -216,7 +216,7 @@ function Tipo({ dados }: Props) {
                         mt: 10
                     }}>
                         <Balancer>
-                        <Typography component='span' variant='span' sx={{
+                        <Typography component='span' sx={{
                             fontSize: {
                                 xs: '2.5vw',  // (7.5 / 1200) * 600
                                 sm: '2vw',  // (7.5 / 1200) * 900

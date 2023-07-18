@@ -2,7 +2,7 @@
 import jwt_decode from "jwt-decode";
 const userToken = localStorage.getItem('token');
 
-export function verify (){
+export function Deccode (){
     return jwt_decode(String(userToken));
 }
 

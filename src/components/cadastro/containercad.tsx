@@ -9,7 +9,7 @@ import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modalcontext";
-import { EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
+import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
 import axios from "axios";
 import theme from "../../assets/theme";
 import { Btn, BtnL } from "../btns";
@@ -35,6 +35,7 @@ function ContainerCad() {
     const [loading, setLoading] = useState(false)
     const [disable, setDisable] = useState(false)
     const [showErrorlog, setShowErrorlog] = useState(false);
+    const [showNull, setShowNull] = useState(false);
 
     const { verify } = React.useContext(ModalContext);
 
@@ -100,6 +101,12 @@ function ContainerCad() {
         setLoading(true)
         setDisable(true)
         try {
+            if (password == '' || cpf2 == '') {
+                setShowNull(true)
+                setTimeout(() => {
+                    setShowNull(false)
+                }, 3000);
+            }
             const res = await axios.post('http://localhost:3344/user/login', {
                 user_CPF: cpf2,
                 user_senha: password,
@@ -123,11 +130,13 @@ function ContainerCad() {
             }
         } catch (err) {
             console.log(err);
+            setShowNull(false)
             setLoading(false)
             setDisable(false)
+            setShowErrorlog(true)
             setTimeout(() => {
-                setShowErrorlog(true)
-            }, 5000)
+                setShowErrorlog(false)
+            }, 3000);
         }
     };
     const StyledCardMedia = styled(CardMedia)(() => ({
@@ -138,6 +147,7 @@ function ContainerCad() {
 
     return (
         <>
+            {showNull && <ContentNull />}
             {showError && <EmailPasswordNull />}
             {showErrorEmail && <EmailIncorrect />}
             {showErrorlog && <ErrorLogin />}
