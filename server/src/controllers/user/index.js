@@ -144,25 +144,10 @@ async UserLogin(req, res) {
           },'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
           console.log('this is req.headers: ', req.headers);
 
-          const userData = {
-            user_CPF: takeCPF.user_CPF,
-            user_nome: takeCPF.user_nome,
-            user_email: takeCPF.user_email,
-            user_nascimento: takeCPF.user_nascimento,
-            user_endCEP: takeCPF.user_endCEP,
-            user_endUF: takeCPF.user_endUF,
-            user_endbairro: takeCPF.user_endbairro,
-            user_endrua: takeCPF.user_endrua,
-            user_endnum: takeCPF.user_endnum,
-            user_endcomplemento: takeCPF.user_endcomplemento,
-            user_endcidade: takeCPF.user_endcidade,
-            user_tipo: takeCPF.user_tipo
-        };
         res.cookie('token', token, {secure: true})  
 
         return res.status(201).send({
           token: token,
-          user: userData,
           message: "ok!"
         });
         }
@@ -173,6 +158,49 @@ async UserLogin(req, res) {
     console.log(error);
   }
 },
+
+  async UpdateToken(req, res) {
+    try {
+      const { user_CPF: cpf } = req.body;
+      console.log(cpf);
+
+      // Use o await para aguardar a consulta ao banco de dados
+      const [takeCPF] = await knex("user").where("user_CPF", "=", cpf);
+
+      if (takeCPF !== undefined) {
+            const token = JWT.sign({
+              user_CPF: takeCPF.user_CPF,
+              user_nome: takeCPF.user_nome,
+              user_email: takeCPF.user_email,
+              user_FotoPerfil: takeCPF.user_FotoPerfil,
+              user_nascimento: takeCPF.user_nascimento,
+              user_endCEP: takeCPF.user_endCEP,
+              user_endUF: takeCPF.user_endUF,
+              user_endbairro: takeCPF.user_endbairro,
+              user_endrua: takeCPF.user_endrua,
+              user_endnum: takeCPF.user_endnum,
+              user_endcomplemento: takeCPF.user_endcomplemento,
+              user_endcidade: takeCPF.user_endcidade,
+              user_tipo: takeCPF.user_tipo
+
+            }, 'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
+            console.log('this is req.headers: ', req.headers);
+
+            res.cookie('token', token, { secure: true })
+
+            return res.status(201).send({
+              token: token,
+              message: "ok!"
+            });
+           } else {
+        res.status(400).send('CPF não encontrado');
+      }
+    } catch (error) {
+      res.status(500).send('Erro no servidor');
+      console.log(error);
+    }
+  },
+
 
 async DeleteUser (req, res) {
   try {

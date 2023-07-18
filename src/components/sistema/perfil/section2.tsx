@@ -1,12 +1,12 @@
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Deccode } from "../FrontDecoded";
 
 
 function SectionPerfil2() { 
-    const userJson = localStorage.getItem('user');
     const token = localStorage.getItem('token');
-    const userData = userJson ? JSON.parse(userJson) : null;
+    const userData = Deccode();
     const data = userData.user_email
     console.log('THIS IS DATA: ', data);
     const navigate = useNavigate()

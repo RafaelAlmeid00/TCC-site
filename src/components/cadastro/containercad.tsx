@@ -119,7 +119,6 @@ function ContainerCad() {
 
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('user', JSON.stringify(res.data.user));
                 console.log(localStorage);
 
                 navigate('/Sistema');
@@ -154,7 +153,7 @@ function ContainerCad() {
             {error && <EmailExiste />}
 
             <Box sx={{
-                background: verify ? '#121212' : '#F0F0FF',
+                background: verify ? '#121212' : 'white',
                 height: "85vh",
                 width: "100vw",
                 zIndex: -1

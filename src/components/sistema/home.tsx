@@ -7,15 +7,17 @@ import React from "react";
 import { BtnHome } from "../btns";
 import Pedido from "./modal/pedidocard";
 import { PedidosAberto } from "../errosvalidations";
+import { Deccode } from "./FrontDecoded";
 
 function Homesistema() {
     const [modal, setModal] = React.useState(false)
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
-    const userJson = localStorage.getItem('user');
-    const userData = userJson ? JSON.parse(userJson) : null;
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
+    const [userData] = React.useState(Deccode());
+    console.log(Deccode());
+    
 
     const buttonshome = [
         {name: 'Histórico do Cartão'},

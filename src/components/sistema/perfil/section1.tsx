@@ -6,6 +6,7 @@ import { Deccode } from "../FrontDecoded";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { Btn } from "../../btns";
+import AttModal from "../modal/attperfil";
 
 function SectionPerfil1() {
     const [dado, setPega] = useState('');
@@ -16,6 +17,7 @@ function SectionPerfil1() {
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const [parame, setPar] = useState('');
+    const [open, setOpen] = React.useState(false);
 
     const userData = Deccode();
     const cpf = userData.user_CPF;
@@ -32,11 +34,13 @@ function SectionPerfil1() {
         setPar('nome')
         console.log(parame);
         console.log(dado);
-        await update(cpf, dado, parame)
+        await update(cpf, dado);
         setNome(false)
+        await UpdateToken()
+        setOpen(true)
     };
     
-    const update = async (cpf: any, dado: any, parame: any) => {
+    const update = async (cpf: any, dado: any) => {
 
         try {
             await axios.post('http://localhost:3344/user/update', {
@@ -61,8 +65,37 @@ function SectionPerfil1() {
         const birthDate = new Date(userData.user_nascimento);
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
 
+    async function UpdateToken() {
+        try {
+            console.log('foi quase');
+            const res = await axios.post('http://localhost:3344/user/token', {
+                user_CPF: cpf,
+            });
+            console.log('foi o token');
+            console.log(res.data);
+            console.log('test', res.data.token);
+            console.log(res);
+
+            if (res.data.token) {
+                console.log(localStorage.getItem('token'));
+                localStorage.removeItem('token')
+                console.log(localStorage.getItem('token'));
+                localStorage.setItem('token', res.data.token);
+                console.log(localStorage.getItem('token'));
+                console.log(localStorage);
+            } else {
+                console.log(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+    
+
     return (
         <>
+        {open && <AttModal opens={open}/>}
             <Box sx={{
                 mt: '9vh',
                 height: '90vh',
