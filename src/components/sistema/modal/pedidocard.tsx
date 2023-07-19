@@ -7,10 +7,11 @@ import { Btn } from "../../btns";
 interface Props {
     userData: string;
     onCloseModal: () => void;
+    onAlertChange: boolean;
 }
 
-function Pedido({ userData, onCloseModal }: Props) {
-
+function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
+    const [alert, setAlert] = React.useState(false)
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
@@ -48,11 +49,31 @@ function Pedido({ userData, onCloseModal }: Props) {
         }
     }
 
-    // Restante do código...
+    async function VerifyCard(list_CPF: string) {
+        try {
+            const response = await axios.post('http://localhost:3344/card/search', { user_CPF: list_CPF })
+            const result = response.data
+            console.log(result);
+            if (result) {
+                console.log('você já tem pedidos abertos');
+                onAlertChange(true);
+                onCloseModal()
+            } else {
+                console.log('algo deu muito errado');
+                
+            }
+        } catch (error) {
+            console.log('só vai menor');
+            
+        }
+    }
+
 
     React.useEffect(() => {
+        const list_CPF = userData.user_CPF;
+
         if (userData) {
-            const list_CPF = userData.user_CPF;
+            VerifyCard(list_CPF)
             fetchListCards(list_CPF);
         }
     }, [userData]);

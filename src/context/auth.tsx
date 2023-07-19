@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
+import { Deccode } from '../components/sistema/FrontDecoded';
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -21,8 +22,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const userJson = localStorage.getItem('user');
-        const userData = userJson ? JSON.parse(userJson) : null;
+        const userData = Deccode();
 
         if (token || userData) {
             setIsAuthenticated(true);

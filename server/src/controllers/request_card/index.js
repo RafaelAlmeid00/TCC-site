@@ -10,6 +10,16 @@ module.exports = {
         }
     },
 
+async searchReqCPF(req, res) {
+  const { user_CPF: list_CPF } = req.body;
+  
+  try {
+    const takeCPF = await knex("request_card").where("user_user_CPF", list_CPF);
+    res.status(200).send(takeCPF);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+},
     async CadReqCard(req, res) {
         try {
             const { req_data: date } = req.body;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
+import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography, styled } from "@mui/material"
 import Box from "@mui/material/Box"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FormControl from '@mui/material/FormControl';
@@ -9,11 +9,12 @@ import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modalcontext";
-import { EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
+import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
 import axios from "axios";
 import theme from "../../assets/theme";
 import { Btn, BtnL } from "../btns";
 import colors from "../../assets/colors";
+import buscad from "../../assets/buscad.jpg"
 
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -21,6 +22,7 @@ function ContainerCad() {
     const { email, setEmail } = useContext(ModalContext);
     const { password, setPassword } = useContext(ModalContext);
     const [cpf2, setCpf2] = React.useState('');
+    const [error, setError] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,25 +35,59 @@ function ContainerCad() {
     const [loading, setLoading] = useState(false)
     const [disable, setDisable] = useState(false)
     const [showErrorlog, setShowErrorlog] = useState(false);
+    const [showNull, setShowNull] = useState(false);
 
     const { verify } = React.useContext(ModalContext);
 
-    function Verifylog() {
-        if (email == '' || password == '') {
-            setTimeout(() => {
+    async function Verifylog() {
+        try {
+            console.log("ta indo")
+            const response = await axios.post('http://localhost:3344/user/email', { user_email: email })
+            console.log(email)
+            console.log(response.data)
+            if (response.data) {
+                setError(true)
+                setEmail('')
+                setShowError(false);
+                setShowErrorEmail(false);
+                setShowErrorlog(false);
+                setTimeout(() => {
+                    setError(false)
+                }, 5000);
+            } else {
+                setError(false)
+                if (email === '' || password === '') {
+                    setShowError(true);
+                    setShowErrorEmail(false);
+                    setShowErrorlog(false);
+                } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                    setShowErrorEmail(true);
+                    setShowError(false);
+                    setShowErrorlog(false);
+                } else {
+                    setShowErrorEmail(false);
+                    setShowError(false);
+                    setShowErrorlog(false);
+                    navigate('/cadastro/complemento');
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            setError(false);
+            if (email === '' || password === '') {
                 setShowError(true);
-            }, 5000);
-            setShowErrorEmail(false);
-            setShowErrorlog(false)
-        } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-            setShowErrorEmail(true);
-            setShowError(false)
-            setShowErrorlog(false)
-        } else {
-            setShowErrorEmail(false)
-            setShowErrorEmail(false)
-            setShowErrorlog(false)
-            navigate('/cadastro/complemento');
+                setShowErrorEmail(false);
+                setShowErrorlog(false);
+            } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                setShowErrorEmail(true);
+                setShowError(false);
+                setShowErrorlog(false);
+            } else {
+                setShowErrorEmail(false);
+                setShowError(false);
+                setShowErrorlog(false);
+                navigate('/cadastro/complemento');
+            }
         }
     }
 
@@ -65,6 +101,12 @@ function ContainerCad() {
         setLoading(true)
         setDisable(true)
         try {
+            if (password == '' || cpf2 == '') {
+                setShowNull(true)
+                setTimeout(() => {
+                    setShowNull(false)
+                }, 3000);
+            }
             const res = await axios.post('http://localhost:3344/user/login', {
                 user_CPF: cpf2,
                 user_senha: password,
@@ -77,7 +119,6 @@ function ContainerCad() {
 
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('user', JSON.stringify(res.data.user));
                 console.log(localStorage);
 
                 navigate('/Sistema');
@@ -88,24 +129,34 @@ function ContainerCad() {
             }
         } catch (err) {
             console.log(err);
+            setShowNull(false)
             setLoading(false)
             setDisable(false)
+            setShowErrorlog(true)
             setTimeout(() => {
-                setShowErrorlog(true)
-            }, 5000)
+                setShowErrorlog(false)
+            }, 3000);
         }
     };
+    const StyledCardMedia = styled(CardMedia)(() => ({
+        width: "120%",
+        height: "100%",
+        objectFit: "cover",
+    }));
 
     return (
         <>
+            {showNull && <ContentNull />}
             {showError && <EmailPasswordNull />}
             {showErrorEmail && <EmailIncorrect />}
             {showErrorlog && <ErrorLogin />}
+            {error && <EmailExiste />}
 
             <Box sx={{
-                background: verify ? '#121212' : '#F0F0FF',
+                background: verify ? '#121212' : 'white',
                 height: "85vh",
                 width: "100vw",
+                zIndex: -1
             }}>
                 <Card sx={{
                     background: verify ? '#121212' : '#F0F0FF',
@@ -146,13 +197,12 @@ function ContainerCad() {
                                 display: 'none'
                             }
                         }}>
-                            <CardMedia sx={{
-                                width: "115%",
-                                height: "100%",
-                                objectFit: "cover",
-                            }}
-                                component="img"
-                                image="https://images4.alphacoders.com/117/1175759.jpg"
+                            <StyledCardMedia
+                                image={buscad}
+                                sx={{
+                                    backgroundPosition: "left",
+                                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                                }}
                             />
                         </Container>
                         <Container sx={{
@@ -204,7 +254,8 @@ function ContainerCad() {
                                         </InputAdornment>
                                     }
                                     sx={{
-                                        fontSize: '14px', outline: 0 }}
+                                        fontSize: '14px', outline: 0
+                                    }}
                                 />
                             </FormControl>
                             <FormControl variant="standard" sx={{ width: '80%', mb: '40px' }}>
@@ -404,13 +455,12 @@ function ContainerCad() {
                                 display: 'none'
                             }
                         }}>
-                            <CardMedia sx={{
-                                width: "115%",
-                                height: "100%",
-                                objectFit: "cover",
-                            }}
-                                component="img"
-                                image="https://images8.alphacoders.com/435/435772.jpg"
+                            <StyledCardMedia
+                                image={buscad}
+                                sx={{
+                                    backgroundPosition: "right",
+                                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                                }}
                             />
                         </Container>
                     </Container>}

@@ -9,6 +9,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import colors from "../../../assets/colors";
 import React from "react";
+import ModalContext from "../../../context/modalcontext";
 
 export default function MenuPerfil() {
     const navigate = useNavigate();
@@ -16,6 +17,9 @@ export default function MenuPerfil() {
         navigate(`/${route}`);
     };
 
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const fundo = themes.palette.background.default
 
     const btnsmenu = [
         { title: 'Minha Conta', route: 'sistema/Perfil', icon: <ManageAccountsIcon /> },
@@ -36,12 +40,14 @@ export default function MenuPerfil() {
                 left: '0',
                 width: '20vw',
                 height: '100%',
-                marginTop: '10.3vh',
-                background: '#FFFFFF',
-                boxShadow: '2px 0px 6px rgba(0, 0, 0, 0.6)'
+                background: verify ? fundo : 'white',
+                boxShadow: verify ? '1px 0px 3px white' : '2px 0px 6px rgba(0, 0, 0, 0.6)',
+                zIndex: 1
             }}
         >
-            <Container maxWidth="xl" >
+            <Container maxWidth="xl" sx={{
+                mt: '9vh'
+            }} >
                 <Toolbar disableGutters sx={{
                     width: '100%',
                     height: '100%',
@@ -60,7 +66,8 @@ export default function MenuPerfil() {
                                     borderBottom: '1px solid #ccc',
                                     margin: 0,
                                     alignSelf: 'center',
-                                    mt: -0.5
+                                    listStyleType: 'none',
+                                    mt: 2
                                 }} />
                             )}
                             <Button
@@ -74,7 +81,7 @@ export default function MenuPerfil() {
                                     position: 'relative',
                                     ml: '24px',
                                     mt: 2,
-                                    color: 'black',
+                                    color: verify ? colors.sc : 'black',
                                     '&:hover': {
                                         background: '#e9e9e9e9',
                                         boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
@@ -92,9 +99,8 @@ export default function MenuPerfil() {
                                     sx={{
                                         ml: '5px',
                                         fontSize: '14px',
-                                        color: 'black',
+                                        color: verify ? colors.sc : 'black',
                                         fontWeight: '600',
-
                                     }}
                                 >
                                     {btn.title}

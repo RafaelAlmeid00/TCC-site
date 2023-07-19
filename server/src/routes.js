@@ -26,6 +26,9 @@ routes.get('/user', controllersUser.searchUser);
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
+routes.post('/user/email', controllersUser.searchUserEmail);
+routes.post('/user/cpf', controllersUser.searchUserCPF);
+routes.post('/user/token', controllersUser.UpdateToken);
 
 
 routes.post('/bussines', controllersBussines.createBussines);
@@ -41,6 +44,8 @@ routes.post('/listcpf/search', controllerListCPF.searchCpf);
 
 routes.post('/card', controllersRequestCard.CadReqCard);
 routes.get('/card', controllersRequestCard.searchReqCard);
+routes.post('/card/search', controllersRequestCard.searchReqCPF);
+
 //👇 middlleware pra uma maior proteção do sistéma 👇
 routes.use(middleware.mid);
 routes.post('/user/delete', controllersUser.DeleteUser);

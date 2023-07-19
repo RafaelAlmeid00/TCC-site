@@ -12,11 +12,13 @@ import colors from '../../../assets/colors';
 import theme from '../../../assets/theme';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Deccode } from '../FrontDecoded';
 
 export default function MenuSistema() {
     console.log(localStorage);
-    const userJson = localStorage.getItem('user');
-    const userData = userJson ? JSON.parse(userJson) : null;
+    const userData = Deccode();
+    console.log(userData);
+    
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);
 
@@ -122,7 +124,7 @@ export default function MenuSistema() {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                             }}>
-                                Olá {userData ? userData.user_nome.split(' ')[0] : ''}!
+                                Olá {userData.user_nome.split(' ')[0]}!
                                 <Typography sx={{
                                     fontSize: '11px',
                                     color: 'rgba(255, 255, 255, 0.35)',

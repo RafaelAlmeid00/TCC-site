@@ -13,9 +13,10 @@ interface BtnsAppProps {
 interface BtnProps {
   name: string;
   route: string;
-  cl?: string | undefined;
-  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  cl: string | undefined;
+  bc: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
   bch: string | undefined;
+  ml?: number | undefined;
   fun?: () => void;
 }
 
@@ -185,13 +186,14 @@ function BtnsApp({ cl, mt, ml, mb }: BtnsAppProps) {
   );
 }
 
-function Btn({ name, route, cl, bc, bch, fun }: BtnProps) {
+function Btn({ name, route, cl, bc, bch, fun, ml }: BtnProps) {
   return (
     <>
       <Button variant="contained" href={route} onClick={fun} sx={{
         color: cl,
         marginRight: 1,
         background: bc,
+        ml: ml,
         border: '2px solid transparent', // adiciona a borda inicialmente
         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
         fontWeight: 'bold',
