@@ -25,7 +25,7 @@ function Pedido({ userData, onCloseModal }: Props) {
     // Função para fazer a requisição ao servidor com o CPF
     async function fetchListCards(list_CPF: string) {
         try {
-            const response = await axios.post('http://localhost:3344/listcpf/search', { list_CPF: list_CPF });
+            const response = await axios.post('http://localhost:3344/listcpf/search', { list_CPF: list_CPF, });
             const result = response.data.objeto;
             const newListCards: { name: string }[] = [];
 
