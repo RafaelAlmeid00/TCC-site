@@ -20,6 +20,15 @@ interface BtnProps {
   fun?: () => void;
 }
 
+interface BtnPerfilProps {
+  name: string;
+  route: string;
+  cl: string | undefined;
+  bc: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  bch: string | undefined;
+  ml?: number | undefined;
+  fun?: () => void;
+}
 interface BtnHomeProps {
   name: string;
   route: string;
@@ -222,6 +231,42 @@ function Btn({ name, route, cl, bc, bch, fun, ml }: BtnProps) {
   )
 }
 
+function BtnPerfil({ name, route, cl, bc, bch, fun, ml }: BtnPerfilProps) {
+  return (
+    <>
+      <Button variant="contained" href={route} onClick={fun} sx={{
+        color: cl,
+        marginRight: 1,
+        background: bc,
+        ml: ml,
+        border: '2px solid transparent', // adiciona a borda inicialmente
+        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+        fontWeight: 'bold',
+        width: {
+          xs: '10vw',
+          sm: '10vw',
+          md: '8vw',
+          lg: '7vw',
+          xl: '7vw',
+        },
+        fontSize: {
+          xs: '2vw',  // (7.5 / 1200) * 600
+          sm: '1.5vw',  // (7.5 / 1200) * 900
+          md: '1.2vw',  // (7.5 / 1200) * 1200
+          lg: '1vw',
+          xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+        },
+        '&:hover': {
+          border: '2px solid #0fcd88', // muda a cor da borda na animação
+          background: bch
+        },
+      }}>
+        {name}
+      </Button>
+    </>
+  )
+}
+
 
 function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
   return (
@@ -371,4 +416,4 @@ function BtnApp({ cl, title }: BtnAppProps) {
 }
 
 
-export { BtnsApp, Btn, BtnApp, BtnL, BtnHome }
+export { BtnsApp, Btn, BtnApp, BtnL, BtnHome, BtnPerfil };

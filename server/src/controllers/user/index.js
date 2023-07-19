@@ -222,36 +222,45 @@ async DeleteUser (req, res) {
 
 async UpdateUser(req, res) {
   try {
-    const { user_CPF: cpf } = req.body;
-    const { info: dado } = req.body;
-    const { parame: parame } = req.body;
+    const { user_CPF: cpf, updates } = req.body; // Recebe um objeto chamado "updates" contendo os campos a serem atualizados
 
-    // Mapeamento dos parâmetros para os campos do banco de dados
+    // Mapeamento dos campos do objeto "updates" para os campos do banco de dados
     const paramToField = {
       nome: 'user_nome',
       email: 'user_email',
       senha: 'user_senha',
-      data: 'user_nascimento'
-      // Adicione outros campos do banco de dados conforme necessário
+      cep: 'user_endCEP',
+      num: 'user_endnum',
+      uf: 'user_endUF',
+      bairro: 'user_endbairro',
+      rua: 'user_endrua',
+      complemento: 'user_endcomplemento',
+      cidade: 'user_endcidade',
     };
-    console.log('Valor de parame:', parame);
 
-    // Verifica se o parâmetro fornecido é válido
-    // eslint-disable-next-line no-prototype-builtins
-    if (paramToField.hasOwnProperty(parame)) {
-      const updateFields = { [paramToField[parame]]: dado };
+    const updateFields = {};
+    // Verifica cada campo fornecido no objeto "updates" e mapeia para o campo correspondente no banco de dados
+    for (const param in updates) {
+      if (paramToField.hasOwnProperty(param)) {
+        updateFields[paramToField[param]] = updates[param];
+      }
+    }
+            console.log(updates);
 
+    // Verifica se existem campos válidos para atualização
+    if (Object.keys(updateFields).length > 0) {
       // Faça a atualização no banco de dados
-      await knex("user").where("user_CPF", "=", cpf).update(updateFields);
-      res.status(200).send('foi negada');
+      await knex('user').where('user_CPF', '=', cpf).update(updateFields);
+      res.status(200).send('Atualização realizada com sucesso.');
     } else {
-      res.status(400).send('Parâmetro inválido.');
+      res.status(400).send('Nenhum campo válido para atualização fornecido.');
     }
   } catch (error) {
     console.log(error);
     res.status(500).send('Erro interno do servidor.');
   }
-},
+}
+
      //recuperação por nome protótipo
     /*async UserNameLogin(req, res){
         try {

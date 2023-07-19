@@ -14,6 +14,7 @@ import Tipo from "./tipouser";
 import { Btn } from "../btns";
 import { verify } from "jsonwebtoken";
 import colors from "../../assets/colors";
+import CompleteCad2 from "./endereço";
 
 function CompleteCad(){
     const {email} = useContext(ModalContext);
@@ -271,6 +272,14 @@ return (
     {showRG && <RGError />}
     {CPFexiste && <CPFExiste/>}
         {showTipo ? <Tipo dados={dadosU} /> : 
+        <Container sx={{
+            width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+        }}>
             <Container sx={{
                 width: "100%",
                 display: "flex",
@@ -383,6 +392,8 @@ return (
                 </FormControl>
                 <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} mt={50} bch={verify ? 'white' : undefined} />
             </Container>
+                <CompleteCad2 />
+                </Container>
     }
         </>
 )

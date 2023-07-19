@@ -1,7 +1,6 @@
 
 import { Box } from '@mui/material'
 import CompleteCad from '../../components/cadastro/dadosuser.tsx'
-import CompleteCad2 from '../../components/cadastro/endereço.tsx'
 import Exit from '../../components/buttonexit.tsx'
 import { Fade } from 'react-awesome-reveal';
 import ModalContext from "../../context/modalcontext";
@@ -48,7 +47,6 @@ function Cadall() {
             }}>
                 <Fade cascade damping={0.2} triggerOnce={hasEntered}>
                 <CompleteCad />
-                <CompleteCad2 />
                 </Fade>
             </Box>
         </>

@@ -1,69 +1,72 @@
-import { Avatar, Box, Button, Container, IconButton, InputLabel, TextField, Typography } from "@mui/material"
+import { Avatar, Box, Container, IconButton, Input, InputLabel, Typography } from "@mui/material"
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import { Deccode } from "../FrontDecoded";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
-import { Btn } from "../../btns";
-import AttModal from "../modal/attperfil";
+import { BtnPerfil } from "../../btns";
+import { PerfilAtualizado, PerfilError, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
+import CEP from "../modal/cep";
+import colors from "../../../assets/colors";
 
 function SectionPerfil1() {
     const [dado, setPega] = useState('');
     const [nome, setNome] = useState(false);
     const [cep, setCep] = useState(false);
-    const [date, setDate] = useState(false);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const [parame, setPar] = useState('');
     const [open, setOpen] = React.useState(false);
-
+    const [open2, setOpen2] = React.useState(false);
+    const [openT, setOpenT] = React.useState(false);
+    const [openT2, setOpenT2] = React.useState(false);
+    const [openT0, setOpenT0] = React.useState(false);
     const userData = Deccode();
     const cpf = userData.user_CPF;
-
-    console.log('this is the verify: ', Deccode());
-    //console.log('token removed: ', removeToken());
-    console.log(userData, cpf);
+    const birthDate = new Date(userData.user_nascimento);
+    const formattedBirthDate = birthDate.toISOString().substring(0, 10);
 
     const trocaNome = () => {
         setNome(true)
+        setCep(false)
     };
 
-    const ConfirmarNome = async () => {
-        setPar('nome')
-        console.log(parame);
-        console.log(dado);
-        await update(cpf, dado);
+    const trocaCEP = () => {
+        setCep(true)
         setNome(false)
-        await UpdateToken()
-        setOpen(true)
     };
-    
-    const update = async (cpf: any, dado: any) => {
+
+    const ParametroNome = async () => {
+            setPar('nome')
+        }
+
+
+    const update = async (cpf: any, updates: any) => {
 
         try {
+           
+            console.log(updates);
+            
             await axios.post('http://localhost:3344/user/update', {
                 user_CPF: cpf,
-                info: dado,
-                parame: parame
+                updates,
             });
+            setOpen(true)
+            setTimeout(() => {
+                setOpen(false)
+            }, 3000)
+            setCep(false)
         } catch (error) {
             console.log(error);
-            
+            setOpen2(true)
+            setTimeout(() => {
+                setOpen2(false)
+            }, 3000)
         }
-       
-    
+
     };
-
-    const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        // Atualiza o estado "parame" com o valor digitado no TextField
-        setPega(event.target.value);
-    };
-
-
-        const birthDate = new Date(userData.user_nascimento);
-    const formattedBirthDate = birthDate.toISOString().substring(0, 10);
 
     async function UpdateToken() {
         try {
@@ -71,31 +74,63 @@ function SectionPerfil1() {
             const res = await axios.post('http://localhost:3344/user/token', {
                 user_CPF: cpf,
             });
-            console.log('foi o token');
-            console.log(res.data);
-            console.log('test', res.data.token);
-            console.log(res);
-
-            if (res.data.token) {
-                console.log(localStorage.getItem('token'));
+            if (res.data.token != '') {
                 localStorage.removeItem('token')
-                console.log(localStorage.getItem('token'));
                 localStorage.setItem('token', res.data.token);
-                console.log(localStorage.getItem('token'));
-                console.log(localStorage);
+                setOpenT(true)
+                setTimeout(() => {
+                    setOpenT(false)
+                }, 3000)
             } else {
                 console.log(res.data.message);
+                setOpenT0(true)
+                setTimeout(() => {
+                    setOpenT0(false)
+                }, 3000)
             }
         } catch (error) {
             console.log(error);
-
+            setOpenT2(true)
+            setTimeout(() => {
+                setOpenT2(false)
+            }, 3000)
         }
     }
-    
+
+
+    const ConfirmarNome = async () => {
+        const updates = {
+            [parame]: dado
+        }
+        setCep(false)
+        await ParametroNome()
+        console.log(parame);
+        console.log(dado);
+        await update(cpf, updates);
+        setNome(false)
+        await UpdateToken()
+
+    };
+
+    const ConfirmarCEP = async (updates: any) => {
+        setNome(false)
+        console.log(parame);
+        console.log(dado);
+        await update(cpf, updates);
+        setNome(false)
+        await UpdateToken()
+
+    };
 
     return (
         <>
-        {open && <AttModal opens={open}/>}
+            {open && <PerfilAtualizado  />}
+            {open2 && <PerfilError/>}
+            {openT && <TokenAtualizado />}
+            {openT2 && <TokenPerfilError />}
+            {openT0 && <TokenPerfilErrorSer />}
+            {cep ? <CEP onConfirmarCEP={ConfirmarCEP} />
+            :
             <Box sx={{
                 mt: '9vh',
                 height: '90vh',
@@ -119,21 +154,21 @@ function SectionPerfil1() {
                         backgroundColor: '#D3D3D3',
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20
-                    }}> 
+                    }}>
 
-                    <IconButton sx={{
-                        float: 'right',
-                        backgroundColor: '#7d7d7d',
-                        mt: 2,
-                        '&:hover':{
-                            backgroundColor: '#9d9d9d',
-                            boxShadow: '0px 0px 2px 1px',
-                        }
-                    }}>                
-                    <EditIcon sx={{
-                        color: 'black',
-                    }} />
-                    </IconButton>   
+                        <IconButton sx={{
+                            float: 'right',
+                            backgroundColor: '#7d7d7d',
+                            mt: 2,
+                            '&:hover': {
+                                backgroundColor: '#9d9d9d',
+                                boxShadow: '0px 0px 2px 1px',
+                            }
+                        }}>
+                            <EditIcon sx={{
+                                color: 'black',
+                            }} />
+                        </IconButton>
                     </Container>
                     <Container sx={{
                         width: '106.25%',
@@ -149,33 +184,7 @@ function SectionPerfil1() {
                             src=""
                             sx={{ width: 70, height: 70 }}
                         />
-                        {nome ? 
-                            <TextField
-                                id="outlined-password-input"
-                                label="Nome"
-                                type="text"
-                                value={dado} // Define o valor do TextField como o valor do estado "parame"
-                                onChange={handleChange} 
-                                sx={{
-                                    ml: 5,
-                                    '& .MuiInputBase-root': {
-                                        color: 'white', // Define a cor do texto do input
-                                        '& fieldset': {
-                                            borderColor: 'white', // Define a cor da borda do input
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: 'white', // Define a cor da borda ao passar o mouse sobre o input
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: 'white', // Define a cor da borda quando o input está focado
-                                        },
-                                    },
-                                    '& .MuiInputLabel-root': {
-                                        color: 'white', // Define a cor do texto do label
-                                    },
-                                }}
-                            />
-                        : <Typography component='h1' sx={{
+                        <Typography component='h1' sx={{
                             ml: 3,
                             fontSize: 20,
                             fontWeight: 600,
@@ -183,9 +192,7 @@ function SectionPerfil1() {
                             width: '50%',
                         }}>
                             {userData.user_nome}
-                        </Typography>}
-                        {nome ? <Btn name={"Confirmar"} route={""} ml={20} fun={ConfirmarNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? 'white' : undefined} />
-                        : <Btn name={"Editar"} route={""} ml={20} fun={trocaNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? 'white' : undefined} />}
+                        </Typography>
                     </Container>
                     <Container sx={{
                         width: '100%',
@@ -197,96 +204,149 @@ function SectionPerfil1() {
                             width: '100%',
                             height: '25%',
                             borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
                         }}>
+                            <Container sx={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'start',
+                                alignItems: 'start',
+                                flexDirection: 'column'
+                            }}>
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Nome de Usuário</Typography>
                             </InputLabel>
-                            <Typography sx={{ color: 'white' }}>{userData.user_nome}</Typography>
-                            <Button variant="contained" href="/Perfil" sx={{
-                                color: 'white',
-                                float: 'right', 
-                                mt: -5,                               
-                                border: '2px solid transparent', // adiciona a borda inicialmente
-                                transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                '&:hover': {
-                                    border: '2px solid #0fcd88', // muda a cor da borda na animação
-                                },
-                            }}>
-                                <Typography sx={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
+                            {nome ?
+                                <Input
+                                    id="outlined-password-input"
+                                    label="Nome"
+                                    type="text"
+                                    value={dado} // Define o valor do TextField como o valor do estado "parame"
+                                    onChange={(event) => setPega(event.target.value)}
+                                    sx={{
+                                        ml: 5,
+                                        color: 'white',
+                                        '& .MuiInputLabel-root': {
+                                            color: 'white', // Define a cor do texto do label
+                                        },
+                                    }}
+                                />
+                                :
+                                    <Typography sx={{
+                                        color: 'white', fontSize: {
+                                            xs: '2vw',  // (7.5 / 1200) * 600
+                                            sm: '1.5vw',  // (7.5 / 1200) * 900
+                                            md: '1.2vw',  // (7.5 / 1200) * 1200
+                                            lg: '1.2vw',
+                                            xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
+                                        }, }}>{userData.user_nome}</Typography>}
+                            </Container>
+                                <Container sx={{
+                                    mt: 2,
+                                display: 'flex',
+                                justifyContent: 'end',
+                                alignItems: 'end'
+
                                 }}>
-                                    Editar
-                                </Typography>
-                            </Button>
+                                    {nome ? <BtnPerfil name={"Confirmar"} fun={ConfirmarNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />
+                                        : <BtnPerfil name={"Editar"} fun={trocaNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />}
+                            </Container>
                         </Container>
                         <Container sx={{
                             width: '100%',
                             height: '25%',
                             borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
                         }}>
+                            <Container sx={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'start',
+                                alignItems: 'start',
+                                flexDirection: 'column'
+                            }}>
+                                
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>CEP</Typography>
                             </InputLabel>
-                            <Typography sx={{color: 'white'}}>{userData.user_endCEP}</Typography>
-                            <Button variant="contained" href="/Perfil" sx={{
-                                color: 'white',
-                                float: 'right',
-                                mt: -5,
-                                border: '2px solid transparent', // adiciona a borda inicialmente
-                                transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                '&:hover': {
-                                    border: '2px solid #0fcd88', // muda a cor da borda na animação
-                                },
+                                {cep ?
+                                    <Input
+                                        id="outlined-password-input"
+                                        label="Nome"
+                                        type="text"
+                                        value={dado} // Define o valor do TextField como o valor do estado "parame"
+                                        onChange={(event) => setPega(event.target.value)}
+                                        sx={{
+                                            ml: 5,
+                                            color: 'white',
+                                            '& .MuiInputLabel-root': {
+                                                color: 'white', // Define a cor do texto do label
+                                            },
+                                        }}
+                                    />
+                                    :
+                            <Typography sx={{ color: 'white' }}>{userData.user_endCEP}</Typography>
+                                    }
+                            </Container>
+                            <Container sx={{
+                                mt: 2,
+                                display: 'flex',
+                                justifyContent: 'end',
+                                alignItems: 'end'
+
                             }}>
-                                <Typography sx={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                }}>
-                                    Editar
-                                </Typography>
-                            </Button>
+                                    <BtnPerfil name={"Editar"} fun={trocaCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} />
+                            </Container>
                         </Container>
                         <Container sx={{
                             width: '100%',
                             height: '25%',
                             borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
                         }}>
+                            <Container sx={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'start',
+                                alignItems: 'start',
+                                flexDirection: 'column'
+                            }}>
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Data de Nascimento</Typography>
                             </InputLabel>
                             <Typography sx={{ color: 'white' }}>{formattedBirthDate}</Typography>
-                            <Button variant="contained" href="/Perfil" onClick={update} sx={{
-                                color: 'white',
-                                float: 'right',
-                                mt: -5,
-                                border: '2px solid transparent', // adiciona a borda inicialmente
-                                transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                '&:hover': {
-                                    border: '2px solid #0fcd88', // muda a cor da borda na animação
-                                },
-                            }}>
-                                <Typography sx={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                }}>
-                                    Editar
-                                </Typography>
-                            </Button>
+                            </Container>
                         </Container>
                         <Container sx={{
                             width: '100%',
                             height: '25%',
                             borderRadius: 5,
+                            display: 'flex',
+                            flexDirection: 'row',
                         }}>
+                            <Container sx={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'start',
+                                alignItems: 'start',
+                                flexDirection: 'column'
+                            }}>
                             <InputLabel>
                                 <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Tipo de Usuário</Typography>
                             </InputLabel>
                             <Typography sx={{ color: 'white' }}>{userData.user_tipo}</Typography>
+                            </Container>
                         </Container>
                     </Container>
                 </Container>
-            </Box>
+            </Box>}
         </>
     )
 }
