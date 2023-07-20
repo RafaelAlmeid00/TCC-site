@@ -18,6 +18,7 @@ const controllerMessage = require('./controllers/sac_message/index')
 const othersRec_Pass = require('./others/rec_pass')
 
 const middleware = require('./controllers/Middleware');
+const RecMid = require('./others/rec_mid');
 
 const routes = express.Router();
 
@@ -30,7 +31,10 @@ routes.post('/user/login', controllersUser.UserLogin);
 routes.post('/user/email', controllersUser.searchUserEmail);
 routes.post('/user/cpf', controllersUser.searchUserCPF);
 routes.post('/user/token', controllersUser.UpdateToken);
+
+//recuperação de conta:
 routes.post('/user/login/PassRec', othersRec_Pass.EmailRec);
+routes.post('/user/login/Rec', othersRec_Pass.compareEmail);
 
 
 routes.post('/bussines', controllersBussines.createBussines);
