@@ -29,7 +29,7 @@ module.exports = {
             })
 
             const EnvTO = {
-                from: 'easypass130@gmail.com',
+                from: process.env.USER,
                 to: recipient,
                 subject: 'seu código de recuperação é',
                 text: income,

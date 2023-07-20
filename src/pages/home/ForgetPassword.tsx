@@ -1,5 +1,5 @@
 import Exit from '../../components/buttonexit';
-import EsqueciAsenha from "../../components/cadastro/forgetPass";
+import EsqueciAsenha from "../../components/cadastro/recuperarconta/forgetPass";
 
 function ForgetPassword() {
 

@@ -25,7 +25,7 @@ function SectionPerfil2() {
             localStorage.removeItem('token')
             console.log(localStorage);
             
-            navigate('/')
+            navigate('/cadastro')
         } catch (err) {
             console.log(err);
         }

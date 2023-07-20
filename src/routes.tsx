@@ -19,6 +19,7 @@ const AppLazy = lazy(() => import('./pages/home/App'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 const SACLazy = lazy(() => import('./pages/sistema/SAC'));
 const ForgetPasswordLazy =  lazy(() => import('./pages/home/ForgetPassword'));
+const RecAccountLazy =  lazy(() => import('./pages/home/ForgetRec'));
 const Escola = lazy(() => import('./pages/home/cadEscola'));
 
 const Rota = () => {
@@ -144,7 +145,8 @@ const Rota = () => {
                 }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
-                  <Route path="EsqueciaSenha" element={<ForgetPasswordLazy/>}/>
+                  <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy/>}/>
+                  <Route path="/rec" element={<RecAccountLazy/>}/>
                   <Route path="/complemento" element={<CadallLazy />} />
                 </Routes>
               </ModalContext.Provider>

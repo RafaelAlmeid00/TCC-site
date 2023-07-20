@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt');
 const localData = require('../Middleware');
 const cookie = require('cookie-parser');
 
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
     async root(req, res) {
@@ -141,7 +142,7 @@ async UserLogin(req, res) {
             user_endcidade: takeCPF.user_endcidade,
             user_tipo: takeCPF.user_tipo
 
-          },'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
+          }, process.env.JWT_SECRET, { expiresIn: '1000000' });
           console.log('this is req.headers: ', req.headers);
 
         res.cookie('token', token, {secure: true})  
@@ -183,7 +184,7 @@ async UserLogin(req, res) {
               user_endcidade: takeCPF.user_endcidade,
               user_tipo: takeCPF.user_tipo
 
-            }, 'Uz&Nxq6ifp*bqvBJgG$z', { expiresIn: '1000000' });
+            }, process.env.JWT_SECRET, { expiresIn: '1000000' });
             console.log('this is req.headers: ', req.headers);
 
             res.cookie('token', token, { secure: true })
