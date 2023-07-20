@@ -67,7 +67,7 @@ export default function MenuPerfil() {
                                     margin: 0,
                                     alignSelf: 'center',
                                     listStyleType: 'none',
-                                    mt: 2
+                                    mt: 1
                                 }} />
                             )}
                             <Button

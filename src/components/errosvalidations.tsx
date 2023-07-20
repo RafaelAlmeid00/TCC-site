@@ -341,5 +341,150 @@ function CPFExiste() {
     );
 }
 
+function PerfilAtualizado() {
+    return (
+        <>
+            <Alert severity="success" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Os dados da sua conta foram <strong>atualizados.</strong>
+            </Alert>
+        </>
+    );
+}
 
-export { CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };
+function TokenAtualizado() {
+    return (
+        <>
+            <Alert severity="success" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Sua página foi <strong>atualizada.</strong>
+            </Alert>
+        </>
+    );
+}
+
+function PerfilError() {
+    return (
+        <>
+            <Alert severity="error" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Os dados da sua conta não foram <strong>atualizados.</strong>
+            </Alert>
+        </>
+    );
+}
+
+function TokenPerfilError() {
+    return (
+        <>
+            <Alert severity="error" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Os dados da página não foram <strong>atualizados.</strong>
+            </Alert>
+        </>
+    );
+}
+
+function TokenPerfilErrorSer() {
+    return (
+        <>
+            <Alert severity="error" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Erro do servidor ao <strong>atualizar.</strong>
+            </Alert>
+        </>
+    );
+}
+
+function CEPPErfil() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '22vh', sm: '18vh', md: '18vh', lg: '12vh', xl: '12vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                CEP <strong>incorreto.</strong>
+                <br />
+                Ou há campos <strong>vazios.</strong>
+            </Alert>
+        </>
+    );
+}
+
+export { CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };

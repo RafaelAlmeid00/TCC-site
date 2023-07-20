@@ -144,21 +144,13 @@ function Tipo({ dados }: Props) {
             {showSucess && <Sucess />}
 
             <Box sx={{
-                height: '100vh',
-                width: '100vw',
-                postion: 'absolute',
-                background: verify ? fundo : 'white',
+                background: 'transparent',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                flexDirection: 'column',
+                ml: 12,
             }}>
-                <Card sx={{
-                    position: 'realtive',
-                    height: '70vh',
-                    width: '40vw',
-                    boxShadow: verify ? '1px 0px 4px 1px white' : '1px 1px 8px 1px',
-
-                }}>
                     <Container sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -238,7 +230,6 @@ function Tipo({ dados }: Props) {
                     }}>
                         <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} />
                     </Container>
-                </Card>
             </Box>
         </>
     )

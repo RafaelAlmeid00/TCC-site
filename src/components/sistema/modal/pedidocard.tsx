@@ -18,6 +18,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     const { hasEntered } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const [card, setCard] = React.useState('');
+    const [hasCardOpen, setHasCardOpen] = React.useState(false);
 
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
@@ -48,26 +49,23 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
             console.error(error);
         }
     }
-
-    async function VerifyCard(list_CPF: string) {
+    async function VerifyCard(list_CPF: string): Promise<boolean> {
         try {
             const response = await axios.post('http://localhost:3344/card/search', { user_CPF: list_CPF })
             const result = response.data
-            console.log(result);
-            if (result) {
-                console.log('você já tem pedidos abertos');
+            const hasCardOpen = result.length > 0;
+            console.log(hasCardOpen);
+            if (hasCardOpen) {
+                console.log('Você já tem pedidos abertos');
                 onAlertChange(true);
-                onCloseModal()
-            } else {
-                console.log('algo deu muito errado');
-                
+                onCloseModal();
             }
+            return true;
         } catch (error) {
-            console.log('só vai menor');
-            
+            console.log('Erro ao verificar pedidos:', error);
+            return false;
         }
     }
-
 
     React.useEffect(() => {
         const list_CPF = userData.user_CPF;
@@ -77,6 +75,41 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
             fetchListCards(list_CPF);
         }
     }, [userData]);
+
+       const HandlePost = async () => {
+        function formatDateToYYYYMMDD(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        }
+
+        // Exemplo de uso:
+        const currentDate = new Date();
+        const date = formatDateToYYYYMMDD(currentDate);
+        const user_CPF = userData.user_CPF;
+        const cardTipo = card === "Cartão de Estudante" ? 'estudante' : card === "Vale-Transporte" && 'vale-transporte'
+        const dataCard = {
+            req_data: date,
+            req_TipoCartao: cardTipo,
+            user_user_CPF: user_CPF
+        }
+        console.log(dataCard);
+
+        try {
+            
+            console.log('foi até aq');
+            const response = await axios.post('http://localhost:3344/card', dataCard);
+            console.log('foi até aq');
+            console.log(response);
+            console.log('foi mlk');
+            onCloseModal();
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
 
     const BootstrapInput = styled(InputBase)(({ theme }) => ({
         'label + &': {
@@ -111,39 +144,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
         },
     }));
 
-    const HandlePost = async () => {
-        function formatDateToYYYYMMDD(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-
-            return `${year}-${month}-${day}`;
-        }
-
-        // Exemplo de uso:
-        const currentDate = new Date();
-        const date = formatDateToYYYYMMDD(currentDate);
-        const user_CPF = userData.user_CPF;
-        const cardTipo = card === "Cartão de Estudante" ? 'estudante' : card === "Vale-Transporte" && 'vale-transporte'
-        const dataCard = {
-            req_data: date,
-            req_TipoCartao: cardTipo,
-            user_user_CPF: user_CPF
-        }
-        console.log(dataCard);
-
-        try {
-            console.log('foi até aq');
-            const response = await axios.post('http://localhost:3344/card', dataCard);
-            console.log('foi até aq');
-            console.log(response);
-            console.log('foi mlk');
-            onCloseModal();
-        } catch (error) {
-            console.log(error);
-            
-        }
-    }
+ 
 
     return (
         <>

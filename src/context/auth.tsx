@@ -19,12 +19,10 @@ const AuthContext = createContext<AuthContextType>({ isAuthenticated: false });
 const AuthProvider = ({ children }: AuthProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isTokenChecked, setIsTokenChecked] = useState(false);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        const userData = Deccode();
-
-        if (token || userData) {
+        if (token) {
             setIsAuthenticated(true);
         }
         setIsTokenChecked(true);
@@ -52,6 +50,7 @@ const AuthProviderHome = ({ children }: AuthProviderHomeProps) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        
         if (token) {
             setIsAuthenticated(true);
         }
