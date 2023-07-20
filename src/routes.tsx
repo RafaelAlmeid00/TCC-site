@@ -14,10 +14,11 @@ const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const HomeSistema = lazy(() => import('./pages/sistema/App'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
-const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'))
+const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'));
 const AppLazy = lazy(() => import('./pages/home/App'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 const SACLazy = lazy(() => import('./pages/sistema/SAC'));
+const ForgetPasswordLazy =  lazy(() => import('./pages/home/ForgetPassword'));
 const Escola = lazy(() => import('./pages/home/cadEscola'));
 
 const Rota = () => {
@@ -143,6 +144,7 @@ const Rota = () => {
                 }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
+                  <Route path="EsqueciaSenha" element={<ForgetPasswordLazy/>}/>
                   <Route path="/complemento" element={<CadallLazy />} />
                 </Routes>
               </ModalContext.Provider>

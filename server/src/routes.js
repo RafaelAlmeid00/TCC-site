@@ -15,6 +15,7 @@ const controllerStop = require('./controllers/bus_stop/index');
 const controllerTurn = require('./controllers/turn_bus/index');
 const controllerDriver = require('./controllers/driver_bus/index');
 const controllerMessage = require('./controllers/sac_message/index')
+const othersRec_Pass = require('./others/rec_pass')
 
 const middleware = require('./controllers/Middleware');
 
@@ -22,13 +23,14 @@ const routes = express.Router();
 
 routes.use(cookie());
 
-routes.get('/user', controllersUser.searchUser);
+
 routes.post('/user', controllersUser.createUser);
 routes.get('/user/login', controllersUser.UserLogin);
 routes.post('/user/login', controllersUser.UserLogin);
 routes.post('/user/email', controllersUser.searchUserEmail);
 routes.post('/user/cpf', controllersUser.searchUserCPF);
 routes.post('/user/token', controllersUser.UpdateToken);
+routes.post('/user/login/PassRec', othersRec_Pass.EmailRec);
 
 
 routes.post('/bussines', controllersBussines.createBussines);
