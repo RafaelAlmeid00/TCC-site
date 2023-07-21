@@ -158,7 +158,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
                 alignItems: 'center',
             }}>
                 <Card sx={{
-                    position: 'realtive',
+                    position: 'relative',
                     height: '70vh',
                     width: '40vw',
                     boxShadow: verify ? '1px 0px 4px 1px white' : '1px 1px 8px 1px',

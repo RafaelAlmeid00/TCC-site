@@ -7,20 +7,21 @@ import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./App.css"
 
+const App = lazy(() => import('./App'));
+const AppLazy = lazy(() => import('./pages/home/App'));
 const CadlogLazy = lazy(() => import('./pages/home/cadlog'));
 const CadallLazy = lazy(() => import('./pages/home/cadall'));
-const App = lazy(() => import('./App'));
 const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
-const HomeSistema = lazy(() => import('./pages/sistema/App'));
+const ForgetPasswordLazy = lazy(() => import('./pages/home/ForgetPassword'));
+const RecAccountLazy = lazy(() => import('./pages/home/ForgetRec'));
+const Escola = lazy(() => import('./pages/home/cadEscola'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
+const HomeSistema = lazy(() => import('./pages/sistema/App'));
 const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'));
-const AppLazy = lazy(() => import('./pages/home/App'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 const SACLazy = lazy(() => import('./pages/sistema/SAC'));
-const ForgetPasswordLazy =  lazy(() => import('./pages/home/ForgetPassword'));
-const RecAccountLazy =  lazy(() => import('./pages/home/ForgetRec'));
-const Escola = lazy(() => import('./pages/home/cadEscola'));
+const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -78,18 +79,18 @@ const Rota = () => {
   React.useEffect(() => {
     setHasEntered(true);
   }, []);
-  
+
   return (
     <ThemeProvider theme={themes}>
 
-    <BrowserRouter>
-          <Suspense fallback={<Loading />}>
-            <Routes>
+      <BrowserRouter>
+        <Suspense fallback={<Loading />}>
+          <Routes>
 
-              {/* Rotas públicas */}
-              <Route path="/*" element={
-                <React.Fragment>
-              <AuthProviderHome>
+            {/* Rotas públicas */}
+            <Route path="/*" element={
+              <React.Fragment>
+                <AuthProviderHome>
                   <ModalContext.Provider value={{
                     verify,
                     darkMode,
@@ -98,23 +99,23 @@ const Rota = () => {
                     hasEntered,
                     setHasEntered,
                   }}>
-                  <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/Servicos" element={<ServiLazy />} />
-                    <Route path="/App" element={<AppLazy />} />
-                    <Route path="/EasyPass" element={<EasyPassLazy />} />
-                    <Route path="/Contatos" element={<ContatosLazy />} />
-                    <Route path="/opcoes" element={<OptionsCad />} />
-                    <Route path="/areaescolas" element={<Escola />} />
-                  </Routes>
+                    <Routes>
+                      <Route path="/" element={<App />} />
+                      <Route path="/Servicos" element={<ServiLazy />} />
+                      <Route path="/App" element={<AppLazy />} />
+                      <Route path="/EasyPass" element={<EasyPassLazy />} />
+                      <Route path="/Contatos" element={<ContatosLazy />} />
+                      <Route path="/opcoes" element={<OptionsCad />} />
+                      <Route path="/areaescolas" element={<Escola />} />
+                    </Routes>
                   </ModalContext.Provider>
-              </AuthProviderHome>
-                </React.Fragment>
-              } />
+                </AuthProviderHome>
+              </React.Fragment>
+            } />
 
-              {/* Rotas de autenticação */}
-              <Route path="/cadastro/*" element={
-            <React.Fragment>
+            {/* Rotas de autenticação */}
+            <Route path="/cadastro/*" element={
+              <React.Fragment>
                 <ModalContext.Provider value={{
                   verify,
                   email,
@@ -143,19 +144,19 @@ const Rota = () => {
                   hasEntered,
                   setHasEntered,
                 }}>
-                <Routes>
-                  <Route path="/" element={<CadlogLazy />} />
-                  <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy/>}/>
-                  <Route path="/rec" element={<RecAccountLazy/>}/>
-                  <Route path="/complemento" element={<CadallLazy />} />
-                </Routes>
-              </ModalContext.Provider>
-            </React.Fragment>
-              } />
+                  <Routes>
+                    <Route path="/" element={<CadlogLazy />} />
+                    <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
+                    <Route path="/rec" element={<RecAccountLazy />} />
+                    <Route path="/complemento" element={<CadallLazy />} />
+                  </Routes>
+                </ModalContext.Provider>
+              </React.Fragment>
+            } />
 
-              {/* Rota do sistema */}
-              <Route path="/Sistema/*" element={
-            <AuthProvider>
+            {/* Rota do sistema */}
+            <Route path="/Sistema/*" element={
+              <AuthProvider>
                 <ModalContext.Provider value={{
                   verify,
                   darkMode,
@@ -164,20 +165,21 @@ const Rota = () => {
                   hasEntered,
                   setHasEntered,
                 }}>
-              <React.Fragment>
-                  <Routes>
-                    <Route path="/" element={<HomeSistema />} />
-                    <Route path="/rotas" element={<RoutesLazy />} />
-                    <Route path="/Perfil" element={<PerfilLazy />} />
-                    <Route path="/SAC" element={<SACLazy />} /> 
-                  </Routes>
-              </React.Fragment>
+                  <React.Fragment>
+                    <Routes>
+                      <Route path="/" element={<HomeSistema />} />
+                      <Route path="/rotas" element={<RoutesLazy />} />
+                      <Route path="/Perfil" element={<PerfilLazy />} />
+                      <Route path="/SAC" element={<SACLazy />} />
+                      <Route path="/Onibus" element={<OnibusLazy />} />
+                    </Routes>
+                  </React.Fragment>
                 </ModalContext.Provider>
-            </AuthProvider>
-              } />
-            </Routes>
-          </Suspense>
-    </BrowserRouter>
+              </AuthProvider>
+            } />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
     </ThemeProvider>
   );
 

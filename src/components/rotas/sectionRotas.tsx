@@ -1,205 +1,132 @@
-import { Fade, Avatar, FormControl, MenuItem, Box, Button, Container, IconButton, InputLabel, Typography, TextField, colors, useMediaQuery } from "@mui/material"
-import color from "../../assets/colors";
-import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator, TreeView, TreeItem, TimelineOppositeContent } from "@mui/lab";
-import SendIcon from '@mui/icons-material/Send';
-import { useEffect, useState } from "react";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { FormControl, MenuItem, Box, Container, InputLabel, Typography, TextField, } from "@mui/material"
+import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator } from "@mui/lab";
+import { useState } from "react";
+import Select from '@mui/material/Select';
 import axios from "axios";
-import Image from "../../assets/busao.jpg";
-import MenuSistema from "../sistema/menu/menusistema";
-import MenuLateral from "../sistema/menu/menulateral";
-const token = localStorage.getItem('token');
+import ModalContext from "../../context/modalcontext";
+import React from "react";
 
 function SectionRota1() {
-  const [take, setTake] = useState();
-  const [vis, visState] = useState('hidden');
+  const [take, setTake] = useState([]);
   const [value, setValue] = useState('');
   const [options, setAge] = useState('');
   const [ex, setEx] = useState('');
-  const [pass, setPass] = useState('');
-  var [alsopass, setAlsoPass] = useState([])
-  const [textval, setTextval] = useState(' ');
-  var [fax, setFax] = useState(0);
+  const { verify } = React.useContext(ModalContext);
+  const { themes } = React.useContext(ModalContext);
+  const [routes, setRoutes] = React.useState([])
+  const token = localStorage.getItem('token')
+  const fundo = themes.palette.background.default
+  const [Loading, setLoading] = useState(false);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
-  };
-
-  async function takeIt() {
-
-    if (options == 'Número do ônibus') {
-      setTake(await axios.post('http://localhost:3344/routes/search',
-        { token: token, route_num: value }));
-      console.log('this is take: ', take);
-    } else
-      if (options == 'Rotas') {
-        setTake(await axios.post('http://localhost:3344/routes/search',
-          { token: token, route_nome: value }));
-
-      }
-    fax = 0;
-  };
-
-  useEffect(() => {
-   
-
-      setTextval(String(take?.data?.consultName[0].route_nome))
-   
-    if (take != undefined) {
-      console.log('this is textval: ', textval);
-      visState('visible');
-      setPass('também passa por:');
-      alsopass.length = 0
-      for (let index = 0; index < take?.data?.consultStop.length; index++) {
-        console.log('foi fi');
-
-        alsopass.push(String(take?.data?.consultStop[index].stop_endrua))
-        alsopass.push(' ')
-        console.log('this is alsopass: ', alsopass);
-
+    async function takeIt() {
+      try {
+        if (options === 'Número do ônibus') {
+          const response = await axios.post('http://localhost:3344/routes/search', {
+            token: token,
+            route_num: value
+          });
+          const rotasres = response.data.consultStop;
+          setRoutes(rotasres);
+          setLoading(true);
+          console.log(response);
+          console.log(rotasres);
+          console.log(routes);
+        } else if (options === 'Rotas') {
+          const response = await axios.post('http://localhost:3344/routes/search', {
+            token: token,
+            route_nome: value
+          });
+          const rotasres = response.data.consultStop;
+          setRoutes(rotasres);
+          setLoading(true);
+          console.log(response);
+          console.log(rotasres);
+          console.log(routes);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
-  }, [take])
-  const regex = /[/]/;
-  var Strcasa = () => { if (textval != undefined) { return textval.search(regex) } else { setTextval(' ') } };
-  console.log(Strcasa);
 
-  //console.log('this is take: ', take?.data[0]?.route_nome);
-  //console.log('this is textval: ', textval);
-
-  useEffect(() => {
-    if (options == 'Número do ônibus') {
-      console.log('oi kkkkkkkkkkkkkkkkk');
-
-      setEx('Ex: 230, 720, 260*');
-    } else
-      if (options == 'Rotas') {
-        setEx('Ex: santo agostinho, conforto, aterrado*');
-      } else { setEx('') }
-
-  }, [options])
-
-  const keyEvent = param => {
-
-    console.log(param.key);
-    if (param.key == 'Enter') {
-      takeIt()
+  React.useEffect(() => {
+    if (value !== '') {
+      takeIt();
     }
+  }, [options, value]);
 
-  }
+
   return (
-    <>
-      <MenuSistema></MenuSistema>
-      <MenuLateral></MenuLateral>
+    <Box sx={{
+      mt: '9vh',
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '80vw',
+      float: 'right',
+      background: verify ? fundo : 'white',
+      overflowY: Loading ? 'hidden' : 'scroll'
+    }}>
       <Container sx={{
+        width: '100%',
+        height: '60%',
         display: 'flex',
-        flexDirection: 'row',
-        marginTop: '10%',
-        marginLeft: '25%',
-        padding: '0%',
-        borderRadius: '2%',
-        width: '70vw',
-        height: '70vh',
-        boxShadow: ' 4px 4px 4px 4px rgba(0, 0, 0, 0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+      
+        mb: 5
       }}>
-        <Box id='box' component="div" sx={{
-
-          width: '50%',
-          display: 'inline-block',
-          padding: '4%',
-
+        <Container sx={{
+          width: '100%',
+          height: '100%',
         }}>
-          <FormControl sx={{ mr: 0.5, minWidth: 80, padding: 0.1, width: '40%', height: '10%' }} >
-            <InputLabel id="demo-simple-select-autowidth-label">Rotas disponiveis</InputLabel>
-            <Select
-              labelId="demo-simple-select-autowidth-label"
-              id="demo-simple-select-autowidth"
-              value={options}
-              onChange={handleChange}
-              autoWidth
-              label="Opções"
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
-              <MenuItem value={'Rotas'} >Rotas</MenuItem>
-
-            </Select>
-          </FormControl>
-          <TextField label={options} type="input" tabIndex={0} onKeyDown={keyEvent} onChange={i => setValue(i.target.value)} sx={{
-            mr: 0.1, width: '40%', height: '10%'
-          }}></TextField><Button variant="outlined" id="btn" sx={{
-            height: '8vh',
-            '&:hover': {
-              background: '#e9e9e9e9',
-              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-              '& svg': {
-                fill: colors.sc,
-              },
-              '& .MuiTypography-root': {
-                color: colors.sc,
-              }
-            }
-          }} onClick={takeIt} endIcon={<SendIcon sx={{
-            width: '100%', paddingRight: '2vh',
-            '&:hover': {
-              color: color.sc,
-              '& svg': {
-                fill: colors.sc,
-              },
-              '& .MuiTypography-root': {
-                color: colors.sc,
-              }
-            }
-          }} />}></Button>
-          <Typography color={'#f9a825'} sx={{ width: '100%', height: '1%' }}>{ex}</Typography>
-          <Timeline position="alternate" sx={{ padding: '10%', visibility: `${vis}`, height: '30%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', }}>
-            <TimelineItem sx={{ paddingTop: '  5%' }}>
-              <TimelineOppositeContent color="textSecondary">
-                ponto inicial
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot variant="outlined" color="primary" />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>{textval.slice(0, Strcasa() - 1)}</TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-              <TimelineOppositeContent color="textSecondary">
-                ponto final
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot variant="outlined" color="secondary" sx={{}} />
-              </TimelineSeparator>
-              <TimelineContent>{textval.slice(Strcasa() + 1)}</TimelineContent>
-            </TimelineItem>
-          </Timeline>
-          <Typography>{pass}</Typography>
-          <Typography sx={{ width: '100%', boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', height: '5%', paddingBottom: '20%', }}>{alsopass}</Typography>
-        </Box>
-
-        <Box sx={{
-          width: '50%',
-
+          <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', mx: 'auto', spacing: 2, gap: 2 }}>
+            <FormControl sx={{ flex: 2 }}>
+              <InputLabel id="demo-simple-select-autowidth-label" > Rotas disponiveis </InputLabel>
+              <Select
+                labelId="demo-simple-select-autowidth-label"
+                id="demo-simple-select-autowidth"
+                value={options}
+                onChange={(event) => setAge(event.target.value)}
+                autoWidth
+                label="Opções"
+              >
+                <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
+                <MenuItem value={'Rotas'} >Rotas</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField label={options} type="input" tabIndex={0} onChange={i => setValue(i.target.value)} sx={{ flex: 2 }} />
+          </Container>
+          <Typography color={'#f9a825'} sx={{ width: '100%' }}>{ex}</Typography>
+        </Container>
+        <Container sx={{
+          width: '80%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          gap: 2,
         }}>
-          <img src={Image} style={{
-            height: '70vh',
-            borderRadius: '2%',
-            width: '35vw',
-          }}></img></Box>
-
+          {Loading ?
+            <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 5 }}>
+              {routes.map((rotas) => (
+                <TimelineItem key={rotas.stop_id} sx={{ paddingTop: '  5%' }}>
+                  <TimelineSeparator>
+                    <TimelineDot variant="outlined" color="primary" />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent sx={{
+                    color: verify ? 'white' : 'black',
+                  }}>{rotas.stop_endrua}</TimelineContent>
+                </TimelineItem>
+              ))}
+            </Timeline> : null}
+        </Container>
       </Container>
-    </>
+    </Box>
   )
 }
-/* aria-label="rich object"
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpanded={['root']}
-      defaultExpandIcon={<ChevronRightIcon />}
-      sx={{ height: 110, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
-    >
-      {renderTree(data)}
-    </TreeView>*/
 
 export default SectionRota1

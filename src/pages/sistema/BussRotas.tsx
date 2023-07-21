@@ -1,10 +1,13 @@
-import SectionRota1  from "../../components/rotas/sectionRotas";
-
+import SectionRota1 from "../../components/rotas/sectionRotas";
+import MenuSistema from "../../components/sistema/menu/menusistema";
+import MenuLateral from "../../components/sistema/menu/menulateral";
 
 function BussRotas() {
-    return(
+    return (
         <>
-            <SectionRota1/>
+            <MenuSistema />
+            <MenuLateral />
+            <SectionRota1 />
         </>
     )
 }

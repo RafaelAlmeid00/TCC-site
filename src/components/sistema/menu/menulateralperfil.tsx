@@ -13,22 +13,18 @@ import ModalContext from "../../../context/modalcontext";
 
 export default function MenuPerfil() {
     const navigate = useNavigate();
-    const handleNavigate = (route: string) => {
-        navigate(`/${route}`);
-    };
 
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
 
     const btnsmenu = [
-        { title: 'Minha Conta', route: 'sistema/Perfil', icon: <ManageAccountsIcon /> },
-        { title: 'Informações Pessoais', route: 'sistema/Dados', icon: <DisplaySettingsIcon /> },
-        { title: 'Endereço', route: 'sistema/Endereço', icon: <HomeIcon /> },
-        { title: 'Cartões', route: 'sistema/Cartões', icon: <StyleIcon /> },
-        { title: 'Viagens', route: 'sistema/Viajens', icon: <DirectionsBusIcon /> },
-        { title: 'Extrato Pagamentos', route: 'sistema/Extrato', icon: <AccountBalanceIcon /> },
-        { title: 'Compras', route: 'sistema/Compras', icon: <LocalMallIcon /> }
+        { title: 'Informações Pessoais', route: 'dados', icon: <DisplaySettingsIcon /> },
+        { title: 'Endereço', route: 'endereço', icon: <HomeIcon /> },
+        { title: 'Cartões', route: 'cartões', icon: <StyleIcon /> },
+        { title: 'Viagens', route: 'viajens', icon: <DirectionsBusIcon /> },
+        { title: 'Extrato Pagamentos', route: 'extrato', icon: <AccountBalanceIcon /> },
+        { title: 'Compras', route: 'compras', icon: <LocalMallIcon /> }
 
     ];
 
@@ -71,7 +67,7 @@ export default function MenuPerfil() {
                                 }} />
                             )}
                             <Button
-                                onClick={() => handleNavigate(btn.route)}
+                                onClick={() => navigate(`/Sistema/${btn.route}`)}
                                 sx={{
                                     width: '100%',
                                     height: '100%',
