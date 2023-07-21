@@ -1,4 +1,4 @@
-import SectionRota1 from "../../components/rotas/sectionRotas";
+import SectionRota1 from "../../components/sistema/rotas/sectionRotas";
 import MenuSistema from "../../components/sistema/menu/menusistema";
 import MenuLateral from "../../components/sistema/menu/menulateral";
 

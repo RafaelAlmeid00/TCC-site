@@ -3,7 +3,7 @@ import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem
 import { useState } from "react";
 import Select from '@mui/material/Select';
 import axios from "axios";
-import ModalContext from "../../context/modalcontext";
+import ModalContext from "../../../context/modalcontext";
 import React from "react";
 
 function SectionRota1() {
@@ -18,35 +18,35 @@ function SectionRota1() {
   const fundo = themes.palette.background.default
   const [Loading, setLoading] = useState(false);
 
-    async function takeIt() {
-      try {
-        if (options === 'Número do ônibus') {
-          const response = await axios.post('http://localhost:3344/routes/search', {
-            token: token,
-            route_num: value
-          });
-          const rotasres = response.data.consultStop;
-          setRoutes(rotasres);
-          setLoading(true);
-          console.log(response);
-          console.log(rotasres);
-          console.log(routes);
-        } else if (options === 'Rotas') {
-          const response = await axios.post('http://localhost:3344/routes/search', {
-            token: token,
-            route_nome: value
-          });
-          const rotasres = response.data.consultStop;
-          setRoutes(rotasres);
-          setLoading(true);
-          console.log(response);
-          console.log(rotasres);
-          console.log(routes);
-        }
-      } catch (error) {
-        console.log(error);
+  async function takeIt() {
+    try {
+      if (options === 'Número do ônibus') {
+        const response = await axios.post('http://localhost:3344/routes/search', {
+          token: token,
+          route_num: value
+        });
+        const rotasres = response.data.consultStop;
+        setRoutes(rotasres);
+        setLoading(true);
+        console.log(response);
+        console.log(rotasres);
+        console.log(routes);
+      } else if (options === 'Rotas') {
+        const response = await axios.post('http://localhost:3344/routes/search', {
+          token: token,
+          route_nome: value
+        });
+        const rotasres = response.data.consultStop;
+        setRoutes(rotasres);
+        setLoading(true);
+        console.log(response);
+        console.log(rotasres);
+        console.log(routes);
       }
+    } catch (error) {
+      console.log(error);
     }
+  }
 
   React.useEffect(() => {
     if (value !== '') {
@@ -74,7 +74,7 @@ function SectionRota1() {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-      
+
         mb: 5
       }}>
         <Container sx={{

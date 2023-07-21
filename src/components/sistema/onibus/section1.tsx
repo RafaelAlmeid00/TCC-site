@@ -17,7 +17,9 @@ export default function Buss() {
                 console.log('ta indo');
                 console.log(token);
 
-                const response = await axios.get('http://localhost:3344/routes')
+                const response = await axios.post('http://localhost:3344/routes/all', {
+                    token: token
+                });
                 console.log(response);
                 console.log('ta indo');
                 console.log(response);
@@ -41,82 +43,72 @@ export default function Buss() {
 
     return (
         <>
-            <Box id="section1" sx={{
-                mt: '9.5vh',
-                height: '90.5vh',
-                width: '80vw',
-                float: "right",
-                background: verify ? fundo : 'white',
-                position: "relative",
-                overflow: "hidden",
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                overflowY: 'scroll'
-            }}>
-
-                <Container sx={{
-                    width: '80%',
-                    height: '100%',
+            <Box
+                id="section1"
+                sx={{
+                    mt: '10vh',
+                    width: '80vw',
+                    float: "right",
+                    background: verify ? fundo : 'white',
+                    position: "relative",
+                    overflow: "hidden",
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    gap: 2,
-                    mt: loading ? 0 : '55vh',
+                    height: 'auto',
+                }}
+            >
+                <Container sx={{
+                    mt: 5,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
                 }}>
-                    {loading ? (
-                        // Renderizar o Skeleton 10 vezes quando o loading for verdadeiro
-                        Array.from({ length: 4 }).map((_, index) => (
-                            <Skeleton key={index} variant="rounded" width={'80%'} height={'20%'} />
-                        ))
-                    ) : (
-                        // Renderizar os cards das rotas quando o loading for falso
+                {loading ? (
+                    Array.from({ length: 4 }).map((_, index) => (
+                        <Skeleton key={index} variant="rounded" width={'80%'} height={'20%'} />
+                    ))
+                ) : (
                         routes.map((card) => (
-                            <Container
+                            <>
+                            <Card
                                 key={card.rote_id} // É importante definir uma chave única para cada elemento do map
                                 sx={{
-                                    width: "100%",
-                                    height: "100%",
+                                    width: "80%",
+                                    height: '15vh',
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "row",
+                                    boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
+                                    cursor: 'pointer',
                                 }}
                             >
-                                <Card
+                                <Container
                                     sx={{
-                                        width: "100%",
-                                        height: "100%",
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
                                         flexDirection: "row",
-                                        mt: 2,
-                                        mb: 2,
-                                        boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
-                                        cursor: 'pointer'
                                     }}
                                 >
-                                    <Container
-                                        sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            flexDirection: "row",
-                                        }}
-                                    >
-                                        <Container>
-                                            <Typography sx={{ mt: 2, mb: 1 }}>{card.route_num}</Typography>
-                                        </Container>
-                                        <Container>
-                                            <Typography sx={{ mt: 2, mb: 1 }}>{card.route_nome}</Typography>
-                                        </Container>
+                                    <Container>
+                                        <Typography >{card.route_num}</Typography>
                                     </Container>
-                                </Card>
-                            </Container>
-                        ))
-                    )}
-
+                                    <Container>
+                                        <Typography >{card.route_nome}</Typography>
+                                    </Container>
+                                </Container>
+                            </Card>
+                            <br/>
+                            </>
+                        )))}
                 </Container>
             </Box>
+
         </>
     )
 }
