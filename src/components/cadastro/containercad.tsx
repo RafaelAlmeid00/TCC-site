@@ -19,25 +19,25 @@ import buscad from "../../assets/buscad.jpg"
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
     const [showComponent, setShowComponent] = React.useState(false);
+    const [error, setError] = React.useState(false);
+    const [showError, setShowError] = useState(false);
+    const [showErrorEmail, setShowErrorEmail] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const [showErrorlog, setShowErrorlog] = useState(false);
+    const [showNull, setShowNull] = useState(false);
+    const [cpf2, setCpf2] = React.useState('');
+    const { verify } = React.useContext(ModalContext);
+    const { loginbool } = useContext(ModalContext);
     const { email, setEmail } = useContext(ModalContext);
     const { password, setPassword } = useContext(ModalContext);
-    const [cpf2, setCpf2] = React.useState('');
-    const [error, setError] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    const navigate = useNavigate();
-    const [showError, setShowError] = useState(false);
-    const [showErrorEmail, setShowErrorEmail] = useState(false);
-    const { loginbool } = useContext(ModalContext);
-    const [loading, setLoading] = useState(false)
-    const [disable, setDisable] = useState(false)
-    const [showErrorlog, setShowErrorlog] = useState(false);
-    const [showNull, setShowNull] = useState(false);
 
-    const { verify } = React.useContext(ModalContext);
 
     async function Verifylog() {
         try {
@@ -143,6 +143,10 @@ function ContainerCad() {
         height: "100%",
         objectFit: "cover",
     }));
+
+    const HandleForget = () => {
+        navigate('/Cadastro/EsqueciaSenha')
+    }
 
     return (
         <>
@@ -441,7 +445,33 @@ function ContainerCad() {
                                 </Link>
                                 .
                             </Typography>
-
+                            <Typography sx={{
+                                textAlign: 'center', mt: '20px', color: '#666666', fontSize: {
+                                    xs: "2vw", // (7.5 / 1200) * 600
+                                    sm: "1.1vw", // (7.5 / 1200) * 900
+                                    md: "1vw", // (7.5 / 1200) * 1200
+                                    lg: "0.8vw",
+                                    xl: "0.8vw", // Manter o mesmo tamanho de lg para xl
+                                },
+                            }}>
+                                Esqueceu sua senha? Clique <Link
+                                    sx={{
+                                        fontSize: {
+                                            xs: "2vw", // (7.5 / 1200) * 600
+                                            sm: "1.1vw", // (7.5 / 1200) * 900
+                                            md: "1vw", // (7.5 / 1200) * 1200
+                                            lg: "0.8vw",
+                                            xl: "0.8vw", // Manter o mesmo tamanho de lg para xl
+                                        },
+                                    }}
+                                    component="button"
+                                    variant="body2"
+                                    onClick={HandleForget}
+                                >
+                                    aqui
+                                </Link>
+                                .
+                            </Typography>
                         </Container>
                         <Container sx={{
                             marginRight: "-22px",

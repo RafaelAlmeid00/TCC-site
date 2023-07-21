@@ -6,7 +6,7 @@ function ForgetPassword() {
     return(
         <>
             <Exit previousRoute={'/cadastro'} />
-            <EsqueciAsenha></EsqueciAsenha>
+            <EsqueciAsenha />
         </>
     )
 }
