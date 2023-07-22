@@ -65,7 +65,6 @@ function SectionRota1() {
       width: '80vw',
       float: 'right',
       background: verify ? fundo : 'white',
-      overflowY: Loading ? 'hidden' : 'scroll'
     }}>
       <Container sx={{
         width: '100%',
@@ -74,7 +73,6 @@ function SectionRota1() {
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-
         mb: 5
       }}>
         <Container sx={{
@@ -108,6 +106,7 @@ function SectionRota1() {
           alignItems: 'center',
           flexDirection: 'column',
           gap: 2,
+          mt: 5
         }}>
           {Loading ?
             <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 5 }}>

@@ -19,6 +19,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     const fundo = themes.palette.background.default
     const [card, setCard] = React.useState('');
     const [hasCardOpen, setHasCardOpen] = React.useState(false);
+    const token = localStorage.getItem('token')
 
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
@@ -27,7 +28,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     // Função para fazer a requisição ao servidor com o CPF
     async function fetchListCards(list_CPF: string) {
         try {
-            const response = await axios.post('http://localhost:3344/listcpf/search', { list_CPF: list_CPF, });
+            const response = await axios.post('http://localhost:3344/listcpf/search', { list_CPF: list_CPF, token: token});
             const result = response.data.objeto;
             const newListCards: { name: string }[] = [];
 
@@ -51,7 +52,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     }
     async function VerifyCard(list_CPF: string): Promise<boolean> {
         try {
-            const response = await axios.post('http://localhost:3344/card/search', { user_CPF: list_CPF })
+            const response = await axios.post('http://localhost:3344/card/search', { user_CPF: list_CPF, token: token })
             const result = response.data
             const hasCardOpen = result.length > 0;
             console.log(hasCardOpen);
@@ -93,7 +94,8 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
         const dataCard = {
             req_data: date,
             req_TipoCartao: cardTipo,
-            user_user_CPF: user_CPF
+            user_user_CPF: user_CPF,
+            token: token
         }
         console.log(dataCard);
 
