@@ -1,13 +1,11 @@
-import { Box, Card, Container, FormControl, InputBase, InputLabel, MenuItem, Select, Typography, styled } from "@mui/material";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
 import axios from "axios";
-import { Btn } from "../btns";
-import themes from "../../assets/theme";
 import { Sucess } from "../errosvalidations";
 import { useNavigate } from "react-router-dom";
 import { Balancer } from "react-wrap-balancer";
-
+import { Box, Container, FormControl, InputBase, InputLabel, MenuItem, Select, Typography, styled } from "@mui/material";
+import { Btn } from "../btns";
 interface Props {
     dados: object;
 }
@@ -15,9 +13,8 @@ interface Props {
 function Tipo({ dados }: Props) {
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
-    const fundo = themes.palette.background.default
     const [card, setCard] = React.useState('');
-    const [listid, setListId] = React.useState('');
+    const [listid] = React.useState('');
     const { setLog } = React.useContext(ModalContext);
     const [showSucess, setShowSucess] = React.useState(false);
 
@@ -26,8 +23,12 @@ function Tipo({ dados }: Props) {
     };
 
     React.useEffect(() => {
-        const cpf = dados.user_CPF        
-        handleGetListCpf(cpf)
+        if ('user_CPF' in dados) {
+            const cpf = String(dados.user_CPF)
+            if (cpf) {
+                handleGetListCpf(cpf)
+            }
+        }
     }, [dados])
     // Função para fazer a requisição ao servidor com o CPF
     const handleGetListCpf = async (cpf: string) => {
@@ -37,7 +38,7 @@ function Tipo({ dados }: Props) {
         const newListCards: { name: string }[] = [];
 
         if (responsecpf) {
-            result.forEach((item) => {
+            result.forEach((item: { list_tipo: string; list_CPF: string; list_id: string; }) => {
                 const type = item.list_tipo
                 const cpf_list = item.list_CPF
                 const idlist = item.list_id
@@ -96,10 +97,16 @@ function Tipo({ dados }: Props) {
     async function cadastrarUsuario(dados: object) {
 
         if (listid) {
-            dados.user_tipo = card;
-            dados.list_CPF_list_id = listid;
+            if ('user_tipo' in dados) {
+                dados.user_tipo = card;
+            }
+            if ('list_CPF_list_id' in dados) {
+                dados.list_CPF_list_id = listid;
+            }
         } else {
-            dados.user_tipo = "default"
+            if ('user_tipo' in dados) {
+                dados.user_tipo = "default";
+            }
         }
 
         console.log(dados);
@@ -108,7 +115,7 @@ function Tipo({ dados }: Props) {
             await axios.post('http://localhost:3344/user', dados);
             setShowSucess(true)
             console.log('foi mlk');
-            setLog(true)
+            setLog?.(true)
             setTimeout(() => {
                 setShowSucess(false)
             }, 2000);
@@ -165,7 +172,8 @@ function Tipo({ dados }: Props) {
                                 lg: '1vw',
                                 xl: '1vw',  // Manter o mesmo tamanho de lg para xl
                             },
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            color: verify ? 'white' :  'black'
                         }}>
                             Escolha seu tipo de usuário disponivel:
                         </Typography>
@@ -188,7 +196,7 @@ function Tipo({ dados }: Props) {
                             >
                                 {ListCards.length > 0 ? (
                                     ListCards.map((card) => (
-                                        <MenuItem key={card.name} value={card.name}>
+                                        <MenuItem key={card.name} value={card.name} >
                                             {card.name}
                                         </MenuItem>
                                     ))
@@ -216,7 +224,8 @@ function Tipo({ dados }: Props) {
                                 lg: '1vw',
                                 xl: '1vw',  // Manter o mesmo tamanho de lg para xl
                             },
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            color: verify ? 'white' : 'black',
                         }}>
                             Seu tipo de usuário definirá qual cartão poderá usar e a qual instituição estará atrelado, lembrando que a troca de tipo só ocorrerá no pedido do cartão e após isso será definitivo até o cancelamento do mesmo.
                         </Typography>
@@ -228,7 +237,7 @@ function Tipo({ dados }: Props) {
                         justifyContent: 'center',
                         mt: 3
                     }}>
-                        <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} />
+                        <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} cl={undefined} vis={undefined} mb={undefined} />
                     </Container>
             </Box>
         </>

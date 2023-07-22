@@ -1,8 +1,8 @@
-import { Box, Button, ButtonGroup, Card, Link, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Exit from "../buttonexit";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
+import { Box, Button, ButtonGroup, Card, Link, Typography } from "@mui/material";
 
 export default function OptionsCad() {
 

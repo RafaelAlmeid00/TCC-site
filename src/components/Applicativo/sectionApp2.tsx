@@ -1,18 +1,14 @@
 
-import {
-  Box,
-  Container,
-  Typography,
-} from "@mui/material";
 import MapIcon from '@mui/icons-material/Map'; 
 import colors from "../../assets/colors";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
-import { Balancer } from "react-wrap-balancer";
-import { BtnApp } from "../btns";
 import Divider from "../divider";
 import theme from "../../assets/theme";
 import AddCardIcon from '@mui/icons-material/AddCard';
+import { Box, Container, Typography } from "@mui/material";
+import { Balancer } from "react-wrap-balancer";
+import { BtnApp } from "../btns";
 
 export default function SectionApp2() {
   const { verify } = React.useContext(ModalContext);

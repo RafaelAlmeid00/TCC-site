@@ -1,46 +1,41 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BadgeIcon from '@mui/icons-material/Badge';
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ModalContext from "../../context/modalcontext";
-import { CPFError, DataError, NomeError, NumError, CEPError, Sucess, RGError, CPFExiste } from "../errosvalidations";
+import { CPFError, DataError, NomeError, NumError, CEPError, RGError, CPFExiste } from "../errosvalidations";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import { useNavigate } from "react-router-dom";
 import Tipo from "./tipouser";
-import { Btn } from "../btns";
-import { verify } from "jsonwebtoken";
 import colors from "../../assets/colors";
 import CompleteCad2 from "./endereço";
+import { Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
+import { Btn } from "../btns";
 
-function CompleteCad(){
-    const {email} = useContext(ModalContext);
-    const {password} = useContext(ModalContext);
+function CompleteCad() {
     const [cpf, setCpf] = useState("");
     const [rg, setRg] = useState("");
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
-    const {cep} = useContext(ModalContext);
-    const {UF} = useContext(ModalContext);
-    const {district} = useContext(ModalContext);
-    const {street} = useContext(ModalContext);
-    const {num} = useContext(ModalContext);
-    const {comp} = useContext(ModalContext);
-    const {city} = useContext(ModalContext);
+    const { cep } = useContext(ModalContext);
+    const { UF } = useContext(ModalContext);
+    const { district } = useContext(ModalContext);
+    const { street } = useContext(ModalContext);
+    const { num } = useContext(ModalContext);
+    const { comp } = useContext(ModalContext);
+    const { city } = useContext(ModalContext);
+    const { verify } = React.useContext(ModalContext);
+    const { email } = useContext(ModalContext);
+    const { password } = useContext(ModalContext);
     const [showErrorCPF, setShowErrorCPF] = useState(false);
     const [showErrorNome, setShowErrorNome] = useState(false);
     const [showErrorData, setShowErrorData] = useState(false);
     const [showErrorCEP, setShowErrorCEP] = useState(false);
     const [showErrorNum, setShowErrorNum] = useState(false);
-    const [tipo, setTipo] = useState("");
     const [showRG, setShowRG] = useState(false);
     const [CPFexiste, setCPFexiste] = useState(false);
     const [showTipo, setShowTipo] = useState(false);
     const [dadosU, setDados] = useState({});
-    const { verify } = React.useContext(ModalContext);
 
     async function ValidaCPF(cpf: string): Promise<boolean> {
         let Soma = 0;
@@ -100,7 +95,7 @@ function CompleteCad(){
     async function VerifyCPF(cpf: string): Promise<boolean> {
         try {
             console.log('ta indoooo');
-            
+
             const resCPF = await axios.post('http://localhost:3344/user/cpf', { user_CPF: cpf })
             console.log('n foooi');
             console.log(cpf)
@@ -123,7 +118,7 @@ function CompleteCad(){
             console.log('CPF TA OK');
             const cpfInvalid = await ValidaCPF(cpf)
             console.log(cpfInvalid);
-            
+
             if (cpfInvalid) {
                 return false;
             } else {
@@ -131,6 +126,7 @@ function CompleteCad(){
                 return true;
             }
         }
+        return true
     }
 
     function VerifyInputs(cpf: string, name: string, date: string, cep: string, num: string, rg: string): boolean {
@@ -226,25 +222,28 @@ function CompleteCad(){
             setShowErrorData(false)
             setCPFexiste(false)
             return false;
-        } 
+        }
     }
 
     const handleclick = async () => {
 
+        const formatdata = handleSubmitData()
+        console.log(formatdata);
+        
         interface UserData {
             user_CPF: string;
             user_RG: string;
             user_nome: string;
-            user_email: string;
-            user_senha: string;
+            user_email?: string;
+            user_senha?: string;
             user_nascimento: string;
-            user_endCEP: string;
-            user_endUF: string;
-            user_endbairro: string;
-            user_endrua: string;
-            user_endnum: string;
-            user_endcomplemento: string;
-            user_endcidade: string;
+            user_endCEP?: string;
+            user_endUF?: string;
+            user_endbairro?: string;
+            user_endrua?: string;
+            user_endnum?: string;
+            user_endcomplemento?: string;
+            user_endcidade?: string;
             user_tipo?: string;
             list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
         }
@@ -255,7 +254,7 @@ function CompleteCad(){
             user_nome: name,
             user_email: email,
             user_senha: password,
-            user_nascimento: date,
+            user_nascimento: formatdata,
             user_endCEP: cep,
             user_endUF: UF,
             user_endbairro: district,
@@ -278,26 +277,22 @@ function CompleteCad(){
             return;
         }
 
-        const inputsError = await VerifyInputs(cpf, name, date, cep, num, rg); // Chama a função diretamente aqui
+        if (cep && num) {
+            const inputsError = await VerifyInputs(cpf, name, date, cep, num, rg); // Chama a função diretamente aqui
 
-        if (inputsError) {
-            setShowTipo(false); // Há erros, não avança para a próxima etapa
-            console.log('travo tudo aqq²');
-            console.log(dadosUsuario);
+            if (inputsError) {
+                setShowTipo(false); // Há erros, não avança para a próxima etapa
+                console.log('travo tudo aqq²');
+                console.log(dadosUsuario);
 
-            return ;
+                return;
+            }
         }
-
         setShowTipo(true);
         setDados(dadosUsuario)
         console.log(dadosU);
-        
-    }
 
-    React.useEffect(() => {
-        // Este efeito será executado sempre que 'dadosU' for atualizado
-        console.log(dadosU);
-    }, [dadosU]);
+    }
 
     function formatDateString(date: string): string {
         let formattedString = date.replace(/\D/g, ''); // remove todos os caracteres não numéricos
@@ -324,142 +319,146 @@ function CompleteCad(){
         return formattedDateForDatabase;
         // Submeta a data no formato yyyy-mm-dd para o banco de dados
     }
-    
-return (
-    <>
-    {showErrorCPF && <CPFError />}
-    {showErrorNome && <NomeError />}
-    {showErrorData && <DataError />}
-    {showErrorCEP && <CEPError />}
-    {showErrorNum && <NumError />}
-    {showRG && <RGError />}
-    {CPFexiste && <CPFExiste/>}
-        {showTipo ? <Tipo dados={dadosU} /> : 
-        <Container sx={{
-            width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-        }}>
-            <Container sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-            }}>
-                <Typography sx={{ textAlign: 'center', mb: '30px', color: '#222222', fontSize: {
+
+    return (
+        <>
+            {showErrorCPF && <CPFError />}
+            {showErrorNome && <NomeError />}
+            {showErrorData && <DataError />}
+            {showErrorCEP && <CEPError />}
+            {showErrorNum && <NumError />}
+            {showRG && <RGError />}
+            {CPFexiste && <CPFExiste />}
+            {showTipo ? <Tipo dados={dadosU} /> :
+                <Container sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                }}>
+                    <Container sx={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                    }}>
+                        <Typography sx={{
+                            textAlign: 'center', mb: '30px', color: verify ? 'white' : '#222222', fontSize: {
                                 xs: '2.5vw',  // (7.5 / 1200) * 600
                                 sm: '2vw',  // (7.5 / 1200) * 900
                                 md: '2vw',  // (7.5 / 1200) * 1200
                                 lg: '1vw',
                                 xl: '1vw',  // Manter o mesmo tamanho de lg para xl
-                            }, fontWeight: 'bold' }}>
-                    Dados Pessoais e Endereço
-                </Typography>
-                <Typography sx={{
-                    textAlign: 'center', mb: '40px', color: '#444444', fontSize: {
-                        xs: '2vw',  // (7.5 / 1200) * 600
-                        sm: '1.5vw',  // (7.5 / 1200) * 900
-                        md: '1vw',  // (7.5 / 1200) * 1200
-                        lg: '1vw',
-                        xl: '1vw',  // Manter o mesmo tamanho de lg para xl
-                    }, }}>
-                    Coloque o seu CPF e CEP para obter os dados:
-                </Typography>
-                <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
-                    <InputLabel htmlFor="input-with-icon-adornment">
-                        CPF
-                    </InputLabel>
-                    <Input
-                        id="input-with-icon-adornment"
-                        inputProps={{ maxLength: 11 }}
-                        required
-                        value={cpf}
-                        placeholder="Insira apenas os números do CPF"
-                        onChange={(event) => {
-                            const { value } = event.target;
-                            const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
-                            setCpf(newValue);
-                        }}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <AccountCircleIcon />
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '14px' }}
-                    />
-                </FormControl>
-                <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
-                    <InputLabel htmlFor="input-with-icon-adornment">
-                        RG
-                    </InputLabel>
-                    <Input
-                        id="input-with-icon-adornment"
-                        inputProps={{ maxLength: 9 }}
-                        required
-                        value={rg}
-                        placeholder="Insira apenas os números do RG"
-                        onChange={(event) => {
-                            const {value} = event.target;
-                            const newValue2 = value.replace(/\D/g, ''); // remove tudo que não é número
-                            setRg(newValue2);}}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <HowToRegIcon />
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '14px' }}
-                    />
-                </FormControl>
-                <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
-                    <InputLabel htmlFor="input-with-icon-adornment">
-                        Nome Completo
-                    </InputLabel>
-                    <Input
-                        inputProps={{ maxLength: 45 }}
-                        placeholder="Fulano da Silva Oliveira"
-                        required
-                        id="input-with-icon-adornment"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <BadgeIcon />
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '14px' }}
-                    />
-                </FormControl>
-                <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
-                    <InputLabel htmlFor="input-with-icon-adornment">
-                        Data de Nascimento
-                    </InputLabel>
-                    <Input
-                        inputProps={{ maxLength: 10 }}
-                        required
-                        id="input-with-icon-adornment"
-                        value={date}
-                        placeholder="Use o formato: yyyy-MM-dd"
-                        onChange={(event) => setDate(formatDateString(event.target.value))}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <CalendarMonthIcon />
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '14px' }}
-                    />
-                </FormControl>
-                <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} mt={50} bch={verify ? 'white' : undefined} />
-            </Container>
-                <CompleteCad2 />
+                            }, fontWeight: 'bold'
+                        }}>
+                            Dados Pessoais e Endereço
+                        </Typography>
+                        <Typography sx={{
+                            textAlign: 'center', mb: '40px', color: verify ? 'white' : '#444444', fontSize: {
+                                xs: '2vw',  // (7.5 / 1200) * 600
+                                sm: '1.5vw',  // (7.5 / 1200) * 900
+                                md: '1vw',  // (7.5 / 1200) * 1200
+                                lg: '1vw',
+                                xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                            },
+                        }}>
+                            Coloque o seu CPF e CEP para obter os dados:
+                        </Typography>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                CPF
+                            </InputLabel>
+                            <Input
+                                id="input-with-icon-adornment"
+                                inputProps={{ maxLength: 11 }}
+                                required
+                                value={cpf}
+                                placeholder="Insira apenas os números do CPF"
+                                onChange={(event) => {
+                                    const { value } = event.target;
+                                    const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
+                                    setCpf(newValue);
+                                }}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <AccountCircleIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        </FormControl>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                RG
+                            </InputLabel>
+                            <Input
+                                id="input-with-icon-adornment"
+                                inputProps={{ maxLength: 9 }}
+                                required
+                                value={rg}
+                                placeholder="Insira apenas os números do RG"
+                                onChange={(event) => {
+                                    const { value } = event.target;
+                                    const newValue2 = value.replace(/\D/g, ''); // remove tudo que não é número
+                                    setRg(newValue2);
+                                }}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <HowToRegIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        </FormControl>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                Nome Completo
+                            </InputLabel>
+                            <Input
+                                inputProps={{ maxLength: 45 }}
+                                placeholder="Fulano da Silva Oliveira"
+                                required
+                                id="input-with-icon-adornment"
+                                value={name}
+                                onChange={(event) => setName(event.target.value)}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <BadgeIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        </FormControl>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                Data de Nascimento
+                            </InputLabel>
+                            <Input
+                                inputProps={{ maxLength: 10 }}
+                                required
+                                id="input-with-icon-adornment"
+                                value={date}
+                                placeholder="24-08-2005"
+                                onChange={(event) => setDate(formatDateString(event.target.value))}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <CalendarMonthIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px', mb: 2 }}
+                            />
+                        </FormControl>
+                        <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
+                    </Container>
+                    <CompleteCad2 />
                 </Container>
-    }
+            }
         </>
-)
+    )
 }
 
 export default CompleteCad

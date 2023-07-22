@@ -1,17 +1,15 @@
-import { Box, Container } from "@mui/material";
 import Img from "../img";
 import bus from "../../assets/bus.svg"
-import { Slide } from "react-awesome-reveal";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import theme from "../../assets/theme";
+import { Slide } from "react-awesome-reveal";
+import { Box, Container } from "@mui/material";
 
 function SectionBus() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const { hasEntered } = React.useContext(ModalContext);
-
-
   const fundo = themes.palette.background.default
 
   return (

@@ -1,23 +1,21 @@
-import { Box, Container, IconButton, Typography } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
-import { Fade, Slide } from "react-awesome-reveal";
 import Balancer from "react-wrap-balancer";
 import theme from "../../assets/theme";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import colors from "../../assets/colors";
-import { AgradecimentosAnderson, AgradecimentosHenrique, AgradecimentosLuciane, EquipeEasyPass, Objetivo, PorqueEasyPass } from "./cards";
 import CloseIcon from '@mui/icons-material/Close';
-import {Bubbles2} from "../bubbles";
+import { Bubbles2 } from "../bubbles";
+import { Box, Container, IconButton, Typography } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+import { Fade, Slide } from "react-awesome-reveal";
+import { AgradecimentosAnderson, AgradecimentosHenrique, AgradecimentosLuciane, EquipeEasyPass, Objetivo, PorqueEasyPass } from "./cards";
 
 export default function Section1EasyPass() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const { hasEntered } = React.useContext(ModalContext);
-
-  const fundo = themes.palette.background.default
-
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const fundo = themes.palette.background.default
 
   const items = [
     { id: '1', title: 'Equipe EasyPass', subtitle: 'Quem trabalha conosco' },

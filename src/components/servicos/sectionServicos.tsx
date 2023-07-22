@@ -1,15 +1,15 @@
-import { Box, Container, useMediaQuery, Theme } from "@mui/material";
 import Cards from "../card";
-import { motion } from "framer-motion";
-import { Slide } from "react-awesome-reveal";
 import history from "../../assets/history.png";
 import rota from "../../assets/map.jpg";
 import pag from "../../assets/pay.png";
 import order from "../../assets/order.png";
-import {BtnsApp} from "../btns";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { Bubbles3 } from "../bubbles";
+import { Box, Container, useMediaQuery, Theme } from "@mui/material";
+import { Slide } from "react-awesome-reveal";
+import { motion } from "framer-motion";
+import { BtnsApp } from "../btns";
 
 export default function SectionService1() {
   const isMdOrBelow = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));

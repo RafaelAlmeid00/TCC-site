@@ -1,28 +1,27 @@
-import { Box, Container, FormControl, FormControlLabel, FormLabel, Input, InputAdornment, InputLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
-import { Fade, Slide } from "react-awesome-reveal";
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import PortraitIcon from '@mui/icons-material/Portrait';
 import emailjs from 'emailjs-com';
-import { useState, FormEvent } from "react";
 import theme from "../../assets/theme";
 import ModalContext from "../../context/modalcontext";
-import React from "react";
 import colors from "../../assets/colors";
 import { BtnL } from "../btns";
+import { Box, Container, FormControl, FormControlLabel, FormLabel, Input, InputAdornment, InputLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import { Fade, Slide } from "react-awesome-reveal";
+import React, { FormEvent } from "react";
 
 export default function SectionContato() {
-    const [nome, setNome] = useState('')
-    const [cpf, setCPF] = useState<string | null>(null);
-    const [email, setEmail] = useState('')
-    const [text, setText] = useState('')
-    const [radio, setRadio] = useState('visitante')
-    const [showErrorCPF, setShowErrorCPF] = useState(false);
-    const [showErrorEmail, setShowErrorEmail] = useState(false);
-    const [showError, setShowError] = useState(false);
-    const [loading, setLoading] = useState(false)
-    const [disable, setDisable] = useState(false)
-    const [sucess, setSucess] = useState(false)
+    const [nome, setNome] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [text, setText] = React.useState('')
+    const [radio, setRadio] = React.useState('visitante')
+    const [showErrorCPF, setShowErrorCPF] = React.useState(false);
+    const [showErrorEmail, setShowErrorEmail] = React.useState(false);
+    const [showError, setShowError] = React.useState(false);
+    const [loading, setLoading] = React.useState(false)
+    const [disable, setDisable] = React.useState(false)
+    const [sucess, setSucess] = React.useState(false)
+    const [cpf, setCPF] = React.useState<string | null>(null);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const { hasEntered } = React.useContext(ModalContext);

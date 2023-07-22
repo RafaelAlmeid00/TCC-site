@@ -1,27 +1,21 @@
-import {
-  Box,
-  Container,
-  Typography,
-} from "@mui/material";
-import { Slide } from "react-awesome-reveal";
 import colors from "../../assets/colors";
 import app2 from "../../assets/app2.png";
-import {BtnsApp} from "../btns";
 import Img from "../img";
-import { Bubbles } from "../bubbles";
 import theme from "../../assets/theme";
-import { Balancer } from "react-wrap-balancer";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
+import { Box, Container, Typography } from "@mui/material";
+import { Balancer } from "react-wrap-balancer";
+import { BtnsApp } from "../btns";
+import { Bubbles } from "../bubbles";
+import { Slide } from "react-awesome-reveal";
 
 export default function SectionApp1() {
-
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const { hasEntered } = React.useContext(ModalContext);
-
-
   const fundo = themes.palette.background.default
+  
   return (
     <>
       <Box sx={{

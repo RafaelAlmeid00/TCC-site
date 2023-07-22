@@ -1,5 +1,4 @@
-import { Container, FormControl, Input, InputAdornment, InputLabel } from "@mui/material"
-import { useContext, useState } from "react";
+import React from "react";
 import axios from "axios";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
@@ -9,31 +8,32 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../context/modalcontext";
+import { Container, FormControl, Input, InputAdornment, InputLabel } from "@mui/material"
 
 function CompleteCad2(){
-    const {cep, setCep} = useContext(ModalContext);
-    const {UF, setUF} = useContext(ModalContext);
-    const {district, setDistrict} = useContext(ModalContext);
-    const {street, setStreet} = useContext(ModalContext);
-    const {num, setNum} = useContext(ModalContext);
-    const {comp, setComp} = useContext(ModalContext);
-    const {city, setCity} = useContext(ModalContext);
-    const [isLoading, setIsLoading] = useState(false);
+    const {cep, setCep} = React.useContext(ModalContext);
+    const {UF, setUF} = React.useContext(ModalContext);
+    const {district, setDistrict} = React.useContext(ModalContext);
+    const {street, setStreet} = React.useContext(ModalContext);
+    const {num, setNum} = React.useContext(ModalContext);
+    const {comp, setComp} = React.useContext(ModalContext);
+    const {city, setCity} = React.useContext(ModalContext);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const handleChangeCep = (event: { target: { value: string; }; }) => {
         let cepValue = event.target.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
         cepValue = cepValue.slice(0, 5) + '-' + cepValue.slice(5, 8); // Adiciona o traço na posição correta
-        setCep(cepValue);
+        setCep?.(cepValue);
     }
     
     const handleApiCEP = async () => {
         const url = `https://cdn.apicep.com/file/apicep/${cep}.json`; 
         try {
             const response = await axios.get(url);
-            setUF(response.data.state);
-            setCity(response.data.city);
-            setDistrict(response.data.district);
-            setStreet(response.data.address);
+            setUF?.(response.data.state);
+            setCity?.(response.data.city);
+            setDistrict?.(response.data.district);
+            setStreet?.(response.data.address);
             setIsLoading(true);
             
         } catch (error) {
@@ -140,7 +140,7 @@ return (
         required
         id="input-with-icon-adornment"
         value={comp}
-        onChange={(event) => setComp(event.target.value)}
+        onChange={(event) => setComp?.(event.target.value)}
         startAdornment={
             <InputAdornment position="start">
             <PlaylistAddIcon />
@@ -158,7 +158,7 @@ return (
         required
         id="input-with-icon-adornment"
         value={num}
-        onChange={(event) => setNum(event.target.value)}
+        onChange={(event) => setNum?.(event.target.value)}
         startAdornment={
             <InputAdornment position="start">
             <HomeIcon />

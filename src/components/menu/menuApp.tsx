@@ -7,21 +7,21 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import theme from '../../assets/theme';
 import Image from '../../assets/logo.png';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ModalContext from '../../context/modalcontext';
-import { Btn } from '../btns';
 import colors from '../../assets/colors';
-import { Drawer } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
+import { Drawer } from '@mui/material';
+import { Btn } from '../btns';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuApp() {
-  const [showCad] = React.useState(true)
   const { darkMode, setDarkMode } = React.useContext(ModalContext);
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     const newTheme = darkMode ? 'light' : 'dark';
@@ -44,13 +44,10 @@ export default function MenuApp() {
     setAnchorElNav(null);
   };
 
-  const navigate = useNavigate();
   const handleNavigate = (route: string) => {
     handleCloseNavMenu()
     navigate(route);
   };
-
-  console.log(showCad);
 
   return (
     <>
@@ -249,7 +246,7 @@ export default function MenuApp() {
                 marginLeft: -2,
               },
           }}>
-              <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode ? 'white' : undefined} bch={darkMode ? 'white' : undefined} fun={undefined} />
+              <Btn name="Cadastrar" route="/opcoes" cl={darkMode ? colors.pm : "white"} bc={darkMode ? 'white' : undefined} bch={darkMode ? 'white' : undefined} fun={undefined} vis={undefined} mb={undefined} />
           </Box>
           
           <IconButton sx={{'&:hover': { color: colors.sc }, mr: 15,

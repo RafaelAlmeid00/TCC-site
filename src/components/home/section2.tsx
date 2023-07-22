@@ -1,10 +1,6 @@
-
-import { Box, Container, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Menus from "../menu/menu";
 import Cards from "../card";
-import { motion } from "framer-motion";
-import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
@@ -14,14 +10,13 @@ import free from "../../assets/free.jpeg"
 import exclusivo from "../../assets/exclusivo.png"
 import rotas from "../../assets/routes.png"
 import pratice from "../../assets/patice.jpeg"
+import { Box, Container, Typography } from "@mui/material";
+import { Slide } from "react-awesome-reveal";
+import { motion } from "framer-motion";
 
 function Section2() {
-
   const { verify } = React.useContext(ModalContext);
   const { hasEntered } = React.useContext(ModalContext);
-
-
-
   const [showEscolas, setShowEscolas] = React.useState(true);
   const toggleShowEscolas = () => setShowEscolas(!showEscolas);
 

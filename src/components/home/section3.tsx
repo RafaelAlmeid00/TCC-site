@@ -1,16 +1,15 @@
 
-import { Box, Card, Container, Link, Typography } from "@mui/material";
 import colors from "../../assets/colors";
 import Img from "../img";
-import { Balancer } from "react-wrap-balancer";
 import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
+import { Box, Card, Container, Link, Typography } from "@mui/material";
+import { Balancer } from "react-wrap-balancer";
 
 function Section3() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
-
   const fundo = themes.palette.background.default
 
   return (

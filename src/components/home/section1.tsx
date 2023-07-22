@@ -1,21 +1,19 @@
-import { Box, Container, Typography } from "@mui/material";
 import Img from "../img";
 import Balancer from 'react-wrap-balancer'
-import { Slide } from "react-awesome-reveal";
 import theme from "../../assets/theme";
-import { BtnsApp } from "../btns";
 import handcell from "../../assets/handcell.png";
 import colors from "../../assets/colors";
 import React from "react";
-import {Bubbles} from "../bubbles";
 import ModalContext from "../../context/modalcontext";
+import { Box, Container, Typography } from "@mui/material";
+import { Bubbles } from "../bubbles";
+import { BtnsApp } from "../btns";
+import { Slide } from "react-awesome-reveal";
 
 function Section1() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const { hasEntered } = React.useContext(ModalContext);
-
-
   const fundo = themes.palette.background.default
 
   return (

@@ -1,36 +1,35 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography, styled } from "@mui/material"
 import Box from "@mui/material/Box"
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FormControl from '@mui/material/FormControl';
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import EmailIcon from '@mui/icons-material/Email';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate } from "react-router-dom";
 import ModalContext from "../../context/modalcontext";
-import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
 import axios from "axios";
 import theme from "../../assets/theme";
-import { Btn, BtnL } from "../btns";
 import colors from "../../assets/colors";
 import buscad from "../../assets/buscad.jpg"
+import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography, styled } from "@mui/material"
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
+import { Btn, BtnL } from "../btns";
 
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
     const [showComponent, setShowComponent] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const [showError, setShowError] = useState(false);
-    const [showErrorEmail, setShowErrorEmail] = useState(false);
-    const [loading, setLoading] = useState(false)
-    const [disable, setDisable] = useState(false)
-    const [showErrorlog, setShowErrorlog] = useState(false);
-    const [showNull, setShowNull] = useState(false);
+    const [showError, setShowError] = React.useState(false);
+    const [showErrorEmail, setShowErrorEmail] = React.useState(false);
+    const [loading, setLoading] = React.useState(false)
+    const [disable, setDisable] = React.useState(false)
+    const [showErrorlog, setShowErrorlog] = React.useState(false);
+    const [showNull, setShowNull] = React.useState(false);
     const [cpf2, setCpf2] = React.useState('');
     const { verify } = React.useContext(ModalContext);
-    const { loginbool } = useContext(ModalContext);
-    const { email, setEmail } = useContext(ModalContext);
-    const { password, setPassword } = useContext(ModalContext);
+    const { loginbool } = React.useContext(ModalContext);
+    const { email, setEmail } = React.useContext(ModalContext);
+    const { password, setPassword } = React.useContext(ModalContext);
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -47,29 +46,13 @@ function ContainerCad() {
             console.log(response.data)
             if (response.data) {
                 setError(true)
-                setEmail('')
+                setEmail?.('')
                 setShowError(false);
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
                 setTimeout(() => {
                     setError(false)
                 }, 5000);
-            } else {
-                setError(false)
-                if (email === '' || password === '') {
-                    setShowError(true);
-                    setShowErrorEmail(false);
-                    setShowErrorlog(false);
-                } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                    setShowErrorEmail(true);
-                    setShowError(false);
-                    setShowErrorlog(false);
-                } else {
-                    setShowErrorEmail(false);
-                    setShowError(false);
-                    setShowErrorlog(false);
-                    navigate('/cadastro/complemento');
-                }
             }
         } catch (error) {
             console.log(error);
@@ -78,7 +61,7 @@ function ContainerCad() {
                 setShowError(true);
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
-            } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            } else if (email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
                 setShowErrorEmail(true);
                 setShowError(false);
                 setShowErrorlog(false);
@@ -91,7 +74,7 @@ function ContainerCad() {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (loginbool) {
             setShowComponent(true);
         }
@@ -253,7 +236,7 @@ function ContainerCad() {
                                     required
                                     id="input-with-icon-adornment"
                                     value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
+                                    onChange={(event) => setEmail?.(event.target.value)}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <EmailIcon />
@@ -271,7 +254,7 @@ function ContainerCad() {
                                     required
                                     id="standard-adornment-password"
                                     value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
+                                    onChange={(event) => setPassword?.(event.target.value)}
                                     type={showPassword ? 'text' : 'password'}
                                     endAdornment={
                                         <InputAdornment position="end">
@@ -287,7 +270,7 @@ function ContainerCad() {
                                     sx={{ fontSize: '14px' }}
                                 />
                             </FormControl>
-                            <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                            <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} vis={undefined} mb={undefined} />
                             <Typography sx={{
                                 textAlign: 'center', mt: '20px', color: '#666666', fontSize: {
                                     xs: "2.5vw", // (7.5 / 1200) * 600
@@ -402,7 +385,7 @@ function ContainerCad() {
                                         type={showPassword ? 'text' : 'password'}
                                         onChange={(event) => {
                                             const { value } = event.target;
-                                            setPassword(value);
+                                            setPassword?.(value);
                                         }}
                                         endAdornment={
                                             <InputAdornment position="end">

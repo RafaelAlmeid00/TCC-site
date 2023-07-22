@@ -1,5 +1,5 @@
 
-import { Box } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import CompleteCad from '../../components/cadastro/dadosuser.tsx'
 import Exit from '../../components/buttonexit.tsx'
 import { Fade } from 'react-awesome-reveal';
@@ -9,13 +9,20 @@ import '../../App.css'
 
 function Cadall() {
     const { hasEntered } = React.useContext(ModalContext);
-
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const fundo = themes.palette.background.default
 
     return (
         <>
             <Exit previousRoute={'/Cadastro'} />
             <Box sx={{
-                backgroundColor: "#F0F0FF",
+                background: verify ? fundo : 'white',
+                height: "85vh",
+                width: "100vw",
+                zIndex: -1
+            }}>
+            <Container sx={{
                 height: {
                     xs: "80%", // (7.5 / 1200) * 600
                     sm: "80%", // (7.5 / 1200) * 900
@@ -48,6 +55,7 @@ function Cadall() {
                 <Fade cascade damping={0.2} triggerOnce={hasEntered}>
                 <CompleteCad />
                 </Fade>
+            </Container>
             </Box>
         </>
     )
