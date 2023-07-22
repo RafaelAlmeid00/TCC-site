@@ -148,6 +148,8 @@ function ContainerCad() {
         navigate('/Cadastro/EsqueciaSenha')
     }
 
+    
+
     return (
         <>
             {showNull && <ContentNull />}

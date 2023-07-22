@@ -42,6 +42,60 @@ function CompleteCad(){
     const [dadosU, setDados] = useState({});
     const { verify } = React.useContext(ModalContext);
 
+    async function ValidaCPF(cpf: string): Promise<boolean> {
+        let Soma = 0;
+        let Resto;
+
+        if (
+            [
+                '00000000000',
+                '11111111111',
+                '22222222222',
+                '33333333333',
+                '44444444444',
+                '55555555555',
+                '66666666666',
+                '77777777777',
+                '88888888888',
+                '99999999999',
+            ].includes(cpf)
+        ) {
+            return false;
+        }
+
+        for (let i = 1; i <= 9; i++) {
+            Soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        }
+
+        Resto = (Soma * 10) % 11;
+
+        if (Resto === 10 || Resto === 11) {
+            Resto = 0;
+        }
+
+        if (Resto !== parseInt(cpf.substring(9, 10))) {
+            return false;
+        }
+
+        Soma = 0;
+
+        for (let i = 1; i <= 10; i++) {
+            Soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+
+        Resto = (Soma * 10) % 11;
+
+        if (Resto === 10 || Resto === 11) {
+            Resto = 0;
+        }
+
+        if (Resto !== parseInt(cpf.substring(10, 11))) {
+            return false;
+        }
+
+        return true;
+    }
+
 
     async function VerifyCPF(cpf: string): Promise<boolean> {
         try {
@@ -67,7 +121,15 @@ function CompleteCad(){
             }
         } catch (error) {
             console.log('CPF TA OK');
-            return false;
+            const cpfInvalid = await ValidaCPF(cpf)
+            console.log(cpfInvalid);
+            
+            if (cpfInvalid) {
+                return false;
+            } else {
+                console.log('CPF invalido cria');
+                return true;
+            }
         }
     }
 
@@ -206,9 +268,10 @@ function CompleteCad(){
         };
 
         const cpfError = await VerifyCPF(cpf);
-
+        console.log(cpfError);
         if (cpfError) {
             setShowTipo(false); // Há erros, não avança para a próxima etapa
+            setShowErrorCPF(true)
             console.log('travo tudo aqq');
             console.log(dadosUsuario);
 
