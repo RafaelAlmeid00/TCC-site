@@ -9,10 +9,10 @@ import { Btn } from "../../btns";
 export default function EsqueciAsenha() {
     const [cpf, Setcpf] = useState('');
     const [mostrar, Setmostrar] = useState('hidden');
-    const [route, Setroute] = useState('');
+    var [route, Setroute] = useState('');
     const [teste, Setteste] = useState(undefined);
     const navi = useNavigate();
-
+    var qualquer = ''
    /* function nav() {
         try {
             navi('/rec')
@@ -29,28 +29,31 @@ export default function EsqueciAsenha() {
         }))
         console.log('this is teste: ', teste?.data?.RecToken);
         
-        localStorage.setItem('item', String(teste?.data.RecToken))
+        
     }
 
     useEffect(() =>{
         console.log(cpf.length);
         
         if (cpf.length == 11) {
-            envCpf()
             Setmostrar('visible');
         }else {
             Setmostrar('hidden');
         }
     }, [cpf]);
     useEffect(() =>{
-        console.log(teste);
-        console.log('this is route: ', route);
+        localStorage.setItem('item', String(teste?.data.RecToken))
+        console.log('this is teste: ', teste);
         
         if (teste != undefined) {
-            Setroute('/cadastro/rec')
+            console.log('confirm !');
+            navi('/cadastro/rec');
+        
         }
     }, [teste])
-
+  
+    console.log('this is route outside: ', route);
+    
     return (
         <>
         
@@ -87,7 +90,7 @@ export default function EsqueciAsenha() {
                 }
                 sx={{ fontSize: '5vh', marginLeft: '24%', padding: '5%', width: '21vw', height: '5vh', marginBottom: '5vh'}}
             />
-            <Btn ml={'74%'} route={route}  vis={mostrar} mb="1%" name="Continue >>"></Btn>
+            <Btn ml={'74%'}  fun={envCpf} vis={mostrar} mb="1%" name="Continue >>"></Btn>
             
             </Box>
         </>
