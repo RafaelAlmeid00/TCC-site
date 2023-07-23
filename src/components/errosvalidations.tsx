@@ -97,6 +97,31 @@ function CPFError() {
     );
 }
 
+
+function CNPJError() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Insira um CNPJ <strong>válido.</strong>
+            </Alert>
+        </>
+    );
+}
+
 function NomeError() {
     return (
         <>
@@ -261,6 +286,30 @@ function ErrorLogin() {
             }}>
                 <AlertTitle>Atenção!</AlertTitle>
                 CPF ou senha <strong>inválidos.</strong>
+            </Alert>
+        </>
+    );
+}
+
+function TipoNull() {
+    return (
+        <>
+            <Alert severity="warning" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Atenção!</AlertTitle>
+                Escolha o tipo de <strong>CNPJ. </strong>
             </Alert>
         </>
     );
@@ -487,4 +536,4 @@ function CEPPErfil() {
     );
 }
 
-export { CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };
+export { TipoNull, CNPJError, CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };

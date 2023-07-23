@@ -12,8 +12,7 @@ export default function OptionsCad() {
 
 
     const buttons = [
-        { text: "Escolas", route: "/areaescolas" },
-        { text: "Empresas", route: "/areaempresas" },
+        { text: "Empresarial", route: "/cadastro/empresa" },
         { text: "Usuário", route: "/cadastro" }
     ]
     return (

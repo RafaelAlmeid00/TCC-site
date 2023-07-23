@@ -106,7 +106,6 @@ const Rota = () => {
                       <Route path="/EasyPass" element={<EasyPassLazy />} />
                       <Route path="/Contatos" element={<ContatosLazy />} />
                       <Route path="/opcoes" element={<OptionsCad />} />
-                      <Route path="/areaescolas" element={<Escola />} />
                     </Routes>
                   </ModalContext.Provider>
                 </AuthProviderHome>
@@ -149,6 +148,7 @@ const Rota = () => {
                     <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
                     <Route path="/rec" element={<RecAccountLazy />} />
                     <Route path="/complemento" element={<CadallLazy />} />
+                    <Route path="/empresa" element={<Escola />} />
                   </Routes>
                 </ModalContext.Provider>
               </React.Fragment>
