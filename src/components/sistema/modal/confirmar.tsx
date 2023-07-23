@@ -17,14 +17,14 @@ export default function Excluir({ onCloseModal }) {
     const token = localStorage.getItem('token');
     const userData = Deccode();
     const navigate = useNavigate()
-    const data = userData.user_email
+    const data = userData.user_CPF
 
      async function excl() {
         console.log(localStorage);
 
         try {
             await axios.post('http://localhost:3344/user/delete', {
-                user_email: data,
+                user_CPF: data,
                 token: token
             })
             console.log('ta indo');

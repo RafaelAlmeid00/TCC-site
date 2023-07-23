@@ -1,4 +1,4 @@
-import { Box, Card, Container, Skeleton, Typography } from "@mui/material";
+import { Box, Card, Container, Divider, Skeleton, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -177,7 +177,8 @@ function Homesistema() {
                                     alignItems: 'center',
                                     float: 'left',
                                     mt: 6,
-                                    ml: 13
+                                    ml: 13,
+                                    mb: 10
                                 }}
                             >
                                 <Skeleton variant="rectangular" animation={"wave"} sx={{
@@ -199,6 +200,7 @@ function Homesistema() {
                                         alignItems: 'center',
                                         float: 'left',
                                         mt: 6,
+                                        mb: 10
                                     }}
                                 >
                                     <motion.div
@@ -239,13 +241,19 @@ function Homesistema() {
                         )
                     }
 
+                    <Divider sx={{
+                        width: '80%',
+                        margin: '0 auto'
+                    }} />
+
                     <Container sx={{
-                        mt: 10,
+                        mt: 5,
                         width: '80%',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         flexDirection: 'column',
+                        mb: 3
                     }}>
                         <Card
                             sx={{
@@ -258,7 +266,7 @@ function Homesistema() {
                                 boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
                                 cursor: 'pointer',
                                 mt: 2,
-                                mb: 2
+                                mb: 5
                             }}
                         >
                             <Container
@@ -269,10 +277,10 @@ function Homesistema() {
                                     flexDirection: "row",
                                 }}
                             >
-                                    <Typography sx={{
-                                        fontSize: 18,
-                                        fontWeight: 'bold'
-                                    }}>Histórico recente do cartão: </Typography>
+                                <Typography sx={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold'
+                                }}>Histórico recente do cartão: </Typography>
                             </Container>
                         </Card>
                         {loading ? (

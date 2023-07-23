@@ -22,6 +22,7 @@ const RoutesLazy = lazy(() => import('./pages/sistema/BussRotas'));
 const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 const SACLazy = lazy(() => import('./pages/sistema/SAC'));
 const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
+const CardLazy = lazy(() => import('./pages/sistema/Card'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -105,7 +106,7 @@ const Rota = () => {
                       <Route path="/App" element={<AppLazy />} />
                       <Route path="/EasyPass" element={<EasyPassLazy />} />
                       <Route path="/Contatos" element={<ContatosLazy />} />
-                      <Route path="/opcoes" element={<OptionsCad />} />
+                      <Route path="/Opcoes" element={<OptionsCad />} />
                     </Routes>
                   </ModalContext.Provider>
                 </AuthProviderHome>
@@ -146,9 +147,9 @@ const Rota = () => {
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />
                     <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
-                    <Route path="/rec" element={<RecAccountLazy />} />
-                    <Route path="/complemento" element={<CadallLazy />} />
-                    <Route path="/empresa" element={<Escola />} />
+                    <Route path="/Rec" element={<RecAccountLazy />} />
+                    <Route path="/Complemento" element={<CadallLazy />} />
+                    <Route path="/Empresa" element={<Escola />} />
                   </Routes>
                 </ModalContext.Provider>
               </React.Fragment>
@@ -168,10 +169,11 @@ const Rota = () => {
                   <React.Fragment>
                     <Routes>
                       <Route path="/" element={<HomeSistema />} />
-                      <Route path="/rotas" element={<RoutesLazy />} />
+                      <Route path="/Rotas" element={<RoutesLazy />} />
                       <Route path="/Perfil" element={<PerfilLazy />} />
                       <Route path="/SAC" element={<SACLazy />} />
                       <Route path="/Onibus" element={<OnibusLazy />} />
+                      <Route path="/Card" element={<CardLazy />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

@@ -1,13 +1,18 @@
-import { Card, Container, Typography } from "@mui/material";
+import { Card, Container, IconButton, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Cartao({dataCard}) {
+    const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
     const { verify } = React.useContext(ModalContext);
     const navigate = useNavigate()
-    
+
+    const handleVisibilityToggle = () => {
+        setIsBalanceVisible((prevValue) => !prevValue);
+    };
     const handleCard = () => {
         navigate("/Sistema/Card")
     }
@@ -22,6 +27,7 @@ export default function Cartao({dataCard}) {
                 justifyContent: 'start',
                 alignItems: 'center',
                 mt: 6,
+                mb: 10
             }}>
                 <motion.div
                     whileHover={{ scale: 1.02 }}
@@ -50,19 +56,29 @@ export default function Cartao({dataCard}) {
                         </Typography>
                     </Card>
                 </motion.div>
-                <Container sx={{
-                    display: 'flex', // Define display para flex
-                    flexDirection: 'column', // Itens ficarão em coluna abaixo um do outro
-                    justifyContent: 'start',
-                    alignItems: 'flex-start', // Alinha os textos à esquerda
-                    ml: 15,
-                }}>
-                    <Typography sx={{ color: verify ? 'white' : 'black' }}>Saldo do cartão: R${dataCard.card_saldo}</Typography>
-                    <Typography sx={{ color: verify ? 'white' : 'black', mt: 2, mb: 2 }}>Validade do cartão: {dataCard.card_validade}</Typography>
-                    <Typography sx={{ color: verify ? 'white' : 'black' }}>Status do cartão: {dataCard.card_status}</Typography>
+                <Container
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'start',
+                        alignItems: 'flex-start',
+                        ml: 15,
+                    }}
+                >
+                    <Typography sx={{ color: verify ? 'white' : 'black' }}>
+                        Saldo do cartão: {isBalanceVisible ? `R$${dataCard.card_saldo}` : '•••••••••'}
+                        <IconButton onClick={handleVisibilityToggle} sx={{ ml: 0.5, mt: -1 }}>
+                            {isBalanceVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </Typography>
+                    <Typography sx={{ color: verify ? 'white' : 'black', mt: 2, mb: 2 }}>
+                        Validade do cartão: {dataCard.card_validade}
+                    </Typography>
+                    <Typography sx={{ color: verify ? 'white' : 'black' }}>
+                        Status do cartão: {dataCard.card_status}
+                    </Typography>
                 </Container>
             </Container>
-
         </>
     )
 }

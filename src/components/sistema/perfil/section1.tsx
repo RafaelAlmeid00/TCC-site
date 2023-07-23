@@ -27,6 +27,7 @@ function SectionPerfil1() {
     const cpf = userData.user_CPF;
     const birthDate = new Date(userData.user_nascimento);
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
+    const token = localStorage.getItem('token');
 
     const trocaNome = () => {
         setNome(true)
@@ -52,6 +53,7 @@ function SectionPerfil1() {
             await axios.post('http://localhost:3344/user/update', {
                 user_CPF: cpf,
                 updates,
+                token: token
             });
             setOpen(true)
             setTimeout(() => {
@@ -73,6 +75,7 @@ function SectionPerfil1() {
             console.log('foi quase');
             const res = await axios.post('http://localhost:3344/user/token', {
                 user_CPF: cpf,
+                token: token
             });
             if (res.data.token != '') {
                 localStorage.removeItem('token')
