@@ -78,14 +78,14 @@ export default function MenuPerfil() {
                                     ml: '24px',
                                     mt: 2,
                                     color: verify ? colors.sc : 'black',
+                                    whiteSpace: 'nowrap', // Prevent wrapping of text
                                     '&:hover': {
                                         background: '#e9e9e9e9',
-                                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
                                         '& svg': {
-                                            fill: colors.sc, // Adicionado para mudar a cor do ícone
+                                            fill: verify ? 'black' : colors.sc,
                                         },
                                         '& .MuiTypography-root': {
-                                            color: colors.sc, // Adicionado para mudar a cor do texto
+                                            color: verify ? 'black' : colors.sc,
                                         }
                                     },
                                 }}
