@@ -8,6 +8,7 @@ import colors from "../../../assets/colors";
 import Excluir from "../modal/confirmar";
 import { PerfilAtualizado, PerfilError, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
 import { Email, Lock } from "@mui/icons-material";
+import { Btn } from "../../btns";
 
 function SectionPerfil2() {
     const [modal, setModal] = React.useState(false)
@@ -58,6 +59,9 @@ function SectionPerfil2() {
         setEmail(false)
     };
 
+    const confirmarSenha = () => {
+        setSenha(false)
+    };
 
     const ParametroEmail = () => {
         parame = 'email'
@@ -183,13 +187,14 @@ function SectionPerfil2() {
                                 fontSize: 12,
                                 width: '40%',
                                 mt: 2,
+                                mb: 5,
                                 color: '#7d7d7d'
                             }}>Sempre verifique qual sua nova senha antes de confirmar a atualização de dados.
                                 Caso perca essa senha e não tenha acesso a seu e-mail,
                                 não será possivel logar sua conta pelos métodos convencionais.</Typography>
                             {senha ?
                                 <>
-                                    <FormControl variant="standard" sx={{ width: '40%', mb: '20px', mt: 5 }}>
+                                    <FormControl variant="standard" sx={{ width: '40%', mb: 5, mt: 5 }}>
                                         <InputLabel htmlFor="input-with-icon-adornment">
                                             Senha
                                         </InputLabel>
@@ -207,7 +212,7 @@ function SectionPerfil2() {
                                             sx={{ fontSize: '14px' }}
                                         />
                                     </FormControl>
-                                    <FormControl variant="standard" sx={{ width: '40%', mt: 5, mb: 5 }}>
+                                    <FormControl variant="standard" sx={{ width: '40%', mb: 5 }}>
                                         <InputLabel htmlFor="input-with-icon-adornment">
                                             Senha
                                         </InputLabel>
@@ -225,27 +230,10 @@ function SectionPerfil2() {
                                             sx={{ fontSize: '14px' }}
                                         />
                                     </FormControl>
+
+                                    <Btn name={"Confirmar"} route={""} fun={confirmarSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                                 </>
-                                : <Button variant="contained" sx={{
-                                    color: verify ? colors.pm : 'white',
-                                    background: verify ? 'white' : undefined,
-                                    mt: 3,
-                                    border: '2px solid transparent', // adiciona a borda inicialmente
-                                    transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-                                    '&:hover': {
-                                        border: '2px solid #0fcd88', // muda a cor da borda na animação,
-                                        background: verify ? 'white' : undefined
-                                    },
-                                }}
-                                    onClick={trocaSenha}
-                                >
-                                    <Typography sx={{
-                                        fontSize: 12,
-                                        fontWeight: 600,
-                                    }}>
-                                        Alterar Senha
-                                    </Typography>
-                                </Button>}
+                                : <Btn name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
                             {email ?
 
                                 <FormControl variant="standard" sx={{ width: '40%', mb: '20px', mt: 5 }}>
@@ -270,7 +258,6 @@ function SectionPerfil2() {
                                 : <Button variant="contained" sx={{
                                     color: verify ? colors.pm : 'white',
                                     background: verify ? 'white' : undefined,
-                                    mt: 3,
                                     border: '2px solid transparent', // adiciona a borda inicialmente
                                     transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
                                     '&:hover': {
