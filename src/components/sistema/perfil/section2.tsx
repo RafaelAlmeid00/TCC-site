@@ -6,9 +6,8 @@ import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import colors from "../../../assets/colors";
 import Excluir from "../modal/confirmar";
-import { ContentNull, EmailEnviado, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
-import { Lock } from "@mui/icons-material";
-import { Btn } from "../../btns";
+import { PerfilAtualizado, PerfilError, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
+import { Email, Lock } from "@mui/icons-material";
 
 function SectionPerfil2() {
     const [modal, setModal] = React.useState(false)
@@ -19,9 +18,7 @@ function SectionPerfil2() {
     const [openT0, setOpenT0] = React.useState(false);
     const [senha, setSenha] = React.useState(false);
     const [email, setEmail] = React.useState(false);
-    const [nulo, setNulo] = React.useState(false);
-    const [vfSenha, setVfSenha] = React.useState(false);
-    const [invalidsenha, setInvalidSenha] = React.useState(false)
+    const [senha, setSenha] = React.useState(false);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const [dado, setPega] = React.useState('');
@@ -32,6 +29,7 @@ function SectionPerfil2() {
     const userData = Deccode();
     const cpf = userData.user_CPF;
     const data = userData.user_email
+    const nome = userData.user_nome
     const navigate = useNavigate()
 
     console.log(localStorage);
@@ -91,27 +89,6 @@ function SectionPerfil2() {
 
     }
 
-    const updateEmail = async () => {
-        try {
-
-            await axios.post('http://localhost:3344/user/updateemail', {
-                user_email: data,
-                token: token
-            })
-            setSenha(false)
-            setEmail(true)
-            setTimeout(() => {
-                setEmail(false)
-            }, 3000)
-        } catch (error) {
-            console.log(error);
-            setOpen2(true)
-            setTimeout(() => {
-                setOpen2(false)
-            }, 3000)
-        }
-
-    };
 
     const update = async (cpf: any, updates: any) => {
         try {
@@ -170,21 +147,7 @@ function SectionPerfil2() {
 
 
     const ConfirmarEmail = async () => {
-        setSenha(false)
-        setVfSenha(false)
-        setInvalidSenha(false)
-
-        if (data == '') {
-            console.log(data);
-            console.log('Email vazio');
-            
-        } else {
-            await updateEmail();
-        }
-    };
-
-    const ConfirmarSenha = async () => {
-        const verifySenha = await ParametroSenha()
+        await ParametroEmail()
         console.log(dado);
         let updates = {
             [parame]: dado
@@ -196,38 +159,15 @@ function SectionPerfil2() {
         console.log(parame);
         console.log(dado);
         setSenha(false)
-
-        if (verifySenha) {
-            if (dado == '') {
-                console.log(parame);
-                console.log('parame vazio');
-                setNulo(true)
-
-            } else {
-                await update(cpf, updates);
-                await UpdateToken()
-                updates = ''
-            }
-        } else{
-            console.log('deu foi merda');
-
-            return null
-        }
+        await update(cpf, updates);
+        setEmail(false)
+        await UpdateToken()
 
     };
 
-    React.useEffect(() => {
-        console.log(nulo, invalidsenha, vfSenha);
-
-    }, [invalidsenha, nulo, vfSenha])
-    
 
     return (
         <>
-            {email && <EmailEnviado data={data} />}
-        {nulo && <ContentNull />}
-            {invalidsenha && <SenhaInvalida />}
-            {vfSenha && <SenhaDiferente />}
             {open && <PerfilAtualizado />}
             {open2 && <PerfilError />}
             {openT && <TokenAtualizado />}
@@ -324,12 +264,68 @@ function SectionPerfil2() {
                                             sx={{ fontSize: '14px' }}
                                         />
                                     </FormControl>
-
-                                    <Btn name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                                 </>
-                                : <Btn name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
-                            
-                            <Btn name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
+                                : <Button variant="contained" sx={{
+                                    color: verify ? colors.pm : 'white',
+                                    background: verify ? 'white' : undefined,
+                                    mt: 3,
+                                    border: '2px solid transparent', // adiciona a borda inicialmente
+                                    transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+                                    '&:hover': {
+                                        border: '2px solid #0fcd88', // muda a cor da borda na animação,
+                                        background: verify ? 'white' : undefined
+                                    },
+                                }}
+                                    onClick={trocaSenha}
+                                >
+                                    <Typography sx={{
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                    }}>
+                                        Alterar Senha
+                                    </Typography>
+                                </Button>}
+                            {email ?
+
+                                <FormControl variant="standard" sx={{ width: '40%', mb: '20px', mt: 5 }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        Email
+                                    </InputLabel>
+                                    <Input
+                                        placeholder="Insira o novo email"
+                                        inputProps={{ maxLength: 12 }}
+                                        required
+                                        id="input-with-icon-adornment"
+                                        onChange={(event) => setPega(event?.target.value)}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <Email />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px' }}
+                                    />
+                                </FormControl>
+
+                                : <Button variant="contained" sx={{
+                                    color: verify ? colors.pm : 'white',
+                                    background: verify ? 'white' : undefined,
+                                    mt: 3,
+                                    border: '2px solid transparent', // adiciona a borda inicialmente
+                                    transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+                                    '&:hover': {
+                                        border: '2px solid #0fcd88', // muda a cor da borda na animação
+                                        background: verify ? 'white' : undefined,
+                                    },
+                                }}
+                                    onClick={trocaEmail}
+                                >
+                                    <Typography sx={{
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                    }}>
+                                        Alterar E-mail
+                                    </Typography>
+                                </Button>}
                         </Container>
 
                         <Divider variant="fullWidth" component="ul" sx={{

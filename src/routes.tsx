@@ -23,6 +23,7 @@ const PerfilLazy = lazy(() => import('./pages/sistema/Perfil'));
 const SACLazy = lazy(() => import('./pages/sistema/SAC'));
 const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
 const CardLazy = lazy(() => import('./pages/sistema/Card'));
+const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -174,6 +175,7 @@ const Rota = () => {
                       <Route path="/SAC" element={<SACLazy />} />
                       <Route path="/Onibus" element={<OnibusLazy />} />
                       <Route path="/Card" element={<CardLazy />} />
+                      <Route path="/AlterarEmail" element={<TrocaEmailLazy />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

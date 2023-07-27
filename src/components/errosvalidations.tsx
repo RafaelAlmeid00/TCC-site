@@ -4,7 +4,7 @@ function EmailPasswordNull() {
     return (
         <>
             <Alert severity="warning" sx={{
-                width: {xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw'},
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
                 height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
                 position: 'absolute',
                 top: 10,
@@ -271,7 +271,7 @@ function ErrorLogin() {
     return (
         <>
             <Alert severity="warning" sx={{
-                width: {xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw'},
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
                 height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
                 position: 'absolute',
                 top: 10,
@@ -344,7 +344,7 @@ function EmailExiste() {
     return (
         <>
             <Alert severity="error" sx={{
-                width: {xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw'},
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
                 height: { xs: '20vh', sm: '15vh', md: '15vh', lg: '10vh', xl: '10vh' },
                 position: 'absolute',
                 top: 10,
@@ -584,7 +584,11 @@ function SenhaInvalida() {
     );
 }
 
-function EmailEnviado({data}) {
+interface Prop {
+    data: string
+}
+
+function EmailEnviado({ data }: Prop) {
     return (
         <>
             <Alert severity="success" sx={{
@@ -602,10 +606,34 @@ function EmailEnviado({data}) {
                 boxShadow: '0px 0px 8px 2px'
             }}>
                 <AlertTitle>Sucesso!</AlertTitle>
-                O email foi enviado para: <strong>{data}.</strong>
+                Um email foi enviado para: <strong>{data}.</strong>
             </Alert>
         </>
     );
 }
 
-export { EmailEnviado, SenhaInvalida, SenhaDiferente, TipoNull, CNPJError, CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };
+function EmailNaoEnviado({ data }: Prop) {
+    return (
+        <>
+            <Alert severity="error" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '22vh', sm: '18vh', md: '18vh', lg: '12vh', xl: '12vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Erro!</AlertTitle>
+                O email não foi enviado para: <strong>{data}.</strong>
+            </Alert>
+        </>
+    );
+}
+
+export { EmailNaoEnviado, EmailEnviado, SenhaInvalida, SenhaDiferente, TipoNull, CNPJError, CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };

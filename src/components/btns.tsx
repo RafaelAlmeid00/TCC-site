@@ -212,13 +212,6 @@ function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb}: BtnProps) {
         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
         fontWeight: 'bold',
         whiteSpace: 'nowrap',
-        height: {
-          xs: '6vh',  // (7.5 / 1200) * 600
-          sm: '5vh',  // (7.5 / 1200) * 900
-          md: '5vh',  // (7.5 / 1200) * 1200
-          lg: '5.2vh',
-          xl: '5.2vh',  // Manter o mesmo tamanho de lg para xl
-        },
         width: {
           xs: '15vw',
           sm: '15vw',

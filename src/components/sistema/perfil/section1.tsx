@@ -49,7 +49,7 @@ function SectionPerfil1() {
     }
 
 
-    const update = async (cpf: any, updates: any) => {
+   const update = async (cpf: any, updates: any) => {
         try {
 
             console.log(updates);
@@ -282,13 +282,8 @@ function SectionPerfil1() {
                 console.error('Error uploading image:', error);
             }
         };
-        if (perfil) {
-            console.log('já foi pego');
-
-        } else {
-            returnImagePerfil();
-        }
-    }, [token]);
+        returnImagePerfil();
+    }, [token]); 
   
 
 
