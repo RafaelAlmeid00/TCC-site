@@ -38,8 +38,16 @@ export default function Buss() {
 
             }
         }
-        SearchRT()
+        if (routes.length > 0) {
+            console.log('já foi pego');
+
+        } else {
+            SearchRT()
+        }
     }, [token])
+
+    console.log(routes);
+    
 
     return (
         <>

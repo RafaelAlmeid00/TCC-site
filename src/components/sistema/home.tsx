@@ -80,7 +80,12 @@ function Homesistema() {
                 setLoad(true)
             }
         }
-        SearchCard()
+        if (dataCard) {
+            console.log('já foi pego');
+
+        } else {
+            SearchCard()
+        }
     }, [card, token])
 
     React.useEffect(() => {
@@ -111,7 +116,12 @@ function Homesistema() {
 
             }
         }
-        SearchVal()
+        if (val) {
+            console.log('já foi pego');
+            
+        } else {
+            SearchVal()
+        }
     }, [token, val])
 
 

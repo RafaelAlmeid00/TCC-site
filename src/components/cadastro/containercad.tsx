@@ -12,7 +12,7 @@ import buscad from "../../assets/buscad.jpg"
 import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLabel, Typography, styled } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin } from "../errosvalidations";
+import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin, SenhaInvalida } from "../errosvalidations";
 import { Btn, BtnL } from "../btns";
 
 function ContainerCad() {
@@ -25,6 +25,7 @@ function ContainerCad() {
     const [disable, setDisable] = React.useState(false)
     const [showErrorlog, setShowErrorlog] = React.useState(false);
     const [showNull, setShowNull] = React.useState(false);
+    const [invalidsenha, setInvalidSenha] = React.useState(false)
     const [cpf2, setCpf2] = React.useState('');
     const { verify } = React.useContext(ModalContext);
     const { loginbool } = React.useContext(ModalContext);
@@ -37,8 +38,15 @@ function ContainerCad() {
         event.preventDefault();
     };
 
+    function validatePassword(password: string | undefined) {
+        const regex = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+
+        return regex.test(password);
+    }
+
 
     async function Verifylog() {
+        const isPasswordValid = validatePassword(password);
         try {
             console.log("ta indo")
             const response = await axios.post('http://localhost:3344/user/email', { user_email: email })
@@ -50,6 +58,7 @@ function ContainerCad() {
                 setShowError(false);
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
+                setInvalidSenha(false)
                 setTimeout(() => {
                     setError(false)
                 }, 5000);
@@ -61,14 +70,22 @@ function ContainerCad() {
                 setShowError(true);
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
+                setInvalidSenha(false)
+            } else if (!isPasswordValid){
+                setShowErrorEmail(false);
+                setShowError(false);
+                setShowErrorlog(false);
+                setInvalidSenha(true)
             } else if (email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
                 setShowErrorEmail(true);
                 setShowError(false);
                 setShowErrorlog(false);
+                setInvalidSenha(false)
             } else {
                 setShowErrorEmail(false);
                 setShowError(false);
                 setShowErrorlog(false);
+                setInvalidSenha(false)
                 navigate('/cadastro/complemento');
             }
         }
@@ -140,6 +157,7 @@ function ContainerCad() {
             {showErrorEmail && <EmailIncorrect />}
             {showErrorlog && <ErrorLogin />}
             {error && <EmailExiste />}
+            {invalidsenha && <SenhaInvalida />}
 
             <Box sx={{
                 background: verify ? '#121212' : 'white',
@@ -270,6 +288,14 @@ function ContainerCad() {
                                     sx={{ fontSize: '14px' }}
                                 />
                             </FormControl>
+                            {invalidsenha &&
+                                <Typography component='span' sx={{
+                                    color: 'red',
+                                    fontSize: '0.9vw'
+                                }}>
+                                    A senha precisa ter: 1 número, 1 caractere especial e 1 letra maiúscula!
+                                </Typography>
+                            }
                             <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} vis={undefined} mb={undefined} />
                             <Typography sx={{
                                 textAlign: 'center', mt: '20px', color: '#666666', fontSize: {

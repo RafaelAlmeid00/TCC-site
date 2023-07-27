@@ -242,7 +242,12 @@ function SectionPerfil1() {
                 console.error('Error uploading image:', error);
             }
         };
-        returnImage();
+        if (img) {
+            console.log('já foi pego');
+
+        } else {
+            returnImage();
+        }
     }, [token]);
 
     React.useEffect(() => {
@@ -277,7 +282,12 @@ function SectionPerfil1() {
                 console.error('Error uploading image:', error);
             }
         };
-        returnImagePerfil();
+        if (perfil) {
+            console.log('já foi pego');
+
+        } else {
+            returnImagePerfil();
+        }
     }, [token]);
   
 

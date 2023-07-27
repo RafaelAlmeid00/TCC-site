@@ -62,7 +62,12 @@ export default function CardSection() {
                 setLoad(true)
             }
         }
-        SearchCard()
+        if (dataCard) {
+            console.log('já foi pego');
+
+        } else {
+            SearchCard()
+        }
     }, [card, token])
 
     React.useEffect(() => {
@@ -95,7 +100,12 @@ export default function CardSection() {
                 setLoading(true)
             }
         }
-        SearchCardCancel()
+        if (dataCardCancel) {
+            console.log('já foi pego');
+
+        } else {
+            SearchCardCancel()
+        }
     }, [card, token])
 
     return (
