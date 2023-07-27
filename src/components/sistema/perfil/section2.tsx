@@ -6,7 +6,7 @@ import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import colors from "../../../assets/colors";
 import Excluir from "../modal/confirmar";
-import { ContentNull, EmailEnviado, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
+import { ContentNull, EmailEnviado, EmailNaoEnviado, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
 import { Lock } from "@mui/icons-material";
 import { Btn } from "../../btns";
 
@@ -19,6 +19,7 @@ function SectionPerfil2() {
     const [openT0, setOpenT0] = React.useState(false);
     const [senha, setSenha] = React.useState(false);
     const [email, setEmail] = React.useState(false);
+    const [nemail, setNEmail] = React.useState(false);
     const [nulo, setNulo] = React.useState(false);
     const [vfSenha, setVfSenha] = React.useState(false);
     const [invalidsenha, setInvalidSenha] = React.useState(false)
@@ -32,6 +33,7 @@ function SectionPerfil2() {
     const userData = Deccode();
     const cpf = userData.user_CPF;
     const data = userData.user_email
+    const nome = userData.user_nome
     const navigate = useNavigate()
 
     console.log(localStorage);
@@ -96,19 +98,22 @@ function SectionPerfil2() {
 
             await axios.post('http://localhost:3344/user/updateemail', {
                 user_email: data,
+                user_CPF: cpf,
+                user_nome: nome,
+                type: "email",
                 token: token
             })
             setSenha(false)
             setEmail(true)
             setTimeout(() => {
                 setEmail(false)
-            }, 3000)
+            }, 8000)
         } catch (error) {
             console.log(error);
-            setOpen2(true)
+            setNEmail(true)
             setTimeout(() => {
-                setOpen2(false)
-            }, 3000)
+                setNEmail(false)
+            }, 5000)
         }
 
     };
@@ -224,6 +229,7 @@ function SectionPerfil2() {
 
     return (
         <>
+            {nemail && <EmailNaoEnviado data={data} />}
             {email && <EmailEnviado data={data} />}
             {nulo && <ContentNull />}
             {invalidsenha && <SenhaInvalida />}
@@ -325,11 +331,11 @@ function SectionPerfil2() {
                                         />
                                     </FormControl>
 
-                                    <Btn name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                                    <Btn name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                                 </>
-                                : <Btn name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
+                                : <Btn name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
 
-                            <Btn name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : colors.sc} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                            <Btn name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                         </Container>
 
                         <Divider variant="fullWidth" component="ul" sx={{
