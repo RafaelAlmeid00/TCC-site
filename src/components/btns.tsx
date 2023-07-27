@@ -211,6 +211,7 @@ function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb}: BtnProps) {
         border: '2px solid transparent', // adiciona a borda inicialmente
         transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
         fontWeight: 'bold',
+        whiteSpace: 'nowrap',
         width: {
           xs: '15vw',
           sm: '15vw',

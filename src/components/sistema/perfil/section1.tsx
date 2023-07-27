@@ -49,7 +49,7 @@ function SectionPerfil1() {
     }
 
 
-    const update = async (cpf: any, updates: any) => {
+   const update = async (cpf: any, updates: any) => {
         try {
 
             console.log(updates);
@@ -209,7 +209,7 @@ function SectionPerfil1() {
 
 
 
-    React.useEffect(() => {
+    {/*   React.useEffect(() => {
         const returnImage = async () => {
             console.log('foi');
             try {
@@ -278,7 +278,7 @@ function SectionPerfil1() {
             }
         };
         returnImagePerfil();
-    }, [token]);
+    }, [token]); */}
   
 
 
