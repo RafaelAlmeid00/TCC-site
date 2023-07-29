@@ -36,6 +36,7 @@ const Rota = () => {
   const [comp, setComp] = useState('');
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
+  const [cpf, setCpf] = React.useState('');
 
   function checkDevice() {
     if (navigator.userAgent.match(/Android/i)
@@ -144,6 +145,7 @@ const Rota = () => {
                   themes, // ou o tema que você desejar usar
                   hasEntered,
                   setHasEntered,
+                  cpf, setCpf
                 }}>
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />

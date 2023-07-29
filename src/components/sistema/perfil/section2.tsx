@@ -100,7 +100,6 @@ function SectionPerfil2() {
                 user_email: data,
                 user_CPF: cpf,
                 user_nome: nome,
-                type: "email",
                 token: token
             })
             setSenha(false)
@@ -307,9 +306,9 @@ function SectionPerfil2() {
                                         <Typography component='span' sx={{
                                             color: 'red',
                                             mb: 5,
-                                            fontSize: '0.9vw'
+                                            fontSize: '0.8vw'
                                         }}>
-                                            A senha precisa ter: 1 número, 1 caractere especial e 1 letra maiúscula!
+                                            A senha precisa ter: Mais de 8 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula!
                                         </Typography>
                                     }
                                     <FormControl variant="standard" sx={{ width: '40%', mb: 5 }}>
