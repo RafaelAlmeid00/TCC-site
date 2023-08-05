@@ -255,6 +255,7 @@ function SectionPerfil2() {
                         justifyContent: 'center',
                         flexDirection: 'column',
                         width: '80%',
+                        mt: -15
                     }}>
 
                         <Divider variant="fullWidth" component="ul" sx={{
