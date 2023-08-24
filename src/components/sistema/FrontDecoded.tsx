@@ -15,7 +15,16 @@ export function DecodedItem2() {
     
     var test = {v: jwt_decode(String(localStorage.getItem('item')))};
     console.log('teste nesse prr: ', test.v.verified);
-    return '/cadastro/alterarSenha'
+    if (test.v.verified == true) {
+        console.log('é true papai');
+        
+        return '/cadastro/alterarSenha'
+    }else{
+        console.log('fake d+ slk');
+        
+        return 'erro'
+    }
+    
 }
 export function removeToken() {
     return localStorage.removeItem('token');

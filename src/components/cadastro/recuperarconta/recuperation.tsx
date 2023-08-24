@@ -3,8 +3,12 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useState } from "react";
 import { DeccodeItem, DecodedItem2} from "../../sistema/FrontDecoded";
+import { useNavigate } from "react-router-dom";
+
+
 
 function EsqueciAsenha() {
+    const navi = useNavigate()
     const RecToken = localStorage.getItem('item');
     const [code, Setcode] = useState('');
     var datadecode = {dt: DeccodeItem()};
@@ -16,9 +20,22 @@ function EsqueciAsenha() {
             code: code
         })
         console.log(response);
-        localStorage.setItem('item', String(response.data.RecToken));
-        var s = DecodedItem2();
-        console.log('aaaaaaaaaaaaaaaaaaaaaa: ', s);
+        if (response.status == 201) {
+            localStorage.setItem('item', String(response.data.RecToken));
+            var s = DecodedItem2();
+            console.log('aaaaaaaaaaaaaaaaaaaaaa: ', s);
+            if (s == 'erro') {
+                alert('código errado!');
+                console.log('dcxz');
+            
+            }else{
+                navi(s);
+                console.log('teste');
+                
+            }
+        }
+        
+        
     }
 
     return (

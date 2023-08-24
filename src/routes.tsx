@@ -14,6 +14,7 @@ const CadallLazy = lazy(() => import('./pages/home/cadall'));
 const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const ForgetPasswordLazy = lazy(() => import('./pages/home/ForgetPassword'));
+const ChangePasswordLazy = lazy(() => import('./pages/home/ChangePass'));
 const RecAccountLazy = lazy(() => import('./pages/home/ForgetRec'));
 const Escola = lazy(() => import('./pages/home/cadEscola'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
@@ -148,6 +149,7 @@ const Rota = () => {
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />
                     <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
+                    <Route path="/alterarSenha" element={<ChangePasswordLazy/>} />
                     <Route path="/Rec" element={<RecAccountLazy />} />
                     <Route path="/Complemento" element={<CadallLazy />} />
                     <Route path="/Empresa" element={<Escola />} />

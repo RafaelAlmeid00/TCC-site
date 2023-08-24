@@ -57,7 +57,6 @@ export default function EsqueciAsenha() {
         }
     }, [teste])
 
-    console.log('this is route outside: ', route);
 
     return (
         <>
