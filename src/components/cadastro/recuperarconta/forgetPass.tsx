@@ -1,40 +1,34 @@
-import { Input, Typography, InputAdornment, Button, Box } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Input, Typography, InputAdornment, Button, Box, Container } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Btn } from "../../btns";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
+import colors from "../../../assets/colors";
 
 
 export default function EsqueciAsenha() {
-    const [cpf, Setcpf] = React.useState('');
+    const { cpf, setCpf } = React.useContext(ModalContext);
     const [mostrar, Setmostrar] = React.useState('hidden');
-    var [route, Setroute] = React.useState('');
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
-    const [teste, Setteste] = React.useState(undefined);
-    const navi = useNavigate();
+    const navigate = useNavigate();
     const fundo = themes.palette.background.default
-
-    var qualquer = ''
-    /* function nav() {
-         try {
-             navi('/rec')
-         } catch (error) {
-             console.log(error);
-         }
-         
-     } */
+    
     async function envCpf() {
-        console.log('env');
 
-        Setteste(await axios.post('http://localhost:3344/user/login/PassRec', {
-            cpf: cpf
-        }))
-        console.log('this is teste: ', teste?.data?.RecToken);
+        try {
+            await axios.post('http://localhost:3344/user/updatesenha', {
+                user_CPF: cpf,
+            })
 
-
+            console.log('foi mlk');
+            navigate('/cadastro/rec');
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 
     React.useEffect(() => {
@@ -46,16 +40,6 @@ export default function EsqueciAsenha() {
             Setmostrar('hidden');
         }
     }, [cpf]);
-    React.useEffect(() => {
-        localStorage.setItem('item', String(teste?.data.RecToken))
-        console.log('this is teste: ', teste);
-
-        if (teste != undefined) {
-            console.log('confirm !');
-            navi('/cadastro/rec');
-
-        }
-    }, [teste])
 
 
     return (
@@ -96,7 +80,7 @@ export default function EsqueciAsenha() {
                         onChange={(event) => {
                             const { value } = event.target;
                             const newValue = value.replace(/\D/g, '');
-                            Setcpf(newValue);
+                            setCpf(newValue);
                         }}
                         id="input-with-icon-adornment"
                         startAdornment={
@@ -106,8 +90,21 @@ export default function EsqueciAsenha() {
                         }
                         sx={{ fontSize: '5vh', marginLeft: '24%', padding: '5%', width: '21vw', height: '5vh', marginBottom: '5vh' }}
                     />
-                    <Btn ml={'74%'} fun={envCpf} vis={mostrar} mb="1%" name="Continue >>"></Btn>
-
+                    <Container sx={{
+                        width: '100%',
+                        height: 'auto'
+                    }}>
+                        <Container sx={{
+                            width: 'auto',
+                            height: 'auto',
+                            float: "right",
+                            mb: 3,
+                            mt: 3,
+                            mr: -3
+                        }}>
+                            <Btn fun={envCpf} vis={mostrar} name="Continue >>" route={""} cl={verify ? colors.pm : "white"} bc={verify ? "white" : undefined} bch={verify ? "white" : undefined} mb={undefined} />
+                        </Container>
+                    </Container>
                 </Box>
             </Box>
         </>
