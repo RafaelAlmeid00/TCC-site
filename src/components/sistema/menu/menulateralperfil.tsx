@@ -20,8 +20,8 @@ export default function MenuPerfil() {
 
     const btnsmenu = [
         { title: 'Informações Pessoais', route: 'dados', icon: <DisplaySettingsIcon /> },
-        { title: 'Endereço', route: 'endereço', icon: <HomeIcon /> },
-        { title: 'Cartões', route: 'cartões', icon: <StyleIcon /> },
+        { title: 'Endereço', route: 'endereco', icon: <HomeIcon /> },
+        { title: 'Documentos', route: 'documentos', icon: <StyleIcon /> },
         { title: 'Viagens', route: 'viajens', icon: <DirectionsBusIcon /> },
         { title: 'Extrato Pagamentos', route: 'extrato', icon: <AccountBalanceIcon /> },
         { title: 'Compras', route: 'compras', icon: <LocalMallIcon /> }

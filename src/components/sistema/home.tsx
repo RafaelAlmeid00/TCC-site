@@ -1,4 +1,4 @@
-import { Box, Card, Container, Divider, Skeleton, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, Container, Divider, Skeleton, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -10,6 +10,8 @@ import { PedidosAberto } from "../errosvalidations";
 import { Deccode } from "./FrontDecoded";
 import axios from "axios";
 import Cartao from "./modal/card";
+import { useNavigate } from "react-router-dom";
+import AlertConta from "./AlertConta";
 
 function Homesistema() {
     const [modal, setModal] = React.useState(false)
@@ -20,11 +22,28 @@ function Homesistema() {
     const fundo = themes.palette.background.default
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
     const [userData] = React.useState(Deccode());
-    console.log(Deccode());
     const token = localStorage.getItem('token')
     const [dataCard, setDataCard] = React.useState('')
     const [val, setVal] = React.useState([])
     const [loading, setLoading] = React.useState(true)
+    const [active, setActive] = React.useState(Boolean)
+    const navigate = useNavigate()
+
+    React.useEffect(() => {
+        console.log(userData.user_status);
+        
+        if (userData.user_status == "ativo") {
+            setActive(false)
+        } else if (userData.user_status == "inativo") {
+            setActive(true)
+        } else {
+            setActive(true)
+            navigate("/cadastro")
+        }
+
+        console.log(active);
+        
+    }, [])
 
 
     const buttonshome = [
@@ -38,7 +57,13 @@ function Homesistema() {
     };
 
     const handleOpenModal = () => {
-        setModal(true);
+        console.log(active);
+        
+        if (active) {
+            setModal(true);
+        } else {
+            navigate('/sistema/documentos')
+        }
     };
 
     const handleAlertChange = (value) => {
@@ -48,40 +73,6 @@ function Homesistema() {
         }, 5000)
     };
 
-    React.useEffect(() => {
-        async function SearchCard() {
-            try {
-                console.log('ta indo');
-                console.log(token);
-
-                const response = await axios.post('http://localhost:3344/card/enviados', {
-                    token: token
-                });
-                console.log(response);
-                console.log('ta indo');
-
-                if (response.data) {
-                    console.log(response.data);
-                    console.log(dataCard);
-                    setDataCard(response.data[0])
-                    console.log(dataCard);
-                    setCard(true)
-                    setLoad(false)
-                    console.log(card);
-
-                } else {
-                    console.log('deu merda rapeize')
-                    setCard(false)
-                    setLoad(true)
-                }
-            } catch (error) {
-                console.log(error);
-                setCard(false)
-                setLoad(true)
-            }
-        }
-        SearchCard()
-    }, [card, token])
 
     React.useEffect(() => {
         async function SearchVal() {
@@ -90,35 +81,40 @@ function Homesistema() {
                 console.log(token);
 
                 const response = await axios.post('http://localhost:3344/validation', {
+                    user_CPF: userData.user_CPF,
                     token: token
                 });
                 console.log(response);
                 console.log('ta indo');
                 console.log(response);
 
-                if (response.data) {
-                    const Cards = response.data
-                    setVal(Cards)
+                if (response.data.lenght > 0) {
+                    const Cards = response.data[0]
+                    setDataCard(Cards)
                     console.log(response)
                     console.log(Cards);
+                    setLoad(false)
+                    setCard(true)
                     console.log(val);
-                    setLoading(false)
                 } else {
                     console.log('deu merda rapeize')
+                    setLoad(false)
+                    setCard(false)
                 }
             } catch (error) {
                 console.log(error);
+                console.log(error.message);
 
             }
         }
         SearchVal()
-    }, [token, val])
+    }, [token])
 
 
     return (
         <>
             {alert && <PedidosAberto />}
-            {modal ? <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} /> :
+            {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />):
                 <Box id="section1" sx={{
                     mt: '9.5vh',
                     height: '90.5vh',
@@ -129,6 +125,11 @@ function Homesistema() {
                     overflow: "hidden",
                     overflowY: 'scroll'
                 }}>
+                    {active && <Alert severity={'warning'} sx={{ width: '100%', padding: 3, gap: 2 }}>
+                        <AlertTitle>Ative sua conta!</AlertTitle>
+                        <div style={{ marginBottom: 10 }}>Para ativar sua conta, envie seus documentos:</div>
+                        <BtnHome name={"Documentos"} route={"/sistema/documentos"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
+                    </Alert>}
 
                     <Container sx={{
                         width: '100%',
