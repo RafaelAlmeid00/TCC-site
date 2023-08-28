@@ -227,7 +227,6 @@ export default function SectionContato() {
                         width: '50%',
                         float: 'right',
                         mt: '10vh',
-                        mb: 10,
                         [theme.breakpoints.down('sm')]: {
                             float: 'none',
                             width: '100vw',

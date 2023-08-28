@@ -1,4 +1,4 @@
-import { Card, Container, IconButton, Typography } from "@mui/material";
+import { Card, CardMedia, Container, IconButton, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
@@ -34,7 +34,8 @@ export default function Cartao({dataCard}) {
                     whileTap={{ scale: 0.97 }}
                     style={{ x: 100, height: '100%', width: '7vw' }}
                 >
-                    <Card onClick={handleCard} sx={{
+                    <Card onClick={handleCard}
+                    sx={{
                         width: '7vw',
                         height: '20vh',
                         cursor: 'pointer',

@@ -53,8 +53,6 @@ export default function Docs() {
         setDocumentList(documents);
     }, [status, userData.user_FotoRec, userData.user_RGFrente, userData.user_RGTras]);
 
-
-
     return (
         <Box
             id="section1"
@@ -187,4 +185,3 @@ export default function Docs() {
             </Container>
         </Box>
     );
-}
