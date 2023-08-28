@@ -12,7 +12,6 @@ import colors from "../../../assets/colors";
 
 function SectionPerfil1() {
     const [dado, setPega] = React.useState('');
-    const [nome, setNome] = React.useState(false);
     const [cep, setCep] = React.useState(false);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
@@ -34,19 +33,13 @@ function SectionPerfil1() {
     const fileInputRefAvatar = React.useRef(null)
     let switchImage = 0
 
-    const trocaNome = () => {
-        setNome(true)
-        setCep(false)
-    };
-
     const trocaCEP = () => {
         setCep(true)
-        setNome(false)
     };
 
-    const ParametroNome = () => {
-        parame = 'nome'
-    }
+    const fechaCEP = () => {
+        setCep(false)
+    };
 
 
    const update = async (cpf: any, updates: any) => {
@@ -105,28 +98,10 @@ function SectionPerfil1() {
     }
 
 
-    const ConfirmarNome = async () => {
-        ParametroNome()
-        console.log(dado);
-        const updates = {
-            [parame]: dado
-        }
-        console.log(updates);
-        console.log(parame);
-        console.log(dado);
-        setCep(false)
-        await update(cpf, updates);
-        setNome(false)
-        await UpdateToken()
-
-    };
-
     const ConfirmarCEP = async (updates: any) => {
-        setNome(false)
         console.log(parame);
         console.log(dado);
         await update(cpf, updates);
-        setNome(false)
         await UpdateToken()
 
     };
@@ -216,38 +191,39 @@ function SectionPerfil1() {
                 const fundoimage = userData.user_Background;
                 console.log(fundoimage);
 
-                const response = await axios.post(
-                    'http://localhost:3344/user/returnfundo',
-                    {
-                        filename: fundoimage,
-                    },
-                    {
-                        responseType: 'arraybuffer',
-                    }
-                );
+                if (fundoimage) {
+                    const response = await axios.post(
+                        'http://localhost:3344/user/returnfundo',
+                        {
+                            filename: fundoimage,
+                        },
+                        {
+                            responseType: 'arraybuffer',
+                        }
+                    );
 
-                const arrayBufferView = new Uint8Array(response.data);
-                const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+                    const arrayBufferView = new Uint8Array(response.data);
+                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
 
-                // Converter Blob para Base64
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                    setImg(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
-                    console.log(response.data);
-                    console.log(img);
-                };
-                console.log('foi');
+                    // Converter Blob para Base64
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        setImg(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
+                        console.log(response.data);
+                        console.log(img);
+                    };
+                    console.log('foi');
+                
+                } else {
+                    console.log('Sem imagem');
+                    
+                }
             } catch (error) {
                 console.error('Error uploading image:', error);
-            }
+            }  
         };
-        if (img) {
-            console.log('já foi pego');
-
-        } else {
-            returnImage();
-        }
+        returnImage();
     }, [token]);
 
     React.useEffect(() => {
@@ -257,27 +233,34 @@ function SectionPerfil1() {
                 const perfilimage = userData.user_FotoPerfil
                 console.log(perfilimage);
 
-                const response = await axios.post(
-                    'http://localhost:3344/user/returnperfil',
-                    {
-                        filename: perfilimage,
-                    },
-                    {
-                        responseType: 'arraybuffer',
-                    }
-                );
+                if (perfilimage) {
+                    const response = await axios.post(
+                        'http://localhost:3344/user/returnperfil',
+                        {
+                            filename: perfilimage,
+                        },
+                        {
+                            responseType: 'arraybuffer',
+                        }
+                    );
 
-                const arrayBufferView = new Uint8Array(response.data);
-                const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+                    const arrayBufferView = new Uint8Array(response.data);
+                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
 
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                    setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
-                    console.log(response.data);
-                    console.log(perfil);
-                };
-                console.log('foi');
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
+                        console.log(response.data);
+                        console.log(perfil);
+                    };
+                    console.log('foi');
+                } else {
+                    console.log('sem imagem');
+                    
+                }
+
+                
             } catch (error) {
                 console.error('Error uploading image:', error);
             }
@@ -294,7 +277,7 @@ function SectionPerfil1() {
                 {openT && <TokenAtualizado />}
                 {openT2 && <TokenPerfilError />}
                 {openT0 && <TokenPerfilErrorSer />}
-                {cep ? <CEP onConfirmarCEP={ConfirmarCEP} />
+                {cep ? <CEP onConfirmarCEP={ConfirmarCEP} onFechaCEP={fechaCEP} />
                     :
                     <Box sx={{
                         mt: '9vh',
@@ -423,22 +406,6 @@ function SectionPerfil1() {
                                         <InputLabel>
                                             <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Nome de Usuário</Typography>
                                         </InputLabel>
-                                        {nome ?
-                                            <Input
-                                                id="outlined-password-input"
-                                                label="Nome"
-                                                type="text"
-                                                value={dado} // Define o valor do TextField como o valor do estado "parame"
-                                                onChange={(event) => setPega(event.target.value)}
-                                                sx={{
-                                                    ml: 5,
-                                                    color: 'white',
-                                                    '& .MuiInputLabel-root': {
-                                                        color: 'white', // Define a cor do texto do label
-                                                    },
-                                                }}
-                                            />
-                                            :
                                             <Typography sx={{
                                                 color: 'white', fontSize: {
                                                     xs: '2vw',  // (7.5 / 1200) * 600
@@ -447,7 +414,7 @@ function SectionPerfil1() {
                                                     lg: '1.2vw',
                                                     xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
                                                 },
-                                            }}>{userData.user_nome}</Typography>}
+                                            }}>{userData.user_nome}</Typography>
                                     </Container>
                                     <Container sx={{
                                         mt: 2,
@@ -456,8 +423,6 @@ function SectionPerfil1() {
                                         alignItems: 'end'
 
                                     }}>
-                                        {nome ? <BtnPerfil name={"Confirmar"} fun={ConfirmarNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />
-                                            : <BtnPerfil name={"Editar"} fun={trocaNome} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />}
                                     </Container>
                                 </Container>
                                 <Container sx={{
@@ -547,7 +512,11 @@ function SectionPerfil1() {
                                         <InputLabel>
                                             <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Tipo de Usuário</Typography>
                                         </InputLabel>
-                                        <Typography sx={{ color: 'white' }}>{userData.user_tipo}</Typography>
+                                        <Typography sx={{ color: 'white' }}>
+                                            {userData.user_tipo === 'default' ? 'Usuário Padrão' :
+                                                userData.user_tipo === 'student' ? 'Estudante' :
+                                                    userData.user_tipo === 'worker' ? 'Trabalhador' : null}
+                                        </Typography>
                                     </Container>
                                 </Container>
                             </Container>

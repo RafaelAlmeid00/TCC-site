@@ -1,6 +1,5 @@
 import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import React from "react";
-import axios from "axios";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -9,127 +8,50 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../../context/modalcontext";
-import { Btn } from "../../btns";
-import colors from "../../../assets/colors";
-import { CEPPErfil } from "../../errosvalidations";
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import { Deccode } from "../FrontDecoded";
 
-function CEP({ onConfirmarCEP, onFechaCEP }) {
+function End() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
-    const [cep, setCep] = React.useState('');
-    const [UF, setUF] = React.useState('');
-    const [district, setDistrict] = React.useState('');
-    const [street, setStreet] = React.useState('');
-    const [num, setNum] = React.useState('');
-    const [comp, setComp] = React.useState('');
-    const [city, setCity] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [err, setErr] = React.useState(false);
+    const [userData] = React.useState(Deccode());
 
-    const handleChangeCep = (event: { target: { value: string; }; }) => {
-        let cepValue = event.target.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
-        cepValue = cepValue.slice(0, 5) + '-' + cepValue.slice(5, 8); // Adiciona o traço na posição correta
-        setCep(cepValue);
-    }
 
-    const handleApiCEP = async () => {
-        const url = `https://cdn.apicep.com/file/apicep/${cep}.json`;
-        try {
-            const response = await axios.get(url);
-            setUF(response.data.state);
-            setCity(response.data.city);
-            setDistrict(response.data.district);
-            setStreet(response.data.address);
-            setIsLoading(true);
-
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const ConfirmarCEP = async () => {
-        try {
-            if (cep == '' || cep.length < 9 || num == '') {
-                setErr(true)
-                setTimeout(() => {
-                    setErr(false)
-                }, 3000)
-            } else {
-            const updates = {
-                cep: cep,
-                num: num,
-                uf: UF,
-                bairro: district,
-                rua: street,
-                complemento: comp,
-                cidade: city,
-            };
-            onConfirmarCEP(updates);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     return (
         <>
-            {err && <CEPPErfil />}
-            <Box id="section1" sx={{
-                mt: '9.5vh',
-                height: '105vh',
-                width: '80vw',
-                float: "right",
-                background: verify ? fundo : 'white',
-                position: "relative",
-                overflow: "hidden",
-                }}>
-                <Box sx={{
-                    height: '15vh',
-                    ml: 10,
-                    mb: -10,
-                    mt: 2,
-                    background: verify ? fundo : 'white',
-                }}>
-                    <IconButton
-                        title="Voltar"
-                        sx={{
-                            ml: '10px',
-                            mt: '10px',
-                        }}
-                        onClick={onFechaCEP}
-                    >
-                        <KeyboardDoubleArrowLeftIcon
-                            sx={{
-                                color: verify ? 'white' : 'black',
-                                fontSize: '35px',
-                            }}
-                        /><Typography sx={{
-                            fontSize: '20px',
-                        }}>Voltar</Typography>
-                    </IconButton>
-                </Box>
-                <Container sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100%",
-                    width: '40%'
-                }}>
+            <Box
+                id="section1"
+                sx={{
+                    mt: "9.5vh",
+                    height: "90.5vh",
+                    width: "80vw",
+                    float: "right",
+                    background: verify ? fundo : "white",
+                    position: "relative",
+                    overflow: "hidden",
+                }}
+            >
+                <Container
+                    sx={{
+                        width: "40%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: 8,
+                    }}
+                >
                     <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
                         <InputLabel htmlFor="input-with-icon-adornment">
                             CEP
                         </InputLabel>
                         <Input
+                            readOnly
                             placeholder="Insira o CEP"
                             inputProps={{ maxLength: 12 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={cep}
-                            onChange={handleChangeCep}
-                            onBlur={handleApiCEP}
+                            value={userData.user_endCEP}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <ApartmentIcon />
@@ -144,11 +66,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 25 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={city}
+                            value={userData.user_endcidade}
                             readOnly
-                            disabled={isLoading}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <LocationCityIcon />
@@ -163,11 +83,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 45 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={district}
+                            value={userData.user_endbairro}
                             readOnly
-                            disabled={isLoading}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <GroupsIcon />
@@ -182,11 +100,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 45 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={street}
+                            value={userData.user_endrua}
                             readOnly
-                            disabled={isLoading}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <SignpostIcon />
@@ -201,11 +117,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 50 }}
-                            placeholder="Exemplo: Casa de baixo"
-                            required
                             id="input-with-icon-adornment"
-                            value={comp}
-                            onChange={(event) => setComp(event.target.value)}
+                            value={userData.user_endcomplemento}
+                            readOnly
                             startAdornment={
                                 <InputAdornment position="start">
                                     <PlaylistAddIcon />
@@ -220,10 +134,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 10 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={num}
-                            onChange={(event) => setNum(event.target.value)}
+                            value={userData.user_endnum}
+                            readOnly
                             startAdornment={
                                 <InputAdornment position="start">
                                     <HomeIcon />
@@ -238,11 +151,9 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                         </InputLabel>
                         <Input
                             inputProps={{ maxLength: 2 }}
-                            required
                             id="input-with-icon-adornment"
-                            value={UF}
+                            value={userData.user_endUF}
                             readOnly
-                            disabled={isLoading}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <DomainIcon />
@@ -251,11 +162,10 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                             sx={{ fontSize: '14px' }}
                         />
                     </FormControl>
-                    <Btn name={"Confirmar"} fun={ConfirmarCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />
                 </Container>
             </Box>
         </>
     )
 }
 
-export default CEP
+export default End

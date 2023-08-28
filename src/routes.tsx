@@ -6,6 +6,10 @@ import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./App.css"
+import { Deccode } from "./components/sistema/FrontDecoded";
+import AlertConta from "./components/sistema/AlertConta";
+import Endereco from "./pages/sistema/endreco";
+import Infos from "./pages/sistema/Informacoes";
 
 const App = lazy(() => import('./App'));
 const AppLazy = lazy(() => import('./pages/home/App'));
@@ -14,7 +18,6 @@ const CadallLazy = lazy(() => import('./pages/home/cadall'));
 const EasyPassLazy = lazy(() => import('./pages/home/EasyPass'));
 const ContatosLazy = lazy(() => import('./pages/home/Contato'));
 const ForgetPasswordLazy = lazy(() => import('./pages/home/ForgetPassword'));
-const ChangePasswordLazy = lazy(() => import('./pages/home/ChangePass'));
 const RecAccountLazy = lazy(() => import('./pages/home/ForgetRec'));
 const Escola = lazy(() => import('./pages/home/cadEscola'));
 const ServiLazy = lazy(() => import('./pages/home/Servicos'));
@@ -25,6 +28,7 @@ const SACLazy = lazy(() => import('./pages/sistema/SAC'));
 const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
 const CardLazy = lazy(() => import('./pages/sistema/Card'));
 const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
+const Docmentos = lazy(() => import('./pages/sistema/Documentos'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -38,7 +42,17 @@ const Rota = () => {
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
+  const [userData] = React.useState(Deccode());
+  const [Active, setActive] = React.useState(false);
 
+  React.useEffect(() => {
+    if (userData.user_status == 'ativo') {
+      setActive(false)
+    } else {
+      setActive(true)
+    }
+  }, [])
+  
   function checkDevice() {
     if (navigator.userAgent.match(/Android/i)
       || navigator.userAgent.match(/webOS/i)
@@ -151,7 +165,6 @@ const Rota = () => {
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />
                     <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
-                    <Route path="/alterarSenha" element={<ChangePasswordLazy/>} />
                     <Route path="/Rec" element={<RecAccountLazy />} />
                     <Route path="/Complemento" element={<CadallLazy />} />
                     <Route path="/Empresa" element={<Escola />} />
@@ -174,12 +187,16 @@ const Rota = () => {
                   <React.Fragment>
                     <Routes>
                       <Route path="/" element={<HomeSistema />} />
-                      <Route path="/Rotas" element={<RoutesLazy />} />
+                      <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
                       <Route path="/Perfil" element={<PerfilLazy />} />
-                      <Route path="/SAC" element={<SACLazy />} />
-                      <Route path="/Onibus" element={<OnibusLazy />} />
-                      <Route path="/Card" element={<CardLazy />} />
-                      <Route path="/AlterarEmail" element={<TrocaEmailLazy />} />
+                      <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />
+                      <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
+                      <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
+                      <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
+                      <Route path="/Documentos" element={<Docmentos />} />
+                      <Route path="/Endereco" element={<Endereco />} />
+                      <Route path="/Dados" element={<Infos />} />
+
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

@@ -3,6 +3,8 @@ import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
 import { Btn } from "../../btns";
+import { useNavigate } from "react-router-dom";
+import { Deccode } from "../FrontDecoded";
 
 interface Props {
     userData: string;
@@ -11,19 +13,32 @@ interface Props {
 }
 
 function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
-    const [alert, setAlert] = React.useState(false)
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
-    const { hasEntered } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const [card, setCard] = React.useState('');
-    const [hasCardOpen, setHasCardOpen] = React.useState(false);
     const token = localStorage.getItem('token')
-
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
     };
+    const [active, setActive] = React.useState(false)
+    const navigate = useNavigate()
+
+    React.useEffect(() => {
+        console.log(userData.user_status);
+
+        if (userData.user_status == "ativo") {
+            setActive(false)
+        } else if (userData.user_status == "inativo") {
+            setActive(true)
+            onCloseModal()
+        } else {
+            setActive(true)
+            onCloseModal()
+            navigate("/cadastro")
+        }
+    }, [])
 
     // Função para fazer a requisição ao servidor com o CPF
     async function fetchListCards(list_CPF: string) {
@@ -221,7 +236,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
                         justifyContent: 'center',
                         mt: 3
                     }}>
-                        <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={HandlePost} bch={verify ? 'white' : undefined} />
+                        <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={HandlePost} bch={verify ? 'white' : undefined} cl={undefined} vis={undefined} mb={undefined} />
                     </Container>
                 </Card>
             </Box>
