@@ -46,11 +46,15 @@ const Rota = () => {
   const [Active, setActive] = React.useState(false);
 
   React.useEffect(() => {
+    if (localStorage.getItem('token')) {
     if (userData.user_status == 'ativo') {
       setActive(false)
     } else {
       setActive(true)
     }
+  } else {
+    console.log('sem token')
+  }
   }, [])
   
   function checkDevice() {

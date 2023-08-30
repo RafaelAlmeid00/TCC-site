@@ -12,6 +12,7 @@ import axios from "axios";
 import Cartao from "./modal/card";
 import { useNavigate } from "react-router-dom";
 import AlertConta from "./AlertConta";
+import Pag from "./modal/pagamento";
 
 function Homesistema() {
     const [modal, setModal] = React.useState(false)
@@ -28,10 +29,67 @@ function Homesistema() {
     const [loading, setLoading] = React.useState(true)
     const [active, setActive] = React.useState(Boolean)
     const navigate = useNavigate()
+    const [pag, setPag] = React.useState(false)
+
+    const cliente = {
+        address: {
+            city: userData.user_endcidade,
+            country: 'BR',
+            line1: `Bairro ${userData.user_endbairro} rua ${userData.user_endrua}, número ${userData.user_endnum}`,
+            line2: userData.user_endcomplemento,
+            postal_code: userData.user_endCEP,
+            state: userData.user_endUF,
+        },
+        currency: 'brl',
+        email: userData.user_email,
+        metadata: {
+            cpf: userData.user_CPF,
+            rg: userData.user_RG,
+            idade: userData.user_nascimento
+        },
+        name: userData.user_nome,
+        shipping: {
+            address: {
+                city: userData.user_endcidade,
+                country: 'BR',
+                line1: `Bairro ${userData.user_endbairro} rua ${userData.user_endrua}, número ${userData.user_endnum}`,
+                line2: userData.user_endcomplemento,
+                postal_code: userData.user_endCEP,
+                state: userData.user_endUF,
+            },
+            name: userData.user_nome,
+        },
+        invoice_prefix: userData.user_CPF.slice(0, 12).replace(/\s/g, '').toUpperCase(),
+        description: `Usuário: ${userData.user_nome} - CPF: ${userData.user_CPF}`
+    }
+
+    const CriarCliente = async () => {
+        try {
+            const response = await axios.post('http://localhost:3344/cliente', { token: token, cliente })
+            console.log(response);
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+
+    const handlePag = () => {
+        setPag(true)
+    }
+
+    const handleClosePag = () => {
+        setPag(false)
+    }
+
+    const buttonshome = [
+        { name: 'Histórico do Cartão',  },
+        { name: 'Recarregar Cartão', void: handlePag },
+        { name: 'Cancelar Cartão' }
+    ]
 
     React.useEffect(() => {
         console.log(userData.user_status);
-        
+
         if (userData.user_status == "ativo") {
             setActive(false)
         } else if (userData.user_status == "inativo") {
@@ -42,15 +100,9 @@ function Homesistema() {
         }
 
         console.log(active);
-        
+
     }, [])
 
-
-    const buttonshome = [
-        { name: 'Histórico do Cartão' },
-        { name: 'Recarregar Cartão' },
-        { name: 'Cancelar Cartão' }
-    ]
 
     const handleModalClose = () => {
         setModal(false);
@@ -88,7 +140,7 @@ function Homesistema() {
                 console.log('ta indo');
                 console.log(response);
 
-                if (response.data.lenght > 0) {
+                if (response.data[0]) {
                     const Cards = response.data[0]
                     setDataCard(Cards)
                     console.log(response)
@@ -110,9 +162,17 @@ function Homesistema() {
         SearchVal()
     }, [token])
 
+    console.log(modal)
+    console.log(load)
+    console.log(active)
+    console.log(alert)
+
+    
+
 
     return (
         <>
+            {pag && <Pag onClose={handleClosePag}/>}
             {alert && <PedidosAberto />}
             {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />):
                 <Box id="section1" sx={{
@@ -163,7 +223,7 @@ function Homesistema() {
                         ml: 4.5
                     }}>
                         {buttonshome.map((buttons) => (
-                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={undefined} route={""} />
+                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.void} route={""} />
                         ))}
                     </Container>
 

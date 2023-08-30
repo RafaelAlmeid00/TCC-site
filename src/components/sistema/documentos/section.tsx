@@ -25,7 +25,7 @@ export default function Docs() {
             setStatus("Aprovado")
         } else if (userData.user_status == "analise") {
             setStatus("Em análise")
-        } 
+        }
     }, [])
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function Docs() {
                 title: "Registro Geral - Frente",
                 status: status ? status : (userData.user_RGFrente ? "Enviado" : "Não enviado"),
                 hint: "Para enviar esse documento acesse nosso aplicativo.",
-                icon: <AssignmentIcon sx={{fontSize: 60}}/>,
+                icon: <AssignmentIcon sx={{ fontSize: 60 }} />,
             },
             {
                 title: "Registro Geral - Verso",
@@ -52,6 +52,8 @@ export default function Docs() {
 
         setDocumentList(documents);
     }, [status, userData.user_FotoRec, userData.user_RGFrente, userData.user_RGTras]);
+
+
 
     return (
         <Box

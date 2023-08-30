@@ -38,6 +38,7 @@
     "react-webcam": "^7.1.1",
     "react-wrap-balancer": "^0.5.0",
     "redux": "^4.2.1",
+    "stripe": "^13.3.0",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
