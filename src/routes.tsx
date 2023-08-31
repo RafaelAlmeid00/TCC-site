@@ -29,6 +29,7 @@ const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
 const CardLazy = lazy(() => import('./pages/sistema/Card'));
 const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
 const Docmentos = lazy(() => import('./pages/sistema/Documentos'));
+const Informacoes = lazy(() => import('./pages/sistema/Documentos'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');

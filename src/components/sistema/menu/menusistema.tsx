@@ -13,12 +13,16 @@ import theme from '../../../assets/theme';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Deccode } from '../FrontDecoded';
+import Not from '../modal/notificacoes';
+import { useDispatch, useSelector } from "react-redux";
+import { toggleNotification } from "../../../redux/actions";
 
 export default function MenuSistema() {
     console.log(localStorage);
-    const userData = Deccode();
+    const [userData] = React.useState(Deccode());
     console.log(userData);
-    
+    const [not, setNot] = React.useState(false);
+
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);
 
@@ -41,7 +45,16 @@ export default function MenuSistema() {
         },
     };
 
+    const dispatch = useDispatch(); // Hook para despachar ação do Redux
+    const isNotificationVisible = useSelector(state => state.isNotificationVisible); // Pegar estado do Redux
+
+    const closeNotification = () => {
+        dispatch(toggleNotification()); // Chama a ação para alternar a visibilidade da notificação
+    };
+
     return (
+        <>
+            {isNotificationVisible && <Not />}
         <AppBar sx={{
             position: 'fixed',
             top: '0',
@@ -102,7 +115,9 @@ export default function MenuSistema() {
                                 variants={cardVariants}
                                 whileHover="hover" // Aplica as animações ao passar o mouse
                             >
-                                <NotificationsIcon sx={{
+                                <NotificationsIcon 
+                                    onClick={closeNotification}
+                                sx={{
                                     width: '40px',
                                     float: 'left',
                                     height: '30px',
@@ -113,7 +128,9 @@ export default function MenuSistema() {
                                     }
                                 }} />
                             </motion.div>
-                            <Typography sx={{
+                            <Typography 
+                            onClick={closeNotification}
+                            sx={{
                                 height: '100px',
                                 fontStyle: 'normal',
                                 fontWeight: '700',
@@ -218,5 +235,6 @@ export default function MenuSistema() {
                 </Toolbar>
             </Container>
         </AppBar>
+        </>
     )
 }

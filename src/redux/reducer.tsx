@@ -1,12 +1,27 @@
-const initialState = { modalOpen: false };
+import { createSlice } from '@reduxjs/toolkit';
+import { openModal, closeModal, toggleNotification } from './actions';
 
-export default function rootReducer(state = initialState, action: { type: any; }) {
-  switch (action.type) {
-    case "OPEN_MODAL":
-      return { ...state, modalOpen: true };
-    case "CLOSE_MODAL":
-      return { ...state, modalOpen: false };
-    default:
-      return state;
-  }
-}
+const initialState = {
+  modalOpen: false,
+  isNotificationVisible: true,
+};
+
+const rootReducer = createSlice({
+  name: 'root',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(openModal, (state) => {
+        state.modalOpen = true;
+      })
+      .addCase(closeModal, (state) => {
+        state.modalOpen = false;
+      })
+      .addCase(toggleNotification, (state) => {
+        state.isNotificationVisible = !state.isNotificationVisible;
+      });
+  },
+});
+
+export default rootReducer.reducer;
