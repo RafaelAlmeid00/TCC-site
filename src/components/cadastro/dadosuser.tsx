@@ -4,19 +4,21 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ModalContext from "../../context/modalcontext";
-import { CPFError, DataError, NomeError, NumError, CEPError, RGError, CPFExiste } from "../errosvalidations";
+import { CPFError, DataError, NomeError, NumError, CEPError, RGError, CPFExiste, ErrorCel } from "../errosvalidations";
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import Tipo from "./tipouser";
 import colors from "../../assets/colors";
 import CompleteCad2 from "./endereço";
 import { Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import { Btn } from "../btns";
+import { Contacts } from '@mui/icons-material';
 
 function CompleteCad() {
     const [cpf, setCpf] = useState("");
     const [rg, setRg] = useState("");
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
+    const [cel, setCel] = useState("");
     const { cep } = useContext(ModalContext);
     const { UF } = useContext(ModalContext);
     const { district } = useContext(ModalContext);
@@ -36,6 +38,59 @@ function CompleteCad() {
     const [CPFexiste, setCPFexiste] = useState(false);
     const [showTipo, setShowTipo] = useState(false);
     const [dadosU, setDados] = useState({});
+    const [showErrorCel, setShowErrorCel] = useState(false);
+    const [id, setId] = useState("");
+
+    const formatPhoneNumber = (input) => {
+        return new Promise((resolve) => {
+            const numericInput = input.replace(/\D/g, '');
+
+            if (numericInput.length < 11) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+    };
+
+    const handleCelChange = async (event) => {
+        const isValid = await formatPhoneNumber(event.target.value);
+
+        if (isValid) {
+            setShowErrorCel(true)
+        } else {
+            setShowErrorCel(false)
+        }
+
+        // Atualize o estado do número de celular
+        setCel(event.target.value);
+    };
+
+
+    const CriarCliente = async (card: any) => {
+
+        const cliente = {
+            name: name,
+            cpfCnpj: cpf,
+            email: email,
+            address: `${city}, ${street}`,
+            addressNumber: num,
+            province: district,
+            postalCode: cep,
+            externalReference: cpf.slice(0, 6),
+            groupName: card,
+            mobilePhone: cel
+        }
+
+        try {
+            const response = await axios.post('http://localhost:3344/cliente', { cliente })
+            console.log(response.data.idcli);
+            console.log(response);
+            setId(response.data.idcli)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     async function ValidaCPF(cpf: string): Promise<boolean> {
         let Soma = 0;
@@ -246,6 +301,8 @@ function CompleteCad() {
             user_endcidade?: string;
             user_tipo?: string;
             list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
+            user_cel: string;
+            user_idcli?: string;
         }
 
         const dadosUsuario: UserData = {
@@ -263,7 +320,9 @@ function CompleteCad() {
             user_endcomplemento: comp,
             user_endcidade: city,
             user_tipo: undefined,
-            list_CPF_list_id: undefined
+            list_CPF_list_id: undefined,
+            user_cel: cel,
+            user_idcli: id
         };
 
         const cpfError = await VerifyCPF(cpf);
@@ -322,6 +381,7 @@ function CompleteCad() {
 
     return (
         <>
+            {showErrorCel && <ErrorCel />}
             {showErrorCPF && <CPFError />}
             {showErrorNome && <NomeError />}
             {showErrorData && <DataError />}
@@ -329,7 +389,7 @@ function CompleteCad() {
             {showErrorNum && <NumError />}
             {showRG && <RGError />}
             {CPFexiste && <CPFExiste />}
-            {showTipo ? <Tipo dados={dadosU} /> :
+            {showTipo ? <Tipo dados={dadosU} onCliente={CriarCliente} /> :
                 <Container sx={{
                     width: "100%",
                     display: "flex",
@@ -447,6 +507,25 @@ function CompleteCad() {
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <CalendarMonthIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px', mb: 2 }}
+                            />
+                        </FormControl>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                Número de Celular
+                            </InputLabel>
+                            <Input
+                                inputProps={{ maxLength: 11 }}
+                                required
+                                id="input-with-icon-adornment"
+                                value={cel}
+                                placeholder="24999123456"
+                                onChange={handleCelChange}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Contacts />
                                     </InputAdornment>
                                 }
                                 sx={{ fontSize: '14px', mb: 2 }}

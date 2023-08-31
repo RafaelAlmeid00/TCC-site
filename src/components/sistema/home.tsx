@@ -31,48 +31,6 @@ function Homesistema() {
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
 
-    const cliente = {
-        address: {
-            city: userData.user_endcidade,
-            country: 'BR',
-            line1: `Bairro ${userData.user_endbairro} rua ${userData.user_endrua}, número ${userData.user_endnum}`,
-            line2: userData.user_endcomplemento,
-            postal_code: userData.user_endCEP,
-            state: userData.user_endUF,
-        },
-        currency: 'brl',
-        email: userData.user_email,
-        metadata: {
-            cpf: userData.user_CPF,
-            rg: userData.user_RG,
-            idade: userData.user_nascimento
-        },
-        name: userData.user_nome,
-        shipping: {
-            address: {
-                city: userData.user_endcidade,
-                country: 'BR',
-                line1: `Bairro ${userData.user_endbairro} rua ${userData.user_endrua}, número ${userData.user_endnum}`,
-                line2: userData.user_endcomplemento,
-                postal_code: userData.user_endCEP,
-                state: userData.user_endUF,
-            },
-            name: userData.user_nome,
-        },
-        invoice_prefix: userData.user_CPF.slice(0, 12).replace(/\s/g, '').toUpperCase(),
-        description: `Usuário: ${userData.user_nome} - CPF: ${userData.user_CPF}`
-    }
-
-    const CriarCliente = async () => {
-        try {
-            const response = await axios.post('http://localhost:3344/cliente', { token: token, cliente })
-            console.log(response);
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
-
     const handlePag = () => {
         setPag(true)
     }
@@ -82,7 +40,7 @@ function Homesistema() {
     }
 
     const buttonshome = [
-        { name: 'Histórico do Cartão',  },
+        { name: 'Histórico do Cartão' },
         { name: 'Recarregar Cartão', void: handlePag },
         { name: 'Cancelar Cartão' }
     ]
@@ -167,7 +125,27 @@ function Homesistema() {
     console.log(active)
     console.log(alert)
 
-    
+    React.useEffect(() => {
+        async function handleAttCard() {
+            try {
+                const response = await axios.post('http://localhost:3344/pagamento/verify', {
+                    params: {
+                        idcli: userData.user_idcli,
+                        dataCard
+                    }
+                }, {
+                    headers: {
+                    'authorization': token
+                    }
+            })
+                console.log(response);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        handleAttCard()
+    }, [dataCard, token, userData.user_idcli])
 
 
     return (

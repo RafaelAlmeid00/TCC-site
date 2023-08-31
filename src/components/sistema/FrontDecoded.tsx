@@ -1,6 +1,5 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import React from "react";
 import { useState, useEffect } from "react";
 const userToken = localStorage.getItem('token') || null;
 

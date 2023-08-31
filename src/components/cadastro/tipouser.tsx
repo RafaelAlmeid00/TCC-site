@@ -8,9 +8,10 @@ import { Box, Container, FormControl, InputBase, InputLabel, MenuItem, Select, T
 import { Btn } from "../btns";
 interface Props {
     dados: object;
+    onCliente: (card: any) => Promise<void>; 
 }
 
-function Tipo({ dados }: Props) {
+function Tipo({ dados, onCliente }: Props) {
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
     const [card, setCard] = React.useState('');
@@ -112,6 +113,7 @@ function Tipo({ dados }: Props) {
         console.log(dados);
 
         try {
+            await onCliente(card);
             await axios.post('http://localhost:3344/user', dados);
             setShowSucess(true)
             console.log('foi mlk');
