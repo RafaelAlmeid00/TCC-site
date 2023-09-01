@@ -3,7 +3,7 @@ import { openModal, closeModal, toggleNotification } from './actions';
 
 const initialState = {
   modalOpen: false,
-  isNotificationVisible: true,
+  isNotificationVisible: false,
 };
 
 const rootReducer = createSlice({
@@ -16,7 +16,7 @@ const rootReducer = createSlice({
         state.modalOpen = true;
       })
       .addCase(closeModal, (state) => {
-        state.modalOpen = false;
+        state.modalOpen = true;
       })
       .addCase(toggleNotification, (state) => {
         state.isNotificationVisible = !state.isNotificationVisible;

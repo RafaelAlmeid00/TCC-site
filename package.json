@@ -25,6 +25,7 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
     "emailjs-com": "^3.2.0",
+    "firebase": "^10.3.1",
     "framer-motion": "^10.12.12",
     "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.0",

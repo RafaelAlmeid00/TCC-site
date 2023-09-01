@@ -310,7 +310,6 @@ function SectionPerfil1() {
                                 <label htmlFor="file-input">
                                     <IconButton
                                         sx={{
-                                            zIndex: 2,
                                             float: 'right',
                                             backgroundColor: '#7d7d7d',
                                             mt: 2,

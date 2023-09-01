@@ -21,7 +21,7 @@ export function Deccode() {
   }
 }
 
-export function UserDataLoader({ children }) {
+export function UserDataLoader({ children }: any) {
   const [userData, setUserData] = useState(null);
 
   React.useEffect(() => {

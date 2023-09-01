@@ -21,8 +21,6 @@ export default function MenuSistema() {
     console.log(localStorage);
     const [userData] = React.useState(Deccode());
     console.log(userData);
-    const [not, setNot] = React.useState(false);
-
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);
 
