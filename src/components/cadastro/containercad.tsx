@@ -118,7 +118,11 @@ function ContainerCad() {
             console.log(res.data.user);
 
             if (res.data.token) {
-                localStorage.setItem('token', res.data.token);
+                await new Promise<void>((resolve) => {
+                    localStorage.setItem('token', res.data.token);
+                    resolve();
+                });
+
                 console.log(localStorage);
 
                 navigate('/Sistema');

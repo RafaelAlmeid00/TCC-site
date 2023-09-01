@@ -1,7 +1,7 @@
 import { Box, Button, Container, Divider, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import colors from "../../../assets/colors";

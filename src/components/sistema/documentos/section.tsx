@@ -10,7 +10,7 @@ import ModalContext from "../../../context/modalcontext";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Balancer from "react-wrap-balancer";
 import colors from "../../../assets/colors";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import PortraitIcon from '@mui/icons-material/Portrait';
 
 export default function Docs() {

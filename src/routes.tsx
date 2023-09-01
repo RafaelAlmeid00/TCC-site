@@ -6,10 +6,42 @@ import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./App.css"
-import { Deccode } from "./components/sistema/FrontDecoded";
+import jwt_decode from "jwt-decode";
 import AlertConta from "./components/sistema/AlertConta";
-import Endereco from "./pages/sistema/endreco";
-import Infos from "./pages/sistema/Informacoes";
+
+export function Deccode() {
+  const userToken = localStorage.getItem('token') || null;
+
+  if (userToken) {
+    return jwt_decode(userToken);
+  } else {
+    // Retorne algum valor de erro ou padrão, ou lance uma exceção
+    console.error("Token não encontrado.");
+    return null;
+  }
+}
+
+export function UserDataLoader({ children }) {
+  const [userData, setUserData] = useState(null);
+
+  React.useEffect(() => {
+    async function loadUserData() {
+      try {
+        const decodedData = await Deccode();
+        setUserData(decodedData);
+      } catch (error) {
+        // Trate qualquer erro ao decodificar o token aqui
+        console.error("Erro ao decodificar o token:", error);
+        setUserData(null);
+      }
+    }
+
+    loadUserData();
+  }, []);
+
+  return children(userData);
+}
+
 
 const App = lazy(() => import('./App'));
 const AppLazy = lazy(() => import('./pages/home/App'));
@@ -30,6 +62,7 @@ const CardLazy = lazy(() => import('./pages/sistema/Card'));
 const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
 const Docmentos = lazy(() => import('./pages/sistema/Documentos'));
 const Informacoes = lazy(() => import('./pages/sistema/Documentos'));
+const Endereco = lazy(() => import('./pages/sistema/endreco'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -200,7 +233,7 @@ const Rota = () => {
                       <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
                       <Route path="/Documentos" element={<Docmentos />} />
                       <Route path="/Endereco" element={<Endereco />} />
-                      <Route path="/Dados" element={<Infos />} />
+                      <Route path="/Dados" element={<Informacoes />} />
 
                     </Routes>
                   </React.Fragment>

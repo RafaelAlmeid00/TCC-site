@@ -8,7 +8,7 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../../context/modalcontext";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 
 function End() {
     const { verify } = React.useContext(ModalContext);

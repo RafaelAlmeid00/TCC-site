@@ -5,7 +5,7 @@ import axios from "axios";
 import Cartao from "../modal/card";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
 

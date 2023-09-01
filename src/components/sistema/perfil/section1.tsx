@@ -2,7 +2,7 @@
 import { Avatar, Box, Container, IconButton, Input, InputLabel, Typography } from "@mui/material"
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { BtnPerfil } from "../../btns";

@@ -1,7 +1,7 @@
 import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import { CheckCircle, Contacts, CreditCard, AccountCircle, HowToReg, Email } from "@mui/icons-material";
 
 function Info() {

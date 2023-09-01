@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Card, Container, Divider, Link, Typography } from "@mui/material";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import { Balancer } from "react-wrap-balancer";
 import { Block, CheckCircle, Clear } from "@mui/icons-material";
 

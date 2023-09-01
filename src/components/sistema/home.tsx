@@ -7,14 +7,16 @@ import React from "react";
 import { BtnHome } from "../btns";
 import Pedido from "./modal/pedidocard";
 import { PedidosAberto } from "../errosvalidations";
-import { Deccode } from "./FrontDecoded";
 import axios from "axios";
 import Cartao from "./modal/card";
 import { useNavigate } from "react-router-dom";
 import AlertConta from "./AlertConta";
 import Pag from "./modal/pagamento";
+import Loading from "../loading";
+import { Deccode } from "../../routes";
 
 function Homesistema() {
+    const [userData] = React.useState(Deccode());
     const [modal, setModal] = React.useState(false)
     const [card, setCard] = React.useState(Boolean)
     const [load, setLoad] = React.useState(true)
@@ -22,7 +24,6 @@ function Homesistema() {
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
-    const [userData] = React.useState(Deccode());
     const token = localStorage.getItem('token')
     const [dataCard, setDataCard] = React.useState('')
     const [val, setVal] = React.useState([])
@@ -30,6 +31,8 @@ function Homesistema() {
     const [active, setActive] = React.useState(Boolean)
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
+
+    console.log(userData)
 
     const handlePag = () => {
         setPag(true)
@@ -46,6 +49,11 @@ function Homesistema() {
     ]
 
     React.useEffect(() => {
+
+        if (!userData) {
+            return <Loading />;
+        }
+
         console.log(userData.user_status);
 
         if (userData.user_status == "ativo") {
@@ -59,7 +67,7 @@ function Homesistema() {
 
         console.log(active);
 
-    }, [])
+    }, [active, navigate, userData])
 
 
     const handleModalClose = () => {

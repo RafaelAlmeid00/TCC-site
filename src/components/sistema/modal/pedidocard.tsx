@@ -4,7 +4,6 @@ import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
 import { Btn } from "../../btns";
 import { useNavigate } from "react-router-dom";
-import { Deccode } from "../FrontDecoded";
 
 interface Props {
     userData: string;

@@ -12,7 +12,7 @@ import colors from '../../../assets/colors';
 import theme from '../../../assets/theme';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { Deccode } from '../FrontDecoded';
+import { Deccode } from "../../../routes";
 import Not from '../modal/notificacoes';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotification } from "../../../redux/actions";

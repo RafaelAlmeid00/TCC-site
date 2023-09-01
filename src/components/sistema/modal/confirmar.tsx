@@ -3,7 +3,7 @@ import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import { Close } from "@mui/icons-material";
 
 interface Props {

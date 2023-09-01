@@ -1,6 +1,6 @@
 import { Card, Container, Typography, TextField } from "@mui/material";
 import ReactDOM from 'react-dom';
-import { Deccode } from "../FrontDecoded";
+import { Deccode } from "../../../routes";
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import colors from "../../../assets/colors";
