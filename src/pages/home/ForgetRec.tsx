@@ -5,7 +5,6 @@ function RecPass() {
 
     return(
         <>
-            <Exit previousRoute={'/cadastro/esqueciasenha'} />
             <EsqueciAsenha/>
         </>
     )

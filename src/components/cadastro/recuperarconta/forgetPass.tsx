@@ -1,11 +1,13 @@
-import { Input, Typography, InputAdornment, Button, Box, Container } from "@mui/material";
+import { Input, Typography, InputAdornment, Box, Container } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Btn } from "../../btns";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import colors from "../../../assets/colors";
-
+import { EmailNaoEnviado, ErrorCodigo } from "../../errosvalidations";
+import { useLocation } from 'react-router-dom';
+import CryptoJS from 'crypto-js';
 
 export default function EsqueciAsenha() {
     const { cpf, setCpf } = React.useContext(ModalContext);
@@ -14,20 +16,77 @@ export default function EsqueciAsenha() {
     const { themes } = React.useContext(ModalContext);
     const navigate = useNavigate();
     const fundo = themes.palette.background.default
-    
+    const [nemail, setNEmail] = React.useState(false);
+    let data = ''
+    const location = useLocation();
+    const error = new URLSearchParams(location.search).get('error');
+    const [isError, setisError] = React.useState(false);
+
+    React.useEffect(() => {
+        if (error == null) {
+            setisError(false) // Usar "=" para atribuir o valor true
+        } else {
+            setisError(true); // Usar "=" para atribuir o valor false
+        }
+    }, [error]);
+
+    console.log(isError);
+    console.log(error == null);
+    console.log(error);
+
+
+    function encryptData(data: string, secretKey: string): string {
+        const encryptedData = CryptoJS.AES.encrypt(data, secretKey).toString();
+        return encryptedData;
+    }
+
+    async function PegaEmail() {
+        try {
+            const res = await axios.post('http://localhost:3344/user/cpf', {
+                user_CPF: cpf,
+            });
+
+            if (!res) {
+                console.log('Sem usuários pego');
+            } else {
+                const datam = res.data.user_email;
+                console.log('Texto criptografado:', datam); // Verifique o valor criptografado
+
+                const secretKey = '5E9CB5A3D3B1736F4017D9331E3FDDA5';
+                const decryptedData = encryptData(datam, secretKey);
+                if (datam) {
+                    console.log('Valor criptografado:', decryptedData);
+                    data = decryptedData
+                } else {
+                    console.log('erro aq hein');
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
     async function envCpf() {
 
         try {
+            await PegaEmail()
+
             await axios.post('http://localhost:3344/user/updatesenha', {
                 user_CPF: cpf,
             })
 
             console.log('foi mlk');
-            navigate('/cadastro/rec');
-            
+            setNEmail(false)
+            navigate(`/cadastro/rec?data=${data}`)
         } catch (error) {
+            setNEmail(true)
+
+            setTimeout(() => {
+                setNEmail(false)
+            }, 5000);
             console.log(error);
-            
         }
     }
 
@@ -44,6 +103,8 @@ export default function EsqueciAsenha() {
 
     return (
         <>
+            {isError && <ErrorCodigo />}
+            {nemail && <EmailNaoEnviado data={data} />}
             <Box sx={{
                 background: verify ? fundo : 'white',
                 height: "94vh",

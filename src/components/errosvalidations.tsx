@@ -659,4 +659,28 @@ function EmailNaoEnviado({ data }: Prop) {
     );
 }
 
-export { ErrorCel, EmailNaoEnviado, EmailEnviado, SenhaInvalida, SenhaDiferente, TipoNull, CNPJError, CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };
+function ErrorCodigo() {
+    return (
+        <>
+            <Alert severity="error" sx={{
+                width: { xs: '40vw', sm: '35vw', md: '35vw', lg: '20vw', xl: '20vw' },
+                height: { xs: '22vh', sm: '18vh', md: '18vh', lg: '12vh', xl: '12vh' },
+                position: 'absolute',
+                top: 10,
+                left: '10%',
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 9999,
+                boxShadow: '0px 0px 8px 2px'
+            }}>
+                <AlertTitle>Erro!</AlertTitle>
+                O código inserido não era <strong>válido!</strong>
+            </Alert>
+        </>
+    );
+}
+
+export { ErrorCel, ErrorCodigo, EmailNaoEnviado, EmailEnviado, SenhaInvalida, SenhaDiferente, TipoNull, CNPJError, CEPPErfil, PerfilAtualizado, TokenPerfilErrorSer, TokenPerfilError, PerfilError, TokenAtualizado, CPFExiste, RGError, EmailExiste, PedidosAberto, ErrorLogin, ContentNull, EmailPasswordNull, EmailIncorrect, CEPError, CPFError, NomeError, DataError, NumError, Sucess };

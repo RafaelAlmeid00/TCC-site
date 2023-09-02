@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Input, Typography, Box, FormControl, InputLabel, InputAdornment, Container } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -5,10 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { Btn } from "../../btns";
 import colors from "../../../assets/colors";
 import ModalContext from "../../../context/modalcontext";
-import { Lock } from "@mui/icons-material";
-import { ContentNull, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida } from "../../errosvalidations";
+import { ContentNull, EmailEnviado, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida } from "../../errosvalidations";
+import { useLocation } from 'react-router-dom';
+import LockIcon from '@mui/icons-material/Lock';
+import CryptoJS from 'crypto-js';
 
 function EsqueciAsenha() {
+    const location = useLocation();
+    const encryptedData = new URLSearchParams(location.search).get('data');
+    console.log(encryptedData);
+
+    const [email, setEmail] = React.useState(false);
     const { cpf, setCpf } = React.useContext(ModalContext);
     const [validToken, setValidToken] = React.useState(false);
     const [code, setCode] = React.useState('');
@@ -25,6 +33,7 @@ function EsqueciAsenha() {
     let parame: string
     const navigate = useNavigate()
     const { setHasEntered } = React.useContext(ModalContext);
+    const [data, setData] = React.useState('')
 
     function validatePassword(dado: string | undefined) {
         const regex = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
@@ -32,6 +41,43 @@ function EsqueciAsenha() {
         return regex.test(dado);
     }
 
+    function decryptData(encryptedData: string, secretKey: string): string {
+        try {
+            const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+            const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+            console.log(bytes);
+            console.log(decryptedData);
+            return decryptedData;
+        } catch (error) {
+            console.error('Erro na descriptografia:', error);
+            return ''; // Retorna uma string vazia em caso de erro
+        }
+    }
+
+    
+    React.useEffect(() => {
+        if (encryptedData) {
+            const secretKey = '5E9CB5A3D3B1736F4017D9331E3FDDA5';
+
+            try {
+                const decryptedEmail = decryptData(encryptedData, secretKey);
+                console.log('Texto criptografado:', encryptedData);
+                    console.log('Texto descriptografado:', decryptedEmail);
+                    setData(decryptedEmail)
+                    setEmail(true)
+
+                    setTimeout(() => {
+                        setEmail(false)
+                    }, 5000);
+                } catch (error) {
+                console.error('Erro na descriptografia:');
+            }
+    
+        } else {
+            console.log('Não era para vc estar aq');
+            navigate(`/Cadastro/EsqueciASenha`);
+        }
+    }, [])
 
     const update = async (cpf: any, updates: any) => {
         try {
@@ -120,7 +166,7 @@ function EsqueciAsenha() {
                 if (response.data.valid) {
                     setValidToken(true);
                 } else {
-                    navigate("/Cadastro/EsqueciASenha");
+                    navigate(`/Cadastro/EsqueciASenha?error=${'error'}`);
                 }
             } catch (error) {
                 console.log(error);
@@ -130,6 +176,7 @@ function EsqueciAsenha() {
 
     return (
         <>
+            {email && <EmailEnviado data={data} />}
             {nulo && <ContentNull />}
             {invalidsenha && <SenhaInvalida />}
             {vfSenha && <SenhaDiferente />}
@@ -137,10 +184,9 @@ function EsqueciAsenha() {
             {open2 && <PerfilError />}
             <Box sx={{
                 background: verify ? fundo : 'white',
-                height: "94vh",
+                height: "100vh",
                 width: "100vw",
                 zIndex: -1,
-                mt: '-9vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
@@ -164,14 +210,14 @@ function EsqueciAsenha() {
                             Senha
                         </InputLabel>
                         <Input
-                            placeholder="Insira o nova senha"
+                            placeholder="Insira a nova senha"
                             inputProps={{ maxLength: 12 }}
                             required
                             id="input-with-icon-adornment"
                             onChange={(event) => setPega(event?.target.value)}
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <Lock />
+                                    <LockIcon />
                                 </InputAdornment>
                             }
                             sx={{ fontSize: '14px' }}
@@ -186,24 +232,24 @@ function EsqueciAsenha() {
                         A senha precisa ter: Mais de 8 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula!
                     </Typography>
                 }
-                <FormControl variant="standard" sx={{ width: '40%', mb: 5 }}>
-                    <InputLabel htmlFor="input-with-icon-adornment">
-                        Senha
-                    </InputLabel>
-                    <Input
-                        placeholder="Insira a senha novamente"
-                        inputProps={{ maxLength: 12 }}
-                        required
-                        id="input-with-icon-adornment"
-                        onChange={(event) => setPegaVerify(event?.target.value)}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <Lock />
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '14px' }}
-                    />
-                </FormControl>
+                        <FormControl variant="standard" sx={{ width: '40%', mb: 5}}>
+                            <InputLabel htmlFor="input-with-icon-adornment">
+                                Senha
+                            </InputLabel>
+                            <Input
+                                placeholder="Insira novamente"
+                                inputProps={{ maxLength: 12 }}
+                                required
+                                id="input-with-icon-adornment"
+                                onChange={(event) => setPegaVerify(event?.target.value)}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <LockIcon />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        </FormControl>
                         <Btn name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? "white" : undefined} bch={verify ? "white" : undefined} vis={undefined} mb={10} />
                     </Box>
                     
@@ -215,30 +261,30 @@ function EsqueciAsenha() {
                     justifyContent: "center",
                     background: verify ? fundo : 'white',
                     boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
-
+                        display: 'flex',
+                        flexDirection: 'column'
                 }}>
                     <Typography sx={{
-                        margin: '10%',
+                            fontWeight: 'bold',
+                        marginTop: '10%',
                         color: verify ? 'white' : 'black'
                     }}>Insira o código que enviamos para o seu email.</Typography>
-                    <Typography sx={{
-                        margin: '10%',
+                    <Typography variant="body2" sx={{
+                            mt: 2,
                         color: verify ? 'white' : 'black'
                     }}>Certifique-se de que os números estejam certos: </Typography>
+                    <FormControl variant="standard" sx={{ width: '70%', mb: 5, mt: 10, display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
                     <Input
+                    
                         inputProps={{ maxLength: 6 }}
                         required
                         value={code}
                         placeholder="Insira o código"
                         onChange={(e) => setCode(e.target.value)}
                         id="input-with-icon-adornment"
-                        startAdornment={
-                            <InputAdornment position="start">
-
-                            </InputAdornment>
-                        }
-                        sx={{ fontSize: '5vh', marginLeft: '24%', padding: '5%', width: '21vw', height: '5vh', marginBottom: '5vh' }}
+                            sx={{ fontSize: '5vh', }}
                     />
+                    </FormControl>
                     <Container sx={{
                         width: '100%',
                         height: 'auto'
