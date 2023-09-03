@@ -22,7 +22,7 @@ export default function MenuPerfil() {
         { title: 'Informações Pessoais', route: 'dados', icon: <DisplaySettingsIcon /> },
         { title: 'Endereço', route: 'endereco', icon: <HomeIcon /> },
         { title: 'Documentos', route: 'documentos', icon: <StyleIcon /> },
-        { title: 'Viagens', route: 'viajens', icon: <DirectionsBusIcon /> },
+        { title: 'Viagens', route: 'viagens', icon: <DirectionsBusIcon /> },
         { title: 'Extrato Pagamentos', route: 'extrato', icon: <AccountBalanceIcon /> },
         { title: 'Compras', route: 'compras', icon: <LocalMallIcon /> }
 

@@ -91,7 +91,7 @@ export default function Buss() {
                                     justifyContent: "center",
                                     alignItems: "center",
                                     flexDirection: "row",
-                                    boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
+                                    boxShadow: verify ? '0px 0px 4px 0px white' : '0px 0px 8px 1px rgba(0, 0, 0, 0.6)',
                                     cursor: 'pointer',
                                 }}
                             >

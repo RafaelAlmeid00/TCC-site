@@ -135,6 +135,7 @@ function Homesistema() {
 
     React.useEffect(() => {
         async function handleAttCard() {
+            console.log(userData.user_idcli, dataCard)
             try {
                 const response = await axios.post('http://localhost:3344/pagamento/verify', {
                     params: {
@@ -148,8 +149,8 @@ function Homesistema() {
             })
                 console.log(response);
 
-            } catch (error) {
-                console.log(error);
+            } catch (error: any) {
+                console.log(error.message);
             }
         }
         handleAttCard()

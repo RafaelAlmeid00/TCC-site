@@ -64,6 +64,7 @@ const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
 const Docmentos = lazy(() => import('./pages/sistema/Documentos'));
 const Informacoes = lazy(() => import('./pages/sistema/Documentos'));
 const Endereco = lazy(() => import('./pages/sistema/endreco'));
+const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -235,7 +236,7 @@ const Rota = () => {
                       <Route path="/Documentos" element={<Docmentos />} />
                       <Route path="/Endereco" element={<Endereco />} />
                       <Route path="/Dados" element={<Informacoes />} />
-
+                      <Route path="/Viagens" element={<Viagens />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>
