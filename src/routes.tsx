@@ -10,8 +10,8 @@ import "./App.css"
 import jwt_decode from "jwt-decode";
 import AlertConta from "./components/sistema/AlertConta";
 
-export function Deccode() {
-  const userToken = localStorage.getItem('token') || null;
+export function Deccode(): object {
+  const userToken = localStorage.getItem('token');
 
   if (userToken) {
     return jwt_decode(userToken);
@@ -62,9 +62,10 @@ const OnibusLazy = lazy(() => import('./pages/sistema/onibus'));
 const CardLazy = lazy(() => import('./pages/sistema/Card'));
 const TrocaEmailLazy = lazy(() => import('./pages/sistema/AlterarEmail'));
 const Docmentos = lazy(() => import('./pages/sistema/Documentos'));
-const Informacoes = lazy(() => import('./pages/sistema/Documentos'));
-const Endereco = lazy(() => import('./pages/sistema/endreco'));
+const Informacoes = lazy(() => import('./pages/sistema/Informacoes'));
+const Endereco = lazy(() => import('./pages/sistema/endereco'));
 const Viagens = lazy(() => import('./pages/sistema/Viagens'));
+const Extrato = lazy(() => import('./pages/sistema/Extrato'));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -78,7 +79,7 @@ const Rota = () => {
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
-  const [userData] = React.useState(Deccode());
+  const [userData] = React.useState<object>(Deccode());
   const [Active, setActive] = React.useState(false);
 
   React.useEffect(() => {
@@ -223,6 +224,7 @@ const Rota = () => {
                   themes, // ou o tema que você desejar usar
                   hasEntered,
                   setHasEntered,
+                  userData
                 }}>
                   <React.Fragment>
                     <Routes>
@@ -236,7 +238,8 @@ const Rota = () => {
                       <Route path="/Documentos" element={<Docmentos />} />
                       <Route path="/Endereco" element={<Endereco />} />
                       <Route path="/Dados" element={<Informacoes />} />
-                      <Route path="/Viagens" element={<Viagens />} />
+                      <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
+                      <Route path="/Extrato" element={(Active ? <AlertConta /> : <Extrato />)} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

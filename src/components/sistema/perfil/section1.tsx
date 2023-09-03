@@ -2,7 +2,6 @@
 import { Avatar, Box, Container, IconButton, Input, InputLabel, Typography } from "@mui/material"
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
-import { Deccode } from "../../../routes";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { BtnPerfil } from "../../btns";
@@ -21,7 +20,7 @@ function SectionPerfil1() {
     const [openT, setOpenT] = React.useState(false);
     const [openT2, setOpenT2] = React.useState(false);
     const [openT0, setOpenT0] = React.useState(false);
-    const userData = Deccode();
+    const { userData } = React.useContext(ModalContext);
     const cpf = userData.user_CPF;
     const birthDate = new Date(userData.user_nascimento);
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);

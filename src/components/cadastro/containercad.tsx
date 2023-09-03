@@ -128,9 +128,8 @@ function ContainerCad() {
                 navigate('/Sistema');
                 console.log('viado');
 
-            } else {
-                console.log(res.data.message);
-            }
+            } 
+            
         } catch (err) {
             console.log(err);
             setShowNull(false)

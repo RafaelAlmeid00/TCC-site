@@ -1,6 +1,5 @@
 import { Card, Container, Typography, TextField } from "@mui/material";
 import ReactDOM from 'react-dom';
-import { Deccode } from "../../../routes";
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import colors from "../../../assets/colors";
@@ -8,8 +7,8 @@ import { Balancer } from "react-wrap-balancer";
 import { BtnHome } from "../../btns";
 import axios from "axios";
 
-function Pag({onClose}) {
-    const [userData] = React.useState(Deccode())
+function Pag({onClose}: any) {
+    const { userData } = React.useContext(ModalContext);
     const { verify } = React.useContext(ModalContext);
     const birthDate = new Date(userData.user_nascimento);
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
@@ -18,6 +17,11 @@ function Pag({onClose}) {
     const [venc, setVenc] = React.useState<string>('');
 
     React.useEffect(() => {
+
+        if (userData.user_status == 'inativo') {
+            onClose()
+        }
+
         const handleCliente = async () => {
             console.log(userData.user_idcli);
             try {
@@ -36,10 +40,13 @@ function Pag({onClose}) {
                 if (error.response) {
                     console.log('Erro na resposta do servidor:', error.response.status);
                     console.log('Dados da resposta:', error.response.data);
+                    onClose()
                 } else if (error.request) {
                     console.log('Sem resposta do servidor:', error.request);
+                    onClose()
                 } else {
                     console.log('Erro ao configurar a solicitação:', error.message);
+                    onClose()
                 }
             }
         }

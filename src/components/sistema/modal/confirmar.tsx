@@ -3,7 +3,6 @@ import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Deccode } from "../../../routes";
 import { Close } from "@mui/icons-material";
 
 interface Props {
@@ -15,7 +14,7 @@ export default function Excluir({ onCloseModal }) {
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token');
-    const userData = Deccode();
+    const { userData } = React.useContext(ModalContext);
     const navigate = useNavigate()
     const data = userData.user_CPF
 

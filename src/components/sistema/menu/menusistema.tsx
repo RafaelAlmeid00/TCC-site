@@ -12,14 +12,13 @@ import colors from '../../../assets/colors';
 import theme from '../../../assets/theme';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { Deccode } from "../../../routes";
 import Not from '../modal/notificacoes';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotification } from "../../../redux/actions";
 
 export default function MenuSistema() {
     console.log(localStorage);
-    const [userData] = React.useState(Deccode());
+    const { userData } = React.useContext(ModalContext);
     console.log(userData);
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);

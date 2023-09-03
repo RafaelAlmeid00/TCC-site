@@ -5,13 +5,11 @@ import axios from "axios";
 import Cartao from "../modal/card";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
-import { Deccode } from "../../../routes";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 export default function CardSection() {
     const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
-    const [card, setCard] = React.useState(Boolean)
     const [load, setLoad] = React.useState(true)
     const [loading, setLoading] = React.useState(true)
     const [dataCard, setDataCard] = React.useState('')
@@ -20,8 +18,7 @@ export default function CardSection() {
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token')
-    const [userData] = React.useState(Deccode());
-    console.log(Deccode());
+    const { userData } = React.useContext(ModalContext);
 
     const buttonshome = [
         { name: 'Histórico do Cartão' },
@@ -51,7 +48,6 @@ export default function CardSection() {
                     setDataCard(response.data[0])
                     console.log(dataCard);
                     setLoad(false)
-                    console.log(card);
 
                 } else {
                     console.log('deu merda rapeize')
@@ -68,7 +64,7 @@ export default function CardSection() {
         } else {
             SearchCard()
         }
-    }, [card, token])
+    }, [dataCard, token])
 
     React.useEffect(() => {
         async function SearchCardCancel() {
@@ -89,7 +85,6 @@ export default function CardSection() {
                     setCardCancel(response.data)
                     console.log(dataCardCancel);
                     setLoading(false)
-                    console.log(card);
 
                 } else {
                     console.log('deu merda rapeize')
@@ -106,7 +101,7 @@ export default function CardSection() {
         } else {
             SearchCardCancel()
         }
-    }, [card, token])
+    }, [dataCardCancel, token, userData.user_CPF])
 
     return (
         <>

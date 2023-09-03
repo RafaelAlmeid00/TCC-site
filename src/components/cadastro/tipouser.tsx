@@ -6,19 +6,49 @@ import { useNavigate } from "react-router-dom";
 import { Balancer } from "react-wrap-balancer";
 import { Box, Container, FormControl, InputBase, InputLabel, MenuItem, Select, Typography, styled } from "@mui/material";
 import { Btn } from "../btns";
+import PrivacyPolicy from "./PrivacyPolicy";
+import CookiePolicy from "./Cookies.Policy";
+import TermsAndConditions from "./TermsAndConditions";
 interface Props {
     dados: object;
     onCliente: (card: any) => Promise<void>; 
 }
 
-function Tipo({ dados, onCliente }: Props) {
+function Tipo({ dados }: Props) {
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
     const [card, setCard] = React.useState('');
     const [listid] = React.useState('');
     const { setLog } = React.useContext(ModalContext);
     const [showSucess, setShowSucess] = React.useState(false);
+    const [idcli, setId] = React.useState("");
 
+    const CriarCliente = async (card: any) => {
+
+        const cliente = {
+            name: dados.user_nome,
+            cpfCnpj: dados.user_CPF,
+            email: dados.user_email,
+            address: `${dados.user_endcidade}, ${dados.user_endrua}`,
+            addressNumber: dados.user_endnum,
+            province: dados.user_endbairro,
+            postalCode: dados.user_endCEP,
+            externalReference: dados.user_CPF.slice(0, 6),
+            groupName: card,
+            mobilePhone: dados.user_cel
+        }
+
+        console.log(cliente)
+
+        try {
+            const response = await axios.post('http://localhost:3344/cliente', { cliente })
+            console.log(response.data.idcli);
+            console.log(response);
+            setId(response.data.idcli)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
     };
@@ -110,18 +140,24 @@ function Tipo({ dados, onCliente }: Props) {
             }
         }
 
+        if (idcli) {
+            if ('user_idcli' in dados) {
+                dados.user_idcli = idcli;
+            } 
+        }
+
         console.log(dados);
 
         try {
-            await onCliente(card);
+            await CriarCliente(card);
             await axios.post('http://localhost:3344/user', dados);
             setShowSucess(true)
             console.log('foi mlk');
             setLog?.(true)
             setTimeout(() => {
                 setShowSucess(false)
+                navigate('/cadastro')
             }, 2000);
-            navigate('/cadastro')
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Erro na requisição POST:', error.message);
@@ -158,7 +194,7 @@ function Tipo({ dados, onCliente }: Props) {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                ml: 12,
+                ml: 10,
             }}>
                     <Container sx={{
                         display: 'flex',
@@ -241,6 +277,31 @@ function Tipo({ dados, onCliente }: Props) {
                     }}>
                         <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} cl={undefined} vis={undefined} mb={undefined} />
                     </Container>
+
+                <Container sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    mt: 3,
+                    mb: 5
+                }}>
+                <Typography sx={{
+                        textAlign: 'center', mb: 1, mt: 2, color: '#666666', fontSize: {
+                        xs: "2vw", // (7.5 / 1200) * 600
+                        sm: "1.5vw", // (7.5 / 1200) * 900
+                        md: "1.2vw", // (7.5 / 1200) * 1200
+                        lg: "1vw",
+                        xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                    },
+                }}>
+                    Ao confirmar seu cadastro você aceita os seguintes termos:
+                </Typography>
+                    <PrivacyPolicy />
+                    <TermsAndConditions />
+                    <CookiePolicy />
+            </Container>
+
             </Box>
         </>
     )

@@ -13,10 +13,9 @@ import { useNavigate } from "react-router-dom";
 import AlertConta from "./AlertConta";
 import Pag from "./modal/pagamento";
 import Loading from "../loading";
-import { Deccode } from "../../routes";
 
 function Homesistema() {
-    const [userData] = React.useState(Deccode());
+    const {userData} = React.useContext(ModalContext);
     const [modal, setModal] = React.useState(false)
     const [card, setCard] = React.useState(Boolean)
     const [load, setLoad] = React.useState(true)

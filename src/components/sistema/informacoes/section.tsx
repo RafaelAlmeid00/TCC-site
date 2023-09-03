@@ -1,14 +1,13 @@
 import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
-import { Deccode } from "../../../routes";
 import { CheckCircle, Contacts, CreditCard, AccountCircle, HowToReg, Email } from "@mui/icons-material";
 
 function Info() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
-    const [userData] = React.useState(Deccode());
+    const { userData } = React.useContext(ModalContext);
     console.log(userData);
 
     return (

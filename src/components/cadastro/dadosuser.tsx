@@ -39,58 +39,7 @@ function CompleteCad() {
     const [showTipo, setShowTipo] = useState(false);
     const [dadosU, setDados] = useState({});
     const [showErrorCel, setShowErrorCel] = useState(false);
-    const [id, setId] = useState("");
-
-    const formatPhoneNumber = (input) => {
-        return new Promise((resolve) => {
-            const numericInput = input.replace(/\D/g, '');
-
-            if (numericInput.length < 11) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-        });
-    };
-
-    const handleCelChange = async (event) => {
-        const isValid = await formatPhoneNumber(event.target.value);
-
-        if (isValid) {
-            setShowErrorCel(true)
-        } else {
-            setShowErrorCel(false)
-        }
-
-        // Atualize o estado do número de celular
-        setCel(event.target.value);
-    };
-
-
-    const CriarCliente = async (card: any) => {
-
-        const cliente = {
-            name: name,
-            cpfCnpj: cpf,
-            email: email,
-            address: `${city}, ${street}`,
-            addressNumber: num,
-            province: district,
-            postalCode: cep,
-            externalReference: cpf.slice(0, 6),
-            groupName: card,
-            mobilePhone: cel
-        }
-
-        try {
-            const response = await axios.post('http://localhost:3344/cliente', { cliente })
-            console.log(response.data.idcli);
-            console.log(response);
-            setId(response.data.idcli)
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
+   
 
     async function ValidaCPF(cpf: string): Promise<boolean> {
         let Soma = 0;
@@ -184,8 +133,8 @@ function CompleteCad() {
         return true
     }
 
-    function VerifyInputs(cpf: string, name: string, date: string, cep: string, num: string, rg: string): boolean {
-        if (date == '' || /^\d{4}-\d{2}-\d{2}$/.test(date) || date.length < 10) {
+    function VerifyInputs(): boolean {
+        if (date == '' ) {
             setShowErrorData(true)
             setShowErrorNum(false)
             setShowErrorCEP(false)
@@ -196,6 +145,7 @@ function CompleteCad() {
             setTimeout(() => {
                 setShowErrorData(false)
             }, 2000);
+            console.log('ta aq o eror')
             return true;
         } else if (cpf == '' || cpf.length < 11) {
             setShowErrorCPF(true)
@@ -268,6 +218,19 @@ function CompleteCad() {
             }, 2000);
             return true;
 
+        } else if (cel == '' || cel.length < 11) {
+            setShowErrorCEP(false)
+            setShowErrorNum(false)
+            setShowErrorCPF(false)
+            setShowErrorNome(false)
+            setShowRG(false)
+            setShowErrorData(false)
+            setCPFexiste(false)    
+            setShowErrorCel(true)
+            setTimeout(() => {
+                setShowErrorCel(false)
+            }, 2000);
+            return true;
         } else {
             setShowErrorNum(false)
             setShowErrorCEP(false)
@@ -276,6 +239,7 @@ function CompleteCad() {
             setShowRG(false)
             setShowErrorData(false)
             setCPFexiste(false)
+            setShowErrorCel(false)
             return false;
         }
     }
@@ -322,7 +286,7 @@ function CompleteCad() {
             user_tipo: undefined,
             list_CPF_list_id: undefined,
             user_cel: cel,
-            user_idcli: id
+            user_idcli: undefined
         };
 
         const cpfError = await VerifyCPF(cpf);
@@ -330,27 +294,26 @@ function CompleteCad() {
         if (cpfError) {
             setShowTipo(false); // Há erros, não avança para a próxima etapa
             setShowErrorCPF(true)
+            setTimeout(() => {
+                setShowErrorCPF(false)
+            }, 2000);
             console.log('travo tudo aqq');
             console.log(dadosUsuario);
 
-            return;
-        }
-
-        if (cep && num) {
-            const inputsError = await VerifyInputs(cpf, name, date, cep, num, rg); // Chama a função diretamente aqui
-
+        } 
+        
+            const inputsError = VerifyInputs(); // Chama a função diretamente aqui
+            console.log('Erro dos input:', inputsError)
             if (inputsError) {
                 setShowTipo(false); // Há erros, não avança para a próxima etapa
                 console.log('travo tudo aqq²');
                 console.log(dadosUsuario);
 
-                return;
+            } else {
+                setShowTipo(true);
+                setDados(dadosUsuario)
+                console.log(dadosU);
             }
-        }
-        setShowTipo(true);
-        setDados(dadosUsuario)
-        console.log(dadosU);
-
     }
 
     function formatDateString(date: string): string {
@@ -389,7 +352,7 @@ function CompleteCad() {
             {showErrorNum && <NumError />}
             {showRG && <RGError />}
             {CPFexiste && <CPFExiste />}
-            {showTipo ? <Tipo dados={dadosU} onCliente={CriarCliente} /> :
+            {showTipo ? <Tipo dados={dadosU}/> :
                 <Container sx={{
                     width: "100%",
                     display: "flex",
@@ -418,7 +381,7 @@ function CompleteCad() {
                             Dados Pessoais e Endereço
                         </Typography>
                         <Typography sx={{
-                            textAlign: 'center', mb: '40px', color: verify ? 'white' : '#444444', fontSize: {
+                            textAlign: 'center', mb: 2, color: verify ? 'white' : '#444444', fontSize: {
                                 xs: '2vw',  // (7.5 / 1200) * 600
                                 sm: '1.5vw',  // (7.5 / 1200) * 900
                                 md: '1vw',  // (7.5 / 1200) * 1200
@@ -428,7 +391,7 @@ function CompleteCad() {
                         }}>
                             Coloque o seu CPF e CEP para obter os dados:
                         </Typography>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
                                 CPF
                             </InputLabel>
@@ -451,7 +414,7 @@ function CompleteCad() {
                                 sx={{ fontSize: '14px' }}
                             />
                         </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
                                 RG
                             </InputLabel>
@@ -474,7 +437,7 @@ function CompleteCad() {
                                 sx={{ fontSize: '14px' }}
                             />
                         </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
                                 Nome Completo
                             </InputLabel>
@@ -493,7 +456,7 @@ function CompleteCad() {
                                 sx={{ fontSize: '14px' }}
                             />
                         </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                        <FormControl variant="standard" sx={{ width: '80%' }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
                                 Data de Nascimento
                             </InputLabel>
@@ -512,7 +475,7 @@ function CompleteCad() {
                                 sx={{ fontSize: '14px', mb: 2 }}
                             />
                         </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
+                        <FormControl variant="standard" sx={{ width: '80%', mb: 3 }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
                                 Número de Celular
                             </InputLabel>
@@ -522,7 +485,7 @@ function CompleteCad() {
                                 id="input-with-icon-adornment"
                                 value={cel}
                                 placeholder="24999123456"
-                                onChange={handleCelChange}
+                                onChange={(event) => setCel(event.target.value.replace(/\D/g, ''))}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <Contacts />

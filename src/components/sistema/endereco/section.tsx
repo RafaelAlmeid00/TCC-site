@@ -8,13 +8,12 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../../context/modalcontext";
-import { Deccode } from "../../../routes";
 
 function End() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
-    const [userData] = React.useState(Deccode());
+    const { userData } = React.useContext(ModalContext);
 
 
 

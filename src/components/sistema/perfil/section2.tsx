@@ -1,7 +1,6 @@
 import { Box, Button, Container, Divider, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Deccode } from "../../../routes";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import colors from "../../../assets/colors";
@@ -30,7 +29,7 @@ function SectionPerfil2() {
     let parame: string
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token');
-    const userData = Deccode();
+    const { userData } = React.useContext(ModalContext);
     const cpf = userData.user_CPF;
     const data = userData.user_email
     const nome = userData.user_nome

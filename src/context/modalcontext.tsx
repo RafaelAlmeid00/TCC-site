@@ -29,6 +29,7 @@ interface ModalContextType {
     themes: Theme; // Você pode definir o tipo correto do objeto 'themes' se necessário
     hasEntered: boolean;
     setHasEntered: (hasEntered: boolean) => void;
+    userData?: object;
 }
 const throwNotImplementedError = () => {
     throw new Error('Function not implemented');
@@ -63,6 +64,7 @@ const ModalContext = createContext<ModalContextType>({
     themes: defaultTheme,
     hasEntered: false,
     setHasEntered: throwNotImplementedError,
+    userData: [{}]
 });
 
 export default ModalContext;

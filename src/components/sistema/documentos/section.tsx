@@ -10,13 +10,12 @@ import ModalContext from "../../../context/modalcontext";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Balancer from "react-wrap-balancer";
 import colors from "../../../assets/colors";
-import { Deccode } from "../../../routes";
 import PortraitIcon from '@mui/icons-material/Portrait';
 
 export default function Docs() {
     const { verify, themes } = useContext(ModalContext);
     const fundo = themes.palette.background.default;
-    const [userData] = useState(Deccode());
+    const { userData } = React.useContext(ModalContext);
     const [documentList, setDocumentList] = useState([{}]);
     const [status, setStatus] = useState('');
 
