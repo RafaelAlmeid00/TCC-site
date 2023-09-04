@@ -1,4 +1,4 @@
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography, CircularProgress, Container } from "@mui/material";
 import ModalContext from "../context/modalcontext";
 import React from "react";
 
@@ -16,13 +16,21 @@ function Loading() {
             alignItems: "center",
             justifyContent: "center",
             height: "100vh",
+            width: "100vw",
         }}>
-        <CircularProgress />
-        <Typography variant="h6" sx={{
-            marginTop: 2,
-        }}>
-            Carregando...
-        </Typography>
+            <Container sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+            }}>
+                <CircularProgress />
+                <Typography variant="h6" sx={{
+                    marginTop: 2,
+                }}>
+                    Carregando...
+                </Typography>
+            </Container>
         </Box>
     );
 }
