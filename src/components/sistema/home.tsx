@@ -54,11 +54,9 @@ function Homesistema() {
             return <Loading />;
         }
 
-        console.log(userData.user_status);
-
-        if (userData.user_status == "ativo") {
+        if (userData && userData.user_status == "ativo") {
             setActive(false)
-        } else if (userData.user_status == "inativo") {
+        } else if (userData && userData.user_status == "inativo") {
             setActive(true)
         } else {
             setActive(true)

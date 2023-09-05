@@ -14,16 +14,11 @@ function Sistema() {
             setLoad(false)
         } else {
             setLoad(true)
-<<<<<<< Updated upstream
-        }
-    }, [])
-=======
             setTimeout(() => {
                 location.reload()
             }, 200);
         }
     }, [userData])
->>>>>>> Stashed changes
 
     return (
         <>
