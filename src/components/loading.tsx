@@ -1,11 +1,13 @@
 import { Box, Typography, CircularProgress, Container } from "@mui/material";
 import ModalContext from "../context/modalcontext";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Loading() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
+
 
     return (
         <Box sx={{

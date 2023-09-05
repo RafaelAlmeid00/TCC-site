@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
@@ -10,16 +10,18 @@ import "./App.css"
 import jwt_decode from "jwt-decode";
 import AlertConta from "./components/sistema/AlertConta";
 
-export function Deccode(): object {
-  const userToken = localStorage.getItem('token');
 
-  if (userToken) {
-    return jwt_decode(userToken);
-  } else {
-    // Retorne algum valor de erro ou padrão, ou lance uma exceção
-    console.error("Token não encontrado.");
-    return null;
-  }
+export function Deccode(): Promise<object> {
+  return new Promise((resolve, reject) => {
+    const userToken = localStorage.getItem('token');
+
+    if (userToken) {
+      resolve(jwt_decode(userToken));
+    } else {
+      // Pode ser melhor lançar uma exceção aqui em vez de apenas console.error
+      reject("Token não encontrado.");
+    }
+  });
 }
 
 export function UserDataLoader({ children }: any) {
@@ -79,12 +81,29 @@ const Rota = () => {
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
-  const [userData] = React.useState<object>(Deccode());
+  const [userData, setUserData] = React.useState<object | null>(null);
   const [Active, setActive] = React.useState(false);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
+
+  React.useEffect(() => {
+    async function loadUserData() {
+      try {
+        const decodedData = await Deccode();
+        setUserData(decodedData);
+        setUserDataLoaded(true);
+      } catch (error) {
+        console.error("Erro ao decodificar o token:", error);
+        setUserData(null);
+        setUserDataLoaded(true);
+      }
+    }
+
+    loadUserData();
+  }, []);
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
-    if (userData.user_status == 'ativo') {
+      if (userData && userData.user_status == 'ativo') {
       setActive(false)
     } else {
       setActive(true)
@@ -92,7 +111,7 @@ const Rota = () => {
   } else {
     console.log('sem token')
   }
-  }, [])
+  }, [userData])
   
   function checkDevice() {
     if (navigator.userAgent.match(/Android/i)
@@ -138,6 +157,7 @@ const Rota = () => {
   React.useEffect(() => {
     setHasEntered(true);
   }, []);
+
 
   return (
     <ThemeProvider theme={themes}>
@@ -228,7 +248,11 @@ const Rota = () => {
                 }}>
                   <React.Fragment>
                     <Routes>
+                      {userDataLoaded ? (
                       <Route path="/" element={<HomeSistema />} />
+                        ) : (
+                          <Route path="/" element={<Loading />} />
+                      )}
                       <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
                       <Route path="/Perfil" element={<PerfilLazy />} />
                       <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />

@@ -15,6 +15,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Not from '../modal/notificacoes';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotification } from "../../../redux/actions";
+import Loading from '../../loading';
 
 export default function MenuSistema() {
     console.log(localStorage);
@@ -48,6 +49,16 @@ export default function MenuSistema() {
     const closeNotification = () => {
         dispatch(toggleNotification()); // Chama a ação para alternar a visibilidade da notificação
     };
+
+    React.useEffect(() => {
+        const veri = () => {
+            if (!userData) {
+                
+                return <Loading />
+            }
+        }
+        veri()
+    }, [userData])
 
     return (
         <>

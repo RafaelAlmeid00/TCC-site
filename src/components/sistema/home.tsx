@@ -33,6 +33,7 @@ function Homesistema() {
 
     console.log(userData)
 
+    
     const handlePag = () => {
         setPag(true)
     }
@@ -153,7 +154,8 @@ function Homesistema() {
             }
         }
         handleAttCard()
-    }, [dataCard, token, userData.user_idcli])
+    }, [dataCard, token])
+
 
 
     return (
@@ -195,7 +197,7 @@ function Homesistema() {
                             fontSize: '25px',
                             fontWeight: 700
                         }}>
-                            Controle de Cartão - {userData.user_nome}
+                            Controle de Cartão - {userData ? userData.user_nome : ''}
                         </Typography>
                     </Container>
                     <Container sx={{

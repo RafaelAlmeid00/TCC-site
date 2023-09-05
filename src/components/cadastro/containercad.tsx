@@ -120,6 +120,7 @@ function ContainerCad() {
             if (res.data.token) {
                 await new Promise<void>((resolve) => {
                     localStorage.setItem('token', res.data.token);
+                    localStorage.setItem('redirect', 'false');
                     resolve();
                 });
 
