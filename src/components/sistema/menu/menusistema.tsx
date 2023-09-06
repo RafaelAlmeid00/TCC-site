@@ -87,7 +87,7 @@ export default function MenuSistema() {
                             variant='h4'
                             component='a'
                             noWrap
-                            href='/#'
+                            onClick={() => navigate('/')}
                             sx={{
                                 fontFamily: 'Franklin Gothic Demi Cond',
                                 fontWeight: 'bold',

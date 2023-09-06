@@ -8,6 +8,8 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../../context/modalcontext";
+import colors from "../../../assets/colors";
+import TuneIcon from "@mui/icons-material/Tune";
 
 function End() {
     const { verify } = React.useContext(ModalContext);
@@ -31,6 +33,34 @@ function End() {
                     overflow: "hidden",
                 }}
             >
+                <Container
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "start",
+                        alignItems: "center",
+                        float: "left",
+                        mt: 3,
+                        mb: 5
+                    }}
+                >
+                    <TuneIcon
+                        sx={{
+                            mr: 2,
+                            color: verify ? "white" : "black",
+                        }}
+                    />
+                    <Typography
+                        sx={{
+                            color: verify ? colors.sc : colors.tc,
+                            fontSize: "25px",
+                            fontWeight: 700,
+                        }}
+                    >
+                        Endereço da Conta - {userData.user_nome}
+                    </Typography>
+                </Container>
                 <Container
                     sx={{
                         width: "40%",

@@ -10,10 +10,37 @@ import {
 import ModalContext from "../../../context/modalcontext";
 import { DirectionsBus } from "@mui/icons-material";
 import { Balancer } from "react-wrap-balancer";
+import colors from "../../../assets/colors";
+import TuneIcon from "@mui/icons-material/Tune";
 
 export default function Viagens() {
     const { verify, themes } = useContext(ModalContext);
     const fundo = themes.palette.background.default;
+    const { userData } = React.useContext(ModalContext);
+    const [usos, setUsos] = React.useState([{}])
+    const token = localStorage.getItem('token');
+
+    React.useEffect(() => {
+        const handleUsos = async () => {
+            try {
+                const response = await axios.post('http://localhost:3344/usos', {
+                    user_CPF: userData.user_CPF,
+                }, {
+                    headers: {
+                        'authorization': token
+                    }
+                })
+                console.log(response);
+                setUsos(response.data.validations)
+                console.log(usos);
+
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        handleUsos()
+    }, [token, userData])
 
     function traduzirMes(prefixoIngles: string): string | null {
         const mesesTraduzidos: { [key: string]: string } = {
@@ -109,6 +136,34 @@ export default function Viagens() {
                 sx={{
                     width: "100%",
                     display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "start",
+                    alignItems: "center",
+                    float: "left",
+                    mt: 3,
+                    mb: 5
+                }}
+            >
+                <TuneIcon
+                    sx={{
+                        mr: 2,
+                        color: verify ? "white" : "black",
+                    }}
+                />
+                <Typography
+                    sx={{
+                        color: verify ? colors.sc : colors.tc,
+                        fontSize: "25px",
+                        fontWeight: 700,
+                    }}
+                >
+                    Histórico de Viagens - {userData.user_nome}
+                </Typography>
+            </Container>
+            <Container
+                sx={{
+                    width: "100%",
+                    display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
@@ -138,15 +193,16 @@ export default function Viagens() {
                         <Icon sx={{
                             borderRadius: '50%',
                             border: '1px solid transparent',
-                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.8)',
+                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.6)',
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                             padding: 10,
-                            opacity: 0.6,
                         }}>
                             <DirectionsBus sx={{
-                                fontSize: 100
+                                fontSize: 100,
+                                color: verify ? colors.sc : colors.pm
+
                             }} />
                         </Icon>
                         <Container sx={{
@@ -237,115 +293,130 @@ export default function Viagens() {
                     </Container>
                 </Card>
 
-                    <Container
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                            width: '100%',
-                            height: 'auto',
-                            gap: 1
-                        }}>
+                <Card
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        boxShadow: verify ? '0px 0px 4px 0px white' : '0px 0px 8px 1px rgba(0, 0, 0, 0.6)',
+                        width: '80%',
+                        height: 'auto',
+                        gap: 1
+                    }}>
                     {ViagemFeita.slice(1, 11).map((viagem, index) => (
-                        <Card
+                        <Container
                             key={index}
 
                             sx={{
-                                width: "80%",
+                                width: "100%",
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                boxShadow: verify ? '0px 0px 4px 0px white' : '0px 0px 4px 0px rgba(0, 0, 0, 0.6)',
                             }}>
-                    
-                    <Container 
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        width: '30%',
-                        padding: 3,
-                        flexDirection: 'column',
-                        marginLeft: 5,
-                        marginRight: 5,
-                    }}>
-                        <Icon sx={{
-                            borderRadius: '50%',
-                            border: '1px solid transparent',
-                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.8)',
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            padding: 3,
-                            opacity: 0.6,
-                        }}>
-                            <DirectionsBus sx={{
-                                fontSize: 30
-                            }} />
-                        </Icon>
-                        <Container sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: '100%'
-                        }}>
-                            <Balancer>
-                                <Typography variant="body1" sx={{ fontSize: 12, textAlign: 'center', mt: 2 }}>
-                                    {viagem.Onibus}
-                                </Typography>
-                            </Balancer>
-                        </Container>
-                    </Container>
-                    <Divider orientation="vertical" variant="middle" flexItem sx={{
-                        ml: 5,
-                        mr: 5
-                    }}/>
 
-                    <Container sx={{
-                        width: '70%',
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "flex-start",
-                        flexDirection: 'column',
-                        padding: 5,
-                        marginLeft: 5,
-                        marginRight: 5,
-                        gap: 2
-                    }}>
-                        <Container sx={{
-                            display: "flex",
-                            flexDirection: 'row',
-                            alignItems: "center",
-                        }}>
-                            <Typography variant="body1" sx={{ fontSize: 15, textAlign: 'left' }}>
-                                Data:
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1 }}>
-                                {viagem.Data}
-                            </Typography>
+                            <Container
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-start',
+                                    alignItems: 'center',
+                                    width: '30%',
+                                    padding: 3,
+                                    flexDirection: 'column',
+                                    marginLeft: 5,
+                                    marginRight: 5,
+                                }}>
+                                <Icon sx={{
+                                    borderRadius: '50%',
+                                    border: '1px solid transparent',
+                                    boxShadow: '0 0 5px rgba(0, 0, 0, 0.6)',
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    padding: 3,
+                                }}>
+                                    <DirectionsBus sx={{
+                                        fontSize: 30,
+                                        color: verify ? colors.sc : colors.pm
+                                    }} />
+                                </Icon>
+                                <Container sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: '100%'
+                                }}>
+                                    <Balancer>
+                                        <Typography variant="body1" sx={{ fontSize: 12, textAlign: 'center', mt: 2, color: verify ? 'white' : 'black' }}>
+                                            {viagem.Onibus}
+                                        </Typography>
+                                    </Balancer>
+                                </Container>
+                            </Container>
+                            <Divider orientation="vertical" variant="middle" flexItem sx={{
+                                ml: 5,
+                                mr: 5
+                            }} />
+
+                            <Container sx={{
+                                width: '70%',
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                alignItems: "flex-start",
+                                flexDirection: 'column',
+                                padding: 5,
+                                marginLeft: 5,
+                                marginRight: 5,
+                                gap: 2
+                            }}>
+                                <Container sx={{
+                                    display: "flex",
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                }}>
+                                    <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                        Data:
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                        {viagem.Data}
+                                    </Typography>
+                                </Container>
+                                <Divider variant="middle" sx={{
+                                    width: '75%'
+                                }} />
+                                <Container sx={{
+                                    display: "flex",
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                }}>
+                                    <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                        Horário:
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                        {viagem.Hora}
+                                    </Typography>
+                                </Container>
+                                <Divider variant="middle" sx={{
+                                    width: '75%'
+                                }} />
+                                <Container sx={{
+                                    display: "flex",
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                }}>
+                                    <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                        Passagem:
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                        {viagem.Passagem}
+                                    </Typography>
+                                </Container>
+                            </Container>
                         </Container>
-                        <Divider variant="middle" sx={{
-                            width: '75%'
-                        }} />
-                        <Container sx={{
-                            display: "flex",
-                            flexDirection: 'row',
-                            alignItems: "center",
-                        }}>
-                            <Typography variant="body1" sx={{ fontSize: 15, textAlign: 'left' }}>
-                                Passagem:
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1 }}>
-                                {viagem.Passagem}
-                            </Typography>
-                        </Container>
-                    </Container>
-                        </Card>
                     ))}
-                    
-                    </Container>
+
+                </Card>
             </Container>
         </Box>
     );

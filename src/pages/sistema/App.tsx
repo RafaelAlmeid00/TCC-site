@@ -9,16 +9,49 @@ function Sistema() {
     const { userData } = React.useContext(ModalContext);
     const [load, setLoad] = React.useState(true)
 
-    React.useEffect(() => {
-        if (userData && userData.user_CPF) {
-            setLoad(false)
-        } else {
-            setLoad(true)
-            setTimeout(() => {
-                location.reload()
-            }, 200);
+    const setLocalStorageItem = () => {
+        return new Promise<void>((resolve, reject) => {
+            try {
+                localStorage.setItem('redirect', 'true');
+                resolve();
+            } catch (error) {
+                reject(error);
+                console.log(error);
+                
+            }
+        });
+    };
+
+    const handleStorage = async () => {
+        try {
+            await setLocalStorageItem();
+                setTimeout(() => {
+                    location.reload();
+                }, 200);
+                console.log('tmlc cria');
+                
+        } catch (error) {
+            console.error('Erro ao definir o valor no localStorage:', error);
         }
-    }, [userData])
+    };
+
+    React.useEffect(() => {
+        const redirect = localStorage.getItem('redirect');
+        console.log(redirect);
+        
+        if (userData && userData.user_CPF) {
+            setLoad(false);
+        } else {
+            setLoad(true);
+            if (redirect == 'false') {
+                handleStorage();
+            } else {
+                console.log('ta true');
+                
+            }
+        }
+    }, [userData]);
+
 
     return (
         <>

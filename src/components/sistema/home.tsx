@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Card, Container, Divider, Skeleton, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Card, Container, Divider, Icon, Skeleton, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import AlertConta from "./AlertConta";
 import Pag from "./modal/pagamento";
 import Loading from "../loading";
+import { DirectionsBus } from "@mui/icons-material";
+import Balancer from "react-wrap-balancer";
 
 function Homesistema() {
-    const {userData} = React.useContext(ModalContext);
+    const { userData } = React.useContext(ModalContext);
     const [modal, setModal] = React.useState(false)
     const [card, setCard] = React.useState(Boolean)
     const [load, setLoad] = React.useState(true)
@@ -33,7 +35,7 @@ function Homesistema() {
 
     console.log(userData)
 
-    
+
     const handlePag = () => {
         setPag(true)
     }
@@ -74,7 +76,7 @@ function Homesistema() {
 
     const handleOpenModal = () => {
         console.log(active);
-        
+
         if (active) {
             setModal(true);
         } else {
@@ -142,9 +144,9 @@ function Homesistema() {
                     }
                 }, {
                     headers: {
-                    'authorization': token
+                        'authorization': token
                     }
-            })
+                })
                 console.log(response);
 
             } catch (error: any) {
@@ -154,13 +156,95 @@ function Homesistema() {
         handleAttCard()
     }, [dataCard, token])
 
+    function traduzirMes(prefixoIngles: string): string | null {
+        const mesesTraduzidos: { [key: string]: string } = {
+            Jan: 'Janeiro',
+            Feb: 'Fevereiro',
+            Mar: 'Março',
+            Apr: 'Abril',
+            May: 'Maio',
+            Jun: 'Junho',
+            Jul: 'Julho',
+            Aug: 'Agosto',
+            Sep: 'Setembro',
+            Oct: 'Outubro',
+            Nov: 'Novembro',
+            Dec: 'Dezembro',
+        };
+
+        const mesTraduzido = mesesTraduzidos[prefixoIngles];
+
+        return mesTraduzido || null;
+    }
+
+    function traduzirDiaDaSemana(diaSemanaIngles: string): string | null {
+        const diasSemanaTraduzidos: { [key: string]: string } = {
+            Sun: 'Domingo',
+            Mon: 'Segunda-feira',
+            Tue: 'Terça-feira',
+            Wed: 'Quarta-feira',
+            Thu: 'Quinta-feira',
+            Fri: 'Sexta-feira',
+            Sat: 'Sábado',
+        };
+
+        const diaTraduzido = diasSemanaTraduzidos[diaSemanaIngles];
+
+        return diaTraduzido || null;
+    }
+
+    function obterDataEHoraAtual(): string {
+        const dataAtual = new Date();
+        const diaSemana = dataAtual.toLocaleDateString('en-US', { weekday: 'short' });
+        const mes = dataAtual.toLocaleDateString('en-US', { month: 'short' });
+        const dia = dataAtual.getDate();
+        const ano = dataAtual.getFullYear();
+        const hora = String(dataAtual.getHours()).padStart(2, '0');
+        const minutos = String(dataAtual.getMinutes()).padStart(2, '0');
+        const segundos = String(dataAtual.getSeconds()).padStart(2, '0');
+
+        const mêsBR = traduzirMes(mes)
+        const semanaBR = traduzirDiaDaSemana(diaSemana)
+
+        const dataEHoraAtual = {
+            Data: `${semanaBR} - ${dia}, ${mêsBR}, ${ano}`,
+            Hora: `${hora}:${minutos}:${segundos}`,
+        }
+
+        return dataEHoraAtual;
+    }
+
+    const DataSystem = obterDataEHoraAtual();
+    console.log(DataSystem.Data);
+    console.log(DataSystem.Hora);
+
+    const ViagemFeita = React.useMemo(() => [
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '15.00', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '4.00', Cartão: 'Vale-Transporte' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '3.40', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '4.20', Cartão: 'Vale-Transporte' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '6.00', Cartão: 'Vale-Transporte' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '9.10', Cartão: 'Vale-Transporte' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '3.70', Cartão: 'Estudante' },
+        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Vale-Transporte' },
+    ], [DataSystem.Data, DataSystem.Hora]);
+
+    React.useEffect(() => {
+        if (ViagemFeita[0]) {
+            setLoading(false)
+            setVal(ViagemFeita)
+        }
+    }, [ViagemFeita])
 
 
     return (
         <>
-            {pag && <Pag onClose={handleClosePag}/>}
+            {pag && <Pag onClose={handleClosePag} />}
             {alert && <PedidosAberto />}
-            {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />):
+            {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />) :
                 <Box id="section1" sx={{
                     mt: '9.5vh',
                     height: '90.5vh',
@@ -337,42 +421,116 @@ function Homesistema() {
                                 }} />
                             ))
                         ) : (
-                            val.map((card) => (
-                                <>
-                                    <Card
-                                        key={card.val_id} // É importante definir uma chave única para cada elemento do map
+                            val.slice(0, 4).map((card, index) => (
+                                <Container
+                                    key={index}
+
+                                    sx={{
+                                        width: "100%",
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}>
+
+                                    <Container
                                         sx={{
-                                            width: "80%",
-                                            height: '15vh',
+                                            display: 'flex',
+                                            justifyContent: 'flex-start',
+                                            alignItems: 'center',
+                                            width: '30%',
+                                            padding: 3,
+                                            flexDirection: 'column',
+                                            marginLeft: 5,
+                                            marginRight: 5,
+                                        }}>
+                                        <Icon sx={{
+                                            borderRadius: '50%',
+                                            border: '1px solid transparent',
+                                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.6)',
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
-                                            flexDirection: "row",
-                                            boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
-                                            cursor: 'pointer',
-                                        }}
-                                    >
-                                        <Container
-                                            sx={{
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                flexDirection: "row",
-                                            }}
-                                        >
-                                            <Container>
-                                                <Typography >{card.val_onibus}</Typography>
-                                            </Container>
-                                            <Container>
-                                                <Typography >{card.val_horario}</Typography>
-                                            </Container>
-                                            <Container>
-                                                <Typography >{card.val_gasto}</Typography>
-                                            </Container>
+                                            padding: 3,
+                                        }}>
+                                            <DirectionsBus sx={{
+                                                fontSize: 30,
+                                                color: verify ? colors.sc : colors.pm
+                                            }} />
+                                        </Icon>
+                                        <Container sx={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            width: '100%'
+                                        }}>
+                                            <Balancer>
+                                                <Typography variant="body1" sx={{ fontSize: 12, textAlign: 'center', mt: 2, color: verify ? 'white' : 'black' }}>
+                                                    {card.Onibus}
+                                                </Typography>
+                                            </Balancer>
                                         </Container>
-                                    </Card>
-                                    <br />
-                                </>
+                                    </Container>
+                                    <Divider orientation="vertical" variant="middle" flexItem sx={{
+                                        ml: 5,
+                                        mr: 5
+                                    }} />
+
+                                    <Container sx={{
+                                        width: '70%',
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        alignItems: "flex-start",
+                                        flexDirection: 'column',
+                                        padding: 5,
+                                        marginLeft: 5,
+                                        marginRight: 5,
+                                        gap: 2
+                                    }}>
+                                        <Container sx={{
+                                            display: "flex",
+                                            flexDirection: 'row',
+                                            alignItems: "center",
+                                        }}>
+                                            <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                                Data:
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                                {card.Data}
+                                            </Typography>
+                                        </Container>
+                                        <Divider variant="middle" sx={{
+                                            width: '75%'
+                                        }} />
+                                        <Container sx={{
+                                            display: "flex",
+                                            flexDirection: 'row',
+                                            alignItems: "center",
+                                        }}>
+                                            <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                                Horário:
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                                {card.Hora}
+                                            </Typography>
+                                        </Container>
+                                        <Divider variant="middle" sx={{
+                                            width: '75%'
+                                        }} />
+                                        <Container sx={{
+                                            display: "flex",
+                                            flexDirection: 'row',
+                                            alignItems: "center",
+                                        }}>
+                                            <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
+                                                Passagem:
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
+                                                {card.Passagem}
+                                            </Typography>
+                                        </Container>
+                                    </Container>
+                                </Container>
                             )))}
                     </Container>
 

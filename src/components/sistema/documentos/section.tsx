@@ -113,7 +113,7 @@ export default function Docs() {
                         fontSize: 12,
                         fontWeight: 600,
                         textAlign: "left",
-                        mt: 10,
+                        mt: 5,
                         mb: 3
                     }}
                 >

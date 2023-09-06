@@ -2,6 +2,8 @@ import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLa
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import { CheckCircle, Contacts, CreditCard, AccountCircle, HowToReg, Email } from "@mui/icons-material";
+import TuneIcon from "@mui/icons-material/Tune";
+import colors from "../../../assets/colors";
 
 function Info() {
     const { verify } = React.useContext(ModalContext);
@@ -24,6 +26,34 @@ function Info() {
                     overflow: "hidden",
                 }}
             >
+                <Container
+                    sx={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "start",
+                        alignItems: "center",
+                        float: "left",
+                        mt: 3,
+                        mb: 5
+                    }}
+                >
+                    <TuneIcon
+                        sx={{
+                            mr: 2,
+                            color: verify ? "white" : "black",
+                        }}
+                    />
+                    <Typography
+                        sx={{
+                            color: verify ? colors.sc : colors.tc,
+                            fontSize: "25px",
+                            fontWeight: 700,
+                        }}
+                    >
+                        Informações da Conta - {userData.user_nome}
+                    </Typography>
+                </Container>
                 <Container
                     sx={{
                         width: "40%",

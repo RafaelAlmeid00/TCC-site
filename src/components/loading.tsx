@@ -1,7 +1,7 @@
 import { Box, Typography, CircularProgress, Container } from "@mui/material";
 import ModalContext from "../context/modalcontext";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import ReactDOM from 'react-dom';
 
 function Loading() {
     const { verify } = React.useContext(ModalContext);
@@ -9,7 +9,7 @@ function Loading() {
     const fundo = themes.palette.background.default
 
 
-    return (
+    return ReactDOM.createPortal(
         <Box sx={{
             background: verify ? fundo : 'white',
 
@@ -33,7 +33,8 @@ function Loading() {
                     Carregando...
                 </Typography>
             </Container>
-        </Box>
+        </Box>,
+        document.getElementById('loading')
     );
 }
 

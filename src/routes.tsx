@@ -263,7 +263,7 @@ const Rota = () => {
                       <Route path="/Endereco" element={<Endereco />} />
                       <Route path="/Dados" element={<Informacoes />} />
                       <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
-                      <Route path="/Extrato" element={(Active ? <AlertConta /> : <Extrato />)} />
+                      <Route path="/Extrato" element={<Extrato />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

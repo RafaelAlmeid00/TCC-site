@@ -51,7 +51,7 @@ function Pag({onClose}: any) {
             }
         }
         handleCliente();
-    }, [userData.user_idcli, token])
+    }, [userData, token])
 
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,6 +107,9 @@ function Pag({onClose}: any) {
             split: {
                 walletId: "217fd70c-b561-43fc-989a-c2f10761277f",
                 fixedValue: parseFloat(inputValue)
+            },
+            fine: {
+                value: 20
             }
         }
 
@@ -140,7 +143,6 @@ function Pag({onClose}: any) {
             left: 0,
             width: "100vw",
             height: "100vh",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
             zIndex: 3,
         }}
         onClick={onClose}

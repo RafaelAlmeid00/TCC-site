@@ -4,7 +4,7 @@ import { Box, Container } from '@mui/material'
 import Exit from '../../components/buttonexit.tsx'
 import CompleteCadEscola from '../../components/cadastro/Cadastroescola/dadosescola.tsx'
 import { Fade } from 'react-awesome-reveal';
-import ModalContext from "../../context/modalcontext";
+import ModalContext from "../../context/modalcontext.tsx";
 import React from "react";
 import '../../App.css'
 
@@ -53,8 +53,8 @@ function CadallEscola() {
                     paddingLeft: 5
                 }}>
                     <Fade cascade damping={0.2} triggerOnce={hasEntered}>
-                <CompleteCadEscola/>
-                </Fade>
+                        <CompleteCadEscola />
+                    </Fade>
                 </Container>
             </Box>
         </>
