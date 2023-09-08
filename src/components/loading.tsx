@@ -28,7 +28,7 @@ function Loading() {
             }}>
                 <CircularProgress />
                 <Typography variant="h6" sx={{
-                    marginTop: 2,
+                    marginTop: 2, color: verify ? 'white' : 'black'
                 }}>
                     Carregando...
                 </Typography>

@@ -118,7 +118,9 @@ function SectionRota1() {
                   </TimelineSeparator>
                   <TimelineContent sx={{
                     color: verify ? 'white' : 'black',
-                  }}>{rotas.stop_endrua}</TimelineContent>
+                  }}>
+                    {rotas.stop_endbairro}, {rotas.stop_endrua}: {rotas.stop_endnum}, {rotas.stop_endcidade} - {rotas.stop_endUF}
+                  </TimelineContent>
                 </TimelineItem>
               ))}
             </Timeline> : null}

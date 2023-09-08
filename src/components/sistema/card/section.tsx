@@ -73,7 +73,7 @@ export default function CardSection() {
                 console.log(token);
 
                 const response = await axios.post('http://localhost:3344/card/cancelados', {
-                    user_CPF: userData.user_CPF,
+                    user_CPF: userData && userData.user_CPF,
                     token: token
                 });
                 console.log(response);
@@ -101,7 +101,7 @@ export default function CardSection() {
         } else {
             SearchCardCancel()
         }
-    }, [dataCardCancel, token, userData.user_CPF])
+    }, [dataCardCancel, token, userData])
 
     return (
         <>
@@ -246,7 +246,7 @@ export default function CardSection() {
                                                         color: '#0fcd88', // muda a cor da borda na animação
                                                     },
                                                 }}>
-                                                    Cartão de {dataCard.card_tipo}
+                                                    Cartão de 
                                                 </Typography>
                                             </Card>
                                         </motion.div>
@@ -260,16 +260,16 @@ export default function CardSection() {
                                             }}
                                         >
                                             <Typography sx={{ color: verify ? 'white' : 'black' }}>
-                                                Saldo do cartão: {isBalanceVisible ? `R$${dataCard.card_saldo}` : '•••••••••'}
+                                                Saldo do cartão: {isBalanceVisible ? `R$${dataCard && dataCard.card_saldo}` : '•••••••••'}
                                                 <IconButton onClick={handleVisibilityToggle} sx={{ ml: 0.5, mt: -1 }}>
                                                     {isBalanceVisible ? <VisibilityOff /> : <Visibility />}
                                                 </IconButton>
                                             </Typography>
                                             <Typography sx={{ color: verify ? 'white' : 'black', mt: 2, mb: 2 }}>
-                                                Validade do cartão: {dataCard.card_validade}
+                                                Validade do cartão: {dataCard && dataCard.card_validade}
                                             </Typography>
                                             <Typography sx={{ color: verify ? 'white' : 'black' }}>
-                                                Status do cartão: {dataCard.card_status}
+                                                Status do cartão: {dataCard && dataCard.card_status}
                                             </Typography>
                                         </Container>
                                     <br />

@@ -14,6 +14,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin, SenhaInvalida } from "../errosvalidations";
 import { Btn, BtnL } from "../btns";
+import jwt_decode from "jwt-decode";
 
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -32,6 +33,7 @@ function ContainerCad() {
     const { email, setEmail } = React.useContext(ModalContext);
     const { password, setPassword } = React.useContext(ModalContext);
     const navigate = useNavigate();
+    const { userData, setUserData } = React.useContext(ModalContext);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -120,7 +122,13 @@ function ContainerCad() {
             if (res.data.token) {
                 await new Promise<void>((resolve) => {
                     localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('redirect', 'false');
+                    resolve();
+                });
+                await new Promise<void>((resolve) => {
+                    const userToken = localStorage.getItem('token')
+                    const decoded = jwt_decode(userToken)
+                    setUserData(decoded)
+                    console.log(userData);
                     resolve();
                 });
 

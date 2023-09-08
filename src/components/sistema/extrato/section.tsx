@@ -31,7 +31,7 @@ function organizePaymentsByMonthAndDay(payments) {
         const paymentDate = new Date(payment.dateCreated);
         const year = paymentDate.getFullYear();
         const month = paymentDate.getMonth() + 1;
-        const day = paymentDate.getDate();
+        const day = paymentDate.getDate() + 1;
 
         console.log(paymentDate);
         console.log(year);

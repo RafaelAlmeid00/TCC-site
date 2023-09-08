@@ -16,10 +16,20 @@ import Not from '../modal/notificacoes';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotification } from "../../../redux/actions";
 import Loading from '../../loading';
+import jwt_decode from "jwt-decode";
 
 export default function MenuSistema() {
+    const { userData, setUserData } = React.useContext(ModalContext);
+
+    if (userData) {
+        console.log('ta ok');
+        
+    } else {
+        const userToken = localStorage.getItem('token')
+        const decoded: object = jwt_decode(userToken)
+        setUserData(decoded)
+    }
     console.log(localStorage);
-    const { userData } = React.useContext(ModalContext);
     console.log(userData);
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);
@@ -150,7 +160,7 @@ export default function MenuSistema() {
                                 flexDirection: 'column',
                                 justifyContent: 'center',
                             }}>
-                                Olá {userData.user_nome.split(' ')[0]}!
+                                    Olá {userData ? userData.user_nome.split(' ')[0] : ''}!
                                 <Typography sx={{
                                     fontSize: '11px',
                                     color: 'rgba(255, 255, 255, 0.35)',

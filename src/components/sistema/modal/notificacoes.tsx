@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Card, Container, Divider, Link, Typography } from "@mui/material";
-import { Deccode } from "../../../routes";
 import { Block, CheckCircle, Clear } from "@mui/icons-material";
+import ModalContext from "../../../context/modalcontext";
 
 function Not() {
-    const [userData] = React.useState(Deccode());
+    const { userData } = React.useContext(ModalContext);
     const [alerts, setAlert] = React.useState([
         { title: "Conta Aprovada", text: "Parabéns, o setor de análise aprovou sua conta", link: "Saiba mais", icon: <CheckCircle sx={{ fontSize: 35 }} /> },
         { title: "Conta Recusada", text: "Infelizmente, o setor de análise recusou sua conta", link: "Saiba mais", icon: <Clear sx={{ fontSize: 35 }} /> },

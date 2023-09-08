@@ -7,44 +7,9 @@ import OptionsCad from "./components/cadastro/optioncad";
 import { AuthProvider, AuthProviderHome } from './context/auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./App.css"
-import jwt_decode from "jwt-decode";
 import AlertConta from "./components/sistema/AlertConta";
-
-
-export function Deccode(): Promise<object> {
-  return new Promise((resolve, reject) => {
-    const userToken = localStorage.getItem('token');
-
-    if (userToken) {
-      resolve(jwt_decode(userToken));
-    } else {
-      // Pode ser melhor lançar uma exceção aqui em vez de apenas console.error
-      reject("Token não encontrado.");
-    }
-  });
-}
-
-export function UserDataLoader({ children }: any) {
-  const [userData, setUserData] = useState(null);
-
-  React.useEffect(() => {
-    async function loadUserData() {
-      try {
-        const decodedData = await Deccode();
-        setUserData(decodedData);
-      } catch (error) {
-        // Trate qualquer erro ao decodificar o token aqui
-        console.error("Erro ao decodificar o token:", error);
-        setUserData(null);
-      }
-    }
-
-    loadUserData();
-  }, []);
-
-  return children(userData);
-}
-
+import { socket } from "../socket.io/index";
+import jwt_decode from "jwt-decode";
 
 const App = lazy(() => import('./App'));
 const AppLazy = lazy(() => import('./pages/home/App'));
@@ -70,6 +35,16 @@ const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 const Extrato = lazy(() => import('./pages/sistema/Extrato'));
 
 const Rota = () => {
+  const userToken = localStorage.getItem('token')
+  React.useEffect(() => {
+    if (userToken) {
+      socket.connect()
+    } else {
+      console.log('sem token sem connect');
+      
+    }
+  }, [userToken])
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cep, setCep] = useState('');
@@ -86,24 +61,39 @@ const Rota = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
   React.useEffect(() => {
-    async function loadUserData() {
-      try {
-        const decodedData = await Deccode();
-        setUserData(decodedData);
-        setUserDataLoaded(true);
-      } catch (error) {
-        console.error("Erro ao decodificar o token:", error);
-        setUserData(null);
-        setUserDataLoaded(true);
-      }
+    const userToken = localStorage.getItem('token')
+
+    if (userToken) {
+      const decoded: object = jwt_decode(userToken)
+      console.log(userData);
+      console.log(decoded);
+      setUserDataLoaded(true)
+
+      setTimeout(() => {
+        socket.emit('userDetails', decoded.user_CPF, (err) => {
+          if (err) {
+            console.log('timeout');
+          }
+        });
+      }, 6000);
+
+      setTimeout(() => {
+      socket.on('userDetails', (data) => {
+        console.log(data)
+        setUserData(data)
+      })
+      }, 6000);
+      return () => {
+        socket.off('userDetails');
+      };
+    } else {
+      console.log('sem token.');
     }
+  }, [userData]);
 
-    loadUserData();
-  }, []);
-
-  React.useEffect(() => {
-    if (localStorage.getItem('token')) {
-      if (userData && userData.user_status == 'ativo') {
+React.useEffect(() => {
+  if (localStorage.getItem('token')) {
+    if (userData && userData.user_status == 'ativo') {
       setActive(false)
     } else {
       setActive(true)
@@ -111,169 +101,173 @@ const Rota = () => {
   } else {
     console.log('sem token')
   }
-  }, [userData])
+
+  console.log(Active);
   
-  function checkDevice() {
-    if (navigator.userAgent.match(/Android/i)
-      || navigator.userAgent.match(/webOS/i)
-      || navigator.userAgent.match(/iPhone/i)
-      || navigator.userAgent.match(/iPad/i)
-      || navigator.userAgent.match(/iPod/i)
-      || navigator.userAgent.match(/BlackBerry/i)
-      || navigator.userAgent.match(/Windows Phone/i)
-    ) {
-      return true; // está utilizando celular
-    }
-    else {
-      return false; // não é celular
-    }
+}, [Active, userData])
+
+function checkDevice() {
+  if (navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i)
+  ) {
+    return true; // está utilizando celular
   }
-  console.log(checkDevice());
-  const [darkMode, setDarkMode] = useState(false);
+  else {
+    return false; // não é celular
+  }
+}
+console.log(checkDevice());
+const [darkMode, setDarkMode] = useState(false);
 
-  React.useEffect(() => {
-    const themes = localStorage.getItem('theme');
-    setDarkMode(themes === 'dark');
-  }, []);
+React.useEffect(() => {
+  const themes = localStorage.getItem('theme');
+  setDarkMode(themes === 'dark');
+}, []);
 
-  const themes = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-    },
-  });
+const themes = createTheme({
+  palette: {
+    mode: darkMode ? 'dark' : 'light',
+  },
+});
 
-  const [hasEntered, setHasEntered] = React.useState(false);
-  const dark = localStorage.getItem('theme')
-  const [verify, setVerify] = React.useState(false);
+const [hasEntered, setHasEntered] = React.useState(false);
+const dark = localStorage.getItem('theme')
+const [verify, setVerify] = React.useState(false);
 
-  React.useEffect(() => {
-    if (dark == 'dark') {
-      setVerify(true)
-    } else {
-      setVerify(false)
-    }
-  }, [dark])
+React.useEffect(() => {
+  if (dark == 'dark') {
+    setVerify(true)
+  } else {
+    setVerify(false)
+  }
+}, [dark])
 
-  React.useEffect(() => {
-    setHasEntered(true);
-  }, []);
+React.useEffect(() => {
+  setHasEntered(true);
+}, []);
 
 
-  return (
-    <ThemeProvider theme={themes}>
+return (
+  <ThemeProvider theme={themes}>
 
-      <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-          <Routes>
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Routes>
 
-            {/* Rotas públicas */}
-            <Route path="/*" element={
-              <React.Fragment>
-                <AuthProviderHome>
-                  <ModalContext.Provider value={{
-                    verify,
-                    darkMode,
-                    setDarkMode,
-                    themes, // ou o tema que você desejar usar
-                    hasEntered,
-                    setHasEntered,
-                  }}>
-                    <Routes>
-                      <Route path="/" element={<App />} />
-                      <Route path="/Servicos" element={<ServiLazy />} />
-                      <Route path="/App" element={<AppLazy />} />
-                      <Route path="/EasyPass" element={<EasyPassLazy />} />
-                      <Route path="/Contatos" element={<ContatosLazy />} />
-                      <Route path="/Opcoes" element={<OptionsCad />} />
-                    </Routes>
-                  </ModalContext.Provider>
-                </AuthProviderHome>
-              </React.Fragment>
-            } />
-
-            {/* Rotas de autenticação */}
-            <Route path="/cadastro/*" element={
-              <React.Fragment>
+          {/* Rotas públicas */}
+          <Route path="/*" element={
+            <React.Fragment>
+              <AuthProviderHome>
                 <ModalContext.Provider value={{
                   verify,
-                  email,
-                  setEmail,
-                  password,
-                  setPassword,
-                  cep,
-                  setCep,
-                  UF,
-                  setUF,
-                  district,
-                  setDistrict,
-                  street,
-                  setStreet,
-                  num,
-                  setNum,
-                  comp,
-                  setComp,
-                  city,
-                  setCity,
-                  loginbool,
-                  setLog,
                   darkMode,
                   setDarkMode,
                   themes, // ou o tema que você desejar usar
                   hasEntered,
                   setHasEntered,
-                  cpf, setCpf
                 }}>
                   <Routes>
-                    <Route path="/" element={<CadlogLazy />} />
-                    <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
-                    <Route path="/Rec" element={<RecAccountLazy />} />
-                    <Route path="/Complemento" element={<CadallLazy />} />
-                    <Route path="/Empresa" element={<Escola />} />
+                    <Route path="/" element={<App />} />
+                    <Route path="/Servicos" element={<ServiLazy />} />
+                    <Route path="/App" element={<AppLazy />} />
+                    <Route path="/EasyPass" element={<EasyPassLazy />} />
+                    <Route path="/Contatos" element={<ContatosLazy />} />
+                    <Route path="/Opcoes" element={<OptionsCad />} />
                   </Routes>
                 </ModalContext.Provider>
-              </React.Fragment>
-            } />
+              </AuthProviderHome>
+            </React.Fragment>
+          } />
 
-            {/* Rota do sistema */}
-            <Route path="/Sistema/*" element={
-              <AuthProvider>
-                <ModalContext.Provider value={{
-                  verify,
-                  darkMode,
-                  setDarkMode,
-                  themes, // ou o tema que você desejar usar
-                  hasEntered,
-                  setHasEntered,
-                  userData
-                }}>
-                  <React.Fragment>
-                    <Routes>
-                      {userDataLoaded ? (
+          {/* Rotas de autenticação */}
+          <Route path="/cadastro/*" element={
+            <React.Fragment>
+              <ModalContext.Provider value={{
+                verify,
+                email,
+                setEmail,
+                password,
+                setPassword,
+                cep,
+                setCep,
+                UF,
+                setUF,
+                district,
+                setDistrict,
+                street,
+                setStreet,
+                num,
+                setNum,
+                comp,
+                setComp,
+                city,
+                setCity,
+                loginbool,
+                setLog,
+                darkMode,
+                setDarkMode,
+                themes, // ou o tema que você desejar usar
+                hasEntered,
+                setHasEntered,
+                cpf, setCpf,
+                userData, setUserData
+              }}>
+                <Routes>
+                  <Route path="/" element={<CadlogLazy />} />
+                  <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
+                  <Route path="/Rec" element={<RecAccountLazy />} />
+                  <Route path="/Complemento" element={<CadallLazy />} />
+                  <Route path="/Empresa" element={<Escola />} />
+                </Routes>
+              </ModalContext.Provider>
+            </React.Fragment>
+          } />
+
+          {/* Rota do sistema */}
+          <Route path="/Sistema/*" element={
+            <AuthProvider>
+              <ModalContext.Provider value={{
+                verify,
+                darkMode,
+                setDarkMode,
+                themes, // ou o tema que você desejar usar
+                hasEntered,
+                setHasEntered,
+                userData, setUserData
+              }}>
+                <React.Fragment>
+                  <Routes>
+                    {userDataLoaded ? (
                       <Route path="/" element={<HomeSistema />} />
-                        ) : (
-                          <Route path="/" element={<Loading />} />
-                      )}
-                      <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
-                      <Route path="/Perfil" element={<PerfilLazy />} />
-                      <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />
-                      <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
-                      <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
-                      <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
-                      <Route path="/Documentos" element={<Docmentos />} />
-                      <Route path="/Endereco" element={<Endereco />} />
-                      <Route path="/Dados" element={<Informacoes />} />
-                      <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
-                      <Route path="/Extrato" element={<Extrato />} />
-                    </Routes>
-                  </React.Fragment>
-                </ModalContext.Provider>
-              </AuthProvider>
-            } />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </ThemeProvider>
-  );
+                    ) : (
+                      <Route path="/" element={<Loading />} />
+                    )}
+                    <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
+                    <Route path="/Perfil" element={<PerfilLazy />} />
+                    <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />
+                    <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
+                    <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
+                    <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
+                    <Route path="/Documentos" element={<Docmentos />} />
+                    <Route path="/Endereco" element={<Endereco />} />
+                    <Route path="/Dados" element={<Informacoes />} />
+                    <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
+                    <Route path="/Extrato" element={<Extrato />} />
+                  </Routes>
+                </React.Fragment>
+              </ModalContext.Provider>
+            </AuthProvider>
+          } />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  </ThemeProvider>
+);
 
 };
 

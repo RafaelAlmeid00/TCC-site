@@ -12,11 +12,13 @@ import Cartao from "./modal/card";
 import { useNavigate } from "react-router-dom";
 import AlertConta from "./AlertConta";
 import Pag from "./modal/pagamento";
-import Loading from "../loading";
 import { DirectionsBus } from "@mui/icons-material";
 import Balancer from "react-wrap-balancer";
+import { socket } from "./../../../socket.io/index";
 
 function Homesistema() {
+    socket.connect()
+
     const { userData } = React.useContext(ModalContext);
     const [modal, setModal] = React.useState(false)
     const [card, setCard] = React.useState(Boolean)
@@ -26,15 +28,30 @@ function Homesistema() {
     const fundo = themes.palette.background.default
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
     const token = localStorage.getItem('token')
-    const [dataCard, setDataCard] = React.useState('')
-    const [val, setVal] = React.useState([])
+    const [dataCard, setDataCard] = React.useState([{}])
+    const [val, setVal] = React.useState([{}])
     const [loading, setLoading] = React.useState(true)
     const [active, setActive] = React.useState(Boolean)
+    console.log(active);
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
 
-    console.log(userData)
+    React.useEffect(() => {
+        if (localStorage.getItem('token')) {
+            if (userData && userData.user_status == 'ativo') {
+                setActive(false)
+            } else {
+                setActive(true)
+            }
+        } else {
+            console.log('sem token')
+        }
 
+        console.log(active);
+
+    }, [active, userData])
+
+    console.log(userData)
 
     const handlePag = () => {
         setPag(true)
@@ -44,31 +61,15 @@ function Homesistema() {
         setPag(false)
     }
 
+    const handNav = () => {
+        navigate('/Sistema/Viagens')
+    }
+
     const buttonshome = [
-        { name: 'Histórico do Cartão' },
+        { name: 'Histórico do Cartão', void: handNav },
         { name: 'Recarregar Cartão', void: handlePag },
         { name: 'Cancelar Cartão' }
     ]
-
-    React.useEffect(() => {
-
-        if (!userData) {
-            return <Loading />;
-        }
-
-        if (userData && userData.user_status == "ativo") {
-            setActive(false)
-        } else if (userData && userData.user_status == "inativo") {
-            setActive(true)
-        } else {
-            setActive(true)
-            navigate("/cadastro")
-        }
-
-        console.log(active);
-
-    }, [active, navigate, userData])
-
 
     const handleModalClose = () => {
         setModal(false);
@@ -91,55 +92,12 @@ function Homesistema() {
         }, 5000)
     };
 
-
-    React.useEffect(() => {
-        async function SearchVal() {
-            try {
-                console.log('ta indo');
-                console.log(token);
-
-                const response = await axios.post('http://localhost:3344/validation', {
-                    user_CPF: userData.user_CPF,
-                    token: token
-                });
-                console.log(response);
-                console.log('ta indo');
-                console.log(response);
-
-                if (response.data[0]) {
-                    const Cards = response.data[0]
-                    setDataCard(Cards)
-                    console.log(response)
-                    console.log(Cards);
-                    setLoad(false)
-                    setCard(true)
-                    console.log(val);
-                } else {
-                    console.log('deu merda rapeize')
-                    setLoad(false)
-                    setCard(false)
-                }
-            } catch (error) {
-                console.log(error);
-                console.log(error.message);
-
-            }
-        }
-        SearchVal()
-    }, [token])
-
-    console.log(modal)
-    console.log(load)
-    console.log(active)
-    console.log(alert)
-
     React.useEffect(() => {
         async function handleAttCard() {
-            console.log(userData.user_idcli, dataCard)
             try {
                 const response = await axios.post('http://localhost:3344/pagamento/verify', {
                     params: {
-                        idcli: userData.user_idcli,
+                        idcli: userData && userData.user_idcli,
                         dataCard
                     }
                 }, {
@@ -239,6 +197,40 @@ function Homesistema() {
         }
     }, [ViagemFeita])
 
+    React.useEffect(() => {
+        function SearchVal() {
+
+            setTimeout(() => {
+                socket.emit("cardDetails", userData && userData.user_CPF, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            }, 5000);
+
+            setTimeout(() => {
+                socket.on('cardDetails', (data) => {
+                    setLoad(false)
+                    setCard(true)
+                    console.log(data)
+                    setDataCard(data[0])
+                    setVal(data)
+                    console.log(dataCard)
+                })
+            }, 5000);
+        } 
+
+        if (dataCard && dataCard.card_id || !load && card) {
+            console.log('cartão ja existe');
+
+        } else if (load && !card) {
+            SearchVal()
+        }
+
+        return () => {
+            socket.off('cardDetails');
+        }; 
+    }, [card, dataCard, load, userData])
 
     return (
         <>
@@ -293,7 +285,7 @@ function Homesistema() {
                         ml: 4.5
                     }}>
                         {buttonshome.map((buttons) => (
-                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.void} route={""} />
+                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.void} route={buttons.route} />
                         ))}
                     </Container>
 
@@ -421,7 +413,7 @@ function Homesistema() {
                                 }} />
                             ))
                         ) : (
-                            val.slice(0, 4).map((card, index) => (
+                            val.slice(0).map((card, index) => (
                                 <Container
                                     key={index}
 
