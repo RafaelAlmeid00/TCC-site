@@ -15,6 +15,7 @@ import Pag from "./modal/pagamento";
 import { DirectionsBus } from "@mui/icons-material";
 import Balancer from "react-wrap-balancer";
 import { socket } from "./../../../socket.io/index";
+import AlertaModal from "./alert";
 
 function Homesistema() {
     socket.connect()
@@ -198,6 +199,10 @@ function Homesistema() {
     }, [ViagemFeita])
 
     React.useEffect(() => {
+        if (dataCard && dataCard.card_status) {
+            setLoad(false)
+            setCard(true)
+        }
         function SearchVal() {
 
             setTimeout(() => {
@@ -219,14 +224,7 @@ function Homesistema() {
                 })
             }, 5000);
         } 
-
-        if (dataCard && dataCard.card_id || !load && card) {
-            console.log('cartão ja existe');
-
-        } else if (load && !card) {
-            SearchVal()
-        }
-
+        SearchVal()
         return () => {
             socket.off('cardDetails');
         }; 
@@ -247,11 +245,7 @@ function Homesistema() {
                     overflow: "hidden",
                     overflowY: 'scroll'
                 }}>
-                    {active && <Alert severity={'warning'} sx={{ width: '100%', padding: 3, gap: 2 }}>
-                        <AlertTitle>Ative sua conta!</AlertTitle>
-                        <div style={{ marginBottom: 10 }}>Para ativar sua conta, envie seus documentos:</div>
-                        <BtnHome name={"Documentos"} route={"/sistema/documentos"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
-                    </Alert>}
+                    {active &&<AlertaModal nomeBtn={"Documentos"} rotaBtn={"/sistema/Documentos"} statusAlert={"warning"} textAlert={"Clique aqui para enviar seus documentos:"} titleAlert={"Ative sua conta!"} /> }
 
                     <Container sx={{
                         width: '100%',

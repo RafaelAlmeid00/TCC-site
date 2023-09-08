@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Box, Container, InputLabel, Typography, TextField, } from "@mui/material"
+import { FormControl, MenuItem, Box, Container, InputLabel, Typography, TextField, Autocomplete, } from "@mui/material"
 import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator } from "@mui/lab";
 import { useState } from "react";
 import Select from '@mui/material/Select';
@@ -17,13 +17,29 @@ function SectionRota1() {
   const token = localStorage.getItem('token')
   const fundo = themes.palette.background.default
   const [Loading, setLoading] = useState(false);
+  const [routesAll, setRoutesAll] = React.useState([])
 
   async function takeIt() {
     try {
+      const resbus = await axios.post('http://localhost:3344/routes/all', {
+        token: token
+      });
+      console.log(resbus);
+      console.log('ta indo');
+      console.log(resbus);
+
+      if (resbus.data) {
+        const Cards = resbus.data
+        setRoutesAll(Cards)
+        console.log(routesAll)
+        console.log(Cards);
+      } else {
+        console.log('deu merda rapeize')
+      }
       if (options === 'Número do ônibus') {
         const response = await axios.post('http://localhost:3344/routes/search', {
           token: token,
-          route_num: value
+          route_num: value.route_num
         });
         const rotasres = response.data.consultStop;
         setRoutes(rotasres);
@@ -34,7 +50,7 @@ function SectionRota1() {
       } else if (options === 'Rotas') {
         const response = await axios.post('http://localhost:3344/routes/search', {
           token: token,
-          route_nome: value
+          route_nome: value.route_nome
         });
         const rotasres = response.data.consultStop;
         setRoutes(rotasres);
@@ -49,82 +65,116 @@ function SectionRota1() {
   }
 
   React.useEffect(() => {
-    if (value !== '') {
-      takeIt();
-    }
+    takeIt();
   }, [options, value]);
 
-  //teste
+  console.log(value);
+
+
   return (
-    <Box sx={{
-      mt: '9vh',
-      height: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '80vw',
-      float: 'right',
-      background: verify ? fundo : 'white',
-    }}>
+    <Box
+      id="section1"
+      sx={{
+        mt: "9.5vh",
+        height: "90.5vh",
+        width: "80vw",
+        float: "right",
+        background: verify ? fundo : "white",
+        position: "relative",
+        overflowY: "scroll",
+      }}>
+
       <Container sx={{
         width: '100%',
-        height: '60%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        mb: 5
       }}>
-        <Container sx={{
-          width: '100%',
-          height: '100%',
-        }}>
-          <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', mx: 'auto', spacing: 2, gap: 2 }}>
-            <FormControl sx={{ flex: 2 }}>
-              <InputLabel id="demo-simple-select-autowidth-label" > Rotas disponiveis </InputLabel>
-              <Select
-                labelId="demo-simple-select-autowidth-label"
-                id="demo-simple-select-autowidth"
-                value={options}
-                onChange={(event) => setAge(event.target.value)}
-                autoWidth
-                label="Opções"
-              >
-                <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
-                <MenuItem value={'Rotas'} >Rotas</MenuItem>
-              </Select>
-            </FormControl>
-            <TextField label={options} type="input" tabIndex={0} onChange={i => setValue(i.target.value)} sx={{ flex: 2 }} />
+        <Container sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', mt: 10 }}>
+          <FormControl sx={{ flex: 2 }}>
+            <InputLabel id="demo-simple-select-autowidth-label" > Rotas disponiveis </InputLabel>
+            <Select
+              labelId="demo-simple-select-autowidth-label"
+              id="demo-simple-select-autowidth"
+              value={options}
+              onChange={(event) => setAge(event.target.value)}
+              autoWidth
+              label="Opções"
+            >
+              <MenuItem value={'Número do ônibus'}>Número do ônibus</MenuItem>
+              <MenuItem value={'Rotas'} >Rotas</MenuItem>
+            </Select>
+          </FormControl>
+          <Container sx={{ flex: 2 }}>
+            <Container sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+              <FormControl variant="standard" >
+                <Autocomplete
+                  disablePortal
+                  id="menu-item"
+                  options={routesAll || []} // Certifique-se de que menuitem seja um array válido
+                  getOptionLabel={(option: any) => {
+                    if (options === "Número do ônibus") {
+                      const route_num = option.route_num || ''; // Verifica se route_num está definido
+                      return route_num
+                    } else if (options === "Rotas") {
+                      const route_nome = option.route_nome || ''; // Verifica se route_nome está definido
+                      return route_nome
+                    } else if (!options) {
+                      return ''
+                    }
+                  }}
+                  isOptionEqualToValue={(option, value) => {
+                    if (options === "Número do ônibus") {
+                      return (option.route_num === (value.route_num || ''))
+                    } else if (options === "Rotas") {
+                      return option.route_nome === (value.route_nome || ''); // Verifica se data está definido
+                    } else if (!options) {
+                      return '';
+                    }
+                  }}
+                  value={value}
+                  onChange={(_, newValue) => {
+                    setValue(newValue);
+                  }}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => <TextField {...params} label={options} />}
+                />
+              </FormControl>
+            </Container>
           </Container>
-          <Typography color={'#f9a825'} sx={{ width: '100%' }}>{ex}</Typography>
         </Container>
-        <Container sx={{
-          width: '80%',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: 2,
-          mt: 5
-        }}>
-          {Loading ?
-            <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 5 }}>
-              {routes.map((rotas) => (
-                <TimelineItem key={rotas.stop_id} sx={{ paddingTop: '  5%' }}>
-                  <TimelineSeparator>
-                    <TimelineDot variant="outlined" color="primary" />
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent sx={{
-                    color: verify ? 'white' : 'black',
-                  }}>
-                    {rotas.stop_endbairro}, {rotas.stop_endrua}: {rotas.stop_endnum}, {rotas.stop_endcidade} - {rotas.stop_endUF}
-                  </TimelineContent>
-                </TimelineItem>
-              ))}
-            </Timeline> : null}
-        </Container>
+      </Container>
+
+      <Container sx={{
+        width: '80%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: 2,
+        mb: 10
+      }}>
+        {Loading ?
+          <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 10 }}>
+            {routes.map((rotas) => (
+              <TimelineItem key={rotas.stop_id} sx={{ paddingTop: '  5%' }}>
+                <TimelineSeparator>
+                  <TimelineDot variant="outlined" color="primary" />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent sx={{
+                  color: verify ? 'white' : 'black',
+                }}>
+                  {rotas.stop_endbairro}, {rotas.stop_endrua}: {rotas.stop_endnum}, {rotas.stop_endcidade} - {rotas.stop_endUF}
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline> : null}
       </Container>
     </Box>
   )

@@ -118,6 +118,7 @@ function ContainerCad() {
             console.log('test', res.data.token);
             console.log(res);
             console.log(res.data.user);
+            console.log(res.data.error);
 
             if (res.data.token) {
                 await new Promise<void>((resolve) => {
@@ -133,11 +134,19 @@ function ContainerCad() {
                 });
 
                 console.log(localStorage);
-
-                navigate('/Sistema');
-                console.log('viado');
-
-            } 
+                    navigate('/Sistema');
+                    console.log('viado');
+                
+            } else if (res.data.error == 'error') {
+                    console.log(res.data.error);
+                    setShowNull(false)
+                    setLoading(false)
+                    setDisable(false)
+                    setShowErrorlog(true)
+                    setTimeout(() => {
+                        setShowErrorlog(false)
+                    }, 3000);
+                } 
             
         } catch (err) {
             console.log(err);
