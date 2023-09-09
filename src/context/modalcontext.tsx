@@ -31,6 +31,8 @@ interface ModalContextType {
     setHasEntered: (hasEntered: boolean) => void;
     userData?: object;
     setUserData?: (userData: object) => void;
+    alertatopo?: any;
+    setAlertaTopo?: (alertatopo: any) => void;
 }
 const throwNotImplementedError = () => {
     throw new Error('Function not implemented');
@@ -67,7 +69,8 @@ const ModalContext = createContext<ModalContextType>({
     setHasEntered: throwNotImplementedError,
     userData: [{}],
     setUserData: throwNotImplementedError,
-
+    alertatopo: {},
+    setAlertaTopo: throwNotImplementedError,
 });
 
 export default ModalContext;

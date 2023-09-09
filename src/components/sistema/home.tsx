@@ -22,8 +22,6 @@ function Homesistema() {
 
     const { userData } = React.useContext(ModalContext);
     const [modal, setModal] = React.useState(false)
-    const [card, setCard] = React.useState(Boolean)
-    const [load, setLoad] = React.useState(true)
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
@@ -32,10 +30,14 @@ function Homesistema() {
     const [dataCard, setDataCard] = React.useState([{}])
     const [val, setVal] = React.useState([{}])
     const [loading, setLoading] = React.useState(true)
-    const [active, setActive] = React.useState(Boolean)
-    console.log(active);
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
+    const [usos, setUsos] = React.useState([])
+    const { alertatopo, setAlertaTopo } = React.useContext(ModalContext)
+    const [active, setActive] = React.useState(false)
+    const [card, setCard] = React.useState(alertatopo.nomeBtn && true)
+    const [load, setLoad] = React.useState(dataCard.card_id ? false : true)
+
 
     React.useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -112,8 +114,13 @@ function Homesistema() {
                 console.log(error.message);
             }
         }
-        handleAttCard()
-    }, [dataCard, token])
+        if (alertatopo.nomeBtn) {
+            console.log('ta em alert');
+
+        } else {
+            handleAttCard()
+        }
+    }, [dataCard, userData])
 
     function traduzirMes(prefixoIngles: string): string | null {
         const mesesTraduzidos: { [key: string]: string } = {
@@ -199,7 +206,7 @@ function Homesistema() {
     }, [ViagemFeita])
 
     React.useEffect(() => {
-        if (dataCard && dataCard.card_status) {
+        if (dataCard.card_id) {
             setLoad(false)
             setCard(true)
         }
@@ -211,7 +218,7 @@ function Homesistema() {
                         console.log(err);
                     }
                 });
-            }, 5000);
+            }, 4000);
 
             setTimeout(() => {
                 socket.on('cardDetails', (data) => {
@@ -222,13 +229,50 @@ function Homesistema() {
                     setVal(data)
                     console.log(dataCard)
                 })
-            }, 5000);
-        } 
-        SearchVal()
+            }, 4000);
+        }
+        if (alertatopo.nomeBtn) {
+            console.log('ta em alert');
+            setCard(false)
+            setLoad(false)
+        } else {
+            SearchVal()
+        }
         return () => {
             socket.off('cardDetails');
-        }; 
-    }, [card, dataCard, load, userData])
+        };
+    }, [userData])
+
+    React.useEffect(() => {
+        const handleUsos = async () => {
+            try {
+                const response = await axios.post('http://localhost:3344/usos', {
+                    user_CPF: userData.user_CPF,
+                }, {
+                    headers: {
+                        'authorization': token
+                    }
+                })
+                console.log(response);
+                setUsos(response.data)
+                console.log(usos);
+
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        if (alertatopo.nomeBtn) {
+            console.log('ta em alert');
+            setLoading(true)
+        } else {
+            handleUsos()
+        }
+    }, [userData])
+
+
+    console.log(alertatopo);
+
 
     return (
         <>
@@ -245,7 +289,7 @@ function Homesistema() {
                     overflow: "hidden",
                     overflowY: 'scroll'
                 }}>
-                    {active &&<AlertaModal nomeBtn={"Documentos"} rotaBtn={"/sistema/Documentos"} statusAlert={"warning"} textAlert={"Clique aqui para enviar seus documentos:"} titleAlert={"Ative sua conta!"} /> }
+                    {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}
 
                     <Container sx={{
                         width: '100%',
@@ -407,52 +451,61 @@ function Homesistema() {
                                 }} />
                             ))
                         ) : (
-                            val.slice(0).map((card, index) => (
+                            usos.slice(0, 4).map((viagem, index) => (
                                 <Container
                                     key={index}
-
                                     sx={{
                                         width: "100%",
                                         display: "flex",
                                         flexDirection: "row",
                                         justifyContent: "center",
                                         alignItems: "center",
-                                    }}>
-
+                                    }}
+                                >
                                     <Container
                                         sx={{
                                             display: 'flex',
                                             justifyContent: 'flex-start',
                                             alignItems: 'center',
-                                            width: '30%',
-                                            padding: 3,
+                                            width: '50%',
                                             flexDirection: 'column',
-                                            marginLeft: 5,
-                                            marginRight: 5,
-                                        }}>
-                                        <Icon sx={{
-                                            borderRadius: '50%',
-                                            border: '1px solid transparent',
-                                            boxShadow: '0 0 5px rgba(0, 0, 0, 0.6)',
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            padding: 3,
-                                        }}>
-                                            <DirectionsBus sx={{
-                                                fontSize: 30,
-                                                color: verify ? colors.sc : colors.pm
-                                            }} />
+                                        }}
+                                    >
+                                        <Icon
+                                            sx={{
+                                                borderRadius: '50%',
+                                                border: '1px solid transparent',
+                                                boxShadow: '0 0 5px rgba(0, 0, 0, 0.6)',
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                padding: 3,
+                                            }}
+                                        >
+                                            <DirectionsBus
+                                                sx={{
+                                                    fontSize: 30,
+                                                    color: verify ? colors.sc : colors.pm
+                                                }}
+                                            />
                                         </Icon>
-                                        <Container sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            width: '100%'
-                                        }}>
-                                            <Balancer>
-                                                <Typography variant="body1" sx={{ fontSize: 12, textAlign: 'center', mt: 2, color: verify ? 'white' : 'black' }}>
-                                                    {card.Onibus}
+                                        <Container
+                                            sx={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                width: '100%',
+                                                flexDirection: 'column'
+                                            }}
+                                        >
+                                            <Balancer style={{ width: '100%' }}>
+                                                <Typography variant="body1" sx={{ fontSize: 13, fontWeight: 'bold', width: '100%', textAlign: 'center', mt: 2, color: verify ? 'white' : 'black' }}>
+                                                    {viagem.route_num}
+                                                </Typography>
+                                            </Balancer>
+                                            <Balancer style={{ width: '100%' }}>
+                                                <Typography component="span" sx={{ fontSize: 11, width: '100%', textAlign: 'center', mt: 2, color: verify ? 'white' : 'black' }}>
+                                                    {viagem.route_nome}
                                                 </Typography>
                                             </Balancer>
                                         </Container>
@@ -461,58 +514,65 @@ function Homesistema() {
                                         ml: 5,
                                         mr: 5
                                     }} />
-
-                                    <Container sx={{
-                                        width: '70%',
-                                        display: "flex",
-                                        justifyContent: "flex-start",
-                                        alignItems: "flex-start",
-                                        flexDirection: 'column',
-                                        padding: 5,
-                                        marginLeft: 5,
-                                        marginRight: 5,
-                                        gap: 2
-                                    }}>
-                                        <Container sx={{
+                                    <Container
+                                        sx={{
+                                            width: '70%',
                                             display: "flex",
-                                            flexDirection: 'row',
-                                            alignItems: "center",
-                                        }}>
+                                            justifyContent: "flex-start",
+                                            alignItems: "flex-start",
+                                            flexDirection: 'column',
+                                            padding: 5,
+                                            marginLeft: 5,
+                                            marginRight: 5,
+                                            gap: 2
+                                        }}
+                                    >
+                                        <Container
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: 'row',
+                                                alignItems: "center",
+                                            }}
+                                        >
                                             <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
                                                 Data:
                                             </Typography>
                                             <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
-                                                {card.Data}
+                                                {viagem.val_data}
                                             </Typography>
                                         </Container>
                                         <Divider variant="middle" sx={{
                                             width: '75%'
                                         }} />
-                                        <Container sx={{
-                                            display: "flex",
-                                            flexDirection: 'row',
-                                            alignItems: "center",
-                                        }}>
+                                        <Container
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: 'row',
+                                                alignItems: "center",
+                                            }}
+                                        >
                                             <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
                                                 Horário:
                                             </Typography>
                                             <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
-                                                {card.Hora}
+                                                {viagem.val_horario}
                                             </Typography>
                                         </Container>
                                         <Divider variant="middle" sx={{
                                             width: '75%'
                                         }} />
-                                        <Container sx={{
-                                            display: "flex",
-                                            flexDirection: 'row',
-                                            alignItems: "center",
-                                        }}>
+                                        <Container
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: 'row',
+                                                alignItems: "center",
+                                            }}
+                                        >
                                             <Typography variant="body1" sx={{ fontSize: 15, fontWeight: 'bold', textAlign: 'left', color: verify ? 'white' : 'black' }}>
                                                 Passagem:
                                             </Typography>
                                             <Typography variant="body2" sx={{ fontSize: 12, textAlign: 'left', ml: 1, color: verify ? 'white' : 'black' }}>
-                                                {card.Passagem}
+                                                {viagem.val_gasto}
                                             </Typography>
                                         </Container>
                                     </Container>

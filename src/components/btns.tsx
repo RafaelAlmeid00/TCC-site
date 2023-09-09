@@ -3,6 +3,7 @@ import theme from "../assets/theme";
 import AppleIcon from "@mui/icons-material/Apple";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useNavigate } from "react-router-dom";
 
 interface BtnsAppProps {
   cl?: string | undefined;
@@ -275,9 +276,11 @@ function BtnPerfil({ name, route, cl, bc, bch, fun, ml }: BtnPerfilProps) {
 
 
 function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
+  const navigate = useNavigate()
+
   return (
     <>
-      <Button variant="contained" href={route} onClick={fun} sx={{
+      <Button variant="contained" onClick={() => { fun; navigate(route)}} sx={{
         color: cl,
         ml: ml,
         mr: mr,

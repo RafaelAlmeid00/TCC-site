@@ -70,7 +70,7 @@ export default function Viagens() {
 
         console.log(filteredData);
 
-    }, [menu, selectedValue,])
+    }, [menu, selectedValue])
 
     const handleMenu1 = () => {
         if (menu === 1) {
@@ -149,7 +149,7 @@ export default function Viagens() {
                     }
                 })
                 console.log(response);
-                setUsos(response.data.reverse())
+                setUsos(response.data)
                 console.log(usos);
 
             } catch (error) {

@@ -59,6 +59,7 @@ const Rota = () => {
   const [userData, setUserData] = React.useState<object | null>(null);
   const [Active, setActive] = React.useState(false);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
+  const [alertatopo, setAlertaTopo] = React.useState({})
 
   React.useEffect(() => {
     const userToken = localStorage.getItem('token')
@@ -75,14 +76,14 @@ const Rota = () => {
             console.log('timeout');
           }
         });
-      }, 6000);
+      }, 4000);
 
       setTimeout(() => {
       socket.on('userDetails', (data) => {
         console.log(data)
         setUserData(data)
       })
-      }, 6000);
+      }, 4000);
       return () => {
         socket.off('userDetails');
       };
@@ -91,20 +92,74 @@ const Rota = () => {
     }
   }, [userData]);
 
-React.useEffect(() => {
-  if (localStorage.getItem('token')) {
-    if (userData && userData.user_status == 'ativo') {
-      setActive(false)
-    } else {
-      setActive(true)
-    }
-  } else {
-    console.log('sem token')
-  }
 
-  console.log(Active);
-  
-}, [Active, userData])
+  React.useEffect(() => {
+    console.log('okok');
+    const handleAlerta = () => {
+      setAlertaTopo({})
+      if (userData && userData.user_verifyemail == null || userData && userData.user_verifyemail == 0) {
+        if (userData && userData.user_verifcel == null || userData && userData.user_verifycel == 0) {
+          const alerta = {
+            nomeBtn: 'Confirmar',
+            rotaBtn: '/Sistema/dados',
+            statusAlert: 'warning',
+            textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
+            titleAlert: 'Seu email e celular precisa de confirmação',
+          }
+          setAlertaTopo(alerta)
+          setActive(true)
+          console.log('okok');
+        } else {
+          const alerta = {
+            nomeBtn: 'Confirmar',
+            rotaBtn: '/Sistema/dados',
+            statusAlert: 'warning',
+            textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
+            titleAlert: 'Seu email precisa de confirmação',
+          }
+          setAlertaTopo(alerta)
+          setActive(true)
+          console.log('okok');
+
+        }
+      } else {
+        if (userData && userData.user_verifycel == null || userData && userData.user_verifycel == 0) {
+          const alerta = {
+            nomeBtn: 'Confirmar',
+            rotaBtn: '/Sistema/dados',
+            statusAlert: 'warning',
+            textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
+            titleAlert: 'Seu celular precisa de confirmação',
+          }
+          setAlertaTopo(alerta)
+          setActive(true)
+          console.log('okok');
+
+        } else {
+          if (userData && userData.user_status == 'inativo') {
+            const alerta = {
+              nomeBtn: 'Confirmar',
+              rotaBtn: '/Sistema/Documentos',
+              statusAlert: 'warning',
+              textAlert: 'Clique no botão abaixo para enviar seus documentos:',
+              titleAlert: 'Ative sua conta!',
+            }
+            setAlertaTopo(alerta)
+            setActive(true)
+            console.log('okok');
+
+          } else {
+            console.log('okok');
+
+          }
+
+        }
+      }
+    }
+    handleAlerta()
+    console.log('okok');
+
+  }, [userData])
 
 function checkDevice() {
   if (navigator.userAgent.match(/Android/i)
@@ -215,7 +270,8 @@ return (
                 hasEntered,
                 setHasEntered,
                 cpf, setCpf,
-                userData, setUserData
+                userData, 
+                setUserData
               }}>
                 <Routes>
                   <Route path="/" element={<CadlogLazy />} />
@@ -238,7 +294,10 @@ return (
                 themes, // ou o tema que você desejar usar
                 hasEntered,
                 setHasEntered,
-                userData, setUserData
+                userData, 
+                setUserData,
+                alertatopo,
+                setAlertaTopo
               }}>
                 <React.Fragment>
                   <Routes>
