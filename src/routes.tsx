@@ -71,7 +71,11 @@ const Rota = () => {
       setUserDataLoaded(true)
 
       setTimeout(() => {
+        console.log(socket);
+        
         socket.emit('userDetails', decoded.user_CPF, (err) => {
+          console.log('emitindo os bagui');
+          
           if (err) {
             console.log('timeout');
           }
@@ -79,6 +83,8 @@ const Rota = () => {
       }, 4000);
 
       setTimeout(() => {
+        
+        console.log(socket);
       socket.on('userDetails', (data) => {
         console.log(data)
         setUserData(data)
@@ -160,6 +166,7 @@ const Rota = () => {
     console.log('okok');
 
   }, [userData])
+console.log('this is active: ', Active);
 
 function checkDevice() {
   if (navigator.userAgent.match(/Android/i)
@@ -308,7 +315,7 @@ return (
                     )}
                     <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
                     <Route path="/Perfil" element={<PerfilLazy />} />
-                    <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />
+                    <Route path="/SAC" element={(Active ? <SACLazy /> : <AlertConta />)} />
                     <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
                     <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
                     <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
