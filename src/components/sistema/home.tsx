@@ -28,7 +28,6 @@ function Homesistema() {
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
     const token = localStorage.getItem('token')
     const [dataCard, setDataCard] = React.useState([{}])
-    const [val, setVal] = React.useState([{}])
     const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
@@ -122,125 +121,45 @@ function Homesistema() {
         }
     }, [dataCard, userData])
 
-    function traduzirMes(prefixoIngles: string): string | null {
-        const mesesTraduzidos: { [key: string]: string } = {
-            Jan: 'Janeiro',
-            Feb: 'Fevereiro',
-            Mar: 'Março',
-            Apr: 'Abril',
-            May: 'Maio',
-            Jun: 'Junho',
-            Jul: 'Julho',
-            Aug: 'Agosto',
-            Sep: 'Setembro',
-            Oct: 'Outubro',
-            Nov: 'Novembro',
-            Dec: 'Dezembro',
-        };
-
-        const mesTraduzido = mesesTraduzidos[prefixoIngles];
-
-        return mesTraduzido || null;
-    }
-
-    function traduzirDiaDaSemana(diaSemanaIngles: string): string | null {
-        const diasSemanaTraduzidos: { [key: string]: string } = {
-            Sun: 'Domingo',
-            Mon: 'Segunda-feira',
-            Tue: 'Terça-feira',
-            Wed: 'Quarta-feira',
-            Thu: 'Quinta-feira',
-            Fri: 'Sexta-feira',
-            Sat: 'Sábado',
-        };
-
-        const diaTraduzido = diasSemanaTraduzidos[diaSemanaIngles];
-
-        return diaTraduzido || null;
-    }
-
-    function obterDataEHoraAtual(): string {
-        const dataAtual = new Date();
-        const diaSemana = dataAtual.toLocaleDateString('en-US', { weekday: 'short' });
-        const mes = dataAtual.toLocaleDateString('en-US', { month: 'short' });
-        const dia = dataAtual.getDate();
-        const ano = dataAtual.getFullYear();
-        const hora = String(dataAtual.getHours()).padStart(2, '0');
-        const minutos = String(dataAtual.getMinutes()).padStart(2, '0');
-        const segundos = String(dataAtual.getSeconds()).padStart(2, '0');
-
-        const mêsBR = traduzirMes(mes)
-        const semanaBR = traduzirDiaDaSemana(diaSemana)
-
-        const dataEHoraAtual = {
-            Data: `${semanaBR} - ${dia}, ${mêsBR}, ${ano}`,
-            Hora: `${hora}:${minutos}:${segundos}`,
-        }
-
-        return dataEHoraAtual;
-    }
-
-    const DataSystem = obterDataEHoraAtual();
-    console.log(DataSystem.Data);
-    console.log(DataSystem.Hora);
-
-    const ViagemFeita = React.useMemo(() => [
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '15.00', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '4.00', Cartão: 'Vale-Transporte' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '3.40', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '4.20', Cartão: 'Vale-Transporte' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '6.00', Cartão: 'Vale-Transporte' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '9.10', Cartão: 'Vale-Transporte' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '3.70', Cartão: 'Estudante' },
-        { Onibus: 260, Rota: 'Santo Agostinho x Caieras', Data: DataSystem.Data, Hora: DataSystem.Hora, Passagem: '5.00', Cartão: 'Vale-Transporte' },
-    ], [DataSystem.Data, DataSystem.Hora]);
-
-    React.useEffect(() => {
-        if (ViagemFeita[0]) {
-            setLoading(false)
-            setVal(ViagemFeita)
-        }
-    }, [ViagemFeita])
-
     React.useEffect(() => {
         if (dataCard.card_id) {
             setLoad(false)
             setCard(true)
         }
-        function SearchVal() {
+        async function SearchCard() {
+            try {
+                console.log('ta indo');
+                console.log(token);
 
-            setTimeout(() => {
-                socket.emit("cardDetails", userData && userData.user_CPF, (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
+                const response = await axios.post('http://localhost:3344/card/enviados', {
+                    token: token
                 });
-            }, 4000);
+                console.log(response);
+                console.log('ta indo');
 
-            setTimeout(() => {
-                socket.on('cardDetails', (data) => {
+                if (response.data) {
+                    console.log(response.data);
+                    console.log(dataCard);
+                    setDataCard(response.data[0])
+                    console.log(dataCard);
                     setLoad(false)
-                    setCard(true)
-                    console.log(data)
-                    setDataCard(data[0])
-                    setVal(data)
-                    console.log(dataCard)
-                })
-            }, 4000);
+
+                } else {
+                    console.log('deu merda rapeize')
+                    setLoad(true)
+                }
+            } catch (error) {
+                console.log(error);
+                setLoad(true)
+            }
         }
         if (alertatopo.nomeBtn) {
             console.log('ta em alert');
             setCard(false)
             setLoad(false)
         } else {
-            SearchVal()
+            SearchCard()
         }
-        return () => {
-            socket.off('cardDetails');
-        };
     }, [userData])
 
     React.useEffect(() => {
@@ -256,6 +175,7 @@ function Homesistema() {
                 console.log(response);
                 setUsos(response.data)
                 console.log(usos);
+                setLoading(false)
 
             } catch (error) {
                 console.log(error);

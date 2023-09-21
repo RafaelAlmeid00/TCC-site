@@ -7,10 +7,10 @@ import ModalContext from '../../context/modalcontext';
 
 function Sistema() {
     const { userData } = React.useContext(ModalContext);
-
+    const token = localStorage.getItem('token')
     return (
         <>
-            {userData ?
+            {userData && token ?
                 <>
                     <MenuSistema />
                     <MenuLateral />

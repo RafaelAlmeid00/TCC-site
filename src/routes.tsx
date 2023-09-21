@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
@@ -35,15 +35,7 @@ const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 const Extrato = lazy(() => import('./pages/sistema/Extrato'));
 
 const Rota = () => {
-  const userToken = localStorage.getItem('token')
-  React.useEffect(() => {
-    if (userToken) {
-      socket.connect()
-    } else {
-      console.log('sem token sem connect');
-      
-    }
-  }, [userToken])
+ 
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -61,6 +53,27 @@ const Rota = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
 
+  const userToken = localStorage.getItem('token')
+  React.useEffect(() => {
+    setUserDataLoaded(false)
+
+    if (userToken) {
+      socket.connect()
+      if (socket.connected) {
+        setUserDataLoaded(true)
+      }
+      console.log(socket);
+      socket.on('connect_error', (error) => {
+        console.error('Erro de conexão:', error);
+        console.log(error);
+        location.reload()
+      });
+    } else {
+      console.log('sem token sem connect');
+
+    }
+  }, [userToken])
+
   React.useEffect(() => {
     const userToken = localStorage.getItem('token')
 
@@ -68,7 +81,6 @@ const Rota = () => {
       const decoded: object = jwt_decode(userToken)
       console.log(userData);
       console.log(decoded);
-      setUserDataLoaded(true)
 
       setTimeout(() => {
         console.log(socket);
@@ -88,6 +100,8 @@ const Rota = () => {
       socket.on('userDetails', (data) => {
         console.log(data)
         setUserData(data)
+        setUserDataLoaded(true)
+
       })
       }, 4000);
       return () => {
