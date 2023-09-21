@@ -6,32 +6,30 @@ import { Message } from "@mui/icons-material";
 
 
 export default function Msg() {
-    
+    socket.connect()
     const [Msg, Setmsg] = useState('');
 
-    const userToken = localStorage.getItem('token')
-    useEffect(() => {
-        if (userToken) {
-            socket.connect()
-        } else {
-            console.log('sem token sem connect');
-        
-        }
-  }, [userToken])
-
+   
+    
     async function msgSend() {
         const message = Msg
         Setmsg('');
         
         setTimeout(() => {
-            console.log('aaaaaaaaa', socket);
-            socket.emit("userMensage", message, (err: any) => {
-                console.log('messagem enviada!');
-                if (err) {
-                  console.log('error');
-                }
-              });
-              
+            socket.on('connect', ()=> {
+                console.log('ss');
+                    
+                socket.emit("userMensage", message, (error) => {
+                    console.log('messagem enviada!');
+                    if (error) {
+                        console.log(error);
+                    }
+                });
+            })
+            socket.on("disconnect", () => {
+                console.log('Conexão com o servidor Socket.io foi desconectada');
+            });
+            
             
         }, 2000);
         
@@ -40,10 +38,10 @@ export default function Msg() {
         setTimeout(() => {
             console.log('recived!');
             
-            const a = socket.on("userMensage", message => {
+            const a = socket.on("userMensage", (message: any) => {
                 console.log('messagem recebida', message);
               });
-              console.log(a);
+              console.log('this is a', a);
         }, 3000);
     }
    
