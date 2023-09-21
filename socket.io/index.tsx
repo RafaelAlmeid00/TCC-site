@@ -10,3 +10,6 @@ export const socket = io("http://localhost:3345", {
     },
     withCredentials: true,
 });
+
+console.log(socket);
+
