@@ -53,21 +53,23 @@ const Rota = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
 
+ 
   const userToken = localStorage.getItem('token')
   React.useEffect(() => {
     setUserDataLoaded(false)
-
+    console.log('this is userToken: ', userToken);
+    
     if (userToken) {
-      socket.connect()
+      socket.connect();
+      
+  //vou deixar true pra teste mas pode tirar  
+      setActive(true)
       if (socket.connected) {
+        console.log('aaa');
+        
         setUserDataLoaded(true)
       }
-      console.log(socket);
-      socket.on('connect_error', (error) => {
-        console.error('Erro de conexão:', error);
-        console.log(error);
-        location.reload()
-      });
+      console.log(socket)
     } else {
       console.log('sem token sem connect');
 
@@ -97,12 +99,12 @@ const Rota = () => {
       setTimeout(() => {
         
         console.log(socket);
-      socket.on('userDetails', (data) => {
-        console.log(data)
-        setUserData(data)
-        setUserDataLoaded(true)
+        socket.on('userDetails', (data) => {
+          console.log(data)
+          setUserData(data)
+          setUserDataLoaded(true)
 
-      })
+        })
       }, 4000);
       return () => {
         socket.off('userDetails');

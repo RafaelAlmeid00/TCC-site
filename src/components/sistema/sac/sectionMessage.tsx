@@ -3,47 +3,55 @@ import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect} from "react";
 import { socket } from "../../../../socket.io/index";
 import { Message } from "@mui/icons-material";
-
+import ModalContext from '../../../context/modalcontext';
+import { useContext } from "react";
 
 export default function Msg() {
-    socket.connect()
+    socket.connect();
+    const { userData, setUserData } = useContext(ModalContext);
     const [Msg, Setmsg] = useState('');
 
-   
-    
     async function msgSend() {
-        const message = Msg
+        const message = Msg;
         Setmsg('');
         
+      console.log('this is socket connected: ', socket.connected);
         setTimeout(() => {
-            socket.on('connect', ()=> {
-                console.log('ss');
-                    
-                socket.emit("userMensage", message, (error) => {
+                console.log('emit!');
+                
+                socket.emit("userMensage", message, userData.user_CPF, (error) => {
                     console.log('messagem enviada!');
                     if (error) {
                         console.log(error);
                     }
                 });
-            })
-            socket.on("disconnect", () => {
-                console.log('Conexão com o servidor Socket.io foi desconectada');
-            });
+            }, 1000)
+
             
-            
-        }, 2000);
+    }
+
         
-    }
-    if (Msg == '') {
-        setTimeout(() => {
-            console.log('recived!');
+        var Msgrecived = false; var message = null;
+        useEffect(() =>{
+            if (Msgrecived == false) {
+            setTimeout(() => {
+                console.log('recived!');
+
+                socket.on("userMensage", (message) => {
+                    console.log('fora do role', Msgrecived);
+                    console.log('messagem recebida: ', message);
+                    Msgrecived = true;
+                  });
+                
+                
+            }, 2000);}
+            else {
+                  
+                Msgrecived = false;
+                
+            }
             
-            const a = socket.on("userMensage", (message: any) => {
-                console.log('messagem recebida', message);
-              });
-              console.log('this is a', a);
-        }, 3000);
-    }
+        }, [Msgrecived, message])
    
 
     return(
