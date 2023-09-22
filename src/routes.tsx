@@ -94,7 +94,7 @@ const Rota = () => {
             console.log('timeout');
           }
         });
-      }, 4000);
+      }, 2000);
 
       setTimeout(() => {
         
@@ -105,7 +105,7 @@ const Rota = () => {
           setUserDataLoaded(true)
 
         })
-      }, 4000);
+      }, 2000);
       return () => {
         socket.off('userDetails');
       };
@@ -172,6 +172,7 @@ const Rota = () => {
 
           } else {
             console.log('okok');
+            setActive(false)
 
           }
 
@@ -331,7 +332,7 @@ return (
                     )}
                     <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
                     <Route path="/Perfil" element={<PerfilLazy />} />
-                    <Route path="/SAC" element={(Active ? <SACLazy /> : <AlertConta />)} />
+                    <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy /> )} />
                     <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
                     <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
                     <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />

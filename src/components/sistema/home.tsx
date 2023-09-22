@@ -63,13 +63,9 @@ function Homesistema() {
         setPag(false)
     }
 
-    const handNav = () => {
-        navigate('/Sistema/Viagens')
-    }
-
     const buttonshome = [
-        { name: 'Histórico do Cartão', void: handNav },
-        { name: 'Recarregar Cartão', void: handlePag },
+        { name: 'Histórico do Cartão', route: '/Sistema/Viagens' },
+        { name: 'Recarregar Cartão', onClick: handlePag },
         { name: 'Cancelar Cartão' }
     ]
 
@@ -192,7 +188,8 @@ function Homesistema() {
 
 
     console.log(alertatopo);
-
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', pag);
+    
 
     return (
         <>
@@ -243,7 +240,7 @@ function Homesistema() {
                         ml: 4.5
                     }}>
                         {buttonshome.map((buttons) => (
-                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.void} route={buttons.route} />
+                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.onClick} route={buttons.route} />
                         ))}
                     </Container>
 

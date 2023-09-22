@@ -35,7 +35,7 @@ interface BtnPerfilProps {
 }
 interface BtnHomeProps {
   name: string;
-  route: string;
+  route?: string;
   cl?: string | undefined;
   bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
   bch: string | undefined;
@@ -278,9 +278,14 @@ function BtnPerfil({ name, route, cl, bc, bch, fun, ml }: BtnPerfilProps) {
 function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
   const navigate = useNavigate()
 
+  if (!fun) {
+    fun = () => {console.log('aaaaaaaaa');
+    }
+  }
+
   return (
     <>
-      <Button variant="contained" onClick={() => { fun; navigate(route)}} sx={{
+      <Button variant="contained" onClick={() => { fun(); navigate(route)}} sx={{
         color: cl,
         ml: ml,
         mr: mr,

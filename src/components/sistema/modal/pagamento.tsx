@@ -18,10 +18,8 @@ function Pag({onClose}: any) {
 
     React.useEffect(() => {
 
-        if (userData.user_status == 'inativo') {
-            onClose()
-        }
-
+       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+       
         const handleCliente = async () => {
             console.log(userData.user_idcli);
             try {
