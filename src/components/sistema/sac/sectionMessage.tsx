@@ -19,7 +19,7 @@ export default function Msg() {
         setTimeout(() => {
                 console.log('emit!');
                 
-                socket.emit("userMensage", message, userData.user_CPF, (error) => {
+                socket.emit("userMensage", message, userData.user_CPF, 'client', (error) => {
                     console.log('messagem enviada!');
                     if (error) {
                         console.log(error);
@@ -30,28 +30,14 @@ export default function Msg() {
             
     }
 
-        
-        var Msgrecived = false; var message = null;
-        useEffect(() =>{
-            if (Msgrecived == false) {
             setTimeout(() => {
                 console.log('recived!');
 
                 socket.on("userMensage", (message) => {
-                    console.log('fora do role', Msgrecived);
                     console.log('messagem recebida: ', message);
-                    Msgrecived = true;
                   });
                 
-                
-            }, 2000);}
-            else {
-                  
-                Msgrecived = false;
-                
-            }
-            
-        }, [Msgrecived, message])
+            }, 2000);
    
 
     return(
