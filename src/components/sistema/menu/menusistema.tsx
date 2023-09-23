@@ -22,15 +22,14 @@ export default function MenuSistema() {
     const { userData, setUserData } = React.useContext(ModalContext);
 
     if (userData) {
-        console.log('ta ok');
+
         
     } else {
         const userToken = localStorage.getItem('token')
         const decoded: object = jwt_decode(userToken)
         setUserData(decoded)
     }
-    console.log(localStorage);
-    console.log(userData);
+
     const navigate = useNavigate()
     const { darkMode, setDarkMode } = React.useContext(ModalContext);
 

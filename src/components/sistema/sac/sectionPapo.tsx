@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
+import Msg from "./sectionMessage";
 
 export default function Adalberto() {
   return (
@@ -15,8 +16,19 @@ export default function Adalberto() {
           backgroundColor: "blue",
           width: "40vw",
           height: "79.7vh",
-        }}
-      ></Box>
+        }}>
+        
+        <Container sx={{
+                width: "30%",
+                height: "10vh",
+                backgroundColor: "white",
+              }}>
+                {
+                  
+                }
+        </Container>
+
+      </Box>
     </>
   );
 }

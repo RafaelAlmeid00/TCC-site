@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect} from "react";
 import { socket } from "../../../../socket.io/index";
@@ -8,17 +8,21 @@ import { useContext } from "react";
 
 export default function Msg() {
     socket.connect();
-    const { userData, setUserData } = useContext(ModalContext);
+    const { userData } = useContext(ModalContext);
     const [Msg, Setmsg] = useState('');
+    const [RecivedMsg, Setrecived] = useState(Array);
+    const { MsgContext, setRecivedContext } = useContext(ModalContext);
+
 
     async function msgSend() {
         const message = Msg;
+        
         Setmsg('');
         
       console.log('this is socket connected: ', socket.connected);
         setTimeout(() => {
                 console.log('emit!');
-                
+
                 socket.emit("userMensage", message, userData.user_CPF, 'client', (error) => {
                     console.log('messagem enviada!');
                     if (error) {
@@ -28,18 +32,35 @@ export default function Msg() {
             }, 1000)
 
             
-    }
+    };
 
+        var count = 0
             setTimeout(() => {
                 console.log('recived!');
 
                 socket.on("userMensage", (message) => {
+                   
                     console.log('messagem recebida: ', message);
+                    if (count == 0) { 
+                        Setrecived(message);
+                    }
+                    console.log(count);
+                    
+                    count++
                   });
-                
+                  
             }, 2000);
-   
-
+            
+            useEffect(()=>{
+                if (RecivedMsg != null) {
+                    console.log('log RecivedMsg: ', RecivedMsg);
+                    
+                    setRecivedContext(RecivedMsg);
+                }
+                console.log('this is the message context: ', MsgContext);
+                
+            },[RecivedMsg])
+       
     return(
         <>
         <Box sx={{
@@ -47,6 +68,7 @@ export default function Msg() {
             height: "10vh",
             backgroundColor: "pink",
         }}>
+
             <TextField variant="outlined" color="success" label='Digite sua Mensagem...' onChange={i => Setmsg(i.target.value)} value={Msg} sx={{
                 width: '70vw',
                 marginTop:'10px'

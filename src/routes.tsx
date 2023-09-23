@@ -49,6 +49,7 @@ const Rota = () => {
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
   const [userData, setUserData] = React.useState<object | null>(null);
+  const [MsgContext, setRecivedContext] = React.useState<object | null>(null);
   const [Active, setActive] = React.useState(false);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
@@ -62,7 +63,7 @@ const Rota = () => {
     if (userToken) {
       socket.connect();
       
-  //vou deixar true pra teste mas pode tirar  
+  //vou deixar true pra teste mas pode tirar
       setActive(true)
       if (socket.connected) {
         console.log('aaa');
@@ -81,11 +82,11 @@ const Rota = () => {
 
     if (userToken) {
       const decoded: object = jwt_decode(userToken)
-      console.log(userData);
-      console.log(decoded);
+      /*console.log(userData);
+      console.log(decoded);*/
 
       setTimeout(() => {
-        console.log(socket);
+        //console.log(socket);
         
         socket.emit('userDetails', decoded.user_CPF, (err) => {
           console.log('emitindo os bagui');
@@ -94,7 +95,7 @@ const Rota = () => {
             console.log('timeout');
           }
         });
-      }, 2000);
+      }, 4000);
 
       setTimeout(() => {
         
@@ -105,7 +106,7 @@ const Rota = () => {
           setUserDataLoaded(true)
 
         })
-      }, 2000);
+      }, 4000);
       return () => {
         socket.off('userDetails');
       };
@@ -116,7 +117,7 @@ const Rota = () => {
 
 
   React.useEffect(() => {
-    console.log('okok');
+    //console.log('okok');
     const handleAlerta = () => {
       setAlertaTopo({})
       if (userData && userData.user_verifyemail == null || userData && userData.user_verifyemail == 0) {
@@ -172,7 +173,6 @@ const Rota = () => {
 
           } else {
             console.log('okok');
-            setActive(false)
 
           }
 
@@ -180,7 +180,7 @@ const Rota = () => {
       }
     }
     handleAlerta()
-    console.log('okok');
+    //console.log('okok');
 
   }, [userData])
 console.log('this is active: ', Active);
@@ -321,7 +321,9 @@ return (
                 userData, 
                 setUserData,
                 alertatopo,
-                setAlertaTopo
+                setAlertaTopo,
+                MsgContext,
+                setRecivedContext,
               }}>
                 <React.Fragment>
                   <Routes>
@@ -332,7 +334,7 @@ return (
                     )}
                     <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
                     <Route path="/Perfil" element={<PerfilLazy />} />
-                    <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy /> )} />
+                    <Route path="/SAC" element={(Active ? <SACLazy /> : <AlertConta />)} />
                     <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
                     <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
                     <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
