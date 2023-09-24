@@ -57,7 +57,6 @@ export default function Msg() {
                     
                     setRecivedContext(RecivedMsg);
                 }
-                console.log('this is the message context: ', MsgContext);
                 
             },[RecivedMsg])
        
