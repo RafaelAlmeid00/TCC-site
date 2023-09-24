@@ -4,6 +4,9 @@ import ModalContext from "../../../context/modalcontext";
 import { CheckCircle, Contacts, CreditCard, AccountCircle, HowToReg, Email } from "@mui/icons-material";
 import TuneIcon from "@mui/icons-material/Tune";
 import colors from "../../../assets/colors";
+import { BtnHome } from "../../btns";
+import { EmailEnviado, EmailNaoEnviado } from "../../errosvalidations";
+import axios from "axios";
 
 function Info() {
     const { verify } = React.useContext(ModalContext);
@@ -11,9 +14,61 @@ function Info() {
     const fundo = themes.palette.background.default
     const { userData } = React.useContext(ModalContext);
     console.log(userData);
+    const [email, setEmail] = React.useState(false);
+    const [nemail, setNEmail] = React.useState(false);
+    let data = userData.user_email
+    const token = localStorage.getItem('token')
+
+    const sendEmail = async () => {
+        try {
+
+            await axios.post('http://localhost:3344/user/emailverify', {
+                user_email: userData.user_email,
+                user_CPF: userData.user_CPF,
+                user_nome: userData.user_nome,
+                token: token
+            })
+            setEmail(true)
+            setTimeout(() => {
+                setEmail(false)
+            }, 8000)
+        } catch (error) {
+            console.log(error);
+            setNEmail(true)
+            setTimeout(() => {
+                setNEmail(false)
+            }, 5000)
+        }
+
+    };
+
+    const sendSMS = async () => {
+        try {
+
+            await axios.post('http://localhost:3344/user/sms', {
+                user_cel: userData.user_cel,
+                user_CPF: userData.user_CPF,
+                user_nome: userData.user_nome,
+                token: token
+            })
+            setEmail(true)
+            setTimeout(() => {
+                setEmail(false)
+            }, 8000)
+        } catch (error) {
+            console.log(error);
+            setNEmail(true)
+            setTimeout(() => {
+                setNEmail(false)
+            }, 5000)
+        }
+
+    };
 
     return (
         <>
+            {nemail && <EmailNaoEnviado data={data} />}
+            {email && <EmailEnviado data={data} />}
             <Box
                 id="section1"
                 sx={{
@@ -102,35 +157,63 @@ function Info() {
                         <InputLabel htmlFor="input-with-icon-adornment">
                             Email
                         </InputLabel>
-                        <Input
-                            inputProps={{ maxLength: 45 }}
-                            id="input-with-icon-adornment"
-                            value={userData.user_email}
-                            readOnly
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <Email />
-                                </InputAdornment>
-                            }
-                            sx={{ fontSize: '14px' }}
-                        />
+                        {userData && userData.user_verifyemail == '1'
+                            ?
+                            <Input
+                                inputProps={{ maxLength: 45 }}
+                                id="input-with-icon-adornment"
+                                value={userData.user_email}
+                                readOnly
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Email />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                            :
+                            <Input
+                                inputProps={{ maxLength: 45 }}
+                                id="input-with-icon-adornment"
+                                value={userData.user_email}
+                                readOnly
+                                endAdornment={
+                                    <BtnHome name={"Confirmar"} fun={sendEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} />
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        }
                     </FormControl>
                     <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
                         <InputLabel htmlFor="input-with-icon-adornment">
                             Celular
                         </InputLabel>
-                        <Input
-                            inputProps={{ maxLength: 45 }}
-                            id="input-with-icon-adornment"
-                            value={userData.user_cel}
-                            readOnly
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <Contacts />
-                                </InputAdornment>
-                            }
-                            sx={{ fontSize: '14px' }}
-                        />
+                        {userData && userData.user_verifycel == '1'
+                            ?
+                            <Input
+                                inputProps={{ maxLength: 45 }}
+                                id="input-with-icon-adornment"
+                                value={userData.user_cel}
+                                readOnly
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <Contacts />
+                                    </InputAdornment>
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                            :
+                            <Input
+                                inputProps={{ maxLength: 45 }}
+                                id="input-with-icon-adornment"
+                                value={userData.user_cel}
+                                readOnly
+                                endAdornment={
+                                    <BtnHome name={"Confirmar"} fun={sendSMS} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} />
+                                }
+                                sx={{ fontSize: '14px' }}
+                            />
+                        }
                     </FormControl>
                     <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
                         <InputLabel htmlFor="input-with-icon-adornment">

@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
-import { BtnPerfil } from "../../btns";
+import { BtnHome } from "../../btns";
 import { PerfilAtualizado, PerfilError, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
 import CEP from "../modal/cep";
 import colors from "../../../assets/colors";
@@ -468,7 +468,7 @@ function SectionPerfil1() {
                                         alignItems: 'end'
 
                                     }}>
-                                        <BtnPerfil name={"Editar"} fun={trocaCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} />
+                                        <BtnHome name={"Editar"} fun={trocaCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} />
                                     </Container>
                                 </Container>
                                 <Container sx={{

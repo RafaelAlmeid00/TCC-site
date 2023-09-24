@@ -7,7 +7,7 @@ import { Balancer } from "react-wrap-balancer";
 import { BtnHome } from "../../btns";
 import axios from "axios";
 
-function Pag({onClose}: any) {
+function Pag({ onClose }: any) {
     const { userData } = React.useContext(ModalContext);
     const { verify } = React.useContext(ModalContext);
     const birthDate = new Date(userData.user_nascimento);
@@ -18,9 +18,12 @@ function Pag({onClose}: any) {
 
     React.useEffect(() => {
 
-       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-       
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
         const handleCliente = async () => {
+            if (userData && userData.user_status == 'inativo') {
+                onClose()
+            }
             console.log(userData.user_idcli);
             try {
                 const response = await axios.get('http://localhost:3344/cliente/search', {
@@ -72,10 +75,10 @@ function Pag({onClose}: any) {
     React.useEffect(() => {
         console.log(inputValue);
         const currentDate = new Date();
-            const threeDaysLater = new Date(currentDate);
-            threeDaysLater.setDate(currentDate.getDate() + 3);
-            const formattedDate = formatDate(threeDaysLater);
-            setVenc(formattedDate);
+        const threeDaysLater = new Date(currentDate);
+        threeDaysLater.setDate(currentDate.getDate() + 3);
+        const formattedDate = formatDate(threeDaysLater);
+        setVenc(formattedDate);
         console.log(venc)
     }, [inputValue, venc]);
 
@@ -98,7 +101,7 @@ function Pag({onClose}: any) {
             value: parseFloat(inputValue),
             dueDate: venc,
             description: `Pagamento referente a R$${inputValue} de passsagem na EasyPass`,
-            externalReference: userData.user_CPF.slice(0,6), 
+            externalReference: userData.user_CPF.slice(0, 6),
             interest: {
                 value: 5
             },
@@ -143,41 +146,41 @@ function Pag({onClose}: any) {
             height: "100vh",
             zIndex: 3,
         }}
-        onClick={onClose}
+            onClick={onClose}
         >
-        <Card 
-        onClick={handleCardClick}
-        sx={{
-            width: '50%',
-            height: 'auto',
-            position: "fixed", // Alterado para "fixed" para que fique em uma camada superior
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)', // Centraliza vertical e horizontalmente
-            zIndex: 4, // Para garantir que o card fique acima de outros elementos
-            boxShadow: verify ? '0px 0px 5px 1px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
-        }}>
-            <Typography variant="h6" align="center" sx={{
-                marginTop: 5, 
-                color: verify ? colors.sc : colors.tc, 
-                fontSize: 25,
-                fontWeight: 'bold'
+            <Card
+                onClick={handleCardClick}
+                sx={{
+                    width: '50%',
+                    height: 'auto',
+                    position: "fixed", // Alterado para "fixed" para que fique em uma camada superior
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)', // Centraliza vertical e horizontalmente
+                    zIndex: 4, // Para garantir que o card fique acima de outros elementos
+                    boxShadow: verify ? '0px 0px 5px 1px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
                 }}>
-                Recarga de Passagem
-            </Typography>
-            <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 2 }}>
+                <Typography variant="h6" align="center" sx={{
+                    marginTop: 5,
+                    color: verify ? colors.sc : colors.tc,
+                    fontSize: 25,
+                    fontWeight: 'bold'
+                }}>
+                    Recarga de Passagem
+                </Typography>
+                <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 2 }}>
                     <Container sx={{ flex: 1, mb: 5 }}>
                         <Typography variant="body2" sx={{ marginTop: 5, marginBottom: 2, textAlign: 'center', fontSize: 14 }}>
-                        Informações do cliente:
-                    </Typography>
-                    <TextField value={userData.user_CPF} label="CPF" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                    <TextField value={userData.user_RG} label="RG" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                    <TextField value={formattedBirthDate} label="Idade" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                    <TextField value={userData.user_email} label="Email" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                    <TextField value={userData.user_cel} label="Celular" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                </Container>
-                <Container sx={{ flex: 1 }}>
-                    <Typography variant="h2" align="center" sx={{
+                            Informações do cliente:
+                        </Typography>
+                        <TextField value={userData.user_CPF} label="CPF" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData.user_RG} label="RG" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={formattedBirthDate} label="Idade" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData.user_email} label="Email" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData.user_cel} label="Celular" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                    </Container>
+                    <Container sx={{ flex: 1 }}>
+                        <Typography variant="h2" align="center" sx={{
                             color: verify ? 'white' : 'black',
                             fontSize: 20,
                             fontWeight: 'bold',
@@ -186,9 +189,9 @@ function Pag({onClose}: any) {
                             Passagem EasyPass
                         </Typography>
                         <Balancer>
-                        <Typography variant="body2" sx={{ marginTop: 1, textAlign: 'center', fontSize: 10 }}>
-                            As passagens EasyPass são de livre recarga pelo valor escolhido pelo usuáriob elas servem para todos os meios de passagens da EasyPass.
-                        </Typography>
+                            <Typography variant="body2" sx={{ marginTop: 1, textAlign: 'center', fontSize: 10 }}>
+                                As passagens EasyPass são de livre recarga pelo valor escolhido pelo usuáriob elas servem para todos os meios de passagens da EasyPass.
+                            </Typography>
                         </Balancer>
                         <TextField
                             label="R$ - Valor"
@@ -202,15 +205,15 @@ function Pag({onClose}: any) {
                                 mb: 5
                             }}
                         />
-                        
-                        <Container sx={{ display: 'flex', justifyContent: 'center'}}>
-                        <BtnHome fun={handlePay} name={"Continuar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+
+                        <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <BtnHome fun={handlePay} name={"Continuar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                        </Container>
                     </Container>
                 </Container>
-            </Container>
-            
-            
-        </Card>
+
+
+            </Card>
         </Container >,
         document.getElementById('portal-root')
     );
