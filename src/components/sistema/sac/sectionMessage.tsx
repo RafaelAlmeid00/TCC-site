@@ -29,8 +29,7 @@ export default function Msg() {
                         console.log(error);
                     }
                 });
-            }, 1000)
-
+            }, 400)
             
     };
 
@@ -64,6 +63,8 @@ export default function Msg() {
         <>
         <Box sx={{
             width: "100%",
+            position: 'fixed',
+            mt: '80vh',
             height: "10vh",
             backgroundColor: "pink",
         }}>
