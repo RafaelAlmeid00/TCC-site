@@ -6,7 +6,7 @@ import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { BtnHome } from "../btns";
 import Pedido from "./modal/pedidocard";
-import { PedidosAberto } from "../errosvalidations";
+import { PedidosAberto, PerfilAtualizado, PerfilError } from "../errosvalidations";
 import axios from "axios";
 import Cartao from "./modal/card";
 import { useNavigate } from "react-router-dom";
@@ -32,11 +32,87 @@ function Homesistema() {
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
     const [usos, setUsos] = React.useState([])
-    const { alertatopo, setAlertaTopo } = React.useContext(ModalContext)
+    const { alertatopo } = React.useContext(ModalContext)
     const [active, setActive] = React.useState(false)
     const [card, setCard] = React.useState(alertatopo.nomeBtn && true)
     const [load, setLoad] = React.useState(dataCard.card_id ? false : true)
+    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
 
+    React.useEffect(() => {
+        async function Verifytoken() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tokenemail = urlParams.get('token');
+            const tokencel = urlParams.get('tokencel');
+
+            if (tokenemail || tokencel) {
+                try {
+                    const response = await axios.post('http://localhost:3344/user/validatetoken', {
+                        token: tokenemail ? tokenemail : tokencel
+                    })
+                    if (response.data.valid) {
+                        console.log('ta indo');
+
+                        if (tokenemail) {
+                            let updates = {
+                                ['verifyemail']: '1'
+                            }
+
+                            try {
+                                const response = await update(updates)
+                                console.log(response);
+                            } catch (error) {
+                                console.log(error);
+                            }
+
+                        } else {
+                            let updates = {
+                                ['verifycel']: '1'
+                            }
+
+                            try {
+                                const response = await update(updates)
+                                console.log(response);
+                            } catch (error) {
+                                console.log(error);
+                            }
+
+                        }
+
+                    } else {
+                        location.reload()
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+        }
+        Verifytoken()
+    }, []);
+
+    const update = async (updates: any) => {
+        try {
+
+            console.log(updates);
+
+            await axios.post('http://localhost:3344/user/update', {
+                user_CPF: userData.user_CPF,
+                updates,
+            });
+            setOpen(true)
+            setTimeout(() => {
+                setOpen(false)
+            }, 3000)
+        } catch (error) {
+            console.log(error);
+            setOpen2(true)
+            setTimeout(() => {
+                setOpen2(false)
+            }, 3000)
+        }
+
+    };
 
     React.useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -139,6 +215,7 @@ function Homesistema() {
                     setDataCard(response.data[0])
                     console.log(dataCard);
                     setLoad(false)
+                    setCard(true)
 
                 } else {
                     console.log('deu merda rapeize')
@@ -175,12 +252,12 @@ function Homesistema() {
 
             } catch (error) {
                 console.log(error);
-
+                setLoading(false)
             }
         }
         if (alertatopo.nomeBtn) {
             console.log('ta em alert');
-            setLoading(true)
+            setLoading(false)
         } else {
             handleUsos()
         }
@@ -189,10 +266,12 @@ function Homesistema() {
 
     console.log(alertatopo);
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', pag);
-    
+
 
     return (
         <>
+            {open && <PerfilAtualizado />}
+            {open2 && <PerfilError />}
             {pag && <Pag onClose={handleClosePag} />}
             {alert && <PedidosAberto />}
             {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />) :
@@ -367,7 +446,10 @@ function Homesistema() {
                                     mt: 2, mb: 2
                                 }} />
                             ))
-                        ) : (
+                        ) :  (
+                            usos.length == undefined ? (
+                              <Typography></Typography>
+                            ) : (
                             usos.slice(0, 4).map((viagem, index) => (
                                 <Container
                                     key={index}
@@ -494,7 +576,8 @@ function Homesistema() {
                                         </Container>
                                     </Container>
                                 </Container>
-                            )))}
+
+                            ))))}
                     </Container>
 
                 </Box>

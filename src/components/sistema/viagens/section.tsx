@@ -29,6 +29,7 @@ export default function Viagens() {
     const [menuitem, setMenuItem] = useState<object>([{}]);
     const [filteredData, setFilteredData] = useState<object>([{}]);
     const [selectedValue, setSelectedValue] = useState<any>(null);
+    const [loadskeleton, setSkeleton] = useState<Boolean>(true);
 
     React.useEffect(() => {
 
@@ -140,6 +141,7 @@ export default function Viagens() {
 
     React.useEffect(() => {
         const handleUsos = async () => {
+            setSkeleton(false)
             try {
                 const response = await axios.post('http://localhost:3344/usos', {
                     user_CPF: userData.user_CPF,
@@ -151,10 +153,15 @@ export default function Viagens() {
                 console.log(response);
                 setUsos(response.data)
                 console.log(usos);
+                setSkeleton(false)
+
+                if (usos.length == 0) {
+                    setSkeleton(true)
+                }
 
             } catch (error) {
                 console.log(error);
-
+                setSkeleton(true)
             }
         }
         handleUsos()
@@ -279,48 +286,54 @@ export default function Viagens() {
                     gap: 5
                 }}
             >
-                <IconButton onClick={handleMenu1}>
-                    <DirectionsBus />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 2 || menu === 3 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    textAlign: "center",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Ônibus da viagem
-                </Typography>
+                {usos && usos.length > 0
+                    ?
+                    (
+                        <>
+                            <IconButton onClick={handleMenu1}>
+                                <DirectionsBus />
+                            </IconButton>
+                            <Typography variant="body2" sx={{
+                                display: menu === 0 || menu === 2 || menu === 3 ? "none" : "flex",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                color: verify ? "white" : "black",
+                                textAlign: "center",
+                                margin: 'auto 0',
+                                ml: -4
+                            }}>
+                                Ônibus da viagem
+                            </Typography>
 
-                <IconButton onClick={handleMenu2}>
-                    <AccessTimeFilled />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 1 || menu === 3 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Data da viagem
-                </Typography>
-                <IconButton onClick={handleMenu3}>
-                    <CreditCard />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 1 || menu === 2 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Cartão usado
-                </Typography>
-            </Container>
+                            <IconButton onClick={handleMenu2}>
+                                <AccessTimeFilled />
+                            </IconButton>
+                            <Typography variant="body2" sx={{
+                                display: menu === 0 || menu === 1 || menu === 3 ? "none" : "flex",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                color: verify ? "white" : "black",
+                                margin: 'auto 0',
+                                ml: -4
+                            }}>
+                                Data da viagem
+                            </Typography>
+                            <IconButton onClick={handleMenu3}>
+                                <CreditCard />
+                            </IconButton>
+                            <Typography variant="body2" sx={{
+                                display: menu === 0 || menu === 1 || menu === 2 ? "none" : "flex",
+                                fontSize: 14,
+                                fontWeight: 600,
+                                color: verify ? "white" : "black",
+                                margin: 'auto 0',
+                                ml: -4
+                            }}>
+                                Cartão usado
+                            </Typography>
+                        </>
+                    ) : <Typography>Sem viagens feitas</Typography>}
+            </Container >
 
             <Container sx={{
                 width: "50%",
@@ -519,9 +532,11 @@ export default function Viagens() {
                             </Container>
                         </Card>
                     ) : (
-                        <Skeleton variant="rounded" width={'80%'} height={350} sx={{
-                            mb: 10
-                        }} />
+                        loadskeleton ? (
+                            <Typography></Typography>
+                        ) : (
+                            <Skeleton variant="rounded" width={'80%'} height={350} sx={{ mb: 10 }} />
+                        )
                     )}
                 {usos && usos.length > 0 ? (
                     <Card
@@ -796,12 +811,15 @@ export default function Viagens() {
                         )}
                     </Card>
                 ) : (
-                    Array.from({ length: 5 }).map((_, index) => (
-                        <Skeleton key={index} variant="rounded" width={'80%'} height={'30vh'} sx={{
-                            mt: -4, mb: -4
-                        }} />
-                    ))
-                )}
+                    loadskeleton ? (
+                        <Typography></Typography>
+                    ) : (
+                        Array.from({ length: 5 }).map((_, index) => (
+                            <Skeleton key={index} variant="rounded" width={'80%'} height={'30vh'} sx={{
+                                mt: -4, mb: -4
+                            }} />
+                        ))
+                    ))}
 
             </Container>
         </Box>

@@ -7,7 +7,7 @@ import colors from "../../../assets/colors";
 import Excluir from "../modal/confirmar";
 import { ContentNull, EmailEnviado, EmailNaoEnviado, PerfilAtualizado, PerfilError, SenhaDiferente, SenhaInvalida, TokenAtualizado, TokenPerfilError, TokenPerfilErrorSer } from "../../errosvalidations";
 import { Lock } from "@mui/icons-material";
-import { Btn } from "../../btns";
+import { BtnHome } from "../../btns";
 
 function SectionPerfil2() {
     const [modal, setModal] = React.useState(false)
@@ -330,11 +330,11 @@ function SectionPerfil2() {
                                         />
                                     </FormControl>
 
-                                    <Btn name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                                    <BtnHome name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                                 </>
-                                : <Btn name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
+                                : <BtnHome name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
 
-                            <Btn name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                            <BtnHome name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
                         </Container>
 
                         <Divider variant="fullWidth" component="ul" sx={{
@@ -373,19 +373,57 @@ function SectionPerfil2() {
                                     backgroundColor: 'red',
                                     boxShadow: 'inset 0px 0px 2px 1px',
                                 },
+                                width: {
+                                    xs: '20vw',
+                                    sm: '18vw',
+                                    md: '15vw',
+                                    lg: '12vw',
+                                    xl: '12vw',
+                                },
+                                fontSize: {
+                                    xs: '2vw',  // (7.5 / 1200) * 600
+                                    sm: '1.5vw',  // (7.5 / 1200) * 900
+                                    md: '1.5vw',  // (7.5 / 1200) * 1200
+                                    lg: '0.8vw',
+                                    xl: '0.8vw',  // Manter o mesmo tamanho de lg para xl
+                                },
+                                height: {
+                                    xs: '6vh',  // (7.5 / 1200) * 600
+                                    sm: '5vh',  // (7.5 / 1200) * 900
+                                    md: '5vh',  // (7.5 / 1200) * 1200
+                                    lg: '5.5vh',
+                                    xl: '5.5vh',  // Manter o mesmo tamanho de lg para xl
+                                },
+                                fontWeight: 600,
                             }}>
-                                <Typography sx={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                }}>
-                                    Sair da Conta
-                                </Typography>
+                                Sair da Conta
                             </Button>
                             <Button variant="outlined" onClick={excl} sx={{
                                 border: '2px solid red', // muda a cor da borda na animação
                                 backgroundColor: 'white',
                                 color: 'red',
                                 mt: 3,
+                                width: {
+                                    xs: '20vw',
+                                    sm: '18vw',
+                                    md: '15vw',
+                                    lg: '12vw',
+                                    xl: '12vw',
+                                },
+                                fontSize: {
+                                    xs: '2vw',  // (7.5 / 1200) * 600
+                                    sm: '1.5vw',  // (7.5 / 1200) * 900
+                                    md: '1.5vw',  // (7.5 / 1200) * 1200
+                                    lg: '0.8vw',
+                                    xl: '0.8vw',  // Manter o mesmo tamanho de lg para xl
+                                },
+                                height: {
+                                    xs: '6vh',  // (7.5 / 1200) * 600
+                                    sm: '5vh',  // (7.5 / 1200) * 900
+                                    md: '5vh',  // (7.5 / 1200) * 1200
+                                    lg: '5.5vh',
+                                    xl: '5.5vh',  // Manter o mesmo tamanho de lg para xl
+                                },
                                 transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
                                 '&:hover': {
                                     backgroundColor: 'red', // muda a cor da borda na animação
@@ -393,13 +431,9 @@ function SectionPerfil2() {
                                     boxShadow: 'inset 0px 0px 2px 1px',
                                     border: '2px solid red', // muda a cor da borda na animação
                                 },
+                                fontWeight: 600,
                             }}>
-                                <Typography sx={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                }}>
-                                    Excluir Conta
-                                </Typography>
+                                Excluir Conta
                             </Button>
                         </Container>
                     </Container>

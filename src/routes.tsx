@@ -35,7 +35,7 @@ const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 const Extrato = lazy(() => import('./pages/sistema/Extrato'));
 
 const Rota = () => {
- 
+
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -54,23 +54,26 @@ const Rota = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
 
- 
+
   const userToken = localStorage.getItem('token')
   React.useEffect(() => {
     setUserDataLoaded(false)
     console.log('this is userToken: ', userToken);
-    
+
     if (userToken) {
+      console.log(socket)
+
       socket.connect();
-      
-  //vou deixar true pra teste mas pode tirar
-      setActive(true)
+
       if (socket.connected) {
         console.log('aaa');
-        
+
         setUserDataLoaded(true)
+      } else {
+        socket.auth.token = userToken
+        console.log(socket)
+
       }
-      console.log(socket)
     } else {
       console.log('sem token sem connect');
 
@@ -87,10 +90,10 @@ const Rota = () => {
 
       setTimeout(() => {
         //console.log(socket);
-        
+
         socket.emit('userDetails', decoded.user_CPF, (err) => {
           console.log('emitindo os bagui');
-          
+
           if (err) {
             console.log('timeout');
           }
@@ -98,7 +101,7 @@ const Rota = () => {
       }, 4000);
 
       setTimeout(() => {
-        
+
         console.log(socket);
         socket.on('userDetails', (data) => {
           console.log(data)
@@ -119,129 +122,179 @@ const Rota = () => {
   React.useEffect(() => {
     //console.log('okok');
     const handleAlerta = () => {
-      setAlertaTopo({})
-      if (userData && userData.user_verifyemail == null || userData && userData.user_verifyemail == 0) {
-        if (userData && userData.user_verifcel == null || userData && userData.user_verifycel == 0) {
+      setAlertaTopo({});
+  
+      if (userData) {
+        if (userData.user_verifyemail !== '1' && userData.user_verifycel !== '1') {
           const alerta = {
             nomeBtn: 'Confirmar',
             rotaBtn: '/Sistema/dados',
             statusAlert: 'warning',
             textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
             titleAlert: 'Seu email e celular precisa de confirmação',
-          }
-          setAlertaTopo(alerta)
-          setActive(true)
-          console.log('okok');
-        } else {
+          };
+          setAlertaTopo(alerta);
+          setActive(true);
+          console.log('okok1');
+        } else if (userData.user_verifyemail !== '1') {
           const alerta = {
             nomeBtn: 'Confirmar',
             rotaBtn: '/Sistema/dados',
             statusAlert: 'warning',
             textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
             titleAlert: 'Seu email precisa de confirmação',
-          }
-          setAlertaTopo(alerta)
-          setActive(true)
-          console.log('okok');
-
-        }
-      } else {
-        if (userData && userData.user_verifycel == null || userData && userData.user_verifycel == 0) {
+          };
+          setAlertaTopo(alerta);
+          setActive(true);
+          console.log('okok2');
+        } else if (userData.user_verifycel !== '1') {
           const alerta = {
             nomeBtn: 'Confirmar',
             rotaBtn: '/Sistema/dados',
             statusAlert: 'warning',
             textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
             titleAlert: 'Seu celular precisa de confirmação',
-          }
-          setAlertaTopo(alerta)
-          setActive(true)
-          console.log('okok');
-
+          };
+          setAlertaTopo(alerta);
+          setActive(true);
+          console.log('okok3');
         } else {
-          if (userData && userData.user_status == 'inativo') {
-            const alerta = {
-              nomeBtn: 'Confirmar',
-              rotaBtn: '/Sistema/Documentos',
-              statusAlert: 'warning',
-              textAlert: 'Clique no botão abaixo para enviar seus documentos:',
-              titleAlert: 'Ative sua conta!',
-            }
-            setAlertaTopo(alerta)
-            setActive(true)
-            console.log('okok');
-
-          } else {
-            console.log('okok');
-
-          }
-
+          setAlertaTopo({});
         }
       }
+    };
+  
+    handleAlerta();
+  }, [userData]);
+  
+  console.log('this is active: ', Active);
+
+  function checkDevice() {
+    if (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+    ) {
+      return true; // está utilizando celular
     }
-    handleAlerta()
-    //console.log('okok');
-
-  }, [userData])
-console.log('this is active: ', Active);
-
-function checkDevice() {
-  if (navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i)
-  ) {
-    return true; // está utilizando celular
+    else {
+      return false; // não é celular
+    }
   }
-  else {
-    return false; // não é celular
-  }
-}
-console.log(checkDevice());
-const [darkMode, setDarkMode] = useState(false);
+  console.log(checkDevice());
+  const [darkMode, setDarkMode] = useState(false);
 
-React.useEffect(() => {
-  const themes = localStorage.getItem('theme');
-  setDarkMode(themes === 'dark');
-}, []);
+  React.useEffect(() => {
+    const themes = localStorage.getItem('theme');
+    setDarkMode(themes === 'dark');
+  }, []);
 
-const themes = createTheme({
-  palette: {
-    mode: darkMode ? 'dark' : 'light',
-  },
-});
+  const themes = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    },
+  });
 
-const [hasEntered, setHasEntered] = React.useState(false);
-const dark = localStorage.getItem('theme')
-const [verify, setVerify] = React.useState(false);
+  const [hasEntered, setHasEntered] = React.useState(false);
+  const dark = localStorage.getItem('theme')
+  const [verify, setVerify] = React.useState(false);
 
-React.useEffect(() => {
-  if (dark == 'dark') {
-    setVerify(true)
-  } else {
-    setVerify(false)
-  }
-}, [dark])
+  React.useEffect(() => {
+    if (dark == 'dark') {
+      setVerify(true)
+    } else {
+      setVerify(false)
+    }
+  }, [dark])
 
-React.useEffect(() => {
-  setHasEntered(true);
-}, []);
+  React.useEffect(() => {
+    setHasEntered(true);
+  }, []);
 
 
-return (
-  <ThemeProvider theme={themes}>
+  return (
+    <ThemeProvider theme={themes}>
 
-    <BrowserRouter>
-      <Suspense fallback={<Loading />}>
-        <Routes>
+      <BrowserRouter>
+        <Suspense fallback={<Loading />}>
+          <Routes>
 
-          {/* Rotas públicas */}
-          <Route path="/*" element={
-            <React.Fragment>
-              <AuthProviderHome>
+            {/* Rotas públicas */}
+            <Route path="/*" element={
+              <React.Fragment>
+                <AuthProviderHome>
+                  <ModalContext.Provider value={{
+                    verify,
+                    darkMode,
+                    setDarkMode,
+                    themes, // ou o tema que você desejar usar
+                    hasEntered,
+                    setHasEntered,
+                  }}>
+                    <Routes>
+                      <Route path="/" element={<App />} />
+                      <Route path="/Servicos" element={<ServiLazy />} />
+                      <Route path="/App" element={<AppLazy />} />
+                      <Route path="/EasyPass" element={<EasyPassLazy />} />
+                      <Route path="/Contatos" element={<ContatosLazy />} />
+                      <Route path="/Opcoes" element={<OptionsCad />} />
+                    </Routes>
+                  </ModalContext.Provider>
+                </AuthProviderHome>
+              </React.Fragment>
+            } />
+
+            {/* Rotas de autenticação */}
+            <Route path="/cadastro/*" element={
+              <React.Fragment>
+                <ModalContext.Provider value={{
+                  verify,
+                  email,
+                  setEmail,
+                  password,
+                  setPassword,
+                  cep,
+                  setCep,
+                  UF,
+                  setUF,
+                  district,
+                  setDistrict,
+                  street,
+                  setStreet,
+                  num,
+                  setNum,
+                  comp,
+                  setComp,
+                  city,
+                  setCity,
+                  loginbool,
+                  setLog,
+                  darkMode,
+                  setDarkMode,
+                  themes, // ou o tema que você desejar usar
+                  hasEntered,
+                  setHasEntered,
+                  cpf, setCpf,
+                  userData,
+                  setUserData
+                }}>
+                  <Routes>
+                    <Route path="/" element={<CadlogLazy />} />
+                    <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
+                    <Route path="/Rec" element={<RecAccountLazy />} />
+                    <Route path="/Complemento" element={<CadallLazy />} />
+                    <Route path="/Empresa" element={<Escola />} />
+                  </Routes>
+                </ModalContext.Provider>
+              </React.Fragment>
+            } />
+
+            {/* Rota do sistema */}
+            <Route path="/Sistema/*" element={
+              <AuthProvider>
                 <ModalContext.Provider value={{
                   verify,
                   darkMode,
@@ -249,110 +302,41 @@ return (
                   themes, // ou o tema que você desejar usar
                   hasEntered,
                   setHasEntered,
+                  userData,
+                  setUserData,
+                  alertatopo,
+                  setAlertaTopo,
+                  MsgContext,
+                  setRecivedContext,
                 }}>
-                  <Routes>
-                    <Route path="/" element={<App />} />
-                    <Route path="/Servicos" element={<ServiLazy />} />
-                    <Route path="/App" element={<AppLazy />} />
-                    <Route path="/EasyPass" element={<EasyPassLazy />} />
-                    <Route path="/Contatos" element={<ContatosLazy />} />
-                    <Route path="/Opcoes" element={<OptionsCad />} />
-                  </Routes>
+                  <React.Fragment>
+                    <Routes>
+                      {userDataLoaded ? (
+                        <Route path="/" element={<HomeSistema />} />
+                      ) : (
+                        <Route path="/" element={<Loading />} />
+                      )}
+                      <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
+                      <Route path="/Perfil" element={<PerfilLazy />} />
+                      <Route path="/SAC" element={(Active ? <AlertConta /> : <SACLazy />)} />
+                      <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
+                      <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
+                      <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
+                      <Route path="/Documentos" element={<Docmentos />} />
+                      <Route path="/Endereco" element={<Endereco />} />
+                      <Route path="/Dados" element={<Informacoes />} />
+                      <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
+                      <Route path="/Extrato" element={Active ? <AlertConta /> : <Extrato />} />
+                    </Routes>
+                  </React.Fragment>
                 </ModalContext.Provider>
-              </AuthProviderHome>
-            </React.Fragment>
-          } />
-
-          {/* Rotas de autenticação */}
-          <Route path="/cadastro/*" element={
-            <React.Fragment>
-              <ModalContext.Provider value={{
-                verify,
-                email,
-                setEmail,
-                password,
-                setPassword,
-                cep,
-                setCep,
-                UF,
-                setUF,
-                district,
-                setDistrict,
-                street,
-                setStreet,
-                num,
-                setNum,
-                comp,
-                setComp,
-                city,
-                setCity,
-                loginbool,
-                setLog,
-                darkMode,
-                setDarkMode,
-                themes, // ou o tema que você desejar usar
-                hasEntered,
-                setHasEntered,
-                cpf, setCpf,
-                userData, 
-                setUserData
-              }}>
-                <Routes>
-                  <Route path="/" element={<CadlogLazy />} />
-                  <Route path="/EsqueciaSenha" element={<ForgetPasswordLazy />} />
-                  <Route path="/Rec" element={<RecAccountLazy />} />
-                  <Route path="/Complemento" element={<CadallLazy />} />
-                  <Route path="/Empresa" element={<Escola />} />
-                </Routes>
-              </ModalContext.Provider>
-            </React.Fragment>
-          } />
-
-          {/* Rota do sistema */}
-          <Route path="/Sistema/*" element={
-            <AuthProvider>
-              <ModalContext.Provider value={{
-                verify,
-                darkMode,
-                setDarkMode,
-                themes, // ou o tema que você desejar usar
-                hasEntered,
-                setHasEntered,
-                userData, 
-                setUserData,
-                alertatopo,
-                setAlertaTopo,
-                MsgContext,
-                setRecivedContext,
-              }}>
-                <React.Fragment>
-                  <Routes>
-                    {userDataLoaded ? (
-                      <Route path="/" element={<HomeSistema />} />
-                    ) : (
-                      <Route path="/" element={<Loading />} />
-                    )}
-                    <Route path="/Rotas" element={(Active ? <AlertConta /> : <RoutesLazy />)} />
-                    <Route path="/Perfil" element={<PerfilLazy />} />
-                    <Route path="/SAC" element={(Active ? <SACLazy /> : <AlertConta />)} />
-                    <Route path="/Onibus" element={(Active ? <AlertConta /> : <OnibusLazy />)} />
-                    <Route path="/Card" element={(Active ? <AlertConta /> : <CardLazy />)} />
-                    <Route path="/AlterarEmail" element={(Active ? <AlertConta /> : <TrocaEmailLazy />)} />
-                    <Route path="/Documentos" element={<Docmentos />} />
-                    <Route path="/Endereco" element={<Endereco />} />
-                    <Route path="/Dados" element={<Informacoes />} />
-                    <Route path="/Viagens" element={(Active ? <AlertConta /> : <Viagens />)} />
-                    <Route path="/Extrato" element={<Extrato />} />
-                  </Routes>
-                </React.Fragment>
-              </ModalContext.Provider>
-            </AuthProvider>
-          } />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  </ThemeProvider>
-);
+              </AuthProvider>
+            } />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 
 };
 

@@ -42,6 +42,7 @@ interface BtnHomeProps {
   fun?: () => void;
   ml?: string;
   mr?: string;
+  mb?: string | number;
 }
 interface BtnLProps {
   loading: boolean;
@@ -275,7 +276,7 @@ function BtnPerfil({ name, route, cl, bc, bch, fun, ml }: BtnPerfilProps) {
 }
 
 
-function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
+function BtnHome({ name, route, cl, bc, bch, fun, ml, mr, mb }: BtnHomeProps) {
   const navigate = useNavigate()
 
   if (!fun) {
@@ -289,6 +290,7 @@ function BtnHome({ name, route, cl, bc, bch, fun, ml, mr }: BtnHomeProps) {
         color: cl,
         ml: ml,
         mr: mr,
+        mb: mb,
         marginRight: 1,
         background: bc,
         border: '2px solid transparent', // adiciona a borda inicialmente

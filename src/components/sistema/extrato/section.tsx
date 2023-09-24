@@ -53,7 +53,7 @@ function organizePaymentsByMonthAndDay(payments) {
         console.log(organizedPayments[year][month][day]);
 
     });
-    
+
     return organizedPayments;
 }
 
@@ -67,6 +67,9 @@ export default function Ext() {
     const dataAtual = new Date();
     const anoAtual = dataAtual.getFullYear();
     const [year, setAge] = useState(anoAtual); // Estado para armazenar o valor selecionado
+    const [hasReceived, setHasReceived] = useState(Boolean);
+    const [hasPending, setHasPending] = useState(Boolean);
+    const [hasOverdue, setHasOverdue] = useState(Boolean);
 
     const handleChange = (event) => {
         const selectedAge = event.target.value; // Obtém o valor selecionado no Select
@@ -81,7 +84,7 @@ export default function Ext() {
 
     const handleCobranças = async (query) => {
         console.log(query);
-        
+
         try {
             const response = await axios.post('http://localhost:3344/pagamento/search', {
                 params: {
@@ -101,6 +104,34 @@ export default function Ext() {
             console.log(organizedPayments);
 
             console.log(pays);
+
+            const checkPayments = (payments) => {
+                for (const pagamento of payments) {
+                    if (pagamento.status === "RECEIVED") {
+                        setHasReceived(true);
+                    } else if (pagamento.status === "PENDING") {
+                        setHasPending(true);
+                    } else if (pagamento.status === "OVERDUE") {
+                        setHasOverdue(true);
+                    }
+                }
+            };
+
+            const traverseObject = (obj) => {
+                for (const key in obj) {
+                    if (Array.isArray(obj[key])) {
+                        checkPayments(obj[key]);
+                    } else if (typeof obj[key] === 'object') {
+                        traverseObject(obj[key]);
+                    }
+                }
+            };
+
+            traverseObject(organizedPayments);
+
+            console.log("Received: " + hasReceived);
+            console.log("Pending: " + hasPending);
+            console.log("Overdue: " + hasOverdue);
 
         } catch (error) {
             console.error(error);
@@ -190,47 +221,70 @@ export default function Ext() {
                     gap: 5
                 }}
             >
-                <IconButton onClick={handleMenu1}>
-                    <CreditScoreIcon />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 2 || menu === 3 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    textAlign: "center",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Pagamentos feitos
-                </Typography>
-
-                <IconButton onClick={handleMenu2}>
-                    <AccessTimeFilledIcon />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 1 || menu === 3 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Pagamentos pendentes
-                </Typography>
-                <IconButton onClick={handleMenu3}>
-                    <CreditCardOff />
-                </IconButton>
-                <Typography variant="body2" sx={{
-                    display: menu === 0 || menu === 1 || menu === 2 ? "none" : "flex",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: verify ? "white" : "black",
-                    margin: 'auto 0',
-                    ml: -4
-                }}>
-                    Pagamentos vencidos
-                </Typography>
+                {hasOverdue || hasPending || hasReceived
+                    ?
+                    (
+                        <>
+                            {hasReceived &&
+                                (
+                                    <>
+                                        <IconButton onClick={handleMenu1}>
+                                            <CreditScoreIcon />
+                                        </IconButton>
+                                        <Typography variant="body2" sx={{
+                                            display: menu === 0 || menu === 2 || menu === 3 ? "none" : "flex",
+                                            fontSize: 14,
+                                            fontWeight: 600,
+                                            color: verify ? "white" : "black",
+                                            textAlign: "center",
+                                            margin: 'auto 0',
+                                            ml: -4
+                                        }}>
+                                            Pagamentos feitos
+                                        </Typography>
+                                    </>
+                                )}
+                            {hasPending &&
+                                (
+                                    <>
+                                        <IconButton onClick={handleMenu2}>
+                                            <AccessTimeFilledIcon />
+                                        </IconButton>
+                                        <Typography variant="body2" sx={{
+                                            display: menu === 0 || menu === 1 || menu === 3 ? "none" : "flex",
+                                            fontSize: 14,
+                                            fontWeight: 600,
+                                            color: verify ? "white" : "black",
+                                            margin: 'auto 0',
+                                            ml: -4
+                                        }}>
+                                            Pagamentos pendentes
+                                        </Typography>
+                                    </>
+                                )}
+                            {hasOverdue &&
+                                (
+                                    <>
+                                        <IconButton onClick={handleMenu3}>
+                                            <CreditCardOff />
+                                        </IconButton>
+                                        <Typography variant="body2" sx={{
+                                            display: menu === 0 || menu === 1 || menu === 2 ? "none" : "flex",
+                                            fontSize: 14,
+                                            fontWeight: 600,
+                                            color: verify ? "white" : "black",
+                                            margin: 'auto 0',
+                                            ml: -4
+                                        }}>
+                                            Pagamentos vencidos
+                                        </Typography>
+                                    </>
+                                )}
+                        </>
+                    )
+                    : (
+                        <Typography>Não há pagamentos</Typography>
+                    )}
             </Container>
 
             <Container sx={{
@@ -252,236 +306,238 @@ export default function Ext() {
                 }} />
             </Container>
 
-            {pays ? (
-                <>
-                    <Container key={year} sx={{ width: '100%', mt: 2 }}>
-                        <Container sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "90%",
-                            mt: 2,
-                        }}>
-                            <FormControl variant="standard" sx={{ mt: 5, minWidth: 120 }}>
-                                <InputLabel id={`year-select-label-${year}`}>Ano</InputLabel>
-                                <Select
-                                    labelId={`year-select-label-${year}`}
-                                    id={`year-select-${year}`}
-                                    value={year}
-                                    onChange={handleChange}
-                                    label="Ano"
-                                >
-                                    {year ? (
-                                        Object.keys(pays).map((year) => (
-                                            <MenuItem key={year} value={year}>
-                                                {year}
-                                            </MenuItem>
-                                        ))
-                                    ) : (
-                                        <MenuItem value="">
-                                            <em>None</em>
-                                        </MenuItem>
-                                    )}
-                                </Select>
-                            </FormControl>
-                        </Container>
-                    </Container>
-
-
-                    {Object.keys(pays[year]).reverse().map((month) => (
-                        <Container key={month} sx={{ width: '100%', mt: 2 }}>
+            {
+                pays ? (
+                    <>
+                        <Container key={year} sx={{ width: '100%', mt: 2 }}>
                             <Container sx={{
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                width: "94%",
-                                mt: 4,
-                                mb: 2,
+                                width: "90%",
+                                mt: 2,
                             }}>
-                                <Typography variant="body1" sx={{
-                                    display: "flex",
-                                    justifyContent: "flex-start",
-                                    alignItems: "center",
-                                    width: "100%",
-                                    fontWeight: 'bold',
-                                    color: verify ? "white" : "black",
-                                    fontSize: 20
-                                }}>
-                                    {monthNames[parseInt(month - 1, 11)]}
-                                </Typography>
+                                <FormControl variant="standard" sx={{ mt: 5, minWidth: 120 }}>
+                                    <InputLabel id={`year-select-label-${year}`}>Ano</InputLabel>
+                                    <Select
+                                        labelId={`year-select-label-${year}`}
+                                        id={`year-select-${year}`}
+                                        value={year}
+                                        onChange={handleChange}
+                                        label="Ano"
+                                    >
+                                        {year ? (
+                                            Object.keys(pays).map((year) => (
+                                                <MenuItem key={year} value={year}>
+                                                    {year}
+                                                </MenuItem>
+                                            ))
+                                        ) : (
+                                            <MenuItem value="">
+                                                <em>None</em>
+                                            </MenuItem>
+                                        )}
+                                    </Select>
+                                </FormControl>
                             </Container>
+                        </Container>
 
-                            {Object.keys(pays[year][month]).reverse().map((day) => (
-                                <Container key={day} sx={{ width: '100%', mt: 2 }}>
-                                    <Container sx={{
+
+                        {Object.keys(pays[year]).reverse().map((month) => (
+                            <Container key={month} sx={{ width: '100%', mt: 2 }}>
+                                <Container sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: "94%",
+                                    mt: 4,
+                                    mb: 2,
+                                }}>
+                                    <Typography variant="body1" sx={{
                                         display: "flex",
-                                        justifyContent: "center",
+                                        justifyContent: "flex-start",
                                         alignItems: "center",
                                         width: "100%",
-                                        mt: 2,
-                                        mb: 2,
+                                        fontWeight: 'bold',
+                                        color: verify ? "white" : "black",
+                                        fontSize: 20
                                     }}>
-                                        <Typography variant="body2" sx={{
+                                        {monthNames[parseInt(month - 1, 11)]}
+                                    </Typography>
+                                </Container>
+
+                                {Object.keys(pays[year][month]).reverse().map((day) => (
+                                    <Container key={day} sx={{ width: '100%', mt: 2 }}>
+                                        <Container sx={{
                                             display: "flex",
-                                            justifyContent: "flex-start",
-                                            alignItems: "center",
-                                            width: "100%",
-                                            color: verify ? "white" : "black",
-                                            fontSize: 12
-                                        }}>
-                                            {daysNames[parseInt(day, 10)]} {monthNames[parseInt(month - 1, 11)]} {year}
-                                        </Typography>
-                                    </Container>
-                                    <Container sx={{ width: '100%' }}>
-                                        <Divider orientation="horizontal" variant="middle" flexItem sx={{ ml: 5, mr: 5, mt: 2, mb: 2 }} />
-                                    </Container>
-                                    <Container
-                                        sx={{
-                                            width: "100%",
-                                            display: "flex",
-                                            flexDirection: "column",
                                             justifyContent: "center",
                                             alignItems: "center",
+                                            width: "100%",
+                                            mt: 2,
+                                            mb: 2,
                                         }}>
-                                        {pays[year][month][day].map((payment) => (
-                                            <Container key={payment.id} sx={{
+                                            <Typography variant="body2" sx={{
                                                 display: "flex",
-                                                justifyContent: "center",
+                                                justifyContent: "flex-start",
                                                 alignItems: "center",
                                                 width: "100%",
-                                                flexDirection: 'row',
-                                                mt: 2,
-                                                mb: 2,
+                                                color: verify ? "white" : "black",
+                                                fontSize: 12
                                             }}>
-                                                <Container sx={{
-                                                    display: 'flex',
-                                                    justifyContent: 'flex-start',
-                                                    alignItems: 'center',
-                                                    width: '30%',
-                                                    padding: 3,
-                                                    flexDirection: 'column',
-                                                    marginLeft: 5,
-                                                    marginRight: 5,
-                                                }}>
-                                                    <Icon sx={{
-                                                        borderRadius: '50%',
-                                                        border: '1px solid transparent',
-                                                        display: "flex",
-                                                        justifyContent: "center",
-                                                        alignItems: "center",
-                                                        padding: 3,
-                                                    }}>
-                                                        <Paid sx={{
-                                                            fontSize: 40,
-                                                            color: payment.status == "OVERDUE" ? 'red' : (payment.status == "PENDING" ? "yellow" : (payment.status == "RECEIVED" ? "green" : (payment.status == "CONFIRMED" && "green"))),
-                                                        }} />
-                                                    </Icon>
-                                                    <Container sx={{
-                                                        display: "flex",
-                                                        justifyContent: "center",
-                                                        alignItems: "center",
-                                                        width: '100%',
-                                                    }}>
-                                                    </Container>
-                                                </Container>
-
-                                                <Divider orientation="vertical" variant="middle" flexItem sx={{ ml: 5, mr: 5 }} />
-
-                                                <Container sx={{
-                                                    width: '70%',
+                                                {daysNames[parseInt(day, 10)]} {monthNames[parseInt(month - 1, 11)]} {year}
+                                            </Typography>
+                                        </Container>
+                                        <Container sx={{ width: '100%' }}>
+                                            <Divider orientation="horizontal" variant="middle" flexItem sx={{ ml: 5, mr: 5, mt: 2, mb: 2 }} />
+                                        </Container>
+                                        <Container
+                                            sx={{
+                                                width: "100%",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                            }}>
+                                            {pays[year][month][day].map((payment) => (
+                                                <Container key={payment.id} sx={{
                                                     display: "flex",
-                                                    justifyContent: "flex-start",
-                                                    alignItems: "flex-start",
-                                                    flexDirection: 'column',
-                                                    padding: 5,
-                                                    marginLeft: 5,
-                                                    marginRight: 5,
-                                                    gap: 2,
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    width: "100%",
+                                                    flexDirection: 'row',
+                                                    mt: 2,
+                                                    mb: 2,
                                                 }}>
                                                     <Container sx={{
-                                                        display: "flex",
-                                                        flexDirection: 'row',
-                                                        alignItems: "center",
+                                                        display: 'flex',
+                                                        justifyContent: 'flex-start',
+                                                        alignItems: 'center',
+                                                        width: '30%',
+                                                        padding: 3,
+                                                        flexDirection: 'column',
+                                                        marginLeft: 5,
+                                                        marginRight: 5,
                                                     }}>
-                                                        <Typography variant="body1" sx={{
-                                                            fontSize: 15,
-                                                            fontWeight: 'bold',
-                                                            textAlign: 'left',
-                                                            color: verify ? 'white' : 'black',
-                                                        }}>
-                                                            Data:
-                                                        </Typography>
-                                                        <Typography variant="body2" sx={{
-                                                            fontSize: 12,
-                                                            textAlign: 'left',
-                                                            ml: 1,
-                                                            color: verify ? 'white' : 'black',
-                                                        }}>
-                                                            {payment.dateCreated}
-                                                        </Typography>
-                                                    </Container>
-                                                    <Divider variant="middle" sx={{ width: '75%' }} />
-
-                                                    <Container sx={{
-                                                        display: "flex",
-                                                        flexDirection: 'row',
-                                                        alignItems: "center",
-                                                    }}>
-                                                        <Typography variant="body1" sx={{
-                                                            fontSize: 15,
-                                                            fontWeight: 'bold',
-                                                            textAlign: 'left',
-                                                            color: verify ? 'white' : 'black',
-                                                        }}>
-                                                            Status:
-                                                        </Typography>
-                                                        <Typography variant="body2" sx={{
-                                                            fontSize: 12,
-                                                            textAlign: 'left',
-                                                            ml: 1,
-                                                            color: verify ? 'white' : 'black',
+                                                        <Icon sx={{
+                                                            borderRadius: '50%',
+                                                            border: '1px solid transparent',
                                                             display: "flex",
-                                                            flexDirection: 'column',
-                                                            textDecoration: 'none'
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                            padding: 3,
                                                         }}>
-                                                            {payment.status == "OVERDUE" ? `Vencido dia: ${payment.dueDate}` : (payment.status == "PENDING" ? "Pagamento pendente" : (payment.status == "RECEIVED" ? "Pagamento Realizado" : (payment.status == "CONFIRMED" && "Pagamento Confirmado")))}
-                                                            {payment.status == "PENDING" && <Link to={payment.invoiceUrl} style={{ marginTop: 2, color: verify ? 'white' : 'black', }}>Clique aqui para pagar!</Link>}
-                                                        </Typography>
+                                                            <Paid sx={{
+                                                                fontSize: 40,
+                                                                color: payment.status == "OVERDUE" ? 'red' : (payment.status == "PENDING" ? "yellow" : (payment.status == "RECEIVED" ? "green" : (payment.status == "CONFIRMED" && "green"))),
+                                                            }} />
+                                                        </Icon>
+                                                        <Container sx={{
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                            width: '100%',
+                                                        }}>
+                                                        </Container>
                                                     </Container>
-                                                    <Divider variant="middle" sx={{ width: '75%' }} />
+
+                                                    <Divider orientation="vertical" variant="middle" flexItem sx={{ ml: 5, mr: 5 }} />
 
                                                     <Container sx={{
+                                                        width: '70%',
                                                         display: "flex",
-                                                        flexDirection: 'row',
-                                                        alignItems: "center",
+                                                        justifyContent: "flex-start",
+                                                        alignItems: "flex-start",
+                                                        flexDirection: 'column',
+                                                        padding: 5,
+                                                        marginLeft: 5,
+                                                        marginRight: 5,
+                                                        gap: 2,
                                                     }}>
-                                                        <Typography variant="body1" sx={{
-                                                            fontSize: 15,
-                                                            fontWeight: 'bold',
-                                                            textAlign: 'left',
-                                                            color: verify ? 'white' : 'black',
+                                                        <Container sx={{
+                                                            display: "flex",
+                                                            flexDirection: 'row',
+                                                            alignItems: "center",
                                                         }}>
-                                                            Recarga:
-                                                        </Typography>
-                                                        <Typography variant="body2" sx={{
-                                                            fontSize: 12,
-                                                            textAlign: 'left',
-                                                            ml: 1,
-                                                            color: verify ? 'white' : 'black',
+                                                            <Typography variant="body1" sx={{
+                                                                fontSize: 15,
+                                                                fontWeight: 'bold',
+                                                                textAlign: 'left',
+                                                                color: verify ? 'white' : 'black',
+                                                            }}>
+                                                                Data:
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{
+                                                                fontSize: 12,
+                                                                textAlign: 'left',
+                                                                ml: 1,
+                                                                color: verify ? 'white' : 'black',
+                                                            }}>
+                                                                {payment.dateCreated}
+                                                            </Typography>
+                                                        </Container>
+                                                        <Divider variant="middle" sx={{ width: '75%' }} />
+
+                                                        <Container sx={{
+                                                            display: "flex",
+                                                            flexDirection: 'row',
+                                                            alignItems: "center",
                                                         }}>
-                                                            {`${payment.value}.00`}
-                                                        </Typography>
+                                                            <Typography variant="body1" sx={{
+                                                                fontSize: 15,
+                                                                fontWeight: 'bold',
+                                                                textAlign: 'left',
+                                                                color: verify ? 'white' : 'black',
+                                                            }}>
+                                                                Status:
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{
+                                                                fontSize: 12,
+                                                                textAlign: 'left',
+                                                                ml: 1,
+                                                                color: verify ? 'white' : 'black',
+                                                                display: "flex",
+                                                                flexDirection: 'column',
+                                                                textDecoration: 'none'
+                                                            }}>
+                                                                {payment.status == "OVERDUE" ? `Vencido dia: ${payment.dueDate}` : (payment.status == "PENDING" ? "Pagamento pendente" : (payment.status == "RECEIVED" ? "Pagamento Realizado" : (payment.status == "CONFIRMED" && "Pagamento Confirmado")))}
+                                                                {payment.status == "PENDING" && <Link to={payment.invoiceUrl} style={{ marginTop: 2, color: verify ? 'white' : 'black', }}>Clique aqui para pagar!</Link>}
+                                                            </Typography>
+                                                        </Container>
+                                                        <Divider variant="middle" sx={{ width: '75%' }} />
+
+                                                        <Container sx={{
+                                                            display: "flex",
+                                                            flexDirection: 'row',
+                                                            alignItems: "center",
+                                                        }}>
+                                                            <Typography variant="body1" sx={{
+                                                                fontSize: 15,
+                                                                fontWeight: 'bold',
+                                                                textAlign: 'left',
+                                                                color: verify ? 'white' : 'black',
+                                                            }}>
+                                                                Recarga:
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{
+                                                                fontSize: 12,
+                                                                textAlign: 'left',
+                                                                ml: 1,
+                                                                color: verify ? 'white' : 'black',
+                                                            }}>
+                                                                {`${payment.value}.00`}
+                                                            </Typography>
+                                                        </Container>
                                                     </Container>
                                                 </Container>
-                                            </Container>
-                                        ))}
+                                            ))}
+                                        </Container>
                                     </Container>
-                                </Container>
-                            ))}
-                        </Container>
-                    ))}
-                </>
-            ) : <Loading />}
-        </Box>
+                                ))}
+                            </Container>
+                        ))}
+                    </>
+                ) : <Loading />
+            }
+        </Box >
     );
 }

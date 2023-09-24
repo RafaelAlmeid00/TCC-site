@@ -64,13 +64,14 @@ export default function CardSection() {
         } else {
             SearchCard()
         }
-    }, [dataCard, token])
+    }, [userData])
 
     React.useEffect(() => {
         async function SearchCardCancel() {
             try {
                 console.log('ta indo');
                 console.log(token);
+                setLoading(true)
 
                 const response = await axios.post('http://localhost:3344/card/cancelados', {
                     user_CPF: userData && userData.user_CPF,
@@ -88,20 +89,23 @@ export default function CardSection() {
 
                 } else {
                     console.log('deu merda rapeize')
-                    setLoading(true)
+                    setLoading(false)
                 }
             } catch (error) {
                 console.log(error);
                 setLoading(true)
             }
         }
-        if (dataCardCancel) {
+        if (dataCardCancel.lenght != undefined) {
             console.log('já foi pego');
+            console.log(dataCardCancel);
+            console.log(dataCardCancel.lenght);
+            setLoading(false)
 
         } else {
             SearchCardCancel()
         }
-    }, [dataCardCancel, token, userData])
+    }, [])
 
     return (
         <>
@@ -131,7 +135,7 @@ export default function CardSection() {
                 </Container>
 
                 {
-                    load ? 
+                    load ?
                         <Container
                             sx={{
                                 width: '60%',
@@ -151,7 +155,7 @@ export default function CardSection() {
                                 height: '20vh'
                             }} />
                         </Container>
-                    : <Cartao dataCard={dataCard} />
+                        : <Cartao dataCard={dataCard} />
                 }
 
                 <Divider sx={{
@@ -209,7 +213,7 @@ export default function CardSection() {
                         mb: 10
                     }}>
                         {loading ? (
-                            Array.from({ length: 4 }).map((_, index) => (
+                            Array.from({ length: 4 }).map((_, _index) => (
                                 <Skeleton variant="rectangular" animation={"wave"} sx={{
                                     borderRadius: 2,
                                     width: '7vw',
@@ -221,8 +225,11 @@ export default function CardSection() {
                                 }} />
                             ))
                         ) : (
-                                dataCardCancel.map((card) => (
-                                <>
+                            dataCardCancel.lenght == undefined ? (
+                                <Typography></Typography>
+                            ) : (
+                                dataCardCancel.map((_card: any) => (
+                                    <>
                                         <motion.div
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.97 }}
@@ -246,7 +253,7 @@ export default function CardSection() {
                                                         color: '#0fcd88', // muda a cor da borda na animação
                                                     },
                                                 }}>
-                                                    Cartão de 
+                                                    Cartão de
                                                 </Typography>
                                             </Card>
                                         </motion.div>
@@ -272,9 +279,9 @@ export default function CardSection() {
                                                 Status do cartão: {dataCard && dataCard.card_status}
                                             </Typography>
                                         </Container>
-                                    <br />
-                                </>
-                            )))}
+                                        <br />
+                                    </>
+                                ))))}
                     </Card>
                 </Container>
             </Box>
