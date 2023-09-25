@@ -1,6 +1,6 @@
 import { Box, Container, Skeleton, Card, Typography } from "@mui/material";
 import ModalContext from '../../../context/modalcontext';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 
 export default function Adalberto() {
   const { MsgContext } = useContext(ModalContext);
@@ -25,29 +25,27 @@ export default function Adalberto() {
     
     
   }, [MsgContext]);
-
-
+//aa
   return (
     <>
       <Box
         sx={{
           backgroundColor: "green",
-          width: "40vw",
+          width: "42%",
           height: "79.7vh"
         }}
       ></Box>
       <Box
         sx={{
           backgroundColor: "blue",
-          width: "40vw",
+          width: "50%",
           height: "79.7vh",
+          overflowY: "auto",
+          border: '1px solid #000',
+          overflowX: "hidden",
+          whiteSpace: "nowrap"
         }}>
         
-        <Container sx={{
-                width: "50vw",
-                height: "10vh",
-                backgroundColor: "white"
-              }} >
                 {
                   User == true ? (
                     
@@ -56,11 +54,19 @@ export default function Adalberto() {
                       console.log('this is msgArray', x);
                         return <>{
                           <Card key={x.sacmen_id} sx={{
-                            width: '100%',
-                            height: '20vh'
+                            ml: '20vw',
+                            mb: '2vh',
+                            width: 'auto',
+                            maxWidth: "100%",
+                            display: 'table',
+                            backgroundColor: "#E6DDDD",
                           }}>
-                            <Container>
-                              <Typography >{x.sacmen_texto}</Typography>
+                            <Container >
+                              <Typography  style={{
+                                wordWrap: 'break-word', // Quebra de palavra
+                                maxWidth: '250px', // Largura máxima para ajuste de texto
+                                
+                              }}>{x.sacmen_texto}</Typography>
                             </Container>
                           </Card>
                         }</>}) 
@@ -69,9 +75,9 @@ export default function Adalberto() {
                       () =>{ return null}
                     )
                 }
-        </Container>
+ 
 
       </Box>
     </>
   );
-}
+} 
