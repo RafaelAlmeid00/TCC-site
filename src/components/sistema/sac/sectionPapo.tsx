@@ -16,6 +16,7 @@ export default function Adalberto() {
       var last = MsgContext.length - 1;
       console.log("length: ", MsgContext[last]);
       //n da pra usar MsgContext[last].user_user_CPF num if só pq a porra do user_user_CPF tá undefinied
+      //Obvio né poha o routes q pega o user e o routes roda antes de logar poha, tem q user userData && userData.user_CPF =
       if (MsgContext[last]) {
         if (MsgContext[last].user_user_CPF) {
           setUser(true);
@@ -31,8 +32,10 @@ export default function Adalberto() {
       <Box
         sx={{
           backgroundColor: verify ? fundo : "white",
-          width: "42%",
-          height: "79.7vh",
+          width: "50%",
+          height: "100%",
+          mb: 8,
+          mt: 3
         }}
       >
         {User == true
@@ -44,12 +47,14 @@ export default function Adalberto() {
                     <Card
                       key={x.sacmen_id}
                       sx={{
-                        ml: "20vw",
+                        ml: "8vw",
                         mb: "2vh",
                         width: "auto",
                         maxWidth: "100%",
                         display: "table",
-                        backgroundColor: "#E6DDDD",
+                        backgroundColor: 'rgb(50, 50, 50)',
+                        paddingTop: 2,
+                        paddingBottom: 2
                       }}
                     >
                       <Container>
@@ -57,6 +62,7 @@ export default function Adalberto() {
                           style={{
                             wordWrap: "break-word", // Quebra de palavra
                             maxWidth: "250px", // Largura máxima para ajuste de texto
+                            color: 'white'
                           }}
                         >
                           {x.sacmen_texto}

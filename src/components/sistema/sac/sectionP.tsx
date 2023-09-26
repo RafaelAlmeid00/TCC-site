@@ -19,7 +19,8 @@ export default function SectionP() {
             marginLeft: "20vw",
             backgroundColor: verify ? fundo : 'white',
             overflow: "hidden",
-            position: "relative"
+            position: "relative",
+            overflowY: 'scroll'
           }}
         >
           <Grid container>

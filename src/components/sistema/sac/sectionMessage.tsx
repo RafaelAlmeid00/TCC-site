@@ -1,89 +1,102 @@
 import { Box, Button, Container, TextField } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { socket } from "../../../../socket.io/index";
 import { Message } from "@mui/icons-material";
 import ModalContext from '../../../context/modalcontext';
 import { useContext } from "react";
 import React from "react";
+
 export default function Msg() {
-    
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
-    const fundo = themes.palette.background.default
+    const fundo = themes.palette.background.default;
     socket.connect();
     const { userData } = useContext(ModalContext);
-    const [Msg, Setmsg] = useState('');
-    const [RecivedMsg, Setrecived] = useState(Array);
+    const [msg, setMsg] = useState('');
+    const [recivedMsg, setRecived] = useState([]);
     const { MsgContext, setRecivedContext } = useContext(ModalContext);
+    const [charCount, setCharCount] = useState(0);
+    const maxCharCount = 500;
 
+    useEffect(() => {
+        socket.on("userMensage", (message) => {
+            console.log('messagem recebida: ', message);
+            setRecived(message);
+        });
+    }, [msg]);
 
-    async function msgSend() {
-        const message = Msg;
-        
-        Setmsg('');
-        
-      console.log('this is socket connected: ', socket.connected);
-        setTimeout(() => {
+    useEffect(() => {
+        if (recivedMsg.length > 0) {
+            console.log('log RecivedMsg: ', recivedMsg);
+            setRecivedContext(recivedMsg);
+        }
+    }, [recivedMsg]);
+
+    const handleInputChange = (event) => {
+        const inputText = event.target.value;
+        if (inputText.length <= maxCharCount) {
+            setMsg(inputText);
+            setCharCount(inputText.length);
+        }
+    };
+
+    const msgSend = () => {
+        if (msg.length <= maxCharCount) {
+            const message = msg;
+            setMsg(''); // Limpa o input
+            console.log('this is socket connected: ', socket.connected);
                 console.log('emit!');
-
                 socket.emit("userMensage", message, userData.user_CPF, 'client', (error) => {
                     console.log('messagem enviada!');
                     if (error) {
                         console.log(error);
                     }
                 });
-            }, 400)
-            
+        } else {
+            alert("A mensagem não pode ter mais de 500 caracteres.");
+        }
     };
 
-        var count = 0
-            setTimeout(() => {
-                console.log('recived!');
-
-                socket.on("userMensage", (message) => {
-                   
-                    console.log('messagem recebida: ', message);
-                    if (count == 0) { 
-                        Setrecived(message);
-                    }
-                    console.log(count);
-                    
-                    count++
-                  });
-                  
-            }, 2000);
-            
-            useEffect(()=>{
-                if (RecivedMsg != null) {
-                    console.log('log RecivedMsg: ', RecivedMsg);
-                    
-                    setRecivedContext(RecivedMsg);
-                }
-                
-            },[RecivedMsg])
-       
-    return(
+    return (
         <>
-        <Box sx={{
-            width: "100%",
-            position: 'fixed',
-            mt: '80vh',
-            height: "10vh",
-            background: verify ? fundo : 'white',
-        }}>
-
-            <TextField variant="outlined" color="success" label='Digite sua Mensagem...' onChange={i => Setmsg(i.target.value)} value={Msg} sx={{
-                width: '70vw',
-                marginTop:'10px'
-            }} />
-            <Button variant="contained" onClick={msgSend} startIcon={<SendIcon />} sx={{
-                width: '8%',
-                marginTop:'10px',
-                height: '8vh',
-                ml: '0.5vw'
-            }}></Button>
-        </Box>
+            <Box sx={{
+                width: "100%",
+                position: 'fixed',
+                mt: '77vh',
+                height: "10vh",
+                background: verify ? fundo : 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                paddingLeft: 3,
+                paddingBottom: 3,
+                
+            }}>
+                <TextField
+                    variant="outlined"
+                    color="success"
+                    label='Digite sua Mensagem...'
+                    onChange={handleInputChange}
+                    value={msg}
+                    sx={{
+                        width: '70vw',
+                        marginTop: '10px',
+                        
+                    }}
+                />
+                <Button
+                    variant="contained"
+                    onClick={msgSend}
+                    endIcon={<SendIcon />}
+                    sx={{
+                        width: '7%',
+                        marginTop: '10px',
+                        height: '7vh',
+                        ml: '0.5vw',
+                    }}
+                />
+            </Box>
         </>
-    )
+    );
 }
