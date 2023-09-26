@@ -5,8 +5,12 @@ import { socket } from "../../../../socket.io/index";
 import { Message } from "@mui/icons-material";
 import ModalContext from '../../../context/modalcontext';
 import { useContext } from "react";
-
+import React from "react";
 export default function Msg() {
+    
+    const { verify } = React.useContext(ModalContext);
+    const { themes } = React.useContext(ModalContext);
+    const fundo = themes.palette.background.default
     socket.connect();
     const { userData } = useContext(ModalContext);
     const [Msg, Setmsg] = useState('');
@@ -66,7 +70,7 @@ export default function Msg() {
             position: 'fixed',
             mt: '80vh',
             height: "10vh",
-            backgroundColor: "pink",
+            background: verify ? fundo : 'white',
         }}>
 
             <TextField variant="outlined" color="success" label='Digite sua Mensagem...' onChange={i => Setmsg(i.target.value)} value={Msg} sx={{
