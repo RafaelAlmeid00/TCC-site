@@ -26,20 +26,26 @@ export default function Adalberto() {
       }
     }
   }, [MsgContext]);
+
+ 
   //aa
   return (
     <>
       <Box
         sx={{
           backgroundColor: verify ? fundo : "white",
-          width: "50%",
-          height: "100%",
-          mb: 8,
-          mt: 3
+          mb: 10,
+          mt: 3,
+          display: "flex",
+          justifyContent: "flex-end",
+          flexDirection: "column",
+          alignItems: "end",
+          width: "80vw",
+          ml: -10,
         }}
       >
         {User == true
-          ? MsgContext.map((x) => {
+          ? MsgContext.map((x: { sacmen_id: React.Key | null | undefined; sacmen_texto: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }) => {
               console.log("this is msgArray", x);
               return (
                 <>
@@ -52,9 +58,9 @@ export default function Adalberto() {
                         width: "auto",
                         maxWidth: "100%",
                         display: "table",
-                        backgroundColor: 'rgb(50, 50, 50)',
+                        backgroundColor: "rgb(50, 50, 50)",
                         paddingTop: 2,
-                        paddingBottom: 2
+                        paddingBottom: 2,
                       }}
                     >
                       <Container>
@@ -62,7 +68,7 @@ export default function Adalberto() {
                           style={{
                             wordWrap: "break-word", // Quebra de palavra
                             maxWidth: "250px", // Largura máxima para ajuste de texto
-                            color: 'white'
+                            color: "white",
                           }}
                         >
                           {x.sacmen_texto}
