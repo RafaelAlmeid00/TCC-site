@@ -1,6 +1,6 @@
 import { Box, Container, Card, Typography } from "@mui/material";
 import ModalContext from "../../../context/modalcontext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import React from "react";
 
 export default function Adalberto() {
@@ -11,11 +11,12 @@ export default function Adalberto() {
   const [user, setUser] = useState(false);
   const [, setIsAdmin] = useState(false);
 
+  // Crie uma referência para o elemento que conterá as mensagens
+  const messagesContainerRef: any = useRef(null);
 
   useEffect(() => {
     if (MsgContext && MsgContext.length > 0) {
       const lastMessage = MsgContext[MsgContext.length - 1];
-      console.log("Last message: ", lastMessage);
 
       if (lastMessage.user_user_CPF) {
         setUser(true);
@@ -24,12 +25,18 @@ export default function Adalberto() {
         setUser(false);
         setIsAdmin(true);
       }
+
+      // Role até a última mensagem
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
   }, [MsgContext]);
 
   return (
     <>
       <Box
+        ref={messagesContainerRef} // Associe a referência ao elemento Box
         sx={{
           backgroundColor: verify ? fundo : "white",
           mb: 15,
