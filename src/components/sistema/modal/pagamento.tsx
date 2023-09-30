@@ -10,7 +10,7 @@ import axios from "axios";
 function Pag({ onClose }: any) {
     const { userData } = React.useContext(ModalContext);
     const { verify } = React.useContext(ModalContext);
-    const birthDate = new Date(userData.user_nascimento);
+    const birthDate = new Date(userData ? userData.user_nascimento : '');
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
     const [inputValue, setInputValue] = React.useState<string>('5.00');
     const token = localStorage.getItem('token')
@@ -24,14 +24,14 @@ function Pag({ onClose }: any) {
             if (userData && userData.user_status == 'inativo') {
                 onClose()
             }
-            console.log(userData.user_idcli);
+            console.log(userData ? userData.user_idcli : '');
             try {
                 const response = await axios.get('https://easypass-iak1.onrender.com/cliente/search', {
                     headers: {
                         'authorization': token
                     },
                     params: {
-                        idcli: userData.user_idcli
+                        idcli: userData ? userData.user_idcli : ''
                     }
                 });
                 console.log(response);
@@ -67,7 +67,7 @@ function Pag({ onClose }: any) {
             setInputValue(`${integerPart}.${decimalPart}`);
         }
     };
-    const handleCardClick = (event) => {
+    const handleCardClick = (event: any) => {
         // Prevent the click event from propagating when clicked inside the card
         event.stopPropagation();
     };
@@ -92,16 +92,16 @@ function Pag({ onClose }: any) {
 
 
     const handlePay = async () => {
-        console.log(userData.user_idcli);
-        console.log(userData.user_CPF.slice(0, 6));
+        console.log(userData ? userData.user_idcli  : '');
+        console.log(userData ? userData.user_CPF.slice(0, 6) : '');
 
         const pagamento = {
-            customer: userData.user_idcli,
+            customer: userData ? userData.user_idcli : '',
             billingType: 'UNDEFINED',
             value: parseFloat(inputValue),
             dueDate: venc,
             description: `Pagamento referente a R$${inputValue} de passsagem na EasyPass`,
-            externalReference: userData.user_CPF.slice(0, 6),
+            externalReference: userData ? userData.user_CPF.slice(0, 6) : '',
             interest: {
                 value: 5
             },
@@ -173,11 +173,11 @@ function Pag({ onClose }: any) {
                         <Typography variant="body2" sx={{ marginTop: 5, marginBottom: 2, textAlign: 'center', fontSize: 14 }}>
                             Informações do cliente:
                         </Typography>
-                        <TextField value={userData.user_CPF} label="CPF" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                        <TextField value={userData.user_RG} label="RG" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData ? userData.user_CPF : ''} label="CPF" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData ? userData.user_RG : ''} label="RG" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
                         <TextField value={formattedBirthDate} label="Idade" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                        <TextField value={userData.user_email} label="Email" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
-                        <TextField value={userData.user_cel} label="Celular" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData ? userData.user_email : ''} label="Email" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
+                        <TextField value={userData ? userData.user_cel : ''} label="Celular" variant="outlined" fullWidth margin="normal" InputProps={{ readOnly: true }} />
                     </Container>
                     <Container sx={{ flex: 1 }}>
                         <Typography variant="h2" align="center" sx={{
@@ -215,7 +215,7 @@ function Pag({ onClose }: any) {
 
             </Card>
         </Container >,
-        document.getElementById('portal-root')
+        document.getElementById('portal-root') as Element 
     );
 }
 

@@ -1,8 +1,7 @@
-import { Box, Button, Container, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
 import { socket } from "../../../../socket.io/index";
-import { Message } from "@mui/icons-material";
 import ModalContext from "../../../context/modalcontext";
 import { useContext } from "react";
 import React from "react";
@@ -15,8 +14,8 @@ export default function Msg() {
   const { userData } = useContext(ModalContext);
   const [msg, setMsg] = useState("");
   const [recivedMsg, setRecived] = useState([]);
-  const { MsgContext, setRecivedContext } = useContext(ModalContext);
-  const [charCount, setCharCount] = useState(0);
+  const { setRecivedContext } = useContext(ModalContext);
+  const [, setCharCount] = useState(0);
   const maxCharCount = 500;
 
   useEffect(() => {
@@ -29,11 +28,13 @@ export default function Msg() {
   useEffect(() => {
     if (recivedMsg.length > 0) {
       console.log("log RecivedMsg: ", recivedMsg);
-      setRecivedContext(recivedMsg);
+      if (setRecivedContext) {
+        setRecivedContext(recivedMsg);
+      }
     }
   }, [recivedMsg]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     const inputText = event.target.value;
     if (inputText.length <= maxCharCount) {
       setMsg(inputText);
@@ -50,9 +51,9 @@ export default function Msg() {
       socket.emit(
         "userMensage",
         message,
-        userData.user_CPF,
+        userData ? userData.user_CPF : '',
         "client",
-        (error) => {
+        (error: any) => {
           console.log("messagem enviada!");
           if (error) {
             console.log(error);

@@ -200,7 +200,7 @@ function BtnsApp({ cl, mt, ml, mb }: BtnsAppProps) {
   );
 }
 
-function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb}: BtnProps) {
+function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb }: BtnProps) {
   return (
     <>
       <Button variant="contained" href={route} onClick={fun} sx={{
@@ -280,49 +280,62 @@ function BtnHome({ name, route, cl, bc, bch, fun, ml, mr, mb }: BtnHomeProps) {
   const navigate = useNavigate()
 
   if (!fun) {
-    fun = () => {console.log('aaaaaaaaa');
+    fun = () => {
+      console.log('aaaaaaaaa');
     }
   }
 
   return (
     <>
-      <Button variant="contained" onClick={() => { fun(); navigate(route)}} sx={{
-        color: cl,
-        ml: ml,
-        mr: mr,
-        mb: mb,
-        marginRight: 1,
-        background: bc,
-        border: '2px solid transparent', // adiciona a borda inicialmente
-        transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
-        fontWeight: 'bold',
-        width: {
-          xs: '20vw',
-          sm: '18vw',
-          md: '15vw',
-          lg: '12vw',
-          xl: '12vw',
-        },
-        fontSize: {
-          xs: '2vw',  // (7.5 / 1200) * 600
-          sm: '1.5vw',  // (7.5 / 1200) * 900
-          md: '1.5vw',  // (7.5 / 1200) * 1200
-          lg: '0.8vw',
-          xl: '0.8vw',  // Manter o mesmo tamanho de lg para xl
-        },
-        height: {
-          xs: '6vh',  // (7.5 / 1200) * 600
-          sm: '5vh',  // (7.5 / 1200) * 900
-          md: '5vh',  // (7.5 / 1200) * 1200
-          lg: '5.5vh',
-          xl: '5.5vh',  // Manter o mesmo tamanho de lg para xl
-        },
-        '&:hover': {
-          border: '2px solid #0fcd88', // muda a cor da borda na animação
-          background: bch
-        },
-        whiteSpace: 'nowrap',
-      }}>
+      <Button variant="contained" onClick={() => {
+        if (!fun) {
+          fun = () => {
+            console.log('aaaaaaaaa');
+          }
+        } else {
+          fun()
+        }
+        if (route) {
+          navigate(route)
+        }
+      }}
+        sx={{
+          color: cl,
+          ml: ml,
+          mr: mr,
+          mb: mb,
+          marginRight: 1,
+          background: bc,
+          border: '2px solid transparent', // adiciona a borda inicialmente
+          transition: 'border-color 0.3s ease-in-out', // adiciona a transição para a animação
+          fontWeight: 'bold',
+          width: {
+            xs: '20vw',
+            sm: '18vw',
+            md: '15vw',
+            lg: '12vw',
+            xl: '12vw',
+          },
+          fontSize: {
+            xs: '2vw',  // (7.5 / 1200) * 600
+            sm: '1.5vw',  // (7.5 / 1200) * 900
+            md: '1.5vw',  // (7.5 / 1200) * 1200
+            lg: '0.8vw',
+            xl: '0.8vw',  // Manter o mesmo tamanho de lg para xl
+          },
+          height: {
+            xs: '6vh',  // (7.5 / 1200) * 600
+            sm: '5vh',  // (7.5 / 1200) * 900
+            md: '5vh',  // (7.5 / 1200) * 1200
+            lg: '5.5vh',
+            xl: '5.5vh',  // Manter o mesmo tamanho de lg para xl
+          },
+          '&:hover': {
+            border: '2px solid #0fcd88', // muda a cor da borda na animação
+            background: bch
+          },
+          whiteSpace: 'nowrap',
+        }}>
         {name}
       </Button>
     </>

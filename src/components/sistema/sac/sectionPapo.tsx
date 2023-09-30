@@ -1,6 +1,6 @@
 import { Box, Container, Card, Typography } from "@mui/material";
 import ModalContext from "../../../context/modalcontext";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
 
 export default function Adalberto() {
@@ -9,7 +9,7 @@ export default function Adalberto() {
   const fundo = themes.palette.background.default;
   const { MsgContext } = useContext(ModalContext);
   const [User, setUser] = useState(false);
-  const [Adm, setAdm] = useState(false);
+  const [, setAdm] = useState(false);
 
   useEffect(() => {
     if (MsgContext != null) {

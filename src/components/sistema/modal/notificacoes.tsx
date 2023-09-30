@@ -2,11 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Card, Container, Divider, Link, Typography } from "@mui/material";
 import { Block, CheckCircle, Clear } from "@mui/icons-material";
-import ModalContext from "../../../context/modalcontext";
 
 function Not() {
-    const { userData } = React.useContext(ModalContext);
-    const [alerts, setAlert] = React.useState([
+    const [alerts] = React.useState([
         { title: "Conta Aprovada", text: "Parabéns, o setor de análise aprovou sua conta", link: "Saiba mais", icon: <CheckCircle sx={{ fontSize: 35 }} /> },
         { title: "Conta Recusada", text: "Infelizmente, o setor de análise recusou sua conta", link: "Saiba mais", icon: <Clear sx={{ fontSize: 35 }} /> },
         { title: "Conta Cancelada", text: "Infelizmente, o setor de análise cancelou sua conta", link: "Saiba mais", icon: <Block sx={{ fontSize: 35 }} /> },
@@ -77,8 +75,8 @@ function Not() {
 
             </Container>
         </Card>,
-        document.getElementById("not-root")
-    );
+        document.getElementById("not-root") as Element
+        );
 }
 
 export default Not;

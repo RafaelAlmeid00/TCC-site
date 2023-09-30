@@ -14,7 +14,7 @@ import colors from "../../../assets/colors";
 import { CEPPErfil } from "../../errosvalidations";
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
-function CEP({ onConfirmarCEP, onFechaCEP }) {
+function CEP({ onConfirmarCEP, onFechaCEP }: any) {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
@@ -251,7 +251,7 @@ function CEP({ onConfirmarCEP, onFechaCEP }) {
                             sx={{ fontSize: '14px' }}
                         />
                     </FormControl>
-                    <Btn name={"Confirmar"} fun={ConfirmarCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} />
+                    <Btn name={"Confirmar"} fun={ConfirmarCEP} bch={verify ? 'white' : undefined} bc={verify ? 'white' : undefined} cl={verify ? colors.pm : undefined} route={""} vis={undefined} mb={undefined} />
                 </Container>
             </Box>
         </>

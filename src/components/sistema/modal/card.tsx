@@ -1,11 +1,11 @@
-import { Card, CardMedia, Container, IconButton, Typography } from "@mui/material";
+import { Card, Container, IconButton, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-export default function Cartao({dataCard}) {
+export default function Cartao({dataCard}: any) {
     const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
     const { verify } = React.useContext(ModalContext);
     const navigate = useNavigate()

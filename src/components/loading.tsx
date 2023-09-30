@@ -34,7 +34,7 @@ function Loading() {
                 </Typography>
             </Container>
         </Box>,
-        document.getElementById('loading')
+        document.getElementById('loading') as Element
     );
 }
 

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Deccode } from '../components/sistema/FrontDecoded';
 
 interface AuthContextType {
     isAuthenticated: boolean;

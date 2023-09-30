@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
     Autocomplete,
     Box,
@@ -18,16 +18,17 @@ import { Balancer } from "react-wrap-balancer";
 import colors from "../../../assets/colors";
 import TuneIcon from "@mui/icons-material/Tune";
 import axios from "axios";
+import { CardUsos } from "../../interfaces";
 
 export default function Viagens() {
     const { verify, themes } = useContext(ModalContext);
     const fundo = themes.palette.background.default;
     const { userData } = React.useContext(ModalContext);
-    const [usos, setUsos] = React.useState([])
+    const [usos, setUsos] = React.useState<CardUsos>([])
     const token = localStorage.getItem('token');
     const [menu, setMenu] = useState(0);
-    const [menuitem, setMenuItem] = useState<object>([{}]);
-    const [filteredData, setFilteredData] = useState<object>([{}]);
+    const [menuitem, setMenuItem] = useState<any>([{}]);
+    const [filteredData, setFilteredData] = useState<any>([{}]);
     const [selectedValue, setSelectedValue] = useState<any>(null);
     const [loadskeleton, setSkeleton] = useState<Boolean>(true);
 
@@ -39,7 +40,9 @@ export default function Viagens() {
                 const filtered = usos.filter((item) => (
                     item.route_num === selectedValue.route_num
                 ));
-                setFilteredData(filtered);
+                if (filtered) {
+                    setFilteredData(filtered);
+                }
                 console.log(filteredData);
                 console.log('ta aq');
 
@@ -48,7 +51,9 @@ export default function Viagens() {
                 const filtered = usos.filter((item) => (
                     item.val_data === selectedValue.data
                 ));
-                setFilteredData(filtered);
+                if (filtered) {
+                    setFilteredData(filtered);
+                }
                 console.log(filteredData);
                 console.log('ta aq2');
 
@@ -56,7 +61,9 @@ export default function Viagens() {
                 const filtered = usos.filter((item) => (
                     item.card_card_id === selectedValue.card
                 ));
-                setFilteredData(filtered);
+                if (filtered) {
+                    setFilteredData(filtered);
+                }
                 console.log(filteredData);
                 console.log('ta aq3');
 
@@ -81,7 +88,7 @@ export default function Viagens() {
             const uniqueRouteData = new Set();
             const tempArray: any = [];
 
-            usos.forEach((item) => {
+            usos.forEach((item: { route_num: any; route_nome: any; }) => {
                 const routeCombination = `${item.route_num}-${item.route_nome}`;
                 if (!uniqueRouteData.has(routeCombination)) {
                     uniqueRouteData.add(routeCombination);
@@ -104,7 +111,7 @@ export default function Viagens() {
             const uniqueData = new Set();
             const tempArray: any = [];
 
-            usos.forEach((item) => {
+            usos.forEach((item: { val_data: any; }) => {
                 const data = item.val_data;
                 if (!uniqueData.has(data)) {
                     uniqueData.add(data);
@@ -126,7 +133,7 @@ export default function Viagens() {
             const uniqueCard = new Set();
             const tempArray: any = [];
 
-            usos.forEach((item) => {
+            usos.forEach((item: { card_card_id: any; }) => {
                 const card = item.card_card_id;
                 if (!uniqueCard.has(card)) {
                     uniqueCard.add(card);
@@ -144,7 +151,7 @@ export default function Viagens() {
             setSkeleton(false)
             try {
                 const response = await axios.post('https://easypass-iak1.onrender.com/usos', {
-                    user_CPF: userData.user_CPF,
+                    user_CPF: userData ? userData.user_CPF : '',
                 }, {
                     headers: {
                         'authorization': token
@@ -167,63 +174,8 @@ export default function Viagens() {
         handleUsos()
     }, [])
 
-    function traduzirMes(prefixoIngles: string): string | null {
-        const mesesTraduzidos: { [key: string]: string } = {
-            Jan: 'Janeiro',
-            Feb: 'Fevereiro',
-            Mar: 'Março',
-            Apr: 'Abril',
-            May: 'Maio',
-            Jun: 'Junho',
-            Jul: 'Julho',
-            Aug: 'Agosto',
-            Sep: 'Setembro',
-            Oct: 'Outubro',
-            Nov: 'Novembro',
-            Dec: 'Dezembro',
-        };
 
-        const mesTraduzido = mesesTraduzidos[prefixoIngles];
 
-        return mesTraduzido || null;
-    }
-
-    function traduzirDiaDaSemana(diaSemanaIngles: string): string | null {
-        const diasSemanaTraduzidos: { [key: string]: string } = {
-            Sun: 'Domingo',
-            Mon: 'Segunda-feira',
-            Tue: 'Terça-feira',
-            Wed: 'Quarta-feira',
-            Thu: 'Quinta-feira',
-            Fri: 'Sexta-feira',
-            Sat: 'Sábado',
-        };
-
-        const diaTraduzido = diasSemanaTraduzidos[diaSemanaIngles];
-
-        return diaTraduzido || null;
-    }
-
-    function obterDataEHoraAtual(): string {
-        const dataAtual = new Date();
-        const diaSemana = dataAtual.toLocaleDateString('en-US', { weekday: 'short' });
-        const mes = dataAtual.toLocaleDateString('en-US', { month: 'short' });
-        const dia = dataAtual.getDate();
-        const ano = dataAtual.getFullYear();
-        const hora = String(dataAtual.getHours()).padStart(2, '0');
-        const minutos = String(dataAtual.getMinutes()).padStart(2, '0');
-        const segundos = String(dataAtual.getSeconds()).padStart(2, '0');
-
-        const mêsBR = traduzirMes(mes)
-        const semanaBR = traduzirDiaDaSemana(diaSemana)
-
-        const dataEHoraAtual = {
-            Data: `${semanaBR} - ${dia}, ${mêsBR}, ${ano}`,
-            Hora: `${hora}:${minutos}:${segundos}`,
-        }
-
-        return dataEHoraAtual;
-    }
 
     console.log(usos);
 
@@ -272,7 +224,7 @@ export default function Viagens() {
                         fontWeight: 700,
                     }}
                 >
-                    Histórico de Viagens - {userData.user_nome}
+                    Histórico de Viagens - {userData ? userData.user_nome : ''}
                 </Typography>
             </Container>
             <Container
@@ -379,12 +331,16 @@ export default function Viagens() {
                             }}
                             isOptionEqualToValue={(option, value) => {
                                 if (menu === 1) {
-                                    return (option.route_num === (value.route_num || '')) && (option[0]?.route_nome === (value[0]?.route_nome || ''));
+                                    return (
+                                        (option.route_num === (value.route_num || '')) &&
+                                        (option[0]?.route_nome === (value[0]?.route_nome || ''))
+                                    );
                                 } else if (menu === 2) {
-                                    return option.data === (value.data || ''); // Verifica se data está definido
+                                    return option.data === (value.data || '');
                                 } else if (menu === 3) {
-                                    return option.card === (value.card || ''); // Verifica se data está definido
+                                    return option.card === (value.card || '');
                                 }
+                                return false; // Add this line to handle other cases
                             }}
                             value={selectedValue}
                             onChange={(_, newValue) => {
@@ -553,7 +509,7 @@ export default function Viagens() {
                         }}
                     >
                         {!selectedValue ? (
-                            usos.slice(1, 100).map((viagem, index) => (
+                            usos.slice(1, 100).map((viagem: { route_num: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; route_nome: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_data: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_horario: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_gasto: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
                                 <Container
                                     key={index}
                                     sx={{
@@ -681,7 +637,7 @@ export default function Viagens() {
                                 </Container>
                             ))
                         ) : (
-                            filteredData.slice(1, 100).map((viagem, index) => (
+                            filteredData.slice(1, 100).map((viagem: { route_num: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; route_nome: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_data: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_horario: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; val_gasto: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
                                 <Container
                                     key={index}
                                     sx={{

@@ -1,4 +1,4 @@
-import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
+import { Box, Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import React from "react";
 import ModalContext from "../../../context/modalcontext";
 import { CheckCircle, Contacts, CreditCard, AccountCircle, HowToReg, Email } from "@mui/icons-material";
@@ -16,16 +16,16 @@ function Info() {
     console.log(userData);
     const [email, setEmail] = React.useState(false);
     const [nemail, setNEmail] = React.useState(false);
-    let data = userData.user_email
+    let data = userData ? userData.user_email : ''
     const token = localStorage.getItem('token')
 
     const sendEmail = async () => {
         try {
 
             await axios.post('https://easypass-iak1.onrender.com/user/emailverify', {
-                user_email: userData.user_email,
-                user_CPF: userData.user_CPF,
-                user_nome: userData.user_nome,
+                user_email: userData ? userData.user_email : '',
+                user_CPF: userData ? userData.user_CPF : '',
+                user_nome: userData ? userData.user_nome : '',
                 token: token
             })
             setEmail(true)
@@ -46,9 +46,9 @@ function Info() {
         try {
 
             await axios.post('https://easypass-iak1.onrender.com/user/sms', {
-                user_cel: userData.user_cel,
-                user_CPF: userData.user_CPF,
-                user_nome: userData.user_nome,
+                user_cel: userData ? userData.user_cel : '',
+                user_CPF: userData ? userData.user_CPF : '',
+                user_nome: userData ? userData.user_nome : '',
                 token: token
             })
             setEmail(true)
@@ -67,8 +67,8 @@ function Info() {
 
     return (
         <>
-            {nemail && <EmailNaoEnviado data={data} />}
-            {email && <EmailEnviado data={data} />}
+            {email && typeof data === 'string' && <EmailEnviado data={data} />}
+            {nemail && typeof data === 'string' && <EmailNaoEnviado data={data} />}
             <Box
                 id="section1"
                 sx={{
@@ -106,7 +106,7 @@ function Info() {
                             fontWeight: 700,
                         }}
                     >
-                        Informações da Conta - {userData.user_nome}
+                        Informações da Conta - {userData ? userData.user_nome : ''}
                     </Typography>
                 </Container>
                 <Container
@@ -127,7 +127,7 @@ function Info() {
                             readOnly
                             inputProps={{ maxLength: 12 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_CPF}
+                            value={userData ? userData.user_CPF : ''}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <AccountCircle />
@@ -143,7 +143,7 @@ function Info() {
                         <Input
                             inputProps={{ maxLength: 25 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_RG}
+                            value={userData ? userData.user_RG : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -175,7 +175,7 @@ function Info() {
                             <Input
                                 inputProps={{ maxLength: 45 }}
                                 id="input-with-icon-adornment"
-                                value={userData.user_email}
+                                value={userData ? userData.user_email : ''}
                                 readOnly
                                 endAdornment={
                                     <BtnHome name={"Confirmar"} fun={sendEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} />
@@ -206,7 +206,7 @@ function Info() {
                             <Input
                                 inputProps={{ maxLength: 45 }}
                                 id="input-with-icon-adornment"
-                                value={userData.user_cel}
+                                value={userData ? userData.user_cel : ''}
                                 readOnly
                                 endAdornment={
                                     <BtnHome name={"Confirmar"} fun={sendSMS} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} />
@@ -222,7 +222,7 @@ function Info() {
                         <Input
                             inputProps={{ maxLength: 45 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_credit}
+                            value={userData ? userData.user_credit : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -239,7 +239,7 @@ function Info() {
                         <Input
                             inputProps={{ maxLength: 50 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_status}
+                            value={userData ? userData.user_status : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">

@@ -127,7 +127,7 @@ export default function Docs() {
                     cortes. Após anexar todos os documentos, clique no botão "Enviar
                     documentos para Análise" para concluir o envio.
                 </Typography>
-                {documentList.map((doc, index) => (
+                {documentList.map((doc: any, index) => (
                     <Card
                         key={index}
                         sx={{

@@ -2,11 +2,14 @@ import { Box, Card, Typography, Container, Skeleton } from "@mui/material";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import axios from "axios";
+import { CardUsos } from "../../interfaces";
 
 export default function Buss() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
-    const [routes, setRoutes] = React.useState([])
+    const [routes, setRoutes] = React.useState<CardUsos>([{
+        'error': 'error'
+    }])
     const [loading, setLoading] = React.useState(true)
     const token = localStorage.getItem('token')
     const fundo = themes.palette.background.default
@@ -38,7 +41,7 @@ export default function Buss() {
 
             }
         }
-        if (routes.length > 0) {
+        if (routes && routes.length > 0) {
             console.log('já foi pego');
 
         } else {
@@ -80,7 +83,7 @@ export default function Buss() {
                         <Skeleton key={index} variant="rounded" width={'80%'} height={'20%'} />
                     ))
                 ) : (
-                        routes.map((card) => (
+                        routes.map((card: any) => (
                             <>
                             <Card
                                 key={card.rote_id} // É importante definir uma chave única para cada elemento do map

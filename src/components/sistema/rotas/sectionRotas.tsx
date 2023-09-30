@@ -1,19 +1,18 @@
-import { FormControl, MenuItem, Box, Container, InputLabel, Typography, TextField, Autocomplete, } from "@mui/material"
+import { FormControl, MenuItem, Box, Container, InputLabel, TextField, Autocomplete, } from "@mui/material"
 import { TimelineContent, TimelineDot, TimelineConnector, Timeline, TimelineItem, TimelineSeparator } from "@mui/lab";
 import { useState } from "react";
 import Select from '@mui/material/Select';
 import axios from "axios";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
+import { CardUsos } from "../../interfaces";
 
 function SectionRota1() {
-  const [take, setTake] = useState([]);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<CardUsos>([]);
   const [options, setAge] = useState('');
-  const [ex, setEx] = useState('');
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
-  const [routes, setRoutes] = React.useState([])
+  const [routes, setRoutes] = React.useState<CardUsos>([])
   const token = localStorage.getItem('token')
   const fundo = themes.palette.background.default
   const [Loading, setLoading] = useState(false);
@@ -116,26 +115,27 @@ function SectionRota1() {
                 <Autocomplete
                   disablePortal
                   id="menu-item"
-                  options={routesAll || []} // Certifique-se de que menuitem seja um array válido
+                  options={routesAll || []}
                   getOptionLabel={(option: any) => {
                     if (options === "Número do ônibus") {
-                      const route_num = option.route_num || ''; // Verifica se route_num está definido
-                      return route_num
+                      const route_num = option.route_num || '';
+                      return route_num;
                     } else if (options === "Rotas") {
-                      const route_nome = option.route_nome || ''; // Verifica se route_nome está definido
-                      return route_nome
+                      const route_nome = option.route_nome || '';
+                      return route_nome;
                     } else if (!options) {
-                      return ''
+                      return '';
                     }
                   }}
                   isOptionEqualToValue={(option, value) => {
                     if (options === "Número do ônibus") {
-                      return (option.route_num === (value.route_num || ''))
+                      return option.route_num === (value.route_num || '');
                     } else if (options === "Rotas") {
-                      return option.route_nome === (value.route_nome || ''); // Verifica se data está definido
+                      return option.route_nome === (value.route_nome || '');
                     } else if (!options) {
-                      return '';
+                      return false; // Return a boolean value here
                     }
+                    return false; // Return a boolean value here
                   }}
                   value={value}
                   onChange={(_, newValue) => {

@@ -4,11 +4,12 @@ import ModalContext from "../../../context/modalcontext";
 import axios from "axios";
 import { Btn } from "../../btns";
 import { useNavigate } from "react-router-dom";
+import { UserData } from "../../interfaces";
 
 interface Props {
-    userData: string;
+    userData: UserData;
     onCloseModal: () => void;
-    onAlertChange: boolean;
+    onAlertChange: (value: boolean) => void;
 }
 
 function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
@@ -21,7 +22,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
     };
-    const [active, setActive] = React.useState(false)
+    const [, setActive] = React.useState(false)
     const navigate = useNavigate()
 
     React.useEffect(() => {
@@ -46,7 +47,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
             const result = response.data.objeto;
             const newListCards: { name: string }[] = [];
 
-            result.forEach((item) => {
+            result.forEach((item: any) => {
                 const listTipo = item.list_tipo;
                 let cardName = '';
 
@@ -92,7 +93,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     }, [userData]);
 
        const HandlePost = async () => {
-        function formatDateToYYYYMMDD(date) {
+        function formatDateToYYYYMMDD(date: any) {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');

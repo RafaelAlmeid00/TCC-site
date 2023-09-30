@@ -9,14 +9,14 @@ interface Props {
     onCloseModal: () => void;
 }
 
-export default function Excluir({ onCloseModal }) {
+export default function Excluir({ onCloseModal }: Props) {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token');
     const { userData } = React.useContext(ModalContext);
     const navigate = useNavigate()
-    const data = userData.user_CPF
+    const data = userData ? userData.user_CPF : ''
 
      async function excl() {
         console.log(localStorage);

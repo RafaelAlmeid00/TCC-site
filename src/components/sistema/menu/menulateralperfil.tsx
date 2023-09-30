@@ -1,6 +1,5 @@
 import { AppBar, Button, Container, Typography, Toolbar, Divider } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import HomeIcon from '@mui/icons-material/Home';
 import StyleIcon from '@mui/icons-material/Style';

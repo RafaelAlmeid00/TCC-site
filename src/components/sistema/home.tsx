@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Card, Container, Divider, Icon, Skeleton, Typography } from "@mui/material";
+import {Box, Card, Container, Divider, Icon, Skeleton, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -16,6 +16,7 @@ import { DirectionsBus } from "@mui/icons-material";
 import Balancer from "react-wrap-balancer";
 import { socket } from "./../../../socket.io/index";
 import AlertaModal from "./alert";
+import { CardData } from "../interfaces";
 
 function Homesistema() {
     socket.connect()
@@ -27,7 +28,7 @@ function Homesistema() {
     const fundo = themes.palette.background.default
     const [alert, setAlert] = React.useState(false); // Novo estado para o alert
     const token = localStorage.getItem('token')
-    const [dataCard, setDataCard] = React.useState([{}])
+    const [dataCard, setDataCard] = React.useState<CardData>()
     const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
@@ -35,7 +36,7 @@ function Homesistema() {
     const { alertatopo } = React.useContext(ModalContext)
     const [active, setActive] = React.useState(false)
     const [card, setCard] = React.useState(alertatopo.nomeBtn && true)
-    const [load, setLoad] = React.useState(dataCard.card_id ? false : true)
+    const [load, setLoad] = React.useState(dataCard && dataCard.card_id ? false : true)
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
@@ -97,7 +98,7 @@ function Homesistema() {
             console.log(updates);
 
             await axios.post('https://easypass-iak1.onrender.com/user/update', {
-                user_CPF: userData.user_CPF,
+                user_CPF: userData ? userData.user_CPF : '',
                 updates,
             });
             setOpen(true)
@@ -159,7 +160,7 @@ function Homesistema() {
         }
     };
 
-    const handleAlertChange = (value) => {
+    const handleAlertChange = (value: any) => {
         setAlert(value);
         setTimeout(() => {
             setAlert(false)
@@ -194,7 +195,7 @@ function Homesistema() {
     }, [dataCard, userData])
 
     React.useEffect(() => {
-        if (dataCard.card_id) {
+        if (dataCard && dataCard.card_id) {
             setLoad(false)
             setCard(true)
         }
@@ -239,7 +240,7 @@ function Homesistema() {
         const handleUsos = async () => {
             try {
                 const response = await axios.post('https://easypass-iak1.onrender.com/usos', {
-                    user_CPF: userData.user_CPF,
+                    user_CPF: userData ? userData.user_CPF : '',
                 }, {
                     headers: {
                         'authorization': token
@@ -274,183 +275,191 @@ function Homesistema() {
             {open2 && <PerfilError />}
             {pag && <Pag onClose={handleClosePag} />}
             {alert && <PedidosAberto />}
-            {modal ? (active ? <AlertConta /> : <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />) :
-                <Box id="section1" sx={{
-                    mt: '9.5vh',
-                    height: '90.5vh',
-                    width: '80vw',
-                    float: "right",
-                    background: verify ? fundo : 'white',
-                    position: "relative",
-                    overflow: "hidden",
-                    overflowY: 'scroll'
+            {modal && userData ? (
+                active ? (
+                    <AlertConta />
+                ) : (
+                    <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
+                )
+            ) : (
+                <span>Handle the case where userData is null, undefined, or not valid</span>
+            )}                
+            <Box id="section1" sx={{
+                mt: '9.5vh',
+                height: '90.5vh',
+                width: '80vw',
+                float: "right",
+                background: verify ? fundo : 'white',
+                position: "relative",
+                overflow: "hidden",
+                overflowY: 'scroll'
+            }}>
+                {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}
+
+                <Container sx={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'start',
+                    alignItems: 'center',
+                    float: 'left',
+                    mt: 3
                 }}>
-                    {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}
-
-                    <Container sx={{
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'start',
-                        alignItems: 'center',
-                        float: 'left',
-                        mt: 3
+                    <TuneIcon sx={{
+                        mr: 2,
+                        color: verify ? 'white' : 'black'
+                    }} />
+                    <Typography sx={{
+                        color: verify ? colors.sc : colors.tc,
+                        fontSize: '25px',
+                        fontWeight: 700
                     }}>
-                        <TuneIcon sx={{
-                            mr: 2,
-                            color: verify ? 'white' : 'black'
-                        }} />
-                        <Typography sx={{
-                            color: verify ? colors.sc : colors.tc,
-                            fontSize: '25px',
-                            fontWeight: 700
-                        }}>
-                            Controle de Cartão - {userData ? userData.user_nome : ''}
-                        </Typography>
-                    </Container>
-                    <Container sx={{
-                        width: '100%',
-                        height: 'auto',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'start',
-                        alignItems: 'center',
-                        mt: 12,
-                        ml: 4.5
-                    }}>
-                        {buttonshome.map((buttons) => (
-                            <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.onClick} route={buttons.route} />
-                        ))}
-                    </Container>
+                        Controle de Cartão - {userData ? userData.user_nome : ''}
+                    </Typography>
+                </Container>
+                <Container sx={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'start',
+                    alignItems: 'center',
+                    mt: 12,
+                    ml: 4.5
+                }}>
+                    {buttonshome.map((buttons) => (
+                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.onClick} route={buttons.route} />
+                    ))}
+                </Container>
 
-                    {
-                        load ? (
+                {
+                    load ? (
+                        <Container
+                            sx={{
+                                width: '60%',
+                                height: 'auto',
+                                flexDirection: 'row',
+                                justifyContent: 'start',
+                                alignItems: 'center',
+                                float: 'left',
+                                mt: 6,
+                                ml: 13,
+                                mb: 10
+                            }}
+                        >
+                            <Skeleton variant="rectangular" animation={"wave"} sx={{
+                                borderRadius: 2,
+                                width: '7vw',
+                                height: '20vh'
+                            }} />
+                        </Container>
+                    ) : (
+                        card ? (
+                            <Cartao dataCard={dataCard} />
+                        ) : (
                             <Container
                                 sx={{
-                                    width: '60%',
+                                    width: '100%',
                                     height: 'auto',
                                     flexDirection: 'row',
                                     justifyContent: 'start',
                                     alignItems: 'center',
                                     float: 'left',
                                     mt: 6,
-                                    ml: 13,
                                     mb: 10
                                 }}
                             >
-                                <Skeleton variant="rectangular" animation={"wave"} sx={{
-                                    borderRadius: 2,
-                                    width: '7vw',
-                                    height: '20vh'
-                                }} />
-                            </Container>
-                        ) : (
-                            card ? (
-                                <Cartao dataCard={dataCard} />
-                            ) : (
-                                <Container
-                                    sx={{
-                                        width: '100%',
-                                        height: 'auto',
-                                        flexDirection: 'row',
-                                        justifyContent: 'start',
-                                        alignItems: 'center',
-                                        float: 'left',
-                                        mt: 6,
-                                        mb: 10
-                                    }}
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    style={{ x: 100, height: '100%', width: '7vw' }}
                                 >
-                                    <motion.div
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.97 }}
-                                        style={{ x: 100, height: '100%', width: '7vw' }}
+                                    <Card
+                                        onClick={handleOpenModal}
+                                        sx={{
+                                            width: '7vw',
+                                            height: '20vh',
+                                            cursor: 'pointer',
+                                            boxShadow: verify ? '1px 0px 4px 1px white' : '1px 1px 8px 1px',
+                                        }}
                                     >
-                                        <Card
-                                            onClick={handleOpenModal}
+                                        <Typography
+                                            variant="h3"
                                             sx={{
-                                                width: '7vw',
-                                                height: '20vh',
-                                                cursor: 'pointer',
-                                                boxShadow: verify ? '1px 0px 4px 1px white' : '1px 1px 8px 1px',
+                                                color: 'black',
+                                                width: '100%',
+                                                height: '100%',
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                '&:hover': {
+                                                    color: '#0fcd88', // muda a cor da borda na animação
+                                                },
                                             }}
                                         >
-                                            <Typography
-                                                variant="h3"
-                                                sx={{
-                                                    color: 'black',
-                                                    width: '100%',
-                                                    height: '100%',
-                                                    display: 'flex',
-                                                    flexDirection: 'row',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    '&:hover': {
-                                                        color: '#0fcd88', // muda a cor da borda na animação
-                                                    },
-                                                }}
-                                            >
-                                                +
-                                            </Typography>
-                                        </Card>
-                                    </motion.div>
-                                </Container>
-                            )
+                                            +
+                                        </Typography>
+                                    </Card>
+                                </motion.div>
+                            </Container>
                         )
-                    }
+                    )
+                }
 
-                    <Divider sx={{
-                        width: '80%',
-                        margin: '0 auto'
-                    }} />
+                <Divider sx={{
+                    width: '80%',
+                    margin: '0 auto'
+                }} />
 
-                    <Container sx={{
-                        mt: 5,
-                        width: '80%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'column',
-                        mb: 3
-                    }}>
-                        <Card
+                <Container sx={{
+                    mt: 5,
+                    width: '80%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    mb: 3
+                }}>
+                    <Card
+                        sx={{
+                            width: "90%",
+                            height: '15vh',
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "row",
+                            boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
+                            cursor: 'pointer',
+                            mt: 2,
+                            mb: 5
+                        }}
+                    >
+                        <Container
                             sx={{
-                                width: "90%",
-                                height: '15vh',
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
                                 flexDirection: "row",
-                                boxShadow: verify ? '1px 0px 3px white' : '2px 0px 5px 1px rgba(0, 0, 0, 0.6)',
-                                cursor: 'pointer',
-                                mt: 2,
-                                mb: 5
                             }}
                         >
-                            <Container
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    flexDirection: "row",
-                                }}
-                            >
-                                <Typography sx={{
-                                    fontSize: 18,
-                                    fontWeight: 'bold'
-                                }}>Histórico recente do cartão: </Typography>
-                            </Container>
-                        </Card>
-                        {loading ? (
-                            Array.from({ length: 4 }).map((_, index) => (
-                                <Skeleton key={index} variant="rounded" width={'80%'} height={'10vh'} sx={{
-                                    mt: 2, mb: 2
-                                }} />
-                            ))
-                        ) :  (
-                            usos.length == undefined ? (
-                              <Typography></Typography>
-                            ) : (
-                            usos.slice(0, 4).map((viagem, index) => (
+                            <Typography sx={{
+                                fontSize: 18,
+                                fontWeight: 'bold'
+                            }}>Histórico recente do cartão: </Typography>
+                        </Container>
+                    </Card>
+                    {loading ? (
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <Skeleton key={index} variant="rounded" width={'80%'} height={'10vh'} sx={{
+                                mt: 2, mb: 2
+                            }} />
+                        ))
+                    ) : (
+                        usos.length == undefined ? (
+                            <Typography></Typography>
+                        ) : (
+                            usos.slice(0, 4).map((viagem: any, index) => (
                                 <Container
                                     key={index}
                                     sx={{
@@ -578,10 +587,9 @@ function Homesistema() {
                                 </Container>
 
                             ))))}
-                    </Container>
+                </Container>
 
-                </Box>
-            }
+            </Box>
         </>
     )
 }

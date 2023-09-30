@@ -1,6 +1,5 @@
 import jwt_decode from "jwt-decode";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export function Deccode() {
     const userToken = localStorage.getItem('token') || null;
@@ -13,7 +12,7 @@ export function DeccodeItem() {
 }
 export function DecodedItem2() {
     
-    var test = {v: jwt_decode(String(localStorage.getItem('item')))};
+    var test: any = {v: jwt_decode(String(localStorage.getItem('item')))};
     console.log('teste nesse prr: ', test.v.verified);
     if (test.v.verified == true) {
         console.log('é true papai');
@@ -30,13 +29,13 @@ export function removeToken() {
     return localStorage.removeItem('token');
 }
 
-export function UserDataLoader({ children }) {
+export function UserDataLoader({ children }: any) {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         async function loadUserData() {
             try {
-                const decodedData = await Deccode();
+                const decodedData: any = await Deccode();
                 setUserData(decodedData);
             } catch (error) {
                 // Trate qualquer erro ao decodificar o token aqui

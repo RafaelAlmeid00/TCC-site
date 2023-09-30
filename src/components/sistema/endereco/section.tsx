@@ -1,4 +1,4 @@
-import { Box, Container, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
+import { Box, Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import React from "react";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
@@ -58,7 +58,7 @@ function End() {
                             fontWeight: 700,
                         }}
                     >
-                        Endereço da Conta - {userData.user_nome}
+                        Endereço da Conta - {userData ? userData.user_nome : ''}
                     </Typography>
                 </Container>
                 <Container
@@ -80,7 +80,7 @@ function End() {
                             placeholder="Insira o CEP"
                             inputProps={{ maxLength: 12 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endCEP}
+                            value={userData ? userData.user_endCEP : ''}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <ApartmentIcon />
@@ -96,7 +96,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 25 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endcidade}
+                            value={userData ?userData.user_endcidade : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -113,7 +113,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 45 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endbairro}
+                            value={userData ? userData.user_endbairro : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -130,7 +130,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 45 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endrua}
+                            value={userData ? userData.user_endrua : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -147,7 +147,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 50 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endcomplemento}
+                            value={userData ? userData.user_endcomplemento : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -164,7 +164,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 10 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endnum}
+                            value={userData ?userData.user_endnum : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
@@ -181,7 +181,7 @@ function End() {
                         <Input
                             inputProps={{ maxLength: 2 }}
                             id="input-with-icon-adornment"
-                            value={userData.user_endUF}
+                            value={userData ? userData.user_endUF : ''}
                             readOnly
                             startAdornment={
                                 <InputAdornment position="start">
