@@ -242,8 +242,8 @@ function SectionPerfil2() {
             {openT0 && <TokenPerfilErrorSer />}
             {modal ? <Excluir onCloseModal={handleModalClose} /> :
                 <Box sx={{
-                    mt: -1,
-                    height: '140vh',
+                    mt: -5,
+                    height: '120vh',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

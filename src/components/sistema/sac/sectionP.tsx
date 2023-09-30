@@ -15,7 +15,6 @@ export default function SectionP() {
           sx={{
             width: "100vw",
             height: "89.7vh",
-            marginTop: "10.3vh",
             marginLeft: "20vw",
             backgroundColor: verify ? fundo : 'white',
             overflow: "hidden",

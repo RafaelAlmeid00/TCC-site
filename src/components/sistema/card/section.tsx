@@ -111,7 +111,6 @@ export default function CardSection() {
     return (
         <>
             <Box id="section1" sx={{
-                mt: '9.5vh',
                 height: '90.5vh',
                 width: '80vw',
                 float: "right",

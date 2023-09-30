@@ -57,7 +57,6 @@ export default function Buss() {
             <Box
                 id="section1"
                 sx={{
-                    mt: '9vh',
                     width: '80vw',
                     float: "right",
                     background: verify ? fundo : 'white',

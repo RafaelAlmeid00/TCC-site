@@ -77,7 +77,6 @@ function CEP({ onConfirmarCEP, onFechaCEP }: any) {
         <>
             {err && <CEPPErfil />}
             <Box id="section1" sx={{
-                mt: '9.5vh',
                 height: '105vh',
                 width: '80vw',
                 float: "right",

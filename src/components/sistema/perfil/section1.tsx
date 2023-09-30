@@ -287,7 +287,6 @@ function SectionPerfil1() {
                 {cep ? <CEP onConfirmarCEP={ConfirmarCEP} onFechaCEP={fechaCEP} />
                     :
                     <Box sx={{
-                        mt: '9vh',
                         height: '90vh',
                         display: 'flex',
                         alignItems: 'center',

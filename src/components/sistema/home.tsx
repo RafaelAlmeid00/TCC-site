@@ -285,7 +285,6 @@ function Homesistema() {
                 <span>Handle the case where userData is null, undefined, or not valid</span>
             )}                
             <Box id="section1" sx={{
-                mt: '9.5vh',
                 height: '90.5vh',
                 width: '80vw',
                 float: "right",
