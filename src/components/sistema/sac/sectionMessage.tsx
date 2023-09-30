@@ -69,7 +69,7 @@ export default function Msg() {
     <>
       <Box
         sx={{
-          width: "100%",
+          width: "100vh",
           position: "fixed",
           mt: "77vh",
           height: "10vh",

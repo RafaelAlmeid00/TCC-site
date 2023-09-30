@@ -74,7 +74,7 @@ function SectionRota1() {
     <Box
       id="section1"
       sx={{
-        height: "90.5vh",
+        height: "100vh",
         width: "80vw",
         float: "right",
         background: verify ? fundo : "white",

@@ -24,7 +24,7 @@ function End() {
             <Box
                 id="section1"
                 sx={{
-                    height: "100%",
+                    height: "100vh",
                     width: "80vw",
                     float: "right",
                     background: verify ? fundo : "white",
