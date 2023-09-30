@@ -290,7 +290,6 @@ function Homesistema() {
                 float: "right",
                 background: verify ? fundo : 'white',
                 position: "relative",
-                overflow: "hidden",
                 overflowY: 'scroll'
             }}>
                 {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}

@@ -190,12 +190,11 @@ export default function Viagens() {
             id="section1"
             sx={{
                 mt: "9.5vh",
-                height: "90.5vh",
+                height: "100%",
                 width: "80vw",
                 float: "right",
                 background: verify ? fundo : "white",
                 position: "relative",
-                overflow: "hidden",
                 overflowY: "scroll",
             }}
         >

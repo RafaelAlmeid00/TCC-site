@@ -179,12 +179,11 @@ export default function Ext() {
         <Box
             id="section1"
             sx={{
-                height: "90.5vh",
+                height: "100%",
                 width: "80vw",
                 float: "right",
                 background: verify ? fundo : "white",
                 position: "relative",
-                overflow: "hidden",
                 overflowY: "scroll",
             }}
         >

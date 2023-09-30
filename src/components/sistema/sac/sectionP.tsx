@@ -14,10 +14,9 @@ export default function SectionP() {
         <Box
           sx={{
             width: "100vw",
-            height: "89.7vh",
+            height: "100%",
             marginLeft: "20vw",
             backgroundColor: verify ? fundo : 'white',
-            overflow: "hidden",
             position: "relative",
             overflowY: 'scroll'
           }}
