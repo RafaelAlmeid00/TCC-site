@@ -7,9 +7,7 @@ import { CardUsos } from "../../interfaces";
 export default function Buss() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
-    const [routes, setRoutes] = React.useState<CardUsos>([{
-        'error': 'error'
-    }])
+    const [routes, setRoutes] = React.useState<CardUsos>([])
     const [loading, setLoading] = React.useState(true)
     const token = localStorage.getItem('token')
     const fundo = themes.palette.background.default
