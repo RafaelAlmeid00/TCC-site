@@ -12,14 +12,14 @@ interface BtnsAppProps {
   mb?: string;
 }
 interface BtnProps {
-  name: string;
-  route: string;
-  cl: string | undefined;
-  bc: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  name?: string;
+  route?: string;
+  cl?: string | undefined;
+  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
   bch: string | undefined;
   ml?: number | undefined;
-  vis: string | undefined;
-  mb: string | undefined;
+  vis?: string | undefined;
+  mb?: string | undefined;
 
   fun?: () => void;
 }
@@ -203,9 +203,9 @@ function BtnsApp({ cl, mt, ml, mb }: BtnsAppProps) {
 function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb }: BtnProps) {
   return (
     <Button variant="contained" href={route} onClick={fun} sx={{
-      color: cl,
+      color: cl || null,
       marginRight: 1,
-      backgroundColor: bc,
+      backgroundColor: bc || null,
       marginLeft: ml || 0,
       marginBottom: mb || 'initial',
       visibility: vis || 'visible',
