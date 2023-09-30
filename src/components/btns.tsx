@@ -203,9 +203,9 @@ function BtnsApp({ cl, mt, ml, mb }: BtnsAppProps) {
 function Btn({ name, route, cl, bc, bch, fun, ml, vis, mb }: BtnProps) {
   return (
     <Button variant="contained" href={route} onClick={fun} sx={{
-      color: cl || 'red',
+      color: cl,
       marginRight: 1,
-      backgroundColor: bc || 'red',
+      backgroundColor: bc,
       marginLeft: ml || 0,
       marginBottom: mb || 'initial',
       visibility: vis || 'visible',
