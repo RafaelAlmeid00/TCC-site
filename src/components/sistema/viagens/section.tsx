@@ -143,7 +143,7 @@ export default function Viagens() {
         const handleUsos = async () => {
             setSkeleton(false)
             try {
-                const response = await axios.post('http://localhost:3344/usos', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/usos', {
                     user_CPF: userData.user_CPF,
                 }, {
                     headers: {

@@ -26,7 +26,7 @@ function Pag({ onClose }: any) {
             }
             console.log(userData.user_idcli);
             try {
-                const response = await axios.get('http://localhost:3344/cliente/search', {
+                const response = await axios.get('https://easypass-iak1.onrender.com/cliente/search', {
                     headers: {
                         'authorization': token
                     },
@@ -116,7 +116,7 @@ function Pag({ onClose }: any) {
 
         console.log(pagamento);
         try {
-            const response = await axios.post('http://localhost:3344/pagamento', {
+            const response = await axios.post('https://easypass-iak1.onrender.com/pagamento', {
                 token: token,
                 pagamento
             });

@@ -46,7 +46,7 @@ function SectionPerfil1() {
 
             console.log(updates);
 
-            await axios.post('http://localhost:3344/user/update', {
+            await axios.post('https://easypass-iak1.onrender.com/user/update', {
                 user_CPF: cpf,
                 updates,
                 token: token
@@ -69,7 +69,7 @@ function SectionPerfil1() {
     async function UpdateToken() {
         try {
             console.log('foi quase');
-            const res = await axios.post('http://localhost:3344/user/token', {
+            const res = await axios.post('https://easypass-iak1.onrender.com/user/token', {
                 user_CPF: cpf,
                 token: token
             });
@@ -129,7 +129,7 @@ function SectionPerfil1() {
                         data.append('selectedImage', file);
 
                         const response = await axios.post(
-                            'http://localhost:3344/user/fundoupload', data,
+                            'https://easypass-iak1.onrender.com/user/fundoupload', data,
                             {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
@@ -155,7 +155,7 @@ function SectionPerfil1() {
                         data.append('selectedImage', file);
 
                         const response = await axios.post(
-                            'http://localhost:3344/user/perfilupload', data,
+                            'https://easypass-iak1.onrender.com/user/perfilupload', data,
                             {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
@@ -192,7 +192,7 @@ function SectionPerfil1() {
 
                 if (fundoimage) {
                     const response = await axios.post(
-                        'http://localhost:3344/user/returnfundo',
+                        'https://easypass-iak1.onrender.com/user/returnfundo',
                         {
                             filename: fundoimage,
                         },
@@ -234,7 +234,7 @@ function SectionPerfil1() {
 
                 if (perfilimage) {
                     const response = await axios.post(
-                        'http://localhost:3344/user/returnperfil',
+                        'https://easypass-iak1.onrender.com/user/returnperfil',
                         {
                             filename: perfilimage,
                         },

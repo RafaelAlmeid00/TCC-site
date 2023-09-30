@@ -12,6 +12,7 @@ import CompleteCad2 from "./endereço";
 import { Container, FormControl, Input, InputAdornment, InputLabel, Typography } from "@mui/material"
 import { Btn } from "../btns";
 import { Contacts } from '@mui/icons-material';
+import { UserData } from "../interfaces";
 
 function CompleteCad() {
     const [cpf, setCpf] = useState("");
@@ -37,9 +38,9 @@ function CompleteCad() {
     const [showRG, setShowRG] = useState(false);
     const [CPFexiste, setCPFexiste] = useState(false);
     const [showTipo, setShowTipo] = useState(false);
-    const [dadosU, setDados] = useState({});
+    const [dadosU, setDados] = useState<UserData| undefined>(undefined);
     const [showErrorCel, setShowErrorCel] = useState(false);
-   
+
 
     async function ValidaCPF(cpf: string): Promise<boolean> {
         let Soma = 0;
@@ -100,7 +101,7 @@ function CompleteCad() {
         try {
             console.log('ta indoooo');
 
-            const resCPF = await axios.post('http://localhost:3344/user/cpf', { user_CPF: cpf })
+            const resCPF = await axios.post('https://easypass-iak1.onrender.com/user/cpf', { user_CPF: cpf })
             console.log('n foooi');
             console.log(cpf)
             console.log(resCPF.data)
@@ -134,7 +135,7 @@ function CompleteCad() {
     }
 
     function VerifyInputs(): boolean {
-        if (date == '' ) {
+        if (date == '') {
             setShowErrorData(true)
             setShowErrorNum(false)
             setShowErrorCEP(false)
@@ -205,7 +206,7 @@ function CompleteCad() {
             }, 2000);
             return true;
 
-        } else if (cep == '' || cep.length < 8) {
+        } else if (cep === undefined || cep == '' || cep.length < 8) {
             setShowErrorCEP(true)
             setShowErrorNum(false)
             setShowErrorCPF(false)
@@ -225,7 +226,7 @@ function CompleteCad() {
             setShowErrorNome(false)
             setShowRG(false)
             setShowErrorData(false)
-            setCPFexiste(false)    
+            setCPFexiste(false)
             setShowErrorCel(true)
             setTimeout(() => {
                 setShowErrorCel(false)
@@ -248,26 +249,6 @@ function CompleteCad() {
 
         const formatdata = handleSubmitData()
         console.log(formatdata);
-        
-        interface UserData {
-            user_CPF: string;
-            user_RG: string;
-            user_nome: string;
-            user_email?: string;
-            user_senha?: string;
-            user_nascimento: string;
-            user_endCEP?: string;
-            user_endUF?: string;
-            user_endbairro?: string;
-            user_endrua?: string;
-            user_endnum?: string;
-            user_endcomplemento?: string;
-            user_endcidade?: string;
-            user_tipo?: string;
-            list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
-            user_cel: string;
-            user_idcli?: string;
-        }
 
         const dadosUsuario: UserData = {
             user_CPF: cpf,
@@ -300,20 +281,20 @@ function CompleteCad() {
             console.log('travo tudo aqq');
             console.log(dadosUsuario);
 
-        } 
-        
-            const inputsError = VerifyInputs(); // Chama a função diretamente aqui
-            console.log('Erro dos input:', inputsError)
-            if (inputsError) {
-                setShowTipo(false); // Há erros, não avança para a próxima etapa
-                console.log('travo tudo aqq²');
-                console.log(dadosUsuario);
+        }
 
-            } else {
-                setShowTipo(true);
-                setDados(dadosUsuario)
-                console.log(dadosU);
-            }
+        const inputsError = VerifyInputs(); // Chama a função diretamente aqui
+        console.log('Erro dos input:', inputsError)
+        if (inputsError) {
+            setShowTipo(false); // Há erros, não avança para a próxima etapa
+            console.log('travo tudo aqq²');
+            console.log(dadosUsuario);
+
+        } else {
+            setShowTipo(true);
+            setDados(dadosUsuario)
+            console.log(dadosU);
+        }
     }
 
     function formatDateString(date: string): string {
@@ -352,7 +333,7 @@ function CompleteCad() {
             {showErrorNum && <NumError />}
             {showRG && <RGError />}
             {CPFexiste && <CPFExiste />}
-            {showTipo ? <Tipo dados={dadosU}/> :
+            {showTipo ? <Tipo dados={dadosU} /> :
                 <Container sx={{
                     width: "100%",
                     display: "flex",

@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { Theme } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles'; // Importe o createTheme
+import { UserData } from "../components/interfaces";
 
 interface ModalContextType {
     verify: boolean;
@@ -29,12 +30,14 @@ interface ModalContextType {
     themes: Theme; // Você pode definir o tipo correto do objeto 'themes' se necessário
     hasEntered: boolean;
     setHasEntered: (hasEntered: boolean) => void;
-    userData?: object;
-    setUserData?: (userData: object) => void;
+    userData?: UserData | null; // Atualize a tipagem para UserData | null
+    setUserData?: (UserData: UserData | null) => void; // Atualize a assinatura da função setUserData
     alertatopo?: any;
     setAlertaTopo?: (alertatopo: any) => void;
     MsgContext?: any;
     setRecivedContext?: (MsgContext: any) => void;
+    cpf?: any;
+    setCpf?: (MsgContext: any) => void;
 }
 const throwNotImplementedError = () => {
     throw new Error('Function not implemented');
@@ -69,12 +72,14 @@ const ModalContext = createContext<ModalContextType>({
     themes: defaultTheme,
     hasEntered: false,
     setHasEntered: throwNotImplementedError,
-    userData: [{}],
+    userData: null,
     setUserData: throwNotImplementedError,
     alertatopo: {},
     setAlertaTopo: throwNotImplementedError,
     MsgContext: {},
     setRecivedContext: throwNotImplementedError,
+    cpf: '',
+    setCpf: throwNotImplementedError
 });
 
 export default ModalContext;

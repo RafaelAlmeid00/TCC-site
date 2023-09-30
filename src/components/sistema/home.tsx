@@ -47,7 +47,7 @@ function Homesistema() {
 
             if (tokenemail || tokencel) {
                 try {
-                    const response = await axios.post('http://localhost:3344/user/validatetoken', {
+                    const response = await axios.post('https://easypass-iak1.onrender.com/user/validatetoken', {
                         token: tokenemail ? tokenemail : tokencel
                     })
                     if (response.data.valid) {
@@ -96,7 +96,7 @@ function Homesistema() {
 
             console.log(updates);
 
-            await axios.post('http://localhost:3344/user/update', {
+            await axios.post('https://easypass-iak1.onrender.com/user/update', {
                 user_CPF: userData.user_CPF,
                 updates,
             });
@@ -169,7 +169,7 @@ function Homesistema() {
     React.useEffect(() => {
         async function handleAttCard() {
             try {
-                const response = await axios.post('http://localhost:3344/pagamento/verify', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/pagamento/verify', {
                     params: {
                         idcli: userData && userData.user_idcli,
                         dataCard
@@ -203,7 +203,7 @@ function Homesistema() {
                 console.log('ta indo');
                 console.log(token);
 
-                const response = await axios.post('http://localhost:3344/card/enviados', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
                     token: token
                 });
                 console.log(response);
@@ -238,7 +238,7 @@ function Homesistema() {
     React.useEffect(() => {
         const handleUsos = async () => {
             try {
-                const response = await axios.post('http://localhost:3344/usos', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/usos', {
                     user_CPF: userData.user_CPF,
                 }, {
                     headers: {

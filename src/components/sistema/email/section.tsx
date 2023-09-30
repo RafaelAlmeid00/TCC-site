@@ -12,7 +12,7 @@ export default function TrocaEmail() {
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('token');
             try {
-               const response = await axios.post('http://localhost:3344/user/validatetoken', { token })
+               const response = await axios.post('https://easypass-iak1.onrender.com/user/validatetoken', { token })
                 if (response.data.valid) {
                     setValidToken(true);
                 } else {

@@ -7,12 +7,13 @@ import ModalContext from "../../../context/modalcontext";
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import { CardData } from "../../interfaces";
 
 export default function CardSection() {
     const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
     const [load, setLoad] = React.useState(true)
     const [loading, setLoading] = React.useState(true)
-    const [dataCard, setDataCard] = React.useState('')
+    const [dataCard, setDataCard] = React.useState<CardData | null>(null)
     const [dataCardCancel, setCardCancel] = React.useState(Object)
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
@@ -36,7 +37,7 @@ export default function CardSection() {
                 console.log('ta indo');
                 console.log(token);
 
-                const response = await axios.post('http://localhost:3344/card/enviados', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
                     token: token
                 });
                 console.log(response);
@@ -73,7 +74,7 @@ export default function CardSection() {
                 console.log(token);
                 setLoading(true)
 
-                const response = await axios.post('http://localhost:3344/card/cancelados', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/card/cancelados', {
                     user_CPF: userData && userData.user_CPF,
                     token: token
                 });

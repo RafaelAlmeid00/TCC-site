@@ -1,15 +1,30 @@
-import { io } from "socket.io-client";
-const token = localStorage.getItem('token')
+import { io, Socket } from "socket.io-client";
+
+interface CustomSocket extends Socket {
+    auth: {
+        token?: string;
+    };
+}
+
+const createCustomSocket = (token?: string): CustomSocket => {
+    const socket = io("https://easypass-iak1.onrender.com/", {
+        autoConnect: false,
+        auth: {
+            token: token,
+        },
+        withCredentials: true,
+    });
+
+    return socket as CustomSocket;
+};
+
+// Obtenha o token do localStorage
+const tokenuser = localStorage.getItem('token');
+const token = tokenuser ? tokenuser : '';
+
 console.log(token);
 
-
-export const socket = io("http://localhost:3345", {
-    autoConnect: false,
-    auth: {
-        token: localStorage.getItem('token')
-    },
-    withCredentials: true,
-});
+// Crie o socket personalizado
+export const socket: CustomSocket = createCustomSocket(token);
 
 console.log(socket);
-

@@ -11,6 +11,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import Balancer from "react-wrap-balancer";
 import colors from "../../../assets/colors";
 import PortraitIcon from '@mui/icons-material/Portrait';
+import { DocumentData } from "../../interfaces";
 
 export default function Docs() {
     const { verify, themes } = useContext(ModalContext);
@@ -20,37 +21,41 @@ export default function Docs() {
     const [status, setStatus] = useState('');
 
     useEffect(() => {
-        if (userData.user_status == "ativo") {
-            setStatus("Aprovado")
-        } else if (userData.user_status == "analise") {
-            setStatus("Em análise")
+        if (userData) {
+            if (userData.user_status == "ativo") {
+                setStatus("Aprovado")
+            } else if (userData.user_status == "analise") {
+                setStatus("Em análise")
+            }
         }
     }, [])
 
     useEffect(() => {
-        const documents = [
-            {
-                title: "Registro Geral - Frente",
-                status: status ? status : (userData.user_RGFrente ? "Enviado" : "Não enviado"),
-                hint: "Para enviar esse documento acesse nosso aplicativo.",
-                icon: <AssignmentIcon sx={{ fontSize: 60 }} />,
-            },
-            {
-                title: "Registro Geral - Verso",
-                status: status ? status : (userData.user_RGTras ? "Enviado" : "Não enviado"),
-                hint: "Para enviar esse documento acesse nosso aplicativo.",
-                icon: <AssignmentIcon sx={{ fontSize: 60 }} />
-            },
-            {
-                title: "Selfie de Reconhecimento",
-                status: status ? status : (userData.user_FotoRec ? "Enviado" : "Não enviado"),
-                hint: "Para enviar esse documento acesse nosso aplicativo.",
-                icon: <PortraitIcon sx={{ fontSize: 60 }} />
-            },
-        ];
+        if (userData) {
+            const documents: DocumentData[] = [
+                {
+                    title: "Registro Geral - Frente",
+                    status: status ? status : (userData.user_RGFrente ? "Enviado" : "Não enviado"),
+                    hint: "Para enviar esse documento acesse nosso aplicativo.",
+                    icon: <AssignmentIcon sx={{ fontSize: 60 }} />,
+                },
+                {
+                    title: "Registro Geral - Verso",
+                    status: status ? status : (userData.user_RGTras ? "Enviado" : "Não enviado"),
+                    hint: "Para enviar esse documento acesse nosso aplicativo.",
+                    icon: <AssignmentIcon sx={{ fontSize: 60 }} />
+                },
+                {
+                    title: "Selfie de Reconhecimento",
+                    status: status ? status : (userData.user_FotoRec ? "Enviado" : "Não enviado"),
+                    hint: "Para enviar esse documento acesse nosso aplicativo.",
+                    icon: <PortraitIcon sx={{ fontSize: 60 }} />
+                },
+            ];
 
-        setDocumentList(documents);
-    }, [status, userData.user_FotoRec, userData.user_RGFrente, userData.user_RGTras]);
+            setDocumentList(documents);
+        }
+    }, [status]);
 
 
 
@@ -92,7 +97,7 @@ export default function Docs() {
                         fontWeight: 700,
                     }}
                 >
-                    Documentos - {userData.user_nome}
+                    Documentos - {userData ? userData.user_nome : ''}
                 </Typography>
             </Container>
             <Container
@@ -122,7 +127,7 @@ export default function Docs() {
                     cortes. Após anexar todos os documentos, clique no botão "Enviar
                     documentos para Análise" para concluir o envio.
                 </Typography>
-                {documentList.map((document, index) => (
+                {documentList.map((doc, index) => (
                     <Card
                         key={index}
                         sx={{
@@ -142,7 +147,7 @@ export default function Docs() {
                                 alignItems: "center",
                             }}
                         >
-                            {document.icon}
+                            {doc.icon}
                         </Container>
                         <Container
                             sx={{
@@ -160,15 +165,15 @@ export default function Docs() {
                                     fontWeight: "bold",
                                 }}
                             >
-                                {document.title}
+                                {doc.title}
                             </Typography>
                             <Typography
                                 sx={{
                                     fontSize: 12,
-                                    color: document.status === "Enviado" ? "green" : "red",
+                                    color: doc.status === "Enviado" ? "green" : "red",
                                 }}
                             >
-                                {document.status}
+                                {doc.status}
                             </Typography>
                             <Balancer>
                                 <Typography
@@ -177,7 +182,7 @@ export default function Docs() {
                                         fontSize: 10,
                                     }}
                                 >
-                                    {document.hint}
+                                    {doc.hint}
                                 </Typography>
                             </Balancer>
                         </Container>

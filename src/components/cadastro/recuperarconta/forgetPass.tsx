@@ -42,7 +42,7 @@ export default function EsqueciAsenha() {
 
     async function PegaEmail() {
         try {
-            const res = await axios.post('http://localhost:3344/user/cpf', {
+            const res = await axios.post('https://easypass-iak1.onrender.com/user/cpf', {
                 user_CPF: cpf,
             });
 
@@ -73,7 +73,7 @@ export default function EsqueciAsenha() {
         try {
             await PegaEmail()
 
-            await axios.post('http://localhost:3344/user/updatesenha', {
+            await axios.post('https://easypass-iak1.onrender.com/user/updatesenha', {
                 user_CPF: cpf,
             })
 
@@ -141,7 +141,9 @@ export default function EsqueciAsenha() {
                         onChange={(event) => {
                             const { value } = event.target;
                             const newValue = value.replace(/\D/g, '');
-                            setCpf(newValue);
+                            if (setCpf) {
+                                setCpf(newValue);
+                            }
                         }}
                         id="input-with-icon-adornment"
                         startAdornment={

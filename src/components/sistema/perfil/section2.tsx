@@ -95,7 +95,7 @@ function SectionPerfil2() {
     const updateEmail = async () => {
         try {
 
-            await axios.post('http://localhost:3344/user/updateemail', {
+            await axios.post('https://easypass-iak1.onrender.com/user/updateemail', {
                 user_email: data,
                 user_CPF: cpf,
                 user_nome: nome,
@@ -121,7 +121,7 @@ function SectionPerfil2() {
 
             console.log(updates);
 
-            await axios.post('http://localhost:3344/user/update', {
+            await axios.post('https://easypass-iak1.onrender.com/user/update', {
                 user_CPF: cpf,
                 updates,
                 token: token
@@ -144,7 +144,7 @@ function SectionPerfil2() {
     async function UpdateToken() {
         try {
             console.log('foi quase');
-            const res = await axios.post('http://localhost:3344/user/token', {
+            const res = await axios.post('https://easypass-iak1.onrender.com/user/token', {
                 user_CPF: cpf,
                 token: token
             });

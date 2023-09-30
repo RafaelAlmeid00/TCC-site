@@ -22,7 +22,7 @@ function Info() {
     const sendEmail = async () => {
         try {
 
-            await axios.post('http://localhost:3344/user/emailverify', {
+            await axios.post('https://easypass-iak1.onrender.com/user/emailverify', {
                 user_email: userData.user_email,
                 user_CPF: userData.user_CPF,
                 user_nome: userData.user_nome,
@@ -45,7 +45,7 @@ function Info() {
     const sendSMS = async () => {
         try {
 
-            await axios.post('http://localhost:3344/user/sms', {
+            await axios.post('https://easypass-iak1.onrender.com/user/sms', {
                 user_cel: userData.user_cel,
                 user_CPF: userData.user_CPF,
                 user_nome: userData.user_nome,

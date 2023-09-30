@@ -86,7 +86,7 @@ export default function Ext() {
         console.log(query);
 
         try {
-            const response = await axios.post('http://localhost:3344/pagamento/search', {
+            const response = await axios.post('https://easypass-iak1.onrender.com/pagamento/search', {
                 params: {
                     idcli: userData.user_idcli,
                     tipo: query

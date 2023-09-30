@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin, SenhaInvalida } from "../errosvalidations";
 import { Btn, BtnL } from "../btns";
 import jwt_decode from "jwt-decode";
+import { UserData } from "../interfaces";
 
 function ContainerCad() {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -43,7 +44,9 @@ function ContainerCad() {
     function validatePassword(password: string | undefined) {
         const regex = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
 
-        return regex.test(password);
+        if (password) {
+            return regex.test(password);
+        }
     }
 
 
@@ -51,7 +54,7 @@ function ContainerCad() {
         const isPasswordValid = validatePassword(password);
         try {
             console.log("ta indo")
-            const response = await axios.post('http://localhost:3344/user/email', { user_email: email })
+            const response = await axios.post('https://easypass-iak1.onrender.com/user/email', { user_email: email })
             console.log(email)
             console.log(response.data)
             if (response.data) {
@@ -73,7 +76,7 @@ function ContainerCad() {
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
                 setInvalidSenha(false)
-            } else if (!isPasswordValid){
+            } else if (!isPasswordValid) {
                 setShowErrorEmail(false);
                 setShowError(false);
                 setShowErrorlog(false);
@@ -109,7 +112,7 @@ function ContainerCad() {
                     setShowNull(false)
                 }, 3000);
             }
-            const res = await axios.post('http://localhost:3344/user/login', {
+            const res = await axios.post('https://easypass-iak1.onrender.com/user/login', {
                 user_CPF: cpf2,
                 user_senha: password,
             });
@@ -127,27 +130,29 @@ function ContainerCad() {
                 });
                 await new Promise<void>((resolve) => {
                     const userToken = localStorage.getItem('token')
-                    const decoded = jwt_decode(userToken)
-                    setUserData(decoded)
-                    console.log(userData);
-                    resolve();
+                    if (userToken && setUserData) {
+                        const decoded: UserData = jwt_decode(userToken)
+                        setUserData(decoded ? decoded : '')
+                        console.log(userData);
+                        resolve();
+                    }
                 });
 
                 console.log(localStorage);
-                    navigate('/Sistema');
-                    console.log('viado');
-                
+                navigate('/Sistema');
+                console.log('viado');
+
             } else if (res.data.error == 'error') {
-                    console.log(res.data.error);
-                    setShowNull(false)
-                    setLoading(false)
-                    setDisable(false)
-                    setShowErrorlog(true)
-                    setTimeout(() => {
-                        setShowErrorlog(false)
-                    }, 3000);
-                } 
-            
+                console.log(res.data.error);
+                setShowNull(false)
+                setLoading(false)
+                setDisable(false)
+                setShowErrorlog(true)
+                setTimeout(() => {
+                    setShowErrorlog(false)
+                }, 3000);
+            }
+
         } catch (err) {
             console.log(err);
             setShowNull(false)
@@ -169,7 +174,7 @@ function ContainerCad() {
         navigate('/Cadastro/EsqueciaSenha')
     }
 
-    
+
 
     return (
         <>

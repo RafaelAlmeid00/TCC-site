@@ -22,7 +22,7 @@ export default function Excluir({ onCloseModal }) {
         console.log(localStorage);
 
         try {
-            await axios.post('http://localhost:3344/user/delete', {
+            await axios.post('https://easypass-iak1.onrender.com/user/delete', {
                 user_CPF: data,
                 token: token
             })

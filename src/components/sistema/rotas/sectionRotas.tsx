@@ -21,7 +21,7 @@ function SectionRota1() {
 
   async function takeIt() {
     try {
-      const resbus = await axios.post('http://localhost:3344/routes/all', {
+      const resbus = await axios.post('https://easypass-iak1.onrender.com/routes/all', {
         token: token
       });
       console.log(resbus);
@@ -37,7 +37,7 @@ function SectionRota1() {
         console.log('deu merda rapeize')
       }
       if (options === 'Número do ônibus') {
-        const response = await axios.post('http://localhost:3344/routes/search', {
+        const response = await axios.post('https://easypass-iak1.onrender.com/routes/search', {
           token: token,
           route_num: value.route_num
         });
@@ -48,7 +48,7 @@ function SectionRota1() {
         console.log(rotasres);
         console.log(routes);
       } else if (options === 'Rotas') {
-        const response = await axios.post('http://localhost:3344/routes/search', {
+        const response = await axios.post('https://easypass-iak1.onrender.com/routes/search', {
           token: token,
           route_nome: value.route_nome
         });

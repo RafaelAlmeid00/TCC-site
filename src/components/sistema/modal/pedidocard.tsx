@@ -42,7 +42,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     // Função para fazer a requisição ao servidor com o CPF
     async function fetchListCards(list_CPF: string) {
         try {
-            const response = await axios.post('http://localhost:3344/listcpf/search', { list_CPF: list_CPF, token: token});
+            const response = await axios.post('https://easypass-iak1.onrender.com/listcpf/search', { list_CPF: list_CPF, token: token});
             const result = response.data.objeto;
             const newListCards: { name: string }[] = [];
 
@@ -66,7 +66,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
     }
     async function VerifyCard(list_CPF: string): Promise<boolean> {
         try {
-            const response = await axios.post('http://localhost:3344/card/search', { user_CPF: list_CPF, token: token })
+            const response = await axios.post('https://easypass-iak1.onrender.com/card/search', { user_CPF: list_CPF, token: token })
             const result = response.data
             const hasCardOpen = result.length > 0;
             console.log(hasCardOpen);
@@ -116,7 +116,7 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
         try {
             
             console.log('foi até aq');
-            const response = await axios.post('http://localhost:3344/card', dataCard);
+            const response = await axios.post('https://easypass-iak1.onrender.com/card', dataCard);
             console.log('foi até aq');
             console.log(response);
             console.log('foi mlk');

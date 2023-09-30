@@ -17,7 +17,7 @@ export default function Buss() {
                 console.log('ta indo');
                 console.log(token);
 
-                const response = await axios.post('http://localhost:3344/routes/all', {
+                const response = await axios.post('https://easypass-iak1.onrender.com/routes/all', {
                     token: token
                 });
                 console.log(response);

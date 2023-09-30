@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
@@ -10,6 +10,7 @@ import "./App.css"
 import AlertConta from "./components/sistema/AlertConta";
 import { socket } from "../socket.io/index";
 import jwt_decode from "jwt-decode";
+import { UserData } from "./components/interfaces";
 
 const App = lazy(() => import('./App'));
 const AppLazy = lazy(() => import('./pages/home/App'));
@@ -35,8 +36,6 @@ const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 const Extrato = lazy(() => import('./pages/sistema/Extrato'));
 
 const Rota = () => {
-
-
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [cep, setCep] = useState('');
@@ -48,7 +47,7 @@ const Rota = () => {
   const [city, setCity] = useState('');
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
-  const [userData, setUserData] = React.useState<object | null>(null);
+  const [userData, setUserData] = React.useState<UserData | null>(null);
   const [MsgContext, setRecivedContext] = React.useState<object | null>(null);
   const [Active, setActive] = React.useState(false);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
@@ -84,14 +83,10 @@ const Rota = () => {
     const userToken = localStorage.getItem('token')
 
     if (userToken) {
-      const decoded: object = jwt_decode(userToken)
-      /*console.log(userData);
-      console.log(decoded);*/
+      const decoded: UserData = jwt_decode(userToken)
 
       setTimeout(() => {
-        //console.log(socket);
-
-        socket.emit('userDetails', decoded.user_CPF, (err) => {
+        socket.emit('userDetails', decoded.user_CPF, (err: any) => {
           console.log('emitindo os bagui');
 
           if (err) {
@@ -123,7 +118,7 @@ const Rota = () => {
     //console.log('okok');
     const handleAlerta = () => {
       setAlertaTopo({});
-  
+
       if (userData) {
         if (userData.user_verifyemail !== '1' && userData.user_verifycel !== '1') {
           const alerta = {
@@ -163,10 +158,10 @@ const Rota = () => {
         }
       }
     };
-  
+
     handleAlerta();
   }, [userData]);
-  
+
   console.log('this is active: ', Active);
 
   function checkDevice() {
@@ -233,6 +228,7 @@ const Rota = () => {
                     themes, // ou o tema que você desejar usar
                     hasEntered,
                     setHasEntered,
+                    cpf, setCpf,
                   }}>
                     <Routes>
                       <Route path="/" element={<App />} />
@@ -278,8 +274,8 @@ const Rota = () => {
                   hasEntered,
                   setHasEntered,
                   cpf, setCpf,
-                  userData,
-                  setUserData
+                  userData: userData || undefined,
+                  setUserData: (userData: UserData | null) => setUserData(userData)
                 }}>
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />

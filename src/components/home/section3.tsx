@@ -1,10 +1,9 @@
 
 import colors from "../../assets/colors";
-import Img from "../img";
 import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
-import { Box, Card, Container, Link, Typography } from "@mui/material";
+import { Box, Card, Container, Typography } from "@mui/material";
 import { Balancer } from "react-wrap-balancer";
 import Maps from "../maps";
 

@@ -115,7 +115,7 @@ function CompleteCadEscola() {
   async function VerifyEmail(email: string): Promise<boolean> {
     try {
       console.log("ta indo");
-      const response = await axios.post('http://localhost:3344/bussines/email', { buss_contato: email });
+      const response = await axios.post('https://easypass-iak1.onrender.com/bussines/email', { buss_contato: email });
       console.log(email);
       console.log(response.data);
 
@@ -269,7 +269,7 @@ function CompleteCadEscola() {
     if (validationinputs) {
       try {
         await axios.post(
-          "http://localhost:3344/bussines",
+          "https://easypass-iak1.onrender.com/bussines",
           dadosEscola
         );
         setShowSucess(true);
