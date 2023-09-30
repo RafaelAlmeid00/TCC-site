@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const linkStyle = {
     opacity: 0.7, // Define a opacidade como 0.7
@@ -13,7 +13,9 @@ function PrivacyPolicy() {
             const script = document.createElement('script');
             script.src = 'https://cdn.iubenda.com/iubenda.js';
             const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+            if (firstScriptTag.parentNode) {
+                firstScriptTag.parentNode.insertBefore(script, firstScriptTag);
+            }
         };
 
         window.addEventListener('load', loadIubendaScript);

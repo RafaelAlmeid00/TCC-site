@@ -267,7 +267,15 @@ function CompleteCad() {
             user_tipo: undefined,
             list_CPF_list_id: undefined,
             user_cel: cel,
-            user_idcli: undefined
+            user_idcli: undefined,
+            user_credit: undefined,
+            user_FotoRec: undefined,
+            user_RGTras: undefined,
+            user_RGFrente: undefined,
+            user_status: undefined,
+            user_verifycel: undefined,
+            user_verifyemail: undefined,
+            user_Background: undefined
         };
 
         const cpfError = await VerifyCPF(cpf);

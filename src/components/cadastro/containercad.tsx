@@ -132,7 +132,7 @@ function ContainerCad() {
                     const userToken = localStorage.getItem('token')
                     if (userToken && setUserData) {
                         const decoded: UserData = jwt_decode(userToken)
-                        setUserData(decoded ? decoded : '')
+                        setUserData(decoded ? decoded : null as unknown as UserData)
                         console.log(userData);
                         resolve();
                     }

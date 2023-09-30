@@ -30,17 +30,18 @@ function SectionPerfil2() {
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token');
     const { userData } = React.useContext(ModalContext);
-    const cpf = userData.user_CPF;
-    const data = userData.user_email
-    const nome = userData.user_nome
+    const cpf = userData ? userData.user_CPF : '';
+    const data = userData ? userData.user_email : ''
+    const nome = userData ? userData.user_nome : ''
     const navigate = useNavigate()
 
     console.log(localStorage);
 
     function validatePassword(password: string | undefined) {
         const regex = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-
-        return regex.test(password);
+        if (password) {
+            return regex.test(password);
+        }
     }
 
 
@@ -209,7 +210,9 @@ function SectionPerfil2() {
             } else {
                 await update(cpf, updates);
                 await UpdateToken()
-                updates = ''
+                updates = {
+                    ['']: ''
+                }
             }
         } else {
             console.log('deu foi merda');
@@ -330,11 +333,11 @@ function SectionPerfil2() {
                                         />
                                     </FormControl>
 
-                                    <BtnHome name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                                    <BtnHome name={"Confirmar"} route={""} fun={ConfirmarSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} mb={5} />
                                 </>
-                                : <BtnHome name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />}
+                                : <BtnHome name={"Alterar Senha"} route={""} fun={trocaSenha} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} mb={5} />}
 
-                            <BtnHome name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={5} />
+                            <BtnHome name={"Alterar Email"} route={""} fun={ConfirmarEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} mb={5} />
                         </Container>
 
                         <Divider variant="fullWidth" component="ul" sx={{

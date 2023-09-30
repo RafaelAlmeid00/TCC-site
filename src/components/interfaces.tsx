@@ -1,12 +1,14 @@
 
 export interface UserData {
+    user_Background: any;
+    [x: string]: any;
     user_credit: unknown;
     user_FotoRec: any;
     user_RGTras: any;
     user_RGFrente: any;
-    user_status: string;
-    user_verifycel: string;
-    user_verifyemail: string;
+    user_status: any;
+    user_verifycel: any;
+    user_verifyemail: any;
     user_CPF: string;
     user_RG: string;
     user_nome: string;

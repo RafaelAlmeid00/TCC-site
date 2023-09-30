@@ -54,7 +54,6 @@ export default function AlertConta() {
                             cl={verify ? colors.pm : "white"}
                             bc={verify ? 'white' : undefined}
                             bch={verify ? 'white' : undefined}
-                            vis={undefined}
                             mb={undefined}
                         />
                     </Balancer>

@@ -608,7 +608,7 @@ function SenhaInvalida() {
 }
 
 interface Prop {
-    data: string
+    data: any
 }
 
 function EmailEnviado({ data }: Prop) {

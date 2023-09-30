@@ -21,15 +21,15 @@ function SectionPerfil1() {
     const [openT2, setOpenT2] = React.useState(false);
     const [openT0, setOpenT0] = React.useState(false);
     const { userData } = React.useContext(ModalContext);
-    const cpf = userData.user_CPF;
-    const birthDate = new Date(userData.user_nascimento);
+    const cpf = userData ? userData.user_CPF : '';
+    const birthDate = new Date(userData ? userData.user_nascimento : '');
     const formattedBirthDate = birthDate.toISOString().substring(0, 10);
     const token = localStorage.getItem('token');
     let parame: string
-    const [img, setImg] = React.useState('');
-    const [perfil, setPerfil] = React.useState('');
-    const fileInputRef = React.useRef(null)
-    const fileInputRefAvatar = React.useRef(null)
+    const [img, setImg] = React.useState<any>();
+    const [perfil, setPerfil] = React.useState<any>('');
+    const fileInputRef = React.useRef<any>(null)
+    const fileInputRefAvatar = React.useRef<any>(null)
     let switchImage = 0
 
     const trocaCEP = () => {
@@ -41,7 +41,7 @@ function SectionPerfil1() {
     };
 
 
-   const update = async (cpf: any, updates: any) => {
+    const update = async (cpf: any, updates: any) => {
         try {
 
             console.log(updates);
@@ -115,158 +115,166 @@ function SectionPerfil1() {
         handleImageChange(event)
     }
 
-    const handleImageChange = async (event: { target: { files: any[]; }; }) => {
-        let file = event.target.files[0];
-        console.log(file);
-
-        if (file) {
-
-            switch (switchImage) {
-                case 1:
-
-                    try {
-                        const data = new FormData();
-                        data.append('selectedImage', file);
-
-                        const response = await axios.post(
-                            'https://easypass-iak1.onrender.com/user/fundoupload', data,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',
-                                    'authorization': token,
-                                    user_CPF: cpf,
-                                },
-                            }
-                        );
-                        file = ''
-                        console.log(response.data); // Handle the response as needed
-                        await UpdateToken()
-                    } catch (error) {
-                        console.error('Error uploading image:', error);
-                        file = ''
-                    }
-
-                    break;
-
-                case 2:
-
-                    try {
-                        const data = new FormData();
-                        data.append('selectedImage', file);
-
-                        const response = await axios.post(
-                            'https://easypass-iak1.onrender.com/user/perfilupload', data,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',
-                                    'authorization': token,
-                                    user_CPF: cpf,
-                                },
-                            }
-                        );
-                        
-                        file = ''
-                        console.log(response.data); // Handle the response as needed
-                        await UpdateToken()
-                    } catch (error) {
-                        console.error('Error uploading image:', error);
-                        file = ''
-                    }
-
-                    break;
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        {
+            let file: any
+            if (event.target.files) {
+                file = event.target.files[0];
             }
-        } else {
-            console.log('file vazio');
-            
+            console.log(file);
+
+            if (file) {
+
+                switch (switchImage) {
+                    case 1:
+
+                        try {
+                            const data = new FormData();
+                            data.append('selectedImage', file);
+
+                            const response = await axios.post(
+                                'https://easypass-iak1.onrender.com/user/fundoupload', data,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',
+                                        'authorization': token,
+                                        user_CPF: cpf,
+                                    },
+                                }
+                            );
+                            file = ''
+                            console.log(response.data); // Handle the response as needed
+                            await UpdateToken()
+                        } catch (error) {
+                            console.error('Error uploading image:', error);
+                            file = ''
+                        }
+
+                        break;
+
+                    case 2:
+
+                        try {
+                            const data = new FormData();
+                            data.append('selectedImage', file);
+
+                            const response = await axios.post(
+                                'https://easypass-iak1.onrender.com/user/perfilupload', data,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',
+                                        'authorization': token,
+                                        user_CPF: cpf,
+                                    },
+                                }
+                            );
+
+                            file = ''
+                            console.log(response.data); // Handle the response as needed
+                            await UpdateToken()
+                        } catch (error) {
+                            console.error('Error uploading image:', error);
+                            file = ''
+                        }
+
+                        break;
+                }
+            } else {
+                console.log('file vazio');
+
+            }
         }
     }
 
 
+        React.useEffect(() => {
+            const returnImage = async () => {
+                console.log('foi');
+                try {
+                    const fundoimage = userData ? userData.user_Background : '';
+                    console.log(fundoimage);
 
-    React.useEffect(() => {
-        const returnImage = async () => {
-            console.log('foi');
-            try {
-                const fundoimage = userData.user_Background;
-                console.log(fundoimage);
+                    if (fundoimage) {
+                        const response = await axios.post(
+                            'https://easypass-iak1.onrender.com/user/returnfundo',
+                            {
+                                filename: fundoimage,
+                            },
+                            {
+                                responseType: 'arraybuffer',
+                            }
+                        );
 
-                if (fundoimage) {
-                    const response = await axios.post(
-                        'https://easypass-iak1.onrender.com/user/returnfundo',
-                        {
-                            filename: fundoimage,
-                        },
-                        {
-                            responseType: 'arraybuffer',
-                        }
-                    );
+                        const arrayBufferView = new Uint8Array(response.data);
+                        const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
 
-                    const arrayBufferView = new Uint8Array(response.data);
-                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+                        // Converter Blob para Base64
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = () => {
+                            if (reader.result) {
+                                setImg(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
+                            }
+                            console.log(response.data);
+                            console.log(img);
+                        };
+                        console.log('foi');
 
-                    // Converter Blob para Base64
-                    const reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        setImg(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
-                        console.log(response.data);
-                        console.log(img);
-                    };
-                    console.log('foi');
-                
-                } else {
-                    console.log('Sem imagem');
-                    
+                    } else {
+                        console.log('Sem imagem');
+
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
                 }
-            } catch (error) {
-                console.error('Error uploading image:', error);
-            }  
-        };
-        returnImage();
-    }, [token]);
+            };
+            returnImage();
+        }, [token]);
 
-    React.useEffect(() => {
-        const returnImagePerfil = async () => {
-            console.log('foi');
-            try {
-                const perfilimage = userData.user_FotoPerfil
-                console.log(perfilimage);
+        React.useEffect(() => {
+            const returnImagePerfil = async () => {
+                console.log('foi');
+                try {
+                    const perfilimage = userData ? userData.user_FotoPerfil : ''
+                    console.log(perfilimage);
 
-                if (perfilimage) {
-                    const response = await axios.post(
-                        'https://easypass-iak1.onrender.com/user/returnperfil',
-                        {
-                            filename: perfilimage,
-                        },
-                        {
-                            responseType: 'arraybuffer',
-                        }
-                    );
+                    if (perfilimage) {
+                        const response = await axios.post(
+                            'https://easypass-iak1.onrender.com/user/returnperfil',
+                            {
+                                filename: perfilimage,
+                            },
+                            {
+                                responseType: 'arraybuffer',
+                            }
+                        );
 
-                    const arrayBufferView = new Uint8Array(response.data);
-                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+                        const arrayBufferView = new Uint8Array(response.data);
+                        const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
 
-                    const reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
-                        console.log(response.data);
-                        console.log(perfil);
-                    };
-                    console.log('foi');
-                } else {
-                    console.log('sem imagem');
-                    
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = () => {
+                            if (reader.result) {
+                                setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
+                            }
+                            console.log(response.data);
+                            console.log(perfil);
+                        };
+                        console.log('foi');
+                    } else {
+                        console.log('sem imagem');
+
+                    }
+
+
+                } catch (error) {
+                    console.error('Error uploading image:', error);
                 }
+            };
+            returnImagePerfil();
+        }, [token]);
 
-                
-            } catch (error) {
-                console.error('Error uploading image:', error);
-            }
-        };
-        returnImagePerfil();
-    }, [token]); 
-  
 
 
         return (
@@ -317,7 +325,11 @@ function SectionPerfil1() {
                                                 boxShadow: '0px 0px 2px 1px',
                                             },
                                         }}
-                                        onClick={() => fileInputRef.current.click()}
+                                        onClick={() => {
+                                            if (fileInputRef.current) {
+                                                fileInputRef.current.click()
+                                            }
+                                        }}
                                     >
                                         <input
                                             type="file"
@@ -351,7 +363,11 @@ function SectionPerfil1() {
                                                 boxShadow: '0 0 2px 1px rgba(0, 0, 0, 0.2)',
                                             },
                                         }}
-                                        onClick={() => fileInputRefAvatar.current.click()}
+                                        onClick={() => {
+                                            if (fileInputRefAvatar.current) {
+                                                fileInputRefAvatar.current.click()
+                                            }
+                                        }}
                                     >
                                         <input
                                             type="file"
@@ -365,7 +381,7 @@ function SectionPerfil1() {
                                         <Avatar
                                             alt="Remy Sharp"
                                             src={perfil}
-                                            sx={{ width: 70, height: 70,  }}
+                                            sx={{ width: 70, height: 70, }}
                                         />
                                     </IconButton>
                                 </label>
@@ -376,7 +392,7 @@ function SectionPerfil1() {
                                     color: 'white',
                                     width: '50%',
                                 }}>
-                                    {userData.user_nome}
+                                    {userData ? userData.user_nome : ''}
                                 </Typography>
                             </Container>
 
@@ -404,15 +420,15 @@ function SectionPerfil1() {
                                         <InputLabel>
                                             <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Nome de Usuário</Typography>
                                         </InputLabel>
-                                            <Typography sx={{
-                                                color: 'white', fontSize: {
-                                                    xs: '2vw',  // (7.5 / 1200) * 600
-                                                    sm: '1.5vw',  // (7.5 / 1200) * 900
-                                                    md: '1.2vw',  // (7.5 / 1200) * 1200
-                                                    lg: '1.2vw',
-                                                    xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
-                                                },
-                                            }}>{userData.user_nome}</Typography>
+                                        <Typography sx={{
+                                            color: 'white', fontSize: {
+                                                xs: '2vw',  // (7.5 / 1200) * 600
+                                                sm: '1.5vw',  // (7.5 / 1200) * 900
+                                                md: '1.2vw',  // (7.5 / 1200) * 1200
+                                                lg: '1.2vw',
+                                                xl: '1.2vw',  // Manter o mesmo tamanho de lg para xl
+                                            },
+                                        }}>{userData ? userData.user_nome : ''}</Typography>
                                     </Container>
                                     <Container sx={{
                                         mt: 2,
@@ -445,7 +461,6 @@ function SectionPerfil1() {
                                         {cep ?
                                             <Input
                                                 id="outlined-password-input"
-                                                label="Nome"
                                                 type="text"
                                                 value={dado} // Define o valor do TextField como o valor do estado "parame"
                                                 onChange={(event) => setPega(event.target.value)}
@@ -458,7 +473,7 @@ function SectionPerfil1() {
                                                 }}
                                             />
                                             :
-                                            <Typography sx={{ color: 'white' }}>{userData.user_endCEP}</Typography>
+                                            <Typography sx={{ color: 'white' }}>{userData ? userData.user_endCEP : ''}</Typography>
                                         }
                                     </Container>
                                     <Container sx={{
@@ -511,9 +526,9 @@ function SectionPerfil1() {
                                             <Typography sx={{ fontSize: 11, mt: 1, color: '#C2C2C2' }}>Tipo de Usuário</Typography>
                                         </InputLabel>
                                         <Typography sx={{ color: 'white' }}>
-                                            {userData.user_tipo === 'default' ? 'Usuário Padrão' :
-                                                userData.user_tipo === 'student' ? 'Estudante' :
-                                                    userData.user_tipo === 'worker' ? 'Trabalhador' : null}
+                                            {userData && userData.user_tipo === 'default' ? 'Usuário Padrão' :
+                                                userData && userData.user_tipo === 'student' ? 'Estudante' :
+                                                    userData && userData.user_tipo === 'worker' ? 'Trabalhador' : null}
                                         </Typography>
                                     </Container>
                                 </Container>
@@ -522,6 +537,5 @@ function SectionPerfil1() {
                     </Box>}
             </>
         )
-    }
-
+}
     export default SectionPerfil1
