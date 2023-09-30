@@ -7,8 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
+    "preview": "vite preview",
+    "start": "vite preview" // Ou o comando adequado para iniciar seu aplicativo em produção
+  },  
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
