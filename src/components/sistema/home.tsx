@@ -282,7 +282,7 @@ function Homesistema() {
                     <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
                 )
             ) : (
-                <span>Handle the case where userData is null, undefined, or not valid</span>
+                null
             )}                
             <Box id="section1" sx={{
                 height: '90.5vh',
