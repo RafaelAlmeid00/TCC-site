@@ -124,7 +124,7 @@ export default function SectionP() {
                 position: "relative"
               }}
             >
-              {user && MsgContext.map((message: any,) => (
+              {user && MsgContext.map((message: any, index: any) => (
                 <Card
                   key={message.sacmen_id}
                   sx={{
