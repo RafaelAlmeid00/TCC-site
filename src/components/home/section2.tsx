@@ -109,7 +109,7 @@ function Section2() {
 
   return (
     <>
-      <Box sx={{
+      <Box id="Bussines" sx={{
         height: '100vh',
         width: '100vw',
         background: verify ? '#222222' : 'white',

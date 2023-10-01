@@ -23,8 +23,8 @@ export default function Footer() {
   };
 
   const listProd = [
-    { text: 'Para Escolas', route: '/Escolas' },
-    { text: 'Para Empresas', route: '/Empresas' },
+    { text: 'Para Escolas', route: '#Bussines' },
+    { text: 'Para Empresas', route: '#Bussines' },
     { text: 'Aplicativo', route: '/Aplicativo' },
     { text: 'Serviços', route: '/Servicos' },
   ]
