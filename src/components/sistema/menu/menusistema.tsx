@@ -90,7 +90,7 @@ export default function MenuSistema() {
                 display: 'flex',
                 flexDirection: 'row',
                 height: 'auto',
-                zIndex: 2
+                zIndex: 3
             }}>
                 <Container sx={{
                     width: '100%',

@@ -312,7 +312,7 @@ export default function Ext() {
             </Container>
 
             {
-                pays ? (
+                pays[year] ? (
                     <>
                         <Container key={year} sx={{ width: '100%', mt: 2 }}>
                             <Container sx={{

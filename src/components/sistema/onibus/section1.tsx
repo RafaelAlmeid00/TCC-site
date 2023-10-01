@@ -17,7 +17,7 @@ export default function Buss() {
             try {
                 console.log('ta indo');
                 console.log(token);
-
+                setLoading(true)
                 const response = await axios.post('https://easypass-iak1.onrender.com/routes/all', {
                     token: token
                 });
@@ -58,13 +58,8 @@ export default function Buss() {
                     width: '80vw',
                     float: "right",
                     background: verify ? fundo : 'white',
-                    position: "relative",
-                    overflow: "hidden",
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    height: 'auto',
+                    overflowY: "scroll",
+                    height: '100vh',
                 }}
             >
                 <Container sx={{
@@ -74,6 +69,7 @@ export default function Buss() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
+                    mb: 10
                 }}>
                 {loading ? (
                     Array.from({ length: 4 }).map((_, index) => (

@@ -113,6 +113,11 @@ const Rota = () => {
     }
   }, [userData]);
 
+  React.useEffect(() => {
+    if (userData && userData.user_status == 'ativo') {
+      setActive(false);
+    }
+  },[userData])
 
   React.useEffect(() => {
     //console.log('okok');
@@ -315,6 +320,7 @@ const Rota = () => {
                       <Route path="/Rotas" element={Active ? <AlertConta /> : <RoutesLazy />} />
                       <Route path="/Perfil" element={<PerfilLazy />} />
                       <Route path="/Onibus" element={Active ? <AlertConta /> : <OnibusLazy />} />
+                      <Route path="/SAC" element={Active ? <AlertConta /> : <SACLazy />} />
                       <Route path="/Card" element={Active ? <AlertConta /> : <CardLazy />} />
                       <Route path="/AlterarEmail" element={Active ? <AlertConta /> : <TrocaEmailLazy />} />
                       <Route path="/Documentos" element={<Docmentos />} />
@@ -322,7 +328,6 @@ const Rota = () => {
                       <Route path="/Dados" element={<Informacoes />} />
                       <Route path="/Viagens" element={Active ? <AlertConta /> : <Viagens />} />
                       <Route path="/Extrato" element={Active ? <AlertConta /> : <Extrato />} />
-                      <Route path="/SAC" element={Active ? <AlertConta /> : <SACLazy />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

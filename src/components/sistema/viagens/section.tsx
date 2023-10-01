@@ -189,7 +189,6 @@ export default function Viagens() {
         <Box
             id="section1"
             sx={{
-                mt: "9.5vh",
                 height: "100vh",
                 width: "80vw",
                 float: "right",

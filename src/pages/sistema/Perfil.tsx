@@ -15,8 +15,8 @@ function Perfil() {
                 <>
                     <MenuPerfil />
                     <MenuSistema />
-                    <SectionPerfil1 />
-                    <SectionPerfil2 />
+                        <SectionPerfil1 />
+                        <SectionPerfil2 />
                 </>
                 : <Loading />}
         </>

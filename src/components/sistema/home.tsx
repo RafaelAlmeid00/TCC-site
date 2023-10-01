@@ -290,6 +290,7 @@ function Homesistema() {
                 float: "right",
                 background: verify ? fundo : 'white',
                 position: "relative",
+                overflowX: 'hidden',
                 overflowY: 'scroll'
             }}>
                 {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}
@@ -417,7 +418,7 @@ function Homesistema() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    mb: 3
+                    mb: 10
                 }}>
                     <Card
                         sx={{
