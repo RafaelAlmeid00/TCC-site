@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import colors from "../assets/colors";
 import theme from "../assets/theme";
 import { BtnsApp } from "./btns";
+import PrivacyPolicy from "./cadastro/PrivacyPolicy";
+import TermsAndConditions from "./cadastro/TermsAndConditions";
+import CookiePolicy from "./cadastro/Cookies.Policy";
 
 export default function Footer() {
 
@@ -25,7 +28,7 @@ export default function Footer() {
   const listProd = [
     { text: 'Para Escolas', route: '#Bussines' },
     { text: 'Para Empresas', route: '#Bussines' },
-    { text: 'Aplicativo', route: '/Aplicativo' },
+    { text: 'Aplicativo', route: '/App' },
     { text: 'Serviços', route: '/Servicos' },
   ]
 
@@ -137,40 +140,9 @@ export default function Footer() {
             ml: 0
           },
         }}>
-          <Link href="/" underline="hover">
-            <Typography sx={{
-              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-              Privacidade
-            </Typography>
-          </Link>
-          <Link href="/" underline="hover">
-            <Typography sx={{
-              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
-              ml: '30px',
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-              Termos
-            </Typography>
-          </Link>
-          <Link href="/" underline="hover">
-            <Typography sx={{
-              fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
-              ml: '30px',
-              fontWeight: 'bold',
-              color: 'white',
-              [theme.breakpoints.down('sm')]: {
-                mt: 2,
-                ml: 0
-              },
-              
-            }}>
-              Preferências de Cookies
-            </Typography>
-          </Link>
+         <PrivacyPolicy/>
+          <TermsAndConditions/>
+          <CookiePolicy/>
         </Container>
         <Container>
           <Typography sx={{
