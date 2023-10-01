@@ -58,7 +58,8 @@ export default function Buss() {
                     width: '80vw',
                     float: "right",
                     background: verify ? fundo : 'white',
-                    height: '100vh',
+                    minHeight: '100vh',
+                    maxHeight: '100%',
                 }}
             >
                 <Container sx={{
