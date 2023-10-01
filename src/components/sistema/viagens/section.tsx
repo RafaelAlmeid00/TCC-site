@@ -194,7 +194,6 @@ export default function Viagens() {
                 float: "right",
                 background: verify ? fundo : "white",
                 position: "relative",
-                overflowY: "scroll",
             }}
         >
             <Container

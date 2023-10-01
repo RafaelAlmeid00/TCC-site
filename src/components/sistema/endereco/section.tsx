@@ -29,7 +29,6 @@ function End() {
                     float: "right",
                     background: verify ? fundo : "white",
                     position: "relative",
-                    overflow: "hidden",
                 }}
             >
                 <Container

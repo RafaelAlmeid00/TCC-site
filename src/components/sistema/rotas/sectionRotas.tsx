@@ -79,7 +79,6 @@ function SectionRota1() {
         float: "right",
         background: verify ? fundo : "white",
         position: "relative",
-        overflowY: "scroll",
       }}>
 
       <Container sx={{

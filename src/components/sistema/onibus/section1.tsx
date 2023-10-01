@@ -58,7 +58,6 @@ export default function Buss() {
                     width: '80vw',
                     float: "right",
                     background: verify ? fundo : 'white',
-                    overflowY: "scroll",
                     height: '100vh',
                 }}
             >

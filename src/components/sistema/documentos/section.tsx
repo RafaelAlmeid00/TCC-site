@@ -68,7 +68,6 @@ export default function Docs() {
                 float: "right",
                 background: verify ? fundo : "white",
                 position: "relative",
-                overflowY: "scroll",
             }}
         >
             <Container

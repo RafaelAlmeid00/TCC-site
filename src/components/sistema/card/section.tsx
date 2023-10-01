@@ -116,7 +116,6 @@ export default function CardSection() {
                 float: "right",
                 background: verify ? fundo : 'white',
                 position: "relative",
-                overflowY: 'scroll'
             }}>
                 <Container sx={{
                     width: '100%',
