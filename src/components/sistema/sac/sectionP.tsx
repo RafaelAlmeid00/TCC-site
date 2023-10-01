@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { socket } from "../../../../socket.io/index";
 import ModalContext from "../../../context/modalcontext";
-import MenuSistema from "../menu/menusistema";
 
 export default function SectionP() {
 
@@ -125,7 +124,7 @@ export default function SectionP() {
                 position: "relative"
               }}
             >
-              {user && MsgContext.map((message: any, index) => (
+              {user && MsgContext.map((message: any,) => (
                 <Card
                   key={message.sacmen_id}
                   sx={{
