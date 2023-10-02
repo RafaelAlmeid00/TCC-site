@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function CookiePolicy(color: any) {
+function CookiePolicy({ color }: { color: string }) {
   const linkStyle = {
     opacity: 0.7, // Define a opacidade como 0.7
     textDecoration: "none", // Remove o sublinhado

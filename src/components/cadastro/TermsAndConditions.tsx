@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function TermsAndConditions(color: any) {
+function TermsAndConditions({ color }: { color: string }) {
   const linkStyle = {
     opacity: 0.7, // Define a opacidade como 0.7
     textDecoration: "none", // Remove o sublinhado
