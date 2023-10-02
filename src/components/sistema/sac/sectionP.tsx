@@ -82,7 +82,7 @@ export default function SectionP() {
           console.log('this is container: ', container);
           console.log('this is container scrolltop: ', container.scrollTop);
           console.log('this is container scrollHeight: ', container.scrollHeight);
-          console.log('a:', a);
+          console.log('this is a:', a);
         }
       }, 100);
     }
