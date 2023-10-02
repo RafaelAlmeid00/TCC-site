@@ -1,3 +1,4 @@
+import { Link } from "@mui/material";
 import { useEffect } from "react";
 
 function PrivacyPolicy({ color }: { color: string }) {
@@ -5,7 +6,7 @@ function PrivacyPolicy({ color }: { color: string }) {
     opacity: 0.7, // Define a opacidade como 0.7
     textDecoration: "none", // Remove o sublinhado
     color: color, // Define a cor do texto como preto
-    fontSize: 11, // Diminui o tamanho da fonte
+    fontSize: { xs: '2.5vw', sm: '2vw', md: '2vw', lg: '1.8vw', xl: '1.8vw' },
     ml: 2,
     mr: 2
   };
@@ -29,14 +30,14 @@ function PrivacyPolicy({ color }: { color: string }) {
 
   return (
     <>
-      <a
+      <Link
         href="https://www.iubenda.com/privacy-policy/25148132"
         className="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe"
         title="Política de Privacidade"
-        style={linkStyle}
+        sx={linkStyle}
       >
         Política de Privacidade
-      </a>
+      </Link>
     </>
   );
 }
