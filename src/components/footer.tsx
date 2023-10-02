@@ -130,7 +130,7 @@ export default function Footer() {
         </Container>
         <Container sx={{
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           ml: '30px',
           mt: '30px',
           color: 'white',
@@ -140,7 +140,7 @@ export default function Footer() {
             ml: 0
           },
         }}>
-         <PrivacyPolicy color={'white'} />
+          <PrivacyPolicy color={'white'} />
           <TermsAndConditions color={'white'} />
           <CookiePolicy color={'white'} />
         </Container>
