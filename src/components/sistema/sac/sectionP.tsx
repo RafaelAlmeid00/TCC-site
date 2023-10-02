@@ -74,8 +74,16 @@ export default function SectionP() {
     if (messagesContainerRef.current) {
       const container = messagesContainerRef.current;
       // Role para o último elemento apenas se houver mensagens
-      if (MsgContext.length > 0) {
+      if (MsgContext && MsgContext.length > 0) {
         container.scrollTop = container.scrollHeight - container.clientHeight;
+        console.log('this is ref: ', messagesContainerRef);
+        console.log('this is ref current: ', messagesContainerRef.current);
+        console.log('this is container: ', container);
+        console.log('this is container scrolltop: ', container.scrollTop);
+        console.log('this is container scrollHeight: ', container.scrollHeight);
+        console.log('this is container clientHeight: ', container.clientHeight);
+
+
       }
     }
   }, [MsgContext]);
