@@ -75,7 +75,8 @@ export default function SectionP() {
         const container = messagesContainerRef.current;
         // Role para o último elemento apenas se houver mensagens
         if (MsgContext && MsgContext.length > 0) {
-          container.scrollTop = container.scrollHeight;
+          let a = container.scrollHeight
+          container.scrollTop = a;
           console.log('this is ref: ', messagesContainerRef);
           console.log('this is ref current: ', messagesContainerRef.current);
           console.log('this is container: ', container);
