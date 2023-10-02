@@ -139,9 +139,24 @@ export default function Footer() {
             ml: 0
           },
         }}>
-          <PrivacyPolicy color={'white'} />
-          <TermsAndConditions color={'white'} />
-          <CookiePolicy color={'white'} />
+          <Container sx={{
+            ml: 2.5,
+            mr: 2.5
+          }}>
+            <PrivacyPolicy color={'white'} />
+          </Container>
+          <Container sx={{
+            ml: 2.5,
+            mr: 2.5
+          }}>
+            <TermsAndConditions color={'white'} />
+          </Container>
+          <Container sx={{
+            ml: 2.5,
+            mr: 2.5
+          }}>
+            <CookiePolicy color={'white'} />
+          </Container>
         </Container>
         <Container>
           <Typography sx={{
