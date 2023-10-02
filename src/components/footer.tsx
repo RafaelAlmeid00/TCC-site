@@ -140,20 +140,20 @@ export default function Footer() {
           },
         }}>
           <Container sx={{
-            ml: 2.5,
-            mr: 2.5
+            ml: 1,
+            mr: 1
           }}>
             <PrivacyPolicy color={'white'} />
           </Container>
           <Container sx={{
-            ml: 2.5,
-            mr: 2.5
+            ml: 1,
+            mr: 1
           }}>
             <TermsAndConditions color={'white'} />
           </Container>
           <Container sx={{
-            ml: 2.5,
-            mr: 2.5
+            ml: 1,
+            mr: 1
           }}>
             <CookiePolicy color={'white'} />
           </Container>
