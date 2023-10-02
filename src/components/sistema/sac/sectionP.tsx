@@ -83,6 +83,8 @@ export default function SectionP() {
           console.log('this is container scrolltop: ', container.scrollTop);
           console.log('this is container scrollHeight: ', container.scrollHeight);
           console.log('this is a:', a);
+          console.log(window.scrollTo(0, a));
+          
         }
       }, 100);
     }
