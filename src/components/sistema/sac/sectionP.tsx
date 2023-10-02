@@ -71,13 +71,14 @@ export default function SectionP() {
 
 
   useEffect(() => {
-    if (MsgContext && MsgContext.length > 0 && messagesContainerRef.current) {
+    if (messagesContainerRef.current) {
       const container = messagesContainerRef.current;
-      // Role para o último elemento
-      container.scrollTop = container.scrollHeight - container.clientHeight;
+      // Role para o último elemento apenas se houver mensagens
+      if (MsgContext.length > 0) {
+        container.scrollTop = container.scrollHeight - container.clientHeight;
+      }
     }
   }, [MsgContext]);
-
 
   useEffect(() => {
     if (MsgContext && MsgContext.length > 0) {
