@@ -6,7 +6,7 @@ function CookiePolicy({ color }: { color: string }) {
     opacity: 0.7, // Define a opacidade como 0.7
     textDecoration: "none", // Remove o sublinhado
     color: color, // Define a cor do texto como preto
-    fontSize: { xs: '2.5vw', sm: '2vw', md: '2vw', lg: '1.8vw', xl: '1.8vw' },
+    fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
     ml: 2,
     mr: 2
   };
