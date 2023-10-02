@@ -1,5 +1,6 @@
 import { Link } from "@mui/material";
 import { useEffect } from "react";
+import theme from "../../assets/theme";
 
 function TermsAndConditions({ color }: { color: string }) {
   const linkStyle = {
@@ -8,7 +9,11 @@ function TermsAndConditions({ color }: { color: string }) {
     color: color, // Define a cor do texto como preto
     fontSize: { xs: '2vw', sm: '1.2vw', md: '1.2vw', lg: '1vw', xl: '1vw' },
     ml: 2,
-    mr: 2
+    mr: 2,
+    [theme.breakpoints.down('md')]: {
+      ml: 0,
+      mr: 0
+    },
   };
 
   useEffect(() => {
