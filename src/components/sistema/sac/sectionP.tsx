@@ -70,6 +70,14 @@ export default function SectionP() {
   };
 
 
+  // Scroll to the bottom of the messages container whenever MsgContext updates
+  useEffect(() => {
+    if (MsgContext && MsgContext.length > 0 && messagesContainerRef.current) {
+      // Scroll to the last message
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [MsgContext]);
+FileReader
 
   useEffect(() => {
     if (MsgContext && MsgContext.length > 0) {
@@ -81,11 +89,6 @@ export default function SectionP() {
       } else {
         setUser(false);
         setIsAdmin(true);
-      }
-
-      // Role até a última mensagem
-      if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }
   }, [MsgContext]);
