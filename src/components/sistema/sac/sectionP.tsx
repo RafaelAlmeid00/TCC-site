@@ -12,7 +12,7 @@ export default function SectionP() {
   const { MsgContext } = useContext(ModalContext);
   const [user, setUser] = useState(false);
   const [, setIsAdmin] = useState(false);
-  const messagesContainerRef: React.RefObject<HTMLElement> = useRef(null);
+  const messagesContainerRef: any = useRef(null);
 
   socket.connect();
   const { userData } = useContext(ModalContext);
