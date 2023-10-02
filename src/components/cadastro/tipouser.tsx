@@ -322,9 +322,9 @@ function Tipo({ dados }: Props) {
                     }}>
                         Ao confirmar seu cadastro você aceita os seguintes termos:
                     </Typography>
-                    <PrivacyPolicy />
-                    <TermsAndConditions />
-                    <CookiePolicy />
+                    <PrivacyPolicy color={'black'} />
+                    <TermsAndConditions color={'black'} />
+                    <CookiePolicy color={'black'} />
                 </Container>
 
             </Box>

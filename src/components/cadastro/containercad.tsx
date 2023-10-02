@@ -54,7 +54,7 @@ function ContainerCad() {
         const isPasswordValid = validatePassword(password);
         try {
             console.log("ta indo")
-            const response = await axios.post('http://localhost:3344/user/email', { user_email: email })
+            const response = await axios.post('https://easypass-iak1.onrender.com/user/email', { user_email: email })
             console.log(email)
             console.log(response.data)
             if (response.data) {
@@ -112,7 +112,7 @@ function ContainerCad() {
                     setShowNull(false)
                 }, 3000);
             }
-            const res = await axios.post('http://localhost:3344/user/login', {
+            const res = await axios.post('https://easypass-iak1.onrender.com/user/login', {
                 user_CPF: cpf2,
                 user_senha: password,
             });

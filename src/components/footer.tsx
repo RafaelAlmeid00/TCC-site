@@ -140,9 +140,9 @@ export default function Footer() {
             ml: 0
           },
         }}>
-         <PrivacyPolicy/>
-          <TermsAndConditions/>
-          <CookiePolicy/>
+         <PrivacyPolicy color={'white'} />
+          <TermsAndConditions color={'white'} />
+          <CookiePolicy color={'white'} />
         </Container>
         <Container>
           <Typography sx={{
