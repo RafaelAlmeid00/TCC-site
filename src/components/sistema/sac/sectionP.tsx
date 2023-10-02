@@ -1,5 +1,5 @@
 import { Box, Button, Card, Container, Grid, TextField, Typography } from "@mui/material";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useLayoutEffect } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { socket } from "../../../../socket.io/index";
 import ModalContext from "../../../context/modalcontext";
@@ -69,22 +69,22 @@ export default function SectionP() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (messagesContainerRef.current) {
-      setTimeout(() => {
-        const container = messagesContainerRef.current;
-        // Role para o último elemento apenas se houver mensagens
-        if (MsgContext && MsgContext.length > 0) {
-          let a = container.scrollHeight
-          container.scrollTop = a;
-          console.log('this is ref: ', messagesContainerRef);
-          console.log('this is ref current: ', messagesContainerRef.current);
-          console.log('this is container: ', container);
-          console.log('this is container scrolltop: ', container.scrollTop);
-          console.log('this is container scrollHeight: ', container.scrollHeight);
-          console.log('this is a:', a);
-        }
-      }, 100);
+      const container = messagesContainerRef.current;
+
+      // Role para o último elemento apenas se houver mensagens
+      if (MsgContext && MsgContext.length > 0) {
+        let a = container.scrollHeight;
+        container.scrollTop = a;
+
+        console.log('this is ref: ', messagesContainerRef);
+        console.log('this is ref current: ', messagesContainerRef.current);
+        console.log('this is container: ', container);
+        console.log('this is container scrolltop: ', container.scrollTop);
+        console.log('this is container scrollHeight: ', container.scrollHeight);
+        console.log('this is a:', a);
+      }
     }
   }, [MsgContext]);
 
