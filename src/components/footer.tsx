@@ -130,8 +130,7 @@ export default function Footer() {
         </Container>
         <Container sx={{
           display: 'flex',
-          flexDirection: 'column',
-          ml: '30px',
+          flexDirection: 'row',
           mt: '30px',
           color: 'white',
           textDecoration: 'none',

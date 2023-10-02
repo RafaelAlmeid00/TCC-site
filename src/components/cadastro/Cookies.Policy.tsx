@@ -6,6 +6,8 @@ function CookiePolicy({ color }: { color: string }) {
     textDecoration: "none", // Remove o sublinhado
     color: color, // Define a cor do texto como preto
     fontSize: 11, // Diminui o tamanho da fonte
+    ml: 2,
+    mr: 2
   };
 
   useEffect(() => {
