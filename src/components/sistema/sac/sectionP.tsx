@@ -12,7 +12,7 @@ export default function SectionP() {
   const { MsgContext } = useContext(ModalContext);
   const [user, setUser] = useState(false);
   const [, setIsAdmin] = useState(false);
-  const messagesContainerRef: any = useRef(null);
+  const messagesContainerRef: React.RefObject<HTMLElement> = useRef(null);
 
   socket.connect();
   const { userData } = useContext(ModalContext);
@@ -70,14 +70,14 @@ export default function SectionP() {
   };
 
 
-  // Scroll to the bottom of the messages container whenever MsgContext updates
   useEffect(() => {
     if (MsgContext && MsgContext.length > 0 && messagesContainerRef.current) {
-      // Scroll to the last message
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      const container = messagesContainerRef.current;
+      // Role para o último elemento
+      container.scrollTop = container.scrollHeight - container.clientHeight;
     }
   }, [MsgContext]);
-FileReader
+
 
   useEffect(() => {
     if (MsgContext && MsgContext.length > 0) {
@@ -106,8 +106,8 @@ FileReader
 
       }}>
         <Grid sx={{
-            height: '100%',
-            flex: 1,
+          height: '100%',
+          flex: 1,
         }}>
           <Container sx={{
             width: '100%',
