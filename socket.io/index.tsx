@@ -7,7 +7,7 @@ interface CustomSocket extends Socket {
 }
 
 const createCustomSocket = (token?: string): CustomSocket => {
-    const socket = io("https://easypass-iak1.onrender.com", {
+    const socket = io("http://easypass-iak1.onrender.com", {
         autoConnect: false,
         auth: {
             token: token,

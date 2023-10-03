@@ -290,7 +290,6 @@ function Homesistema() {
                 float: "right",
                 background: verify ? fundo : 'white',
                 position: "relative",
-                overflowX: 'hidden',
             }}>
                 {alertatopo && alertatopo.nomeBtn ? <AlertaModal nomeBtn={alertatopo.nomeBtn} rotaBtn={alertatopo.rotaBtn} statusAlert={alertatopo.statusAlert} textAlert={alertatopo.textAlert} titleAlert={alertatopo.titleAlert} /> : ''}
 
@@ -301,7 +300,7 @@ function Homesistema() {
                     justifyContent: 'start',
                     alignItems: 'center',
                     float: 'left',
-                    mt: 3
+                    mt: 3,
                 }}>
                     <TuneIcon sx={{
                         mr: 2,

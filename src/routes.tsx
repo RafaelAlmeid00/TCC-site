@@ -48,7 +48,6 @@ const Rota = () => {
   const [loginbool, setLog] = useState(false);
   const [cpf, setCpf] = React.useState('');
   const [userData, setUserData] = React.useState<UserData | null>(null);
-  const [MsgContext, setRecivedContext] = React.useState<object | null>(null);
   const [Active, setActive] = React.useState(false);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
@@ -307,8 +306,6 @@ const Rota = () => {
                   setUserData,
                   alertatopo,
                   setAlertaTopo,
-                  MsgContext,
-                  setRecivedContext,
                 }}>
                   <React.Fragment>
                     <Routes>

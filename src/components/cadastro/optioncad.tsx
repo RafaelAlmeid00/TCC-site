@@ -19,7 +19,7 @@ export default function OptionsCad() {
         <>
             <Exit previousRoute={'/'} />
             <Box sx={{
-                height: '85vh',
+                height: '75vh',
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',

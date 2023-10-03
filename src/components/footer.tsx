@@ -9,8 +9,10 @@ import { BtnsApp } from "./btns";
 import PrivacyPolicy from "./cadastro/PrivacyPolicy";
 import TermsAndConditions from "./cadastro/TermsAndConditions";
 import CookiePolicy from "./cadastro/Cookies.Policy";
+import { useLocation } from "react-router-dom";
 
 export default function Footer() {
+  const location = useLocation();
 
   const cardVariants = {
     hover: {
@@ -26,7 +28,7 @@ export default function Footer() {
   };
 
   const listProd = [
-    { text: 'Para Escolas', route: '#Bussines' },
+    { text: 'Para Escolas', route: location.pathname !=="https://easypass-app.onrender.com/" ? 'https://easypass-app.onrender.com/#Bussines' : '#Bussines' },
     { text: 'Para Empresas', route: '#Bussines' },
     { text: 'Aplicativo', route: '/App' },
     { text: 'Serviços', route: '/Servicos' },

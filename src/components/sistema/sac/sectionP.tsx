@@ -9,34 +9,16 @@ export default function SectionP() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const fundo = themes.palette.background.default
-  const { MsgContext } = useContext(ModalContext);
   const [user, setUser] = useState(false);
   const [, setIsAdmin] = useState(false);
-  const messagesContainerRef: any = useRef(null);
-
+  const messagesContainerRef = useRef<HTMLDivElement>(null);;
   socket.connect();
   const { userData } = useContext(ModalContext);
-  const [msg, setMsg] = useState("");
-  const [recivedMsg, setRecived] = useState([]);
-  const { setRecivedContext } = useContext(ModalContext);
+  const [msg, setMsg] = useState<any>([]);
+  const [recivedMsg, setRecived] = useState<any>([]);
   const [, setCharCount] = useState(0);
   const maxCharCount = 500;
-
-  useEffect(() => {
-    socket.on("userMensage", (message) => {
-      console.log("messagem recebida: ", message);
-      setRecived(message);
-    });
-  }, [msg]);
-
-  useEffect(() => {
-    if (recivedMsg.length > 0) {
-      console.log("log RecivedMsg: ", recivedMsg);
-      if (setRecivedContext) {
-        setRecivedContext(recivedMsg);
-      }
-    }
-  }, [recivedMsg]);
+  const [bool, setBool] = useState(Boolean);
 
   const handleInputChange = (event: any) => {
     const inputText = event.target.value;
@@ -47,11 +29,14 @@ export default function SectionP() {
   };
 
   const msgSend = () => {
+    if (!bool) {
+      setBool(true)
+    }
     if (msg.length <= maxCharCount) {
-      const message = msg;
-      setMsg(""); // Limpa o input
       console.log("this is socket connected: ", socket.connected);
       console.log("emit!");
+      const message = msg;
+
       socket.emit(
         "userMensage",
         message,
@@ -64,35 +49,34 @@ export default function SectionP() {
           }
         }
       );
+      socket.on("userMensage", (message) => {
+        console.log("messagem recebida: ", message);
+        setRecived(message);
+        setMsg('');
+        setBool(false)
+      });
+
+
     } else {
       alert("A mensagem não pode ter mais de 500 caracteres.");
     }
   };
 
   useEffect(() => {
-    if (messagesContainerRef.current) {
+    setTimeout(() => {
+      messagesContainerRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
       setTimeout(() => {
-        const container = messagesContainerRef.current;
-        // Role para o último elemento apenas se houver mensagens
-        if (MsgContext && MsgContext.length > 0) {
-          let a = container.scrollHeight
-          window.scrollTo(0, a);
-          console.log('this is ref: ', messagesContainerRef);
-          console.log('this is ref current: ', messagesContainerRef.current);
-          console.log('this is container: ', container);
-          console.log('this is container scrolltop: ', container.scrollTop);
-          console.log('this is container scrollHeight: ', container.scrollHeight);
-          console.log('this is a:', a);
-          console.log(window.scrollTo(0, a));
-          
-        }
-      }, 100);
-    }
-  }, [MsgContext]);
-
-  useEffect(() => {
-    if (MsgContext && MsgContext.length > 0) {
-      const lastMessage = MsgContext[MsgContext.length - 1];
+        messagesContainerRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 1000);
+    }, 1000);
+    if (recivedMsg && recivedMsg.length > 0) {
+      const lastMessage = recivedMsg[recivedMsg.length - 1];
 
       if (lastMessage.user_user_CPF) {
         setUser(true);
@@ -102,7 +86,10 @@ export default function SectionP() {
         setIsAdmin(true);
       }
     }
-  }, [MsgContext]);
+
+  }, [recivedMsg.length]);
+
+
 
   return (
     <>
@@ -127,18 +114,17 @@ export default function SectionP() {
             flexDirection: 'column',
             alignItems: 'flex-end',
             overflowY: "auto",
-            height: MsgContext ? '88%' : '80%'
+            height: recivedMsg ? '88%' : '80%'
           }}>
 
 
             <div
-              ref={messagesContainerRef}
               style={{
                 height: "100%",
                 position: "relative"
               }}
             >
-              {user && MsgContext.map((message: any, index: any) => (
+              {user && recivedMsg.map((message: any, index: any) => (
                 <Card
                   key={message.sacmen_id}
                   sx={{
@@ -150,7 +136,7 @@ export default function SectionP() {
                     paddingTop: 2,
                     paddingBottom: 2,
                     mr: 7,
-                    mb: index == MsgContext.length ? 5 : 2,
+                    mb: index == recivedMsg.length ? 5 : 2,
                     mt: index == 0 ? 5 : 0,
 
                   }}
@@ -167,13 +153,14 @@ export default function SectionP() {
                       {message.sacmen_texto}
                     </Typography>
                   </Container>
+                  <div ref={messagesContainerRef}></div>
                 </Card>
               ))}
             </div>
           </Container>
 
           <Container sx={{
-            height: MsgContext ? '10vh' : '25vh',
+            height: recivedMsg ? '10vh' : '25vh',
             background: verify ? fundo : 'white',
             ml: 3,
             marginBottom: '20px', // Ajuste conforme necessário
@@ -199,6 +186,7 @@ export default function SectionP() {
             />
 
             <Button
+              disabled={bool === undefined ? false : bool }
               variant="contained"
               onClick={msgSend}
               endIcon={<SendIcon />}
