@@ -25,6 +25,7 @@ export default function SectionContato() {
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const { hasEntered } = React.useContext(ModalContext);
+    const [showErrorNome, setShowErrorNome] = React.useState(false);
 
 
     const fundo = themes.palette.background.default
@@ -45,6 +46,16 @@ export default function SectionContato() {
                 fontSize: '11px',
                 mb: '10px'
             }}>O email deve ser valido</Typography></>
+        )
+    }
+
+    const Nomes = () => {
+        return (
+            <><Typography sx={{
+                color: 'red',
+                fontSize: '11px',
+                mb: '10px'
+            }}>O nome deve ser valido</Typography></>
         )
     }
 
@@ -81,16 +92,23 @@ export default function SectionContato() {
     function sendEmail(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        // Certifique-se de que "cpf" não é nulo antes de continuar
-        if (cpf === null) {
-            // Ou você pode tratar o caso em que "cpf" é nulo aqui, se necessário
-            return; // Parar a execução da função
+        setShowErrorCPF(false);
+        setShowErrorEmail(false);
+        setShowError(false);
+        setShowErrorNome(false);
+
+        if (cpf == null || cpf == '') {
+            setShowErrorCPF(true)
+            return
         }
 
-        // Usar assertiva de tipo "as" para informar que "cpf" é uma string
+        if (nome == null || nome == '') {
+            setShowErrorNome(true)
+            return
+        }
+
         const cpfString = cpf as string;
 
-        // Agora, você pode realizar as validações
         if (text === '') {
             setShowError(true);
             setShowErrorCPF(false);
@@ -114,6 +132,7 @@ export default function SectionContato() {
         setShowErrorCPF(false);
         setShowErrorEmail(false);
         setShowError(false);
+        setShowErrorNome(false);
         setLoading(true)
         setDisable(true)
 
@@ -136,13 +155,6 @@ export default function SectionContato() {
                 console.log('FAILED...', error);
             });
     }
-
-    // Função que lança um erro indicando que a função não foi definida corretamente
-    const throwNotImplementedError = () => {
-        throw new Error('Function not implemented');
-    };
-
-
 
     return (
         <>
@@ -233,7 +245,7 @@ export default function SectionContato() {
                         },
                     }}>
 
-                        <FormControl id="contact-form" sx={{ width: '100%', display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                        <FormControl id="contact-form" sx={{ width: '100%', display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column', mb: 10 }}>
                             <form onSubmit={sendEmail} style={{ width: '100%', display: "flex", alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                                 <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
                                     <InputLabel htmlFor="input-with-icon-adornment">
@@ -253,11 +265,11 @@ export default function SectionContato() {
                                         sx={{ fontSize: '14px' }}
                                     />
                                 </FormControl>
+                                {showErrorNome && <Nomes />}
                                 <FormControl variant="standard" sx={{ width: '80%', mb: '20px' }}>
                                     <InputLabel htmlFor="input-with-icon-adornment">
                                         CPF
                                     </InputLabel>
-                                  // ...
                                     <Input
                                         value={cpf === null ? '' : cpf.toString()} // Converte para string se cpf não for nulo
                                         onChange={(event) => {
@@ -324,7 +336,7 @@ export default function SectionContato() {
                                     />
                                 </FormControl>
                                 {showError && <Nulls />}
-                                <BtnL name="Enviar" loading={loading} dis={disable}  handleLogin={throwNotImplementedError} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                                <BtnL name="Enviar" loading={loading} dis={disable} handleLogin={sendEmail} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
                                 {sucess && <Sucess />}
                             </form>
                         </FormControl>

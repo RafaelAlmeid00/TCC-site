@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Box, Button, Container, Link, Typography } from "@mui/material";
 import theme from "../assets/theme";
 import AppleIcon from "@mui/icons-material/Apple";
@@ -47,7 +48,7 @@ interface BtnHomeProps {
 interface BtnLProps {
   loading: boolean;
   dis: boolean;
-  handleLogin: () => void;
+  handleLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
   name: string;
   route: string;
   cl: string;

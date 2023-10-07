@@ -19,7 +19,7 @@ export default function OptionsCad() {
         <>
             <Exit previousRoute={'/'} />
             <Box sx={{
-                height: '75vh',
+                height: '100vh',
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
@@ -34,8 +34,8 @@ export default function OptionsCad() {
                         xs: "80%", // (7.5 / 1200) * 600
                         sm: "80%", // (7.5 / 1200) * 900
                         md: "80%", // (7.5 / 1200) * 1200
-                        lg: "100%",
-                        xl: "100%", // Manter o mesmo tamanho de lg para xl
+                        lg: "80%",
+                        xl: "80%", // Manter o mesmo tamanho de lg para xl
                     },
                     width: {
                         xs: "80vw", // (7.5 / 1200) * 600
@@ -46,7 +46,7 @@ export default function OptionsCad() {
                     },
                     boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
                     flexDirection: 'column',
-                    mt: '-60px',
+                    mt: -30,
                     borderRadius: 6
                 }}>
                     <Typography
