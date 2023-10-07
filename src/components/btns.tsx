@@ -48,7 +48,7 @@ interface BtnHomeProps {
 interface BtnLProps {
   loading: boolean;
   dis: boolean;
-  handleLogin: (event) => void; // Alterando o tipo do evento
+  handleLogin: (event: FormEvent<HTMLFormElement>) => void; // Alterando o tipo do evento
   name: string;
   route: string;
   cl: string;
