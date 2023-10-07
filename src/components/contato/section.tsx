@@ -8,7 +8,7 @@ import colors from "../../assets/colors";
 import { BtnL } from "../btns";
 import { Box, Container, FormControl, FormControlLabel, FormLabel, Input, InputAdornment, InputLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import { Fade, Slide } from "react-awesome-reveal";
-import React, { FormEvent } from "react";
+import React from "react";
 
 export default function SectionContato() {
     const [nome, setNome] = React.useState('')
@@ -89,8 +89,7 @@ export default function SectionContato() {
         from_name: 'EasyPass'
     };
 
-    function sendEmail(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+    function sendEmail() {
 
         setShowErrorCPF(false);
         setShowErrorEmail(false);
