@@ -48,11 +48,11 @@ interface BtnHomeProps {
 interface BtnLProps {
   loading: boolean;
   dis: boolean;
-  handleLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleLogin: (event) => void; // Alterando o tipo do evento
   name: string;
   route: string;
   cl: string;
-  bc?: string | undefined; // Prop 'bc' agora é opcional e pode ser do tipo string ou undefined
+  bc?: string | undefined;
   bch: string | undefined;
   mb?: string;
 }
