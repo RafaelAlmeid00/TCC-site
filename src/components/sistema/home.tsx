@@ -10,7 +10,6 @@ import { PedidosAberto, PerfilAtualizado, PerfilError } from "../errosvalidation
 import axios from "axios";
 import Cartao from "./modal/card";
 import { useNavigate } from "react-router-dom";
-import AlertConta from "./AlertConta";
 import Pag from "./modal/pagamento";
 import { DirectionsBus } from "@mui/icons-material";
 import Balancer from "react-wrap-balancer";
@@ -285,7 +284,7 @@ function Homesistema() {
                 null
             )}                
             <Box id="section1" sx={{
-                height: '100vh',
+                height: '100%',
                 width: '80vw',
                 float: "right",
                 background: verify ? fundo : 'white',
