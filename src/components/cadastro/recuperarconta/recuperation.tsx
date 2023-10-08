@@ -210,7 +210,9 @@ function EsqueciAsenha() {
                         flexDirection: 'column',
                         background: verify ? fundo : 'white',
                         boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
-
+                        mb: 10,
+                        paddingBottom: 10,
+                        paddingTop: 10
                     }}>
                         <FormControl variant="standard" sx={{ width: '40%', mb: 5, mt: 10 }}>
                             <InputLabel htmlFor="input-with-icon-adornment">
@@ -294,7 +296,8 @@ function EsqueciAsenha() {
                         </FormControl>
                         <Container sx={{
                             width: '100%',
-                            height: 'auto'
+                            height: 'auto',
+                            mb: 5
                         }}>
                             <Container sx={{
                                 width: 'auto',
@@ -304,7 +307,7 @@ function EsqueciAsenha() {
                                 mt: 3,
                                 mr: -3
                             }}>
-                                <Btn name={"Confirmar"} route={""} fun={Verifycode} cl={verify ? colors.pm : "white"} bc={verify ? "white" : undefined} bch={verify ? "white" : undefined} vis={undefined} mb={undefined} />
+                                <Btn name={"Confirmar"} route={""} fun={Verifycode} cl={verify ? colors.pm : "white"} bc={verify ? "white" : undefined} bch={verify ? "white" : undefined} vis={undefined} mb={'10'} />
                             </Container>
                         </Container>
                     </Box>}

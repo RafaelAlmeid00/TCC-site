@@ -284,7 +284,7 @@ function Homesistema() {
                 null
             )}                
             <Box id="section1" sx={{
-                height: '100%',
+                height: 'auto',
                 width: '80vw',
                 float: "right",
                 background: verify ? fundo : 'white',
