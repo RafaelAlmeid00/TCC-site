@@ -152,10 +152,17 @@ const Rota = () => {
           setActive(true);
           console.log('okok3');
         } else {
-          setAlertaTopo({});
           if (userData.user_status == 'ativo') {
             setActive(false);
           } else {
+            const alerta = {
+              nomeBtn: 'Confirmar',
+              rotaBtn: '/Sistema/documentos',
+              statusAlert: 'warning',
+              textAlert: 'Clique no botão abaixo para ir ver os documentos necessários:',
+              titleAlert: 'Envie pelo App os documentos',
+            };
+            setAlertaTopo(alerta);
             setActive(true);
           }
         }
