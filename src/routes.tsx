@@ -153,8 +153,10 @@ const Rota = () => {
           console.log('okok3');
         } else {
           setAlertaTopo({});
-          if (userData && userData.user_status == 'ativo') {
+          if (userData.user_status == 'ativo') {
             setActive(false);
+          } else {
+            setActive(true);
           }
         }
       }

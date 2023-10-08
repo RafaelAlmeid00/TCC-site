@@ -33,7 +33,7 @@ function Homesistema() {
     const [pag, setPag] = React.useState(false)
     const [usos, setUsos] = React.useState([])
     const { alertatopo } = React.useContext(ModalContext)
-    const [active, setActive] = React.useState(false)
+    const [active] = React.useState(false)
     const [card, setCard] = React.useState(alertatopo.nomeBtn && true)
     const [load, setLoad] = React.useState(dataCard && dataCard.card_id ? false : true)
     const [open, setOpen] = React.useState(false);
@@ -113,21 +113,6 @@ function Homesistema() {
         }
 
     };
-
-    React.useEffect(() => {
-        if (localStorage.getItem('token')) {
-            if (userData && userData.user_status == 'ativo') {
-                setActive(false)
-            } else {
-                setActive(true)
-            }
-        } else {
-            console.log('sem token')
-        }
-
-        console.log(active);
-
-    }, [active, userData])
 
     console.log(userData)
 
@@ -284,7 +269,8 @@ function Homesistema() {
                 null
             )}                
             <Box id="section1" sx={{
-                height: 'auto',
+                minHeight: '100vh',
+                maxHeight: '100%',
                 width: '80vw',
                 float: "right",
                 background: verify ? fundo : 'white',
