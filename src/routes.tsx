@@ -145,8 +145,8 @@ const Rota = () => {
             nomeBtn: 'Confirmar',
             rotaBtn: '/Sistema/dados',
             statusAlert: 'warning',
-            textAlert: 'Clique no botão abaixo para ir confirmar seus dados:',
-            titleAlert: 'Seu celular precisa de confirmação',
+            textAlert: 'Clique no botão abaixo e confirme o número:',
+            titleAlert: 'Confirme no App o seu celular',
           };
           setAlertaTopo(alerta);
           setActive(true);
