@@ -282,7 +282,9 @@ export default function Viagens() {
                                 Cartão usado
                             </Typography>
                         </>
-                    ) : <Typography>Sem viagens feitas</Typography>}
+                    ) : <Typography sx={{
+                        color: verify ? 'white' : 'black'
+                    }}>Sem viagens feitas</Typography>}
             </Container >
 
             <Container sx={{

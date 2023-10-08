@@ -95,7 +95,7 @@ export default function Ext() {
         try {
             const response = await axios.post('https://easypass-iak1.onrender.com/pagamento/search', {
                 params: {
-                    idcli: userData ? userData.user_idcli : '',
+                    idcli: userData && userData.user_idcli,
                     tipo: query
                 }
             }, {
@@ -288,7 +288,9 @@ export default function Ext() {
                         </>
                     )
                     : (
-                        <Typography>Não há pagamentos</Typography>
+                        <Typography sx={{
+                            color: verify ? 'white' : 'black'
+                        }}> Não há pagamentos</Typography>
                     )}
             </Container>
 
