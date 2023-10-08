@@ -42,29 +42,6 @@ function Info() {
 
     };
 
-    const sendSMS = async () => {
-        try {
-
-            await axios.post('https://easypass-iak1.onrender.com/user/sms', {
-                user_cel: userData ? userData.user_cel : '',
-                user_CPF: userData ? userData.user_CPF : '',
-                user_nome: userData ? userData.user_nome : '',
-                token: token
-            })
-            setEmail(true)
-            setTimeout(() => {
-                setEmail(false)
-            }, 8000)
-        } catch (error) {
-            console.log(error);
-            setNEmail(true)
-            setTimeout(() => {
-                setNEmail(false)
-            }, 5000)
-        }
-
-    };
-
     return (
         <>
             {email && typeof data === 'string' && <EmailEnviado data={data} />}
@@ -186,12 +163,10 @@ function Info() {
                         <InputLabel htmlFor="input-with-icon-adornment">
                             Celular
                         </InputLabel>
-                        {userData && userData.user_verifycel == '1'
-                            ?
                             <Input
                                 inputProps={{ maxLength: 45 }}
                                 id="input-with-icon-adornment"
-                                value={userData.user_cel}
+                                value={userData && userData.user_cel}
                                 readOnly
                                 startAdornment={
                                     <InputAdornment position="start">
@@ -200,18 +175,6 @@ function Info() {
                                 }
                                 sx={{ fontSize: '14px' }}
                             />
-                            :
-                            <Input
-                                inputProps={{ maxLength: 45 }}
-                                id="input-with-icon-adornment"
-                                value={userData ? userData.user_cel : ''}
-                                readOnly
-                                endAdornment={
-                                    <BtnHome name={"Confirmar"} fun={sendSMS} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} />
-                                }
-                                sx={{ fontSize: '14px' }}
-                            />
-                        }
                     </FormControl>
                     <FormControl variant="standard" sx={{ width: '100%', mb: '20px' }}>
                         <InputLabel htmlFor="input-with-icon-adornment">
