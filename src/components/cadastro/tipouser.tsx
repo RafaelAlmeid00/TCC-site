@@ -41,10 +41,10 @@ function Tipo({ dados }: Props) {
     const [ListCards, setListCards] = React.useState([{ name: '' }]);
     const { verify } = React.useContext(ModalContext);
     const [card, setCard] = React.useState('');
-    const [listid] = React.useState('');
+    const [listid, setLiistId] = React.useState({});
     const { setLog } = React.useContext(ModalContext);
     const [showSucess, setShowSucess] = React.useState(false);
-    const [idcli, setId] = React.useState("");
+    const [idcli, setId] = React.useState('');
     const [error, setError] = React.useState(false);
 
     const CriarCliente = async (card: any) => {
@@ -65,9 +65,12 @@ function Tipo({ dados }: Props) {
             console.log(cliente)
             try {
                 const response = await axios.post('https://easypass-iak1.onrender.com/cliente', { cliente })
-                console.log(response.data.idcli);
+                console.log(response.data.id);
                 console.log(response);
-                setId(response.data.idcli)
+                setId(response.data.id)
+                console.log(response.data);
+                console.log(idcli);
+                
             } catch (error: any) {
                 console.log(error.message)
                 throw new Error("Erro ao criar cliente");
@@ -76,6 +79,8 @@ function Tipo({ dados }: Props) {
     }
     const handleChange = (event: { target: { value: string } }) => {
         setCard(event.target.value);
+        console.log(card);
+
     };
 
     React.useEffect(() => {
@@ -93,6 +98,19 @@ function Tipo({ dados }: Props) {
         const list_CPF = cpf
         const responsecpf = await axios.post('https://easypass-iak1.onrender.com/listcpf/search', { list_CPF: list_CPF })
         const result = responsecpf.data.objeto
+        console.log(responsecpf);
+        for (const objeto of result) {
+            if ('list_id' in objeto && 'list_tipo' in objeto) {
+                const listId = objeto.list_id;
+                const listTipo = objeto.list_tipo;
+
+                // Atualizar o estado idcli com listId e card com listTipo
+                setLiistId(prevIdCli => ({
+                    ...prevIdCli,
+                    [listId]: listTipo
+                }));
+            }
+        }
         const newListCards: { name: string }[] = [];
 
         if (responsecpf) {
@@ -102,7 +120,6 @@ function Tipo({ dados }: Props) {
                 const idlist = item.list_id
                 console.log(type, cpf_list, idlist);
                 let cardName = '';
-
                 if (cpf_list == cpf) {
                     if (type === 'student') {
                         cardName = 'student';
@@ -160,7 +177,19 @@ function Tipo({ dados }: Props) {
                 dados.user_tipo = card;
             }
             if ('list_CPF_list_id' in dados) {
-                dados.list_CPF_list_id = listid;
+                if (card) {
+                    const index = Object.values(listid).indexOf(card);
+                    console.log(Object.values(listid).indexOf(card));
+                    console.log(index);
+                    
+                    if (index !== -1) {
+                      dados.list_CPF_list_id = Object.keys(listid)[index];
+                      console.log(Object.keys(listid)[index]);
+                      console.log(dados.list_CPF_list_id);
+                      
+                      
+                    }
+                  }
             }
         } else {
             if ('user_tipo' in dados) {
@@ -171,6 +200,8 @@ function Tipo({ dados }: Props) {
         if (idcli) {
             if ('user_idcli' in dados) {
                 dados.user_idcli = idcli;
+                console.log(idcli);
+                
             }
         }
 
@@ -184,8 +215,10 @@ function Tipo({ dados }: Props) {
             setLog?.(true)
             setTimeout(() => {
                 setShowSucess(false)
-                navigate('/cadastro')
+                navigate('/Cadastro')
             }, 2000);
+            console.log(dados);
+
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Erro na requisição POST:', error.message);
@@ -215,7 +248,8 @@ function Tipo({ dados }: Props) {
     }
 
 
-
+    console.log(idcli);
+    console.log(card);
     return (
         <>
             {showSucess && <Sucess />}
