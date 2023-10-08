@@ -12,6 +12,8 @@ import { Btn } from "../btns";
 import PrivacyPolicy from "./PrivacyPolicy";
 import CookiePolicy from "./Cookies.Policy";
 import TermsAndConditions from "./TermsAndConditions";
+import theme from "../../assets/theme";
+import PortalAsaas from "./errorAssas";
 
 interface Props {
     dados: {
@@ -43,6 +45,7 @@ function Tipo({ dados }: Props) {
     const { setLog } = React.useContext(ModalContext);
     const [showSucess, setShowSucess] = React.useState(false);
     const [idcli, setId] = React.useState("");
+    const [error, setError] = React.useState(false);
 
     const CriarCliente = async (card: any) => {
 
@@ -67,6 +70,7 @@ function Tipo({ dados }: Props) {
                 setId(response.data.idcli)
             } catch (error: any) {
                 console.log(error.message)
+                throw new Error("Erro ao criar cliente");
             }
         }
     }
@@ -185,6 +189,9 @@ function Tipo({ dados }: Props) {
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Erro na requisição POST:', error.message);
+                if (error.message == 'Erro ao criar cliente') {
+                    setError(true)
+                }
             } else if (axios.isAxiosError(error)) {
                 // Verificar se o erro é do Axios (opcional)
                 if (error.response) {
@@ -212,122 +219,131 @@ function Tipo({ dados }: Props) {
     return (
         <>
             {showSucess && <Sucess />}
-
-            <Box sx={{
-                background: 'transparent',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                ml: 10,
-            }}>
-                <Container sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mt: 10
+            {error ? <PortalAsaas /> :
+                <Box sx={{
+                    background: verify ? '#121212' : '#F0F0FF',
+                    height: "80vh",
+                    width: "75vw",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    borderRadius: 5,
+                    boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
+                    display: "flex",
+                    flexDirection: "column",
+                    [theme.breakpoints.down('md')]: {
+                        height: "60vh",
+                    }
                 }}>
-                    <Typography sx={{
-                        fontSize: {
-                            xs: '3vw',  // (7.5 / 1200) * 600
-                            sm: '2.5vw',  // (7.5 / 1200) * 900
-                            md: '2vw',  // (7.5 / 1200) * 1200
-                            lg: '1vw',
-                            xl: '1vw',  // Manter o mesmo tamanho de lg para xl
-                        },
-                        fontWeight: 'bold',
-                        color: verify ? 'white' : 'black'
+                    <Container sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mt: 10
                     }}>
-                        Escolha seu tipo de usuário disponivel:
-                    </Typography>
-                </Container>
-
-                <Container sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mt: 3
-                }}>
-                    <FormControl sx={{ m: 1 }} variant="standard">
-                        <InputLabel id="demo-customized-select-label">Cartão</InputLabel>
-                        <Select
-                            labelId="demo-customized-select-label"
-                            id="demo-customized-select"
-                            value={card}
-                            onChange={handleChange}
-                            input={<BootstrapInput />}
-                        >
-                            {ListCards.length > 0 ? (
-                                ListCards.map((card) => (
-                                    <MenuItem key={card.name} value={card.name} >
-                                        {card.name}
-                                    </MenuItem>
-                                ))
-                            ) : (
-                                <MenuItem value="Usuário Padrão">
-                                    <em>Usuário Padrão</em>
-                                </MenuItem>
-                            )}
-                        </Select>
-                    </FormControl>
-                </Container>
-
-                <Container sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mt: 10
-                }}>
-                    <Balancer>
-                        <Typography component='span' sx={{
+                        <Typography sx={{
                             fontSize: {
-                                xs: '2.5vw',  // (7.5 / 1200) * 600
-                                sm: '2vw',  // (7.5 / 1200) * 900
+                                xs: '3vw',  // (7.5 / 1200) * 600
+                                sm: '2.5vw',  // (7.5 / 1200) * 900
                                 md: '2vw',  // (7.5 / 1200) * 1200
                                 lg: '1vw',
                                 xl: '1vw',  // Manter o mesmo tamanho de lg para xl
                             },
-                            textAlign: 'center',
-                            color: verify ? 'white' : 'black',
+                            fontWeight: 'bold',
+                            color: verify ? 'white' : 'black'
                         }}>
-                            Seu tipo de usuário definirá qual cartão poderá usar e a qual instituição estará atrelado, lembrando que a troca de tipo só ocorrerá no pedido do cartão e após isso será definitivo até o cancelamento do mesmo.
+                            Escolha seu tipo de usuário disponivel:
                         </Typography>
-                    </Balancer>
-                </Container>
-                <Container sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mt: 3
-                }}>
-                    <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} cl={undefined} vis={undefined} mb={undefined} />
-                </Container>
+                    </Container>
 
-                <Container sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    mt: 3,
-                    mb: 5
-                }}>
-                    <Typography sx={{
-                        textAlign: 'center', mb: 1, mt: 2, color: '#666666', fontSize: {
-                            xs: "2vw", // (7.5 / 1200) * 600
-                            sm: "1.5vw", // (7.5 / 1200) * 900
-                            md: "1.2vw", // (7.5 / 1200) * 1200
-                            lg: "1vw",
-                            xl: "1vw", // Manter o mesmo tamanho de lg para xl
-                        },
+                    <Container sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mt: 3
                     }}>
-                        Ao confirmar seu cadastro você aceita os seguintes termos:
-                    </Typography>
-                    <PrivacyPolicy color={'black'} />
-                    <TermsAndConditions color={'black'} />
-                    <CookiePolicy color={'black'} />
-                </Container>
+                        <FormControl sx={{ m: 1 }} variant="standard">
+                            <InputLabel id="demo-customized-select-label">Cartão</InputLabel>
+                            <Select
+                                labelId="demo-customized-select-label"
+                                id="demo-customized-select"
+                                value={card}
+                                onChange={handleChange}
+                                input={<BootstrapInput />}
+                            >
+                                {ListCards.length > 0 ? (
+                                    ListCards.map((card) => (
+                                        <MenuItem key={card.name} value={card.name} >
+                                            {card.name}
+                                        </MenuItem>
+                                    ))
+                                ) : (
+                                    <MenuItem value="Usuário Padrão">
+                                        <em>Usuário Padrão</em>
+                                    </MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
+                    </Container>
 
-            </Box>
+                    <Container sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mt: 10
+                    }}>
+                        <Balancer>
+                            <Typography component='span' sx={{
+                                fontSize: {
+                                    xs: '2.5vw',  // (7.5 / 1200) * 600
+                                    sm: '2vw',  // (7.5 / 1200) * 900
+                                    md: '2vw',  // (7.5 / 1200) * 1200
+                                    lg: '1vw',
+                                    xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                                },
+                                textAlign: 'center',
+                                color: verify ? 'white' : 'black',
+                            }}>
+                                Seu tipo de usuário definirá qual cartão poderá usar e a qual instituição estará atrelado, lembrando que a troca de tipo só ocorrerá no pedido do cartão e após isso será definitivo até o cancelamento do mesmo.
+                            </Typography>
+                        </Balancer>
+                    </Container>
+                    <Container sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mt: 3
+                    }}>
+                        <Btn name={"Confirmar"} route={''} bc={verify ? 'white' : undefined} fun={handleclick} bch={verify ? 'white' : undefined} cl={undefined} vis={undefined} mb={undefined} />
+                    </Container>
+
+                    <Container sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        mt: 3,
+                        mb: 5
+                    }}>
+                        <Typography sx={{
+                            textAlign: 'center', mb: 1, mt: 2, color: '#666666', fontSize: {
+                                xs: "2vw", // (7.5 / 1200) * 600
+                                sm: "1.5vw", // (7.5 / 1200) * 900
+                                md: "1.2vw", // (7.5 / 1200) * 1200
+                                lg: "1vw",
+                                xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                            },
+                        }}>
+                            Ao confirmar seu cadastro você aceita os seguintes termos:
+                        </Typography>
+                        <PrivacyPolicy color={'black'} />
+                        <TermsAndConditions color={'black'} />
+                        <CookiePolicy color={'black'} />
+                    </Container>
+
+                </Box>
+            }
         </>
     )
 }

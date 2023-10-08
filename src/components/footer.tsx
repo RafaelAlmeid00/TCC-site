@@ -29,7 +29,7 @@ export default function Footer() {
 
   const listProd = [
     { text: 'Para Escolas', route: location.pathname !=="https://easypass-app.onrender.com/" ? 'https://easypass-app.onrender.com/#Bussines' : '#Bussines' },
-    { text: 'Para Empresas', route: '#Bussines' },
+    { text: 'Para Empresas', route: location.pathname !=="https://easypass-app.onrender.com/" ? 'https://easypass-app.onrender.com/#Bussines' : '#Bussines' },
     { text: 'Aplicativo', route: '/App' },
     { text: 'Serviços', route: '/Servicos' },
   ]
@@ -83,7 +83,7 @@ export default function Footer() {
             variants={cardVariants}
             whileHover="hover" // Aplica as animações ao passar o mouse
           >
-            <Link href="/" sx={{
+            <Link href="https://www.instagram.com/easy.pass_/" sx={{
               cursor: 'pointer',
               mr: '30px',
             }}>
@@ -100,7 +100,7 @@ export default function Footer() {
             variants={cardVariants}
             whileHover="hover" // Aplica as animações ao passar o mouse
           >
-            <Link href="/" sx={{
+            <Link href="https://www.youtube.com/@easypass-zl3yg" sx={{
               cursor: 'pointer',
               mr: '30px',
             }}>

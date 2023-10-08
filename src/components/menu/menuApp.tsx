@@ -202,11 +202,11 @@ export default function MenuApp() {
                   position: 'relative',
                   display: 'inline-block',
                   fontSize: {
-                    xs: '1vh',  // (7.5 / 1200) * 600
-                    sm: '1.7vh',  // (7.5 / 1200) * 900
-                    md: '2vh',  // (7.5 / 1200) * 1200
+                    xs: '1vh',  
+                    sm: '1.7vh', 
+                    md: '2vh',  
                     lg: '2vh',
-                    xl: '2vh',  // Manter o mesmo tamanho de lg para xl
+                    xl: '2vh',
                   },
                   '&::after': {
                     content: '""',

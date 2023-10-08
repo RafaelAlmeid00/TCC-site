@@ -6,6 +6,7 @@ import { Fade } from 'react-awesome-reveal';
 import ModalContext from "../../context/modalcontext.tsx";
 import React from "react";
 import '../../App.css'
+import theme from '../../assets/theme.tsx';
 
 function Cadall() {
     const { hasEntered } = React.useContext(ModalContext);
@@ -20,22 +21,23 @@ function Cadall() {
                 background: verify ? fundo : 'white',
                 height: "85vh",
                 width: "100vw",
-                zIndex: -1
+                zIndex: -1,
+               
             }}>
                 <Container sx={{
                     height: {
-                        xs: "80%", // (7.5 / 1200) * 600
-                        sm: "80%", // (7.5 / 1200) * 900
-                        md: "80%", // (7.5 / 1200) * 1200
+                        xs: "80%", 
+                        sm: "80%", 
+                        md: "80%", 
                         lg: "80%",
-                        xl: "80%", // Manter o mesmo tamanho de lg para xl
+                        xl: "80%", 
                     },
                     width: {
-                        xs: "70vw", // (7.5 / 1200) * 600
-                        sm: "70vw", // (7.5 / 1200) * 900
-                        md: "70vw", // (7.5 / 1200) * 1200
+                        xs: "70vw",
+                        sm: "70vw", 
+                        md: "70vw", 
                         lg: "50vw",
-                        xl: "50vw", // Manter o mesmo tamanho de lg para xl
+                        xl: "50vw",
                     },
                     position: "absolute",
                     top: "50%",
@@ -50,7 +52,10 @@ function Cadall() {
                     flexGrow: 1,
                     gap: 2,
                     paddingRight: 5,
-                    paddingLeft: 5
+                    paddingLeft: 5,
+                    [theme.breakpoints.down('md')]: {
+                        height: "60vh",
+                    }
                 }}>
                     <Fade cascade damping={0.2} triggerOnce={hasEntered}>
                         <CompleteCad />

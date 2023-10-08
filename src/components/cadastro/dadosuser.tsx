@@ -13,6 +13,7 @@ import { Container, FormControl, Input, InputAdornment, InputLabel, Typography }
 import { Btn } from "../btns";
 import { Contacts } from '@mui/icons-material';
 import { UserData } from "../interfaces";
+import theme from '../../assets/theme';
 
 function CompleteCad() {
     const [cpf, setCpf] = useState("");
@@ -38,8 +39,23 @@ function CompleteCad() {
     const [showRG, setShowRG] = useState(false);
     const [CPFexiste, setCPFexiste] = useState(false);
     const [showTipo, setShowTipo] = useState(false);
-    const [dadosU, setDados] = useState<UserData| undefined>(undefined);
+    const [dadosU, setDados] = useState<UserData | undefined>(undefined);
     const [showErrorCel, setShowErrorCel] = useState(false);
+    const [enviobtn, setEnvioBtn] = useState(false);
+
+    const { breakpoints } = theme;
+
+    const screenSize = {
+        xs: window.innerWidth < breakpoints.values.sm ? 'xs' : null,
+        sm: window.innerWidth >= breakpoints.values.sm && window.innerWidth < breakpoints.values.md ? 'sm' : null,
+        md: window.innerWidth >= breakpoints.values.md && window.innerWidth < breakpoints.values.lg ? 'md' : null,
+        lg: window.innerWidth >= breakpoints.values.lg && window.innerWidth < breakpoints.values.xl ? 'lg' : null,
+        xl: window.innerWidth >= breakpoints.values.xl ? 'xl' : null,
+    };
+
+    const currentScreenSize = Object.values(screenSize).filter(size => size !== null)[0];
+
+
 
 
     async function ValidaCPF(cpf: string): Promise<boolean> {
@@ -331,6 +347,14 @@ function CompleteCad() {
         // Submeta a data no formato yyyy-mm-dd para o banco de dados
     }
 
+    const handleVerifyChange = (value: any) => {
+        setEnvioBtn(value);
+    };
+
+    console.log(currentScreenSize);
+    console.log(enviobtn);
+
+
     return (
         <>
             {showErrorCel && <ErrorCel />}
@@ -350,142 +374,150 @@ function CompleteCad() {
                     alignItems: "center",
                     height: "100%",
                 }}>
-                    <Container sx={{
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                    }}>
-                        <Typography sx={{
-                            textAlign: 'center', mb: '30px', color: verify ? 'white' : '#222222', fontSize: {
-                                xs: '2.5vw',  // (7.5 / 1200) * 600
-                                sm: '2vw',  // (7.5 / 1200) * 900
-                                md: '2vw',  // (7.5 / 1200) * 1200
-                                lg: '1vw',
-                                xl: '1vw',  // Manter o mesmo tamanho de lg para xl
-                            }, fontWeight: 'bold'
-                        }}>
-                            Dados Pessoais e Endereço
-                        </Typography>
-                        <Typography sx={{
-                            textAlign: 'center', mb: 2, color: verify ? 'white' : '#444444', fontSize: {
-                                xs: '2vw',  // (7.5 / 1200) * 600
-                                sm: '1.5vw',  // (7.5 / 1200) * 900
-                                md: '1vw',  // (7.5 / 1200) * 1200
-                                lg: '1vw',
-                                xl: '1vw',  // Manter o mesmo tamanho de lg para xl
-                            },
-                        }}>
-                            Coloque o seu CPF e CEP para obter os dados:
-                        </Typography>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
-                            <InputLabel htmlFor="input-with-icon-adornment">
-                                CPF
-                            </InputLabel>
-                            <Input
-                                id="input-with-icon-adornment"
-                                inputProps={{ maxLength: 11 }}
-                                required
-                                value={cpf}
-                                placeholder="Insira apenas os números do CPF"
-                                onChange={(event) => {
-                                    const { value } = event.target;
-                                    const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
-                                    setCpf(newValue);
-                                }}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <AccountCircleIcon />
-                                    </InputAdornment>
-                                }
-                                sx={{ fontSize: '14px' }}
-                            />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
-                            <InputLabel htmlFor="input-with-icon-adornment">
-                                RG
-                            </InputLabel>
-                            <Input
-                                id="input-with-icon-adornment"
-                                inputProps={{ maxLength: 9 }}
-                                required
-                                value={rg}
-                                placeholder="Insira apenas os números do RG"
-                                onChange={(event) => {
-                                    const { value } = event.target;
-                                    const newValue2 = value.replace(/\D/g, ''); // remove tudo que não é número
-                                    setRg(newValue2);
-                                }}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <HowToRegIcon />
-                                    </InputAdornment>
-                                }
-                                sx={{ fontSize: '14px' }}
-                            />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
-                            <InputLabel htmlFor="input-with-icon-adornment">
-                                Nome Completo
-                            </InputLabel>
-                            <Input
-                                inputProps={{ maxLength: 45 }}
-                                placeholder="Fulano da Silva Oliveira"
-                                required
-                                id="input-with-icon-adornment"
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <BadgeIcon />
-                                    </InputAdornment>
-                                }
-                                sx={{ fontSize: '14px' }}
-                            />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%' }}>
-                            <InputLabel htmlFor="input-with-icon-adornment">
-                                Data de Nascimento
-                            </InputLabel>
-                            <Input
-                                inputProps={{ maxLength: 10 }}
-                                required
-                                id="input-with-icon-adornment"
-                                value={date}
-                                placeholder="24-08-2005"
-                                onChange={(event) => setDate(formatDateString(event.target.value))}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <CalendarMonthIcon />
-                                    </InputAdornment>
-                                }
-                                sx={{ fontSize: '14px', mb: 2 }}
-                            />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ width: '80%', mb: 3 }}>
-                            <InputLabel htmlFor="input-with-icon-adornment">
-                                Número de Celular
-                            </InputLabel>
-                            <Input
-                                inputProps={{ maxLength: 11 }}
-                                required
-                                id="input-with-icon-adornment"
-                                value={cel}
-                                placeholder="24999123456"
-                                onChange={(event) => setCel(event.target.value.replace(/\D/g, ''))}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        <Contacts />
-                                    </InputAdornment>
-                                }
-                                sx={{ fontSize: '14px', mb: 2 }}
-                            />
-                        </FormControl>
-                        <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
-                    </Container>
-                    <CompleteCad2 />
+                    {currentScreenSize === 'xs' && enviobtn === false ? (
+                        <CompleteCad2 screen={currentScreenSize} onVerifyChange={handleVerifyChange} />
+                    ) : (
+                        <>
+                            <Container sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                height: "100%",
+                            }}>
+                                <Typography sx={{
+                                    textAlign: 'center', mb: '30px', color: verify ? 'white' : '#222222', fontSize: {
+                                        xs: '2.5vw',  // (7.5 / 1200) * 600
+                                        sm: '2vw',  // (7.5 / 1200) * 900
+                                        md: '2vw',  // (7.5 / 1200) * 1200
+                                        lg: '1vw',
+                                        xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                                    }, fontWeight: 'bold'
+                                }}>
+                                    Dados Pessoais e Endereço
+                                </Typography>
+                                <Typography sx={{
+                                    textAlign: 'center', mb: 2, color: verify ? 'white' : '#444444', fontSize: {
+                                        xs: '2vw',  // (7.5 / 1200) * 600
+                                        sm: '1.5vw',  // (7.5 / 1200) * 900
+                                        md: '1vw',  // (7.5 / 1200) * 1200
+                                        lg: '1vw',
+                                        xl: '1vw',  // Manter o mesmo tamanho de lg para xl
+                                    },
+                                }}>
+                                    Coloque o seu CPF e CEP para obter os dados:
+                                </Typography>
+                                <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        CPF
+                                    </InputLabel>
+                                    <Input
+                                        id="input-with-icon-adornment"
+                                        inputProps={{ maxLength: 11 }}
+                                        required
+                                        value={cpf}
+                                        placeholder="Insira apenas os números do CPF"
+                                        onChange={(event) => {
+                                            const { value } = event.target;
+                                            const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
+                                            setCpf(newValue);
+                                        }}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <AccountCircleIcon />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px' }}
+                                    />
+                                </FormControl>
+                                <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        RG
+                                    </InputLabel>
+                                    <Input
+                                        id="input-with-icon-adornment"
+                                        inputProps={{ maxLength: 9 }}
+                                        required
+                                        value={rg}
+                                        placeholder="Insira apenas os números do RG"
+                                        onChange={(event) => {
+                                            const { value } = event.target;
+                                            const newValue2 = value.replace(/\D/g, ''); // remove tudo que não é número
+                                            setRg(newValue2);
+                                        }}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <HowToRegIcon />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px' }}
+                                    />
+                                </FormControl>
+                                <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        Nome Completo
+                                    </InputLabel>
+                                    <Input
+                                        inputProps={{ maxLength: 45 }}
+                                        placeholder="Fulano da Silva Oliveira"
+                                        required
+                                        id="input-with-icon-adornment"
+                                        value={name}
+                                        onChange={(event) => setName(event.target.value)}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <BadgeIcon />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px' }}
+                                    />
+                                </FormControl>
+                                <FormControl variant="standard" sx={{ width: '80%' }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        Data de Nascimento
+                                    </InputLabel>
+                                    <Input
+                                        inputProps={{ maxLength: 10 }}
+                                        required
+                                        id="input-with-icon-adornment"
+                                        value={date}
+                                        placeholder="24-08-2005"
+                                        onChange={(event) => setDate(formatDateString(event.target.value))}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <CalendarMonthIcon />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px', mb: 2 }}
+                                    />
+                                </FormControl>
+                                <FormControl variant="standard" sx={{ width: '80%', mb: 3 }}>
+                                    <InputLabel htmlFor="input-with-icon-adornment">
+                                        Número de Celular
+                                    </InputLabel>
+                                    <Input
+                                        inputProps={{ maxLength: 11 }}
+                                        required
+                                        id="input-with-icon-adornment"
+                                        value={cel}
+                                        placeholder="24999123456"
+                                        onChange={(event) => setCel(event.target.value.replace(/\D/g, ''))}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                <Contacts />
+                                            </InputAdornment>
+                                        }
+                                        sx={{ fontSize: '14px', mb: 2 }}
+                                    />
+                                </FormControl>
+                                
+                                <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
+                            </Container>
+                            {currentScreenSize !== 'xs' && <CompleteCad2 />}
+                        </>
+                    )}
+
                 </Container>
             }
         </>

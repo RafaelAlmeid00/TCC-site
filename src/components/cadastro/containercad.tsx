@@ -13,7 +13,7 @@ import { Card, CardMedia, Container, IconButton, Input, InputAdornment, InputLab
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { ContentNull, EmailExiste, EmailIncorrect, EmailPasswordNull, ErrorLogin, SenhaInvalida } from "../errosvalidations";
-import { Btn, BtnL } from "../btns";
+import { BtnL } from "../btns";
 import jwt_decode from "jwt-decode";
 import { UserData } from "../interfaces";
 
@@ -52,12 +52,18 @@ function ContainerCad() {
 
     async function Verifylog() {
         const isPasswordValid = validatePassword(password);
+        setLoading(true)
+        setDisable(true)
         try {
+            console.log(isPasswordValid, 'se true é valido');
+            
             console.log("ta indo")
             const response = await axios.post('https://easypass-iak1.onrender.com/user/email', { user_email: email })
             console.log(email)
             console.log(response.data)
             if (response.data) {
+                setLoading(false)
+                setDisable(false)
                 setError(true)
                 setEmail?.('')
                 setShowError(false);
@@ -76,21 +82,29 @@ function ContainerCad() {
                 setShowErrorEmail(false);
                 setShowErrorlog(false);
                 setInvalidSenha(false)
+                setLoading(false)
+                setDisable(false)
             } else if (!isPasswordValid) {
                 setShowErrorEmail(false);
                 setShowError(false);
                 setShowErrorlog(false);
                 setInvalidSenha(true)
+                setLoading(false)
+                setDisable(false)
             } else if (email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
                 setShowErrorEmail(true);
                 setShowError(false);
                 setShowErrorlog(false);
                 setInvalidSenha(false)
+                setLoading(false)
+                setDisable(false)
             } else {
                 setShowErrorEmail(false);
                 setShowError(false);
                 setShowErrorlog(false);
                 setInvalidSenha(false)
+                setLoading(false)
+                setDisable(false)
                 navigate('/cadastro/complemento');
             }
         }
@@ -189,7 +203,7 @@ function ContainerCad() {
                 background: verify ? '#121212' : 'white',
                 height: "85vh",
                 width: "100vw",
-                zIndex: -1
+                zIndex: -1,
             }}>
                 <Card sx={{
                     background: verify ? '#121212' : '#F0F0FF',
@@ -203,6 +217,9 @@ function ContainerCad() {
                     boxShadow: "0px 0px 10px 4px rgba(0, 0, 0, 0.4)",
                     display: "flex",
                     flexDirection: "row",
+                    [theme.breakpoints.down('md')]: {
+                        height: "60vh",
+                    }
                 }}>
                     <Container id="cont1" sx={{
                         background: verify ? '#121212' : '#F0F0FF',
@@ -317,12 +334,21 @@ function ContainerCad() {
                             {invalidsenha &&
                                 <Typography component='span' sx={{
                                     color: 'red',
-                                    fontSize: '0.9vw'
+                                    fontSize: {
+                                        xs: "2.5vw", // (7.5 / 1200) * 600
+                                        sm: "1.5vw", // (7.5 / 1200) * 900
+                                        md: "1.2vw", // (7.5 / 1200) * 1200
+                                        lg: "1vw",
+                                        xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                                    },
+                                    width: '80%',
+                                    textAlign: 'center',
+                                    mb: 3
                                 }}>
-                                    A senha precisa ter: 1 número, 1 caractere especial e 1 letra maiúscula!
+                                    A senha precisa ter: 8 caracteres, 1 número, 1 caractere especial e 1 letra maiúscula!
                                 </Typography>
                             }
-                            <Btn fun={Verifylog} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} vis={undefined} mb={undefined} />
+                            <BtnL handleLogin={Verifylog} loading={loading} dis={disable} name="Cadastrar" cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} mb={undefined} />
                             <Typography sx={{
                                 textAlign: 'center', mt: '20px', color: '#666666', fontSize: {
                                     xs: "2.5vw", // (7.5 / 1200) * 600

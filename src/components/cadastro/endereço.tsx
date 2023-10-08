@@ -9,8 +9,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import DomainIcon from '@mui/icons-material/Domain';
 import ModalContext from "../../context/modalcontext";
 import { Container, FormControl, Input, InputAdornment, InputLabel } from "@mui/material"
+import { Btn } from "../btns";
+import colors from "../../assets/colors";
 
-function CompleteCad2(){
+function CompleteCad2(screen: any, _onVerifyChange: (arg0: any) => void){
     const {cep, setCep} = React.useContext(ModalContext);
     const {UF, setUF} = React.useContext(ModalContext);
     const {district, setDistrict} = React.useContext(ModalContext);
@@ -19,6 +21,7 @@ function CompleteCad2(){
     const {comp, setComp} = React.useContext(ModalContext);
     const {city, setCity} = React.useContext(ModalContext);
     const [isLoading, setIsLoading] = React.useState(false);
+    const { verify } = React.useContext(ModalContext);
 
     const handleChangeCep = (event: { target: { value: string; }; }) => {
         let cepValue = event.target.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
@@ -41,6 +44,7 @@ function CompleteCad2(){
         }
     };
 
+    console.log(screen.screen);
     
 
 return (
@@ -186,6 +190,7 @@ return (
         sx={{ fontSize: '14px' }}
         />
         </FormControl>
+        {screen.screen == 'xs' && <Btn name={'Confirmar'} fun={() => screen.onVerifyChange(true)} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />}
         </Container>
     </>
 )
