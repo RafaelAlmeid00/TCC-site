@@ -277,7 +277,7 @@ function Homesistema() {
             {alert && <PedidosAberto />}
             {modal && userData ? (
                 active ? (
-                    <AlertConta />
+                    ''
                 ) : (
                     <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
                 )
