@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
@@ -113,12 +113,6 @@ const Rota = () => {
   }, [userData]);
 
   React.useEffect(() => {
-    if (userData && userData.user_status == 'ativo') {
-      setActive(false);
-    }
-  },[userData])
-
-  React.useEffect(() => {
     //console.log('okok');
     const handleAlerta = () => {
       setAlertaTopo({});
@@ -159,6 +153,9 @@ const Rota = () => {
           console.log('okok3');
         } else {
           setAlertaTopo({});
+          if (userData && userData.user_status == 'ativo') {
+            setActive(false);
+          }
         }
       }
     };
