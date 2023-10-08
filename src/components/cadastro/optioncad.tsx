@@ -3,6 +3,7 @@ import Exit from "../buttonexit";
 import ModalContext from "../../context/modalcontext";
 import React from "react";
 import { Box, Button, ButtonGroup, Card, Link, Typography } from "@mui/material";
+import theme from "../../assets/theme";
 
 export default function OptionsCad() {
 
@@ -30,12 +31,9 @@ export default function OptionsCad() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    height: {
-                        xs: "80%", // (7.5 / 1200) * 600
-                        sm: "80%", // (7.5 / 1200) * 900
-                        md: "80%", // (7.5 / 1200) * 1200
-                        lg: "80%",
-                        xl: "80%", // Manter o mesmo tamanho de lg para xl
+                    height: '80%',
+                    [theme.breakpoints.down('md')]: {
+                        height: "60vh",
                     },
                     width: {
                         xs: "80vw", // (7.5 / 1200) * 600
