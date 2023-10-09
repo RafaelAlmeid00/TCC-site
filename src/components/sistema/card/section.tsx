@@ -121,9 +121,12 @@ export default function CardSection() {
         }
     }, [])
 
+    console.log('datacard', dataCard);
+
+
     return (
         <>
-            {pag && <Pag onClose={handleClosePag} load={load} />}
+            {pag && <Pag onClose={handleClosePag} load={dataCard} />}
 
             <Box id="section1" sx={{
                 height: '100vh',

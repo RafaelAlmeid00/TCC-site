@@ -255,12 +255,14 @@ function Homesistema() {
     console.log(alertatopo);
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', pag);
 
+    console.log('datacard', dataCard);
+    
 
     return (
         <>
             {open && <PerfilAtualizado />}
             {open2 && <PerfilError />}
-            {pag && <Pag onClose={handleClosePag} load={load} />}
+            {pag && <Pag onClose={handleClosePag} load={dataCard} />}
             {alert && <PedidosAberto />}
             {modal && userData ? (
                 active ? (

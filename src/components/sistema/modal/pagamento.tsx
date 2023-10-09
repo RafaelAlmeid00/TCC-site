@@ -17,7 +17,7 @@ function Pag({ onClose }: any, { load }: any) {
     const [venc, setVenc] = React.useState<string>('');
 
     React.useEffect(() => {
-        if (load) {
+        if (!load) {
             onClose()
         }
     }, [load])
