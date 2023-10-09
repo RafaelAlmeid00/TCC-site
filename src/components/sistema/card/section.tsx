@@ -32,40 +32,34 @@ export default function CardSection() {
     };
 
     React.useEffect(() => {
-        async function SearchCard() {
-            try {
-                console.log('ta indo');
-                console.log(token);
-
-                const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
-                    token: token
-                });
-                console.log(response);
-                console.log('ta indo');
-
-                if (response.data) {
-                    console.log(response.data);
-                    console.log(dataCard);
-                    setDataCard(response.data[0])
-                    console.log(dataCard);
-                    setLoad(false)
-
-                } else {
-                    console.log('deu merda rapeize')
-                    setLoad(true)
-                }
-            } catch (error) {
-                console.log(error);
-                setLoad(true)
+        async function searchCard() {
+          try {
+            console.log('Iniciando a busca do cartão...');
+            const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
+              user_CPF: userData && userData.user_CPF,
+              token: token
+            });
+    
+            if (response.data && response.data.length > 0) {
+              console.log('Dados do cartão recebidos com sucesso:', response.data);
+              setDataCard(response.data[0]);
+              setLoad(false);
+            } else {
+              console.log('Nenhum cartão encontrado.');
+              setLoad(true);
             }
+          } catch (error) {
+            console.error('Erro ao buscar o cartão:', error);
+            setLoad(true);
+          }
         }
+    
         if (dataCard) {
-            console.log('já foi pego');
-
+          console.log('Os dados do cartão já foram recebidos.');
         } else {
-            SearchCard()
+          searchCard();
         }
-    }, [userData])
+      }, [userData]);
 
     React.useEffect(() => {
         async function SearchCardCancel() {
