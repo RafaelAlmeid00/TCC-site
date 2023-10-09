@@ -39,6 +39,9 @@ export default function CardSection() {
               user_CPF: userData && userData.user_CPF,
               token: token
             });
+
+            console.log('aaa',response.data);
+            
     
             if (response.data && response.data.length > 0) {
               console.log('Dados do cartão recebidos com sucesso:', response.data);
