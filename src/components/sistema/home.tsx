@@ -1,4 +1,4 @@
-import {Box, Card, Container, Divider, Icon, Skeleton, Typography } from "@mui/material";
+import { Box, Card, Container, Divider, Icon, Skeleton, Typography } from "@mui/material";
 import TuneIcon from '@mui/icons-material/Tune';
 import colors from "../../assets/colors";
 import { motion } from "framer-motion";
@@ -187,29 +187,29 @@ function Homesistema() {
             try {
                 console.log('Iniciando a busca do cartão...');
                 const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
-                  user_CPF: userData && userData.user_CPF,
-                  token: token
+                    user_CPF: userData && userData.user_CPF,
+                    token: token
                 });
-    
-                console.log('aaa',response.data);
-    
-                if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+
+                console.log('aaa', response.data);
+
+
+                if (response.data && response.data.length > 0) {
+                    if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+                        setLoad(true);
+                    } else {
+                        console.log('Dados do cartão recebidos com sucesso:', response.data);
+                        setDataCard(response.data[0]);
+                        setLoad(false);
+                    }
+                } else {
+                    console.log('Nenhum cartão encontrado.');
                     setLoad(true);
                 }
-        
-                if (response.data && response.data.length > 0) {
-                  console.log('Dados do cartão recebidos com sucesso:', response.data);
-                  setDataCard(response.data[0]);
-                  setLoad(false);
-                  setCard(true)
-                } else {
-                  console.log('Nenhum cartão encontrado.');
-                  setLoad(true);
-                }
-              } catch (error) {
+            } catch (error) {
                 console.error('Erro ao buscar o cartão:', error);
                 setLoad(true);
-              }
+            }
         }
         if (alertatopo.nomeBtn) {
             console.log('ta em alert');
@@ -267,7 +267,7 @@ function Homesistema() {
                 )
             ) : (
                 null
-            )}                
+            )}
             <Box id="section1" sx={{
                 minHeight: '100vh',
                 maxHeight: '100%',

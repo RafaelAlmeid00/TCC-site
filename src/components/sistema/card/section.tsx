@@ -33,40 +33,41 @@ export default function CardSection() {
 
     React.useEffect(() => {
         async function searchCard() {
-          try {
-            console.log('Iniciando a busca do cartão...');
-            const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
-              user_CPF: userData && userData.user_CPF,
-              token: token
-            });
+            try {
+                console.log('Iniciando a busca do cartão...');
+                const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
+                    user_CPF: userData && userData.user_CPF,
+                    token: token
+                });
 
-            console.log('aaa',response.data);
+                console.log('aaa', response.data);
 
-            if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+
+                if (response.data && response.data.length > 0) {
+                    if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+                        setLoad(true);
+                    } else {
+                        console.log('Dados do cartão recebidos com sucesso:', response.data);
+                        setDataCard(response.data[0]);
+                        setLoad(false);
+                    }
+
+                } else {
+                    console.log('Nenhum cartão encontrado.');
+                    setLoad(true);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o cartão:', error);
                 setLoad(true);
             }
-            
-    
-            if (response.data && response.data.length > 0) {
-              console.log('Dados do cartão recebidos com sucesso:', response.data);
-              setDataCard(response.data[0]);
-              setLoad(false);
-            } else {
-              console.log('Nenhum cartão encontrado.');
-              setLoad(true);
-            }
-          } catch (error) {
-            console.error('Erro ao buscar o cartão:', error);
-            setLoad(true);
-          }
         }
-    
+
         if (dataCard) {
-          console.log('Os dados do cartão já foram recebidos.');
+            console.log('Os dados do cartão já foram recebidos.');
         } else {
-          searchCard();
+            searchCard();
         }
-      }, [userData]);
+    }, [userData]);
 
     React.useEffect(() => {
         async function SearchCardCancel() {
