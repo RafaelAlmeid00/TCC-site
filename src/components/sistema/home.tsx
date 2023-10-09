@@ -9,7 +9,6 @@ import Pedido from "./modal/pedidocard";
 import { PedidosAberto, PerfilAtualizado, PerfilError } from "../errosvalidations";
 import axios from "axios";
 import Cartao from "./modal/card";
-import { useNavigate } from "react-router-dom";
 import Pag from "./modal/pagamento";
 import { DirectionsBus } from "@mui/icons-material";
 import Balancer from "react-wrap-balancer";
@@ -29,11 +28,9 @@ function Homesistema() {
     const token = localStorage.getItem('token')
     const [dataCard, setDataCard] = React.useState<CardData>()
     const [loading, setLoading] = React.useState(true)
-    const navigate = useNavigate()
     const [pag, setPag] = React.useState(false)
     const [usos, setUsos] = React.useState([])
     const { alertatopo } = React.useContext(ModalContext)
-    const [active] = React.useState(false)
     const [card, setCard] = React.useState(alertatopo.nomeBtn && true)
     const [load, setLoad] = React.useState(dataCard && dataCard.card_id ? false : true)
     const [open, setOpen] = React.useState(false);
@@ -135,13 +132,7 @@ function Homesistema() {
     };
 
     const handleOpenModal = () => {
-        console.log(active);
-
-        if (active) {
-            setModal(true);
-        } else {
-            navigate('/sistema/documentos')
-        }
+        setModal(true);
     };
 
     const handleAlertChange = (value: any) => {
@@ -256,7 +247,7 @@ function Homesistema() {
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', pag);
 
     console.log('datacard', dataCard);
-    
+
 
     return (
         <>
@@ -265,11 +256,7 @@ function Homesistema() {
             {pag && <Pag onClose={handleClosePag} load={dataCard} />}
             {alert && <PedidosAberto />}
             {modal && userData ? (
-                active ? (
-                    ''
-                ) : (
-                    <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
-                )
+                <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
             ) : (
                 null
             )}
