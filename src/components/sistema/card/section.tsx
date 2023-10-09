@@ -8,6 +8,7 @@ import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { CardData } from "../../interfaces";
+import Pag from "../modal/pagamento";
 
 export default function CardSection() {
     const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
@@ -20,12 +21,22 @@ export default function CardSection() {
     const fundo = themes.palette.background.default
     const token = localStorage.getItem('token')
     const { userData } = React.useContext(ModalContext);
+    const [pag, setPag] = React.useState(false)
+
+    const handlePag = () => {
+        setPag(true)
+    }
+
+    const handleClosePag = () => {
+        setPag(false)
+    }
 
     const buttonshome = [
-        { name: 'Histórico do Cartão' },
-        { name: 'Recarregar Cartão' },
+        { name: 'Histórico do Cartão', route: '/Sistema/Viagens' },
+        { name: 'Recarregar Cartão', onClick: handlePag },
         { name: 'Cancelar Cartão' }
     ]
+
 
     const handleVisibilityToggle = () => {
         setIsBalanceVisible((prevValue) => !prevValue);
@@ -112,6 +123,8 @@ export default function CardSection() {
 
     return (
         <>
+            {pag && <Pag onClose={handleClosePag} />}
+
             <Box id="section1" sx={{
                 height: '100vh',
                 width: '80vw',
