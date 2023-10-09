@@ -196,15 +196,18 @@ function Homesistema() {
 
                 if (response.data && response.data.length > 0) {
                     if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
-                        setLoad(true);
+                        setLoad(false);
+                        setCard(false)
                     } else {
                         console.log('Dados do cartão recebidos com sucesso:', response.data);
                         setDataCard(response.data[0]);
-                        setLoad(false);
+                        setLoad(false)
+                        setCard(true)
                     }
                 } else {
                     console.log('Nenhum cartão encontrado.');
-                    setLoad(true);
+                    setLoad(false);
+                    setCard(false)
                 }
             } catch (error) {
                 console.error('Erro ao buscar o cartão:', error);
@@ -257,7 +260,7 @@ function Homesistema() {
         <>
             {open && <PerfilAtualizado />}
             {open2 && <PerfilError />}
-            {pag && <Pag onClose={handleClosePag} />}
+            {pag && <Pag onClose={handleClosePag} load={load} />}
             {alert && <PedidosAberto />}
             {modal && userData ? (
                 active ? (

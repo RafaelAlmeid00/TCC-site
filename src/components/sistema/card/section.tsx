@@ -123,7 +123,7 @@ export default function CardSection() {
 
     return (
         <>
-            {pag && <Pag onClose={handleClosePag} />}
+            {pag && <Pag onClose={handleClosePag} load={load} />}
 
             <Box id="section1" sx={{
                 height: '100vh',
@@ -143,7 +143,7 @@ export default function CardSection() {
                     ml: 4.5
                 }}>
                     {buttonshome.map((buttons) => (
-                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={undefined} route={""} />
+                        <BtnHome name={buttons.name} ml='1vw' mr='1vw' cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} fun={buttons.onClick} route={buttons.route} />
                     ))}
                 </Container>
 

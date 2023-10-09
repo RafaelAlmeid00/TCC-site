@@ -7,7 +7,7 @@ import { Balancer } from "react-wrap-balancer";
 import { BtnHome } from "../../btns";
 import axios from "axios";
 
-function Pag({ onClose }: any) {
+function Pag({ onClose }: any, { load }: any) {
     const { userData } = React.useContext(ModalContext);
     const { verify } = React.useContext(ModalContext);
     const birthDate = new Date(userData ? userData.user_nascimento : '');
@@ -15,6 +15,12 @@ function Pag({ onClose }: any) {
     const [inputValue, setInputValue] = React.useState<string>('5.00');
     const token = localStorage.getItem('token')
     const [venc, setVenc] = React.useState<string>('');
+
+    React.useEffect(() => {
+        if (load) {
+            onClose()
+        }
+    }, [load])
 
     React.useEffect(() => {
 
@@ -92,7 +98,7 @@ function Pag({ onClose }: any) {
 
 
     const handlePay = async () => {
-        console.log(userData ? userData.user_idcli  : '');
+        console.log(userData ? userData.user_idcli : '');
         console.log(userData ? userData.user_CPF.slice(0, 6) : '');
 
         const pagamento = {
@@ -215,7 +221,7 @@ function Pag({ onClose }: any) {
 
             </Card>
         </Container >,
-        document.getElementById('portal-root') as Element 
+        document.getElementById('portal-root') as Element
     );
 }
 
