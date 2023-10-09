@@ -41,6 +41,10 @@ export default function CardSection() {
             });
 
             console.log('aaa',response.data);
+
+            if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+                setLoad(true);
+            }
             
     
             if (response.data && response.data.length > 0) {

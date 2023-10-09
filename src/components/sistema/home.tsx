@@ -185,31 +185,31 @@ function Homesistema() {
         }
         async function SearchCard() {
             try {
-                console.log('ta indo');
-                console.log(token);
-
+                console.log('Iniciando a busca do cartão...');
                 const response = await axios.post('https://easypass-iak1.onrender.com/card/enviados', {
-                    token: token
+                  user_CPF: userData && userData.user_CPF,
+                  token: token
                 });
-                console.log(response);
-                console.log('ta indo');
-
-                if (response.data) {
-                    console.log(response.data);
-                    console.log(dataCard);
-                    setDataCard(response.data[0])
-                    console.log(dataCard);
-                    setLoad(false)
-                    setCard(true)
-
-                } else {
-                    console.log('deu merda rapeize')
-                    setLoad(true)
+    
+                console.log('aaa',response.data);
+    
+                if (response.data == "Sem pedidos" || response.data == "Sem cards ativos") {
+                    setLoad(true);
                 }
-            } catch (error) {
-                console.log(error);
-                setLoad(true)
-            }
+        
+                if (response.data && response.data.length > 0) {
+                  console.log('Dados do cartão recebidos com sucesso:', response.data);
+                  setDataCard(response.data[0]);
+                  setLoad(false);
+                  setCard(true)
+                } else {
+                  console.log('Nenhum cartão encontrado.');
+                  setLoad(true);
+                }
+              } catch (error) {
+                console.error('Erro ao buscar o cartão:', error);
+                setLoad(true);
+              }
         }
         if (alertatopo.nomeBtn) {
             console.log('ta em alert');
