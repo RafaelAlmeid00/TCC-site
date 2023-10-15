@@ -34,6 +34,7 @@ const Informacoes = lazy(() => import('./pages/sistema/Informacoes'));
 const Endereco = lazy(() => import('./pages/sistema/endereco'));
 const Viagens = lazy(() => import('./pages/sistema/Viagens'));
 const Extrato = lazy(() => import('./pages/sistema/Extrato'));
+const TrabalheConosco = lazy(() => import("./pages/home/TrabalheConosco"));
 
 const Rota = () => {
   const [email, setEmail] = React.useState('');
@@ -247,6 +248,8 @@ const Rota = () => {
                       <Route path="/EasyPass" element={<EasyPassLazy />} />
                       <Route path="/Contatos" element={<ContatosLazy />} />
                       <Route path="/Opcoes" element={<OptionsCad />} />
+                      <Route path="/Vagas" element={<TrabalheConosco />} />
+                      <Route path="*" element={<App />} />
                     </Routes>
                   </ModalContext.Provider>
                 </AuthProviderHome>
@@ -331,6 +334,7 @@ const Rota = () => {
                       <Route path="/Dados" element={<Informacoes />} />
                       <Route path="/Viagens" element={Active ? <AlertConta /> : <Viagens />} />
                       <Route path="/Extrato" element={Active ? <AlertConta /> : <Extrato />} />
+                      <Route path="*" element={<HomeSistema />} />
                     </Routes>
                   </React.Fragment>
                 </ModalContext.Provider>

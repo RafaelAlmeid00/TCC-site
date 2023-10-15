@@ -220,11 +220,11 @@ export default function SectionContato() {
                                 </Typography>
                                 <Typography component="span" sx={{
                                     fontSize: {
-                                        xs: "2.2vw", // (7.5 / 1200) * 600
-                                        sm: "1.5vw", // (7.5 / 1200) * 900
-                                        md: "1.2vw", // (7.5 / 1200) * 1200
+                                        xs: "2.2vw",
+                                        sm: "1.5vw", 
+                                        md: "1.2vw",
                                         lg: "1vw",
-                                        xl: "1vw", // Manter o mesmo tamanho de lg para xl
+                                        xl: "1vw", 
                                     },
                                     color: verify ? 'white' : 'black' 
                                 }}>
