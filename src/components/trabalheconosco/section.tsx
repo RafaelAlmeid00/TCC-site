@@ -1578,26 +1578,6 @@ export default function Vagas() {
                         </Container>
                     </Container>
                     <Container sx={{
-                        width: '100%',
-                        height: 'auto',
-                        mt: 10
-                    }}>
-                        <Typography sx={{
-                            fontSize: {
-                                xs: '3.5vw',
-                                sm: '2vw',
-                                md: '2vw',
-                                lg: '1.5vw',
-                                xl: '1.4vw',
-                            },
-                            textAlign: 'left',
-                            color: verify ? "white" : "black",
-                            fontWeight: '600'
-                        }}>
-                            Foto
-                        </Typography>
-                    </Container>
-                    <Container sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
