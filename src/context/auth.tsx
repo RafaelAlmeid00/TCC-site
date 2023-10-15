@@ -20,18 +20,19 @@ function exit() {
     try {
         console.log('ta indo');
         localStorage.removeItem('token');
-        window.location.reload()
+        setTimeout(() => {
+            window.location.reload()
+        }, 1500);
     } catch (err) {
         console.log(err);
     }
 }
 
 async function verifyToken(token: string) {
-    try {
+    try {        
         const result = await axios.post("https://easypass-iak1.onrender.com/user/testetoken", {
             token: token
         });
-
         console.log('Resultado', result);
         return true; // Token é válido
     } catch (error: any) {
@@ -47,25 +48,27 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isTokenChecked, setIsTokenChecked] = useState(false);
     const token = localStorage.getItem('token');
-
+    console.log('teste');
+    
 
     useEffect(() => {
+        
         async function checkToken() {
+            
             if (token) {
+                
                 setIsAuthenticated(true);
-                try {
-                    const a = await verifyToken(token);
-                    console.log('Se true é token se false é expirado', a);
-                    if (!a) {
-                        exit();
-                    }
-                } catch (error) {
-                    console.error('Erro ao verificar o token: ', error);
+                const a = await verifyToken(token);
+
+                console.log('Se true é token se false é expirado', a);
+                if (!a) {
+                    exit();
                 }
             }
             setIsTokenChecked(true);
+            console.log('teste 7');
         }
-    
+
         checkToken();
     }, []);
 
@@ -106,7 +109,7 @@ const AuthProviderHome = ({ children }: AuthProviderHomeProps) => {
             }
             setIsTokenChecked(true);
         }
-    
+
         checkToken();
     }, []);
 

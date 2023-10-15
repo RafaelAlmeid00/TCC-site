@@ -1,21 +1,19 @@
-import { Box, Card, Container, Divider, IconButton, Skeleton, Typography } from "@mui/material";
+import { Box, Card, Container, Divider, Skeleton, Typography } from "@mui/material";
 import colors from "../../../assets/colors";
 import { BtnHome } from "../../btns";
 import axios from "axios";
 import Cartao from "../modal/card";
 import ModalContext from "../../../context/modalcontext";
 import React from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { CardData } from "../../interfaces";
 import Pag from "../modal/pagamento";
 
 export default function CardSection() {
-    const [isBalanceVisible, setIsBalanceVisible] = React.useState(false);
     const [load, setLoad] = React.useState(true)
     const [loading, setLoading] = React.useState(true)
     const [dataCard, setDataCard] = React.useState<CardData | null>(null)
-    const [dataCardCancel, setCardCancel] = React.useState(Object)
+    const [dataCardCancel, setCardCancel] = React.useState<Array<Object> | null>()
     const { verify } = React.useContext(ModalContext);
     const { themes } = React.useContext(ModalContext);
     const fundo = themes.palette.background.default
@@ -36,11 +34,6 @@ export default function CardSection() {
         { name: 'Recarregar Cartão', onClick: handlePag },
         { name: 'Cancelar Cartão' }
     ]
-
-
-    const handleVisibilityToggle = () => {
-        setIsBalanceVisible((prevValue) => !prevValue);
-    };
 
     React.useEffect(() => {
         async function searchCard() {
@@ -91,14 +84,14 @@ export default function CardSection() {
                     user_CPF: userData && userData.user_CPF,
                     token: token
                 });
-                console.log(response);
+                console.log('cancel', response);
                 console.log('ta indo');
 
                 if (response.data.length > 0) {
-                    console.log(response.data);
-                    console.log(dataCardCancel);
+                    console.log('cancel', response.data);
+                    console.log('cancel', dataCardCancel);
                     setCardCancel(response.data)
-                    console.log(dataCardCancel);
+                    console.log('cancel', dataCardCancel);
                     setLoading(false)
 
                 } else {
@@ -110,10 +103,10 @@ export default function CardSection() {
                 setLoading(true)
             }
         }
-        if (dataCardCancel.lenght != undefined) {
+        if (dataCardCancel && dataCardCancel != undefined) {
             console.log('já foi pego');
             console.log(dataCardCancel);
-            console.log(dataCardCancel.lenght);
+            console.log(dataCardCancel);
             setLoading(false)
 
         } else {
@@ -226,7 +219,8 @@ export default function CardSection() {
                         alignItems: 'center',
                         mt: 5,
                         flexWrap: 'wrap',
-                        mb: 10
+                        mb: 10,
+                        padding: 5
                     }}>
                         {loading ? (
                             Array.from({ length: 4 }).map((_, _index) => (
@@ -241,12 +235,13 @@ export default function CardSection() {
                                 }} />
                             ))
                         ) : (
-                            dataCardCancel.lenght == undefined ? (
+                            dataCardCancel == undefined ? (
                                 <Typography></Typography>
                             ) : (
-                                dataCardCancel.map((_card: any) => (
+                                dataCardCancel.map((card: any) => (
                                     <>
                                         <motion.div
+                                            key={card.card_id}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.97 }}
                                             style={{ x: 100, height: '100%', width: '7vw' }}
@@ -269,33 +264,10 @@ export default function CardSection() {
                                                         color: '#0fcd88', // muda a cor da borda na animação
                                                     },
                                                 }}>
-                                                    Cartão de
+                                                    Cartão de {card.card_tipo}
                                                 </Typography>
                                             </Card>
                                         </motion.div>
-                                        <Container
-                                            sx={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                justifyContent: 'start',
-                                                alignItems: 'flex-start',
-                                                ml: 15,
-                                            }}
-                                        >
-                                            <Typography sx={{ color: verify ? 'white' : 'black' }}>
-                                                Saldo do cartão: {isBalanceVisible ? `R$${dataCard && dataCard.card_saldo}` : '•••••••••'}
-                                                <IconButton onClick={handleVisibilityToggle} sx={{ ml: 0.5, mt: -1 }}>
-                                                    {isBalanceVisible ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </Typography>
-                                            <Typography sx={{ color: verify ? 'white' : 'black', mt: 2, mb: 2 }}>
-                                                Validade do cartão: {dataCard && dataCard.card_validade}
-                                            </Typography>
-                                            <Typography sx={{ color: verify ? 'white' : 'black' }}>
-                                                Status do cartão: {dataCard && dataCard.card_status}
-                                            </Typography>
-                                        </Container>
-                                        <br />
                                     </>
                                 ))))}
                     </Card>

@@ -158,7 +158,7 @@ function SectionRota1() {
         mb: 10
       }}>
         {Loading ?
-          <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 10 }}>
+          <Timeline position="alternate" sx={{ boxShadow: ' 2px 2px 4px 2px rgba(0, 0, 0, 0.3)', width: '100%', mt: 10, mb: 10 }}>
             {routes.map((rotas) => (
               <TimelineItem key={rotas.stop_id} sx={{ paddingTop: '  5%' }}>
                 <TimelineSeparator>

@@ -7,7 +7,7 @@ import { Balancer } from "react-wrap-balancer";
 import { BtnHome } from "../../btns";
 import axios from "axios";
 
-function Pag({ onClose }: any, { load }: any) {
+function Pag(props: any) {
     const { userData } = React.useContext(ModalContext);
     const { verify } = React.useContext(ModalContext);
     const birthDate = new Date(userData ? userData.user_nascimento : '');
@@ -15,6 +15,10 @@ function Pag({ onClose }: any, { load }: any) {
     const [inputValue, setInputValue] = React.useState<string>('5.00');
     const token = localStorage.getItem('token')
     const [venc, setVenc] = React.useState<string>('');
+    const { onClose, load } = props;
+
+    console.log('pagaaa', load);
+
 
     React.useEffect(() => {
         if (!load) {

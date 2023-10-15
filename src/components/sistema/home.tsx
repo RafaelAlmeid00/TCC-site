@@ -15,6 +15,7 @@ import Balancer from "react-wrap-balancer";
 import { socket } from "./../../../socket.io/index";
 import AlertaModal from "./alert";
 import { CardData } from "../interfaces";
+import Cancel from "./modal/cancel";
 
 function Homesistema() {
     socket.connect()
@@ -35,6 +36,7 @@ function Homesistema() {
     const [load, setLoad] = React.useState(dataCard && dataCard.card_id ? false : true)
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+    const [pag2, setPag2] = React.useState(false)
 
     React.useEffect(() => {
         async function Verifytoken() {
@@ -117,14 +119,22 @@ function Homesistema() {
         setPag(true)
     }
 
+    const handlePag2 = () => {
+        setPag2(true)
+    }
+
     const handleClosePag = () => {
         setPag(false)
+    }
+
+    const handleClosePag2 = () => {
+        setPag2(false)
     }
 
     const buttonshome = [
         { name: 'Histórico do Cartão', route: '/Sistema/Viagens' },
         { name: 'Recarregar Cartão', onClick: handlePag },
-        { name: 'Cancelar Cartão' }
+        { name: 'Cancelar Cartão', onClick: handlePag2 }
     ]
 
     const handleModalClose = () => {
@@ -254,6 +264,7 @@ function Homesistema() {
             {open && <PerfilAtualizado />}
             {open2 && <PerfilError />}
             {pag && <Pag onClose={handleClosePag} load={dataCard} />}
+            {pag2 && <Cancel onCloseModal={handleClosePag2} card={dataCard} />}
             {alert && <PedidosAberto />}
             {modal && userData ? (
                 <Pedido userData={userData} onCloseModal={handleModalClose} onAlertChange={handleAlertChange} />
