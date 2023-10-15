@@ -1,4 +1,4 @@
-import { Avatar, Box, Checkbox, CircularProgress, Container, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Checkbox, CircularProgress, Container, FormControl, FormControlLabel, FormGroup, Input, InputAdornment, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
 import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
@@ -45,8 +45,6 @@ export default function Vagas() {
     const [linkedin, setLinkedin] = React.useState<any>('');
     const [facebook, setFacebook] = React.useState<any>('');
     const [github, setGithub] = React.useState<any>('');
-    const [perfil, setPerfil] = React.useState<any>('');
-    const fileInputRefAvatar = React.useRef<any>(null)
     const [detalhesExperiencia, setExperiencias] = React.useState<any>('');
     const [detalhesEscolares, setEscolares] = React.useState<any>('');
     const [loading, setLoading] = React.useState(false)
@@ -64,8 +62,6 @@ export default function Vagas() {
         { 'ReactNative': optNative }
     ]
     const interessesJSON = JSON.stringify(interesses);
-    let file: any
-    console.log('file: ', file);
 
     const data: any = {
         cur_CPF: cpf,
@@ -94,14 +90,9 @@ export default function Vagas() {
         cur_instagram: instagram,
         cur_github: github,
         cur_facebook: facebook,
-        cur_foto_perfil: perfil,
         cur_con_prog: interessesJSON,
         cur_cel: cel
     };
-
-    const handleActivePerfil = (event: any) => {
-        handleImageChange(event)
-    }
 
     const handleOptionChange = (event: { target: { value: any; checked: any; }; }) => {
         const value = event.target.value;
@@ -191,19 +182,6 @@ export default function Vagas() {
         setNoturno(event.target.value);
     };
 
-    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('file: ', file);
-
-        {
-            if (event.target.files) {
-                file = event.target.files[0];
-                console.log('file: ', file);
-
-            }
-            console.log('file: ', file);
-        }
-    }
-
     const handleNull = () => {
         setCpf('');
         setName('');
@@ -287,39 +265,6 @@ export default function Vagas() {
 
             if (response.status === 201) {
                 alert('Currículo cadastrado com sucesso!');
-                console.log('file: ', file);
-
-                if (file) {
-                    console.log('file: ', file);
-
-                    try {
-                        const data = new FormData();
-                        data.append('selectedImage', file);
-
-                        const response = await axios.post(
-                            'https://easypass-iak1.onrender.com/curriculo/foto', data,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',
-                                },
-                            }
-                        );
-
-                        file = ''
-                        console.log('file: ', file);
-
-                        console.log(response.data); // Handle the response as needed
-                    } catch (error) {
-                        console.error('Error uploading image:', error);
-                        file = ''
-                        console.log('file: ', file);
-
-                    }
-                } else {
-                    console.log('file vazio');
-                    console.log('file: ', file);
-
-                }
                 handleNull()
             } else {
                 const errorMessage = response.data;
@@ -488,50 +433,6 @@ export default function Vagas() {
             handleApiCEP()
         }
     }, [cep])
-
-    React.useEffect(() => {
-        const returnImage = async () => {
-            console.log('foi');
-            try {
-                const fundoimage = curriculo ? curriculo?.cur_foto_perfil : '';
-                console.log(fundoimage);
-
-                if (fundoimage) {
-                    const response = await axios.post(
-                        'https://easypass-iak1.onrender.com/curriculo/fotoreturn',
-                        {
-                            filename: fundoimage,
-                        },
-                        {
-                            responseType: 'arraybuffer',
-                        }
-                    );
-
-                    const arrayBufferView = new Uint8Array(response.data);
-                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
-
-                    // Converter Blob para Base64
-                    const reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        if (reader.result) {
-                            setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
-                        }
-                        console.log(response.data);
-                        console.log(perfil);
-                    };
-                    console.log('foi');
-
-                } else {
-                    console.log('Sem imagem');
-
-                }
-            } catch (error) {
-                console.error('Error uploading image:', error);
-            }
-        };
-        returnImage();
-    }, [curriculo]);
 
 
     const handleInputChange = (event: any) => {
@@ -1703,70 +1604,6 @@ export default function Vagas() {
                         height: 'auto',
                         mt: 3,
                     }}>
-                        <Balancer>
-                            <Typography sx={{
-                                fontSize: {
-                                    xs: "2.2vw",
-                                    sm: "1.5vw",
-                                    md: "1.2vw",
-                                    lg: "1vw",
-                                    xl: "1vw",
-                                },
-                                textAlign: 'left',
-                                color: verify ? "white" : "black",
-                                mb: 3
-                            }}>
-                                Anexe uma foto de perfil na sua ficha.
-                            </Typography>
-                        </Balancer>
-                        <Container sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            gap: 3,
-                            mt: 3,
-                            mb: 5,
-                            [theme.breakpoints.down('md')]: {
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                                flexWrap: 'nowrap',
-                            },
-                        }}>
-
-                            <label htmlFor="file-input" style={{ marginBottom: 3 }}>
-                                <IconButton
-                                    sx={{
-                                        width: 'auto',
-                                        height: 'auto',
-                                        '&:hover': {
-                                            boxShadow: '0 0 2px 1px rgba(0, 0, 0, 0.2)',
-                                        },
-                                    }}
-                                    onClick={() => {
-                                        if (fileInputRefAvatar.current) {
-                                            fileInputRefAvatar.current.click()
-                                        }
-                                    }}
-                                >
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        id="file-input"
-                                        onChange={handleImageChange}
-                                        style={{ display: 'none' }}
-                                        ref={fileInputRefAvatar}
-                                        onClick={handleActivePerfil}
-                                    />
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src={perfil}
-                                        sx={{ width: 70, height: 70, }}
-                                    />
-                                </IconButton>
-                            </label>
-                        </Container>
                         {curriculo ?
                             <BtnL loading={loading} dis={disable} handleLogin={handleSubmit} name={"Enviar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
                             : <BtnL loading={loading} dis={disable} handleLogin={handleSubmit} name={"Atualizar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
