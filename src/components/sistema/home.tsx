@@ -15,6 +15,7 @@ import Balancer from "react-wrap-balancer";
 import { socket } from "./../../../socket.io/index";
 import AlertaModal from "./alert";
 import { CardData } from "../interfaces";
+import { useNavigate } from "react-router-dom";
 
 function Homesistema() {
     socket.connect()
@@ -35,6 +36,7 @@ function Homesistema() {
     const [load, setLoad] = React.useState(dataCard && dataCard.card_id ? false : true)
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         async function Verifytoken() {
@@ -142,6 +144,16 @@ function Homesistema() {
         }, 5000)
     };
 
+    async function exit() {
+        try {
+            console.log('ta indo');
+            localStorage.removeItem('token');
+            navigate('/cadastro');
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     React.useEffect(() => {
         async function handleAttCard() {
             try {
@@ -158,6 +170,10 @@ function Homesistema() {
                 console.log(response);
 
             } catch (error: any) {
+                if (error.message.includes('Token inválido') || error.message.includes('Token expirado')) {
+                    console.log('Token inválido ou expirado');
+                    await exit()
+                }
                 console.log(error.message);
             }
         }
