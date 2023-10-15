@@ -68,6 +68,8 @@ const Rota = () => {
         console.log('aaa');
 
         setUserDataLoaded(true)
+        console.log('Dataload', userDataLoaded);
+        
       } else {
         socket.auth.token = userToken
         console.log(socket)
