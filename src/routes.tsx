@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalContext from "./context/modalcontext";
 import React, { lazy, Suspense, useState } from "react";
 import Loading from "./components/loading";
@@ -11,7 +11,6 @@ import AlertConta from "./components/sistema/AlertConta";
 import { socket } from "../socket.io/index";
 import jwt_decode from "jwt-decode";
 import { UserData } from "./components/interfaces";
-import axios from "axios";
 
 const App = lazy(() => import('./App'));
 const AppLazy = lazy(() => import('./pages/home/App'));
@@ -54,16 +53,7 @@ const Rota = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
 
-  function exit() {
-    try {
-      console.log('ta indo');
-      localStorage.removeItem('token');
-
-      return <Navigate to="/cadastro" replace />;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  
 
   const userToken = localStorage.getItem('token')
   React.useEffect(() => {
@@ -72,22 +62,6 @@ const Rota = () => {
 
     if (userToken) {
       console.log(socket)
-
-      try {
-        const result = axios.post("https://easypass-iak1.onrender.com/user/testetoken", {
-          token: userToken
-        })
-
-        console.log(result);
-
-      } catch (error: any) {
-        if (error.message.includes('Token inválido') || error.message.includes('Token expirado')) {
-          console.log('Token inválido ou expirado');
-          exit()
-        }
-        console.log(error.message);
-      }
-
       socket.connect();
 
       if (socket.connected) {
