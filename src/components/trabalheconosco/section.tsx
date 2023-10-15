@@ -1,4 +1,4 @@
-import { Avatar, Box, Checkbox, Container, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Checkbox, CircularProgress, Container, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, MenuItem, TextField, Typography } from "@mui/material";
 import theme from "../../assets/theme";
 import React from "react";
 import ModalContext from "../../context/modalcontext";
@@ -25,6 +25,7 @@ export default function Vagas() {
     const [city, setCity] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
+    const [load, setLoad] = React.useState(false);
     const [selectedOption, setSelectedOption] = React.useState('');
     const [sal, setSal] = React.useState('0.00');
     const [filhos, setFilhos] = React.useState('0');
@@ -44,7 +45,7 @@ export default function Vagas() {
     const [linkedin, setLinkedin] = React.useState<any>('');
     const [facebook, setFacebook] = React.useState<any>('');
     const [github, setGithub] = React.useState<any>('');
-    const [perfil] = React.useState<any>('');
+    const [perfil, setPerfil] = React.useState<any>('');
     const fileInputRefAvatar = React.useRef<any>(null)
     const [detalhesExperiencia, setExperiencias] = React.useState<any>('');
     const [detalhesEscolares, setEscolares] = React.useState<any>('');
@@ -63,6 +64,8 @@ export default function Vagas() {
         { 'ReactNative': optNative }
     ]
     const interessesJSON = JSON.stringify(interesses);
+    let file: any
+    console.log('file: ', file);
 
     const data: any = {
         cur_CPF: cpf,
@@ -189,38 +192,15 @@ export default function Vagas() {
     };
 
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log('file: ', file);
+
         {
-            let file: any
             if (event.target.files) {
                 file = event.target.files[0];
-            }
-            console.log(file);
-
-            if (file) {
-
-                try {
-                    const data = new FormData();
-                    data.append('selectedImage', file);
-
-                    const response = await axios.post(
-                        '', data,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        }
-                    );
-
-                    file = ''
-                    console.log(response.data); // Handle the response as needed
-                } catch (error) {
-                    console.error('Error uploading image:', error);
-                    file = ''
-                }
-            } else {
-                console.log('file vazio');
+                console.log('file: ', file);
 
             }
+            console.log('file: ', file);
         }
     }
 
@@ -307,6 +287,39 @@ export default function Vagas() {
 
             if (response.status === 201) {
                 alert('Currículo cadastrado com sucesso!');
+                console.log('file: ', file);
+
+                if (file) {
+                    console.log('file: ', file);
+
+                    try {
+                        const data = new FormData();
+                        data.append('selectedImage', file);
+
+                        const response = await axios.post(
+                            'https://easypass-iak1.onrender.com/curriculo/foto', data,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                            }
+                        );
+
+                        file = ''
+                        console.log('file: ', file);
+
+                        console.log(response.data); // Handle the response as needed
+                    } catch (error) {
+                        console.error('Error uploading image:', error);
+                        file = ''
+                        console.log('file: ', file);
+
+                    }
+                } else {
+                    console.log('file vazio');
+                    console.log('file: ', file);
+
+                }
                 handleNull()
             } else {
                 const errorMessage = response.data;
@@ -323,39 +336,86 @@ export default function Vagas() {
 
     React.useEffect(() => {
         if (curriculo !== undefined) {
-          setName(curriculo?.cur_nome_completo);
-          setDate(curriculo?.cur_data_nasc);
-          setCel(curriculo?.cur_cel);
-          setCep(curriculo?.cur_cpf);
-          setUF(curriculo?.cur_uf);
-          setDistrict(curriculo?.cur_bairro);
-          setStreet(curriculo?.cur_rua);
-          setNum(curriculo?.cur_numero);
-          setComp(curriculo?.cur_rua_complemento);
-          setCity(curriculo?.cur_cidade);
-          setEmail(curriculo?.cur_email);
-          setSelectedOption(curriculo?.cur_escolaridade);
-          setSal(curriculo?.cur_escolaridade);
-          setFilhos(curriculo?.cur_num_filhos);
-          setOptJavascript(curriculo?.cur_escolaridade);
-          setOptTypescript(curriculo?.cur_escolaridade);
-          setOptNodejs(curriculo?.cur_escolaridade);
-          setOptReact(curriculo?.cur_escolaridade);
-          setOptNative(curriculo?.cur_escolaridade);
-          setIngles(curriculo?.cur_ingles);
-          setEspanhol(curriculo?.cur_espanhol);
-          setViagem(curriculo?.cur_disponibilidade_viagem);
-          setNoturno(curriculo?.cur_trabalho_noturno);
-          setInstagram(curriculo?.cur_instagram);
-          setLinkedin(curriculo?.cur_linkedin);
-          setFacebook(curriculo?.cur_facebook);
-          setGithub(curriculo?.cur_github);
-          setSelectedOptions(curriculo?.cur_escolaridade)
-          setSelectCarteira(curriculo?.cur_escolaridade)
-          setEscolares(curriculo?.cur_escolaridade)
-          setExperiencias(curriculo?.cur_escolaridade)
+            const dateObject = new Date(curriculo?.cur_data_nasc);
+            const dia = (dateObject.getDate() + 1).toString().padStart(2, '0');
+            const mes = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+            const ano = dateObject.getFullYear();
+            const dataTransformed = `${dia}-${mes}-${ano}`;
+            setName(curriculo?.cur_nome_completo);
+            setDate(dataTransformed);
+            setCel(curriculo?.cur_cel);
+            setCep(curriculo?.cur_cep);
+            setNum(curriculo?.cur_numero);
+            setEmail(curriculo?.cur_email);
+            setSelectedOption(curriculo?.cur_escolaridade);
+            setSal(curriculo?.cur_pret_salarial);
+            setFilhos(curriculo?.cur_num_filhos);
+            curriculo?.cur_con_prog.forEach((item: { [x: string]: any; }) => {
+                for (const key in item) {
+                    const value = item[key];
+                    switch (key) {
+                        case "Javascript":
+                            setOptJavascript(value);
+                            break;
+                        case "Typescript":
+                            setOptTypescript(value);
+                            break;
+                        case "Node.Js":
+                            setOptNodejs(value);
+                            break;
+                        case "React":
+                            setOptReact(value);
+                            break;
+                        case "ReactNative":
+                            setOptNative(value);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            )
+            setIngles(curriculo?.cur_ingles);
+            setEspanhol(curriculo?.cur_espanhol);
+            setViagem(curriculo?.cur_disponibilidade_viagem);
+            setNoturno(curriculo?.cur_trabalho_noturno);
+            setInstagram(curriculo?.cur_instagram);
+            setLinkedin(curriculo?.cur_linkedin);
+            setFacebook(curriculo?.cur_facebook);
+            setGithub(curriculo?.cur_github);
+            setSelectedOptions(curriculo?.cur_area_interesse)
+            if (curriculo?.cur_carteira_moto == 'Sim') {
+                if (!selectCarteira.includes('Moto')) {
+                    selectCarteira.push('Moto');
+                }
+            }
+            if (curriculo?.cur_carteira_carro == 'Sim') {
+                if (!selectCarteira.includes('Carro')) {
+                    selectCarteira.push('Carro');
+                }
+            }
+            setEscolares(curriculo?.cur_detalhes_escolares)
+            setExperiencias(curriculo?.cur_detalhes_experiencia_profissional)
         }
-      }, [curriculo]);
+    }, [curriculo]);
+
+    React.useEffect(() => {
+        console.log('aaa', programador);
+        const programadorPresente = selectedOptions.some(option => option === "Programador");
+        console.log('aaa', (programadorPresente && !programador), 'Se tem programador e o booleano ta falso é true');
+        console.log('aaa', (programador), 'se o booleano ta true é true');
+        if (programadorPresente && !programador) {
+            setProgramador(true);
+        } else if (!programador) {
+            setOptJavascript('Nenhum');
+            setOptTypescript('Nenhum');
+            setOptNodejs('Nenhum');
+            setOptReact('Nenhum');
+            setOptNative('Nenhum');
+        }
+        console.log('aaa', programador);
+
+    }, [selectedOptions, programador])
 
     React.useEffect(() => {
         const handleSearch = async () => {
@@ -365,12 +425,15 @@ export default function Vagas() {
                 if (!response.data) {
                     console.log('Currículo não encontrado')
                 }
+                setLoad(false)
             } catch (err) {
                 console.log('Currículo não encontrado');
+                setLoad(false)
             }
         };
 
         if (cpf && cpf.length > 10 && !curriculo) {
+            setLoad(true)
             handleSearch()
         }
     }, [cpf])
@@ -394,7 +457,7 @@ export default function Vagas() {
         const yyyy = parts[2];
         const mm = parts[1];
         const dd = parts[0];
-        const formattedDateForDatabase = `${yyyy} - ${mm} - ${dd}`;
+        const formattedDateForDatabase = `${yyyy}-${mm}-${dd}`;
         console.log(formattedDateForDatabase);
 
         return formattedDateForDatabase;
@@ -406,19 +469,70 @@ export default function Vagas() {
         setCep?.(cepValue);
     }
 
-    const handleApiCEP = async () => {
-        const url = `https://cdn.apicep.com/file/apicep/${cep}.json`;
-        try {
-            const response = await axios.get(url);
-            setUF?.(response.data.state);
-            setCity?.(response.data.city);
-            setDistrict?.(response.data.district);
-            setStreet?.(response.data.address);
-            setIsLoading(true);
-        } catch (error) {
-            console.error(error);
+    React.useEffect(() => {
+        const handleApiCEP = async () => {
+            const url = `https://cdn.apicep.com/file/apicep/${cep}.json`;
+            try {
+                const response = await axios.get(url);
+                setUF?.(response.data.state);
+                setCity?.(response.data.city);
+                setDistrict?.(response.data.district);
+                setStreet?.(response.data.address);
+                setIsLoading(true);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (cep.length > 8) {
+            handleApiCEP()
         }
-    };
+    }, [cep])
+
+    React.useEffect(() => {
+        const returnImage = async () => {
+            console.log('foi');
+            try {
+                const fundoimage = curriculo ? curriculo?.cur_foto_perfil : '';
+                console.log(fundoimage);
+
+                if (fundoimage) {
+                    const response = await axios.post(
+                        'https://easypass-iak1.onrender.com/curriculo/fotoreturn',
+                        {
+                            filename: fundoimage,
+                        },
+                        {
+                            responseType: 'arraybuffer',
+                        }
+                    );
+
+                    const arrayBufferView = new Uint8Array(response.data);
+                    const blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+
+                    // Converter Blob para Base64
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        if (reader.result) {
+                            setPerfil(reader.result) // A URL Base64 será armazenada em imageUrlWithPrefix
+                        }
+                        console.log(response.data);
+                        console.log(perfil);
+                    };
+                    console.log('foi');
+
+                } else {
+                    console.log('Sem imagem');
+
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        };
+        returnImage();
+    }, [curriculo]);
+
 
     const handleInputChange = (event: any) => {
         let inputValue = event.target.value.replace(/\D/g, '');
@@ -530,6 +644,15 @@ export default function Vagas() {
                                     <InputAdornment position="start">
                                         <AccountCircle />
                                     </InputAdornment>
+                                }
+                                endAdornment={
+                                    (
+                                        <>
+                                            {load &&
+                                                <CircularProgress sx={{ width: 20, height: 20 }} />
+                                            }
+                                        </>
+                                    )
                                 }
                                 sx={{ fontSize: '14px' }}
                             />
@@ -698,7 +821,6 @@ export default function Vagas() {
                                 id="input-with-icon-adornment"
                                 value={cep}
                                 onChange={handleChangeCep}
-                                onBlur={handleApiCEP}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <Apartment />
@@ -855,6 +977,7 @@ export default function Vagas() {
                             rows={10}
                             variant="filled"
                             onChange={(e) => setEscolares(e.target.value)}
+                            value={detalhesEscolares}
                         />
                         <TextField
                             sx={{ mt: 5 }}
@@ -864,6 +987,7 @@ export default function Vagas() {
                             rows={10}
                             variant="filled"
                             onChange={(e) => setExperiencias(e.target.value)}
+                            value={detalhesExperiencia}
                         />
                     </Container>
                     <Container sx={{
@@ -932,7 +1056,7 @@ export default function Vagas() {
                             }}>
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -945,7 +1069,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -958,7 +1082,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -971,7 +1095,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -984,7 +1108,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -997,7 +1121,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -1010,7 +1134,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -1023,7 +1147,7 @@ export default function Vagas() {
                                 />
                                 <FormControlLabel
                                     sx={{
-                                        color: verify ? "white" : colors.tc,
+                                        color: verify ? "white" : 'black',
                                     }}
                                     control={
                                         <Checkbox
@@ -1417,7 +1541,7 @@ export default function Vagas() {
                                 }}>
                                     <FormControlLabel
                                         sx={{
-                                            color: verify ? "white" : colors.tc,
+                                            color: verify ? "white" : 'black',
                                         }}
                                         control={
                                             <Checkbox
@@ -1430,7 +1554,7 @@ export default function Vagas() {
                                     />
                                     <FormControlLabel
                                         sx={{
-                                            color: verify ? "white" : colors.tc,
+                                            color: verify ? "white" : 'black',
                                         }}
                                         control={
                                             <Checkbox
@@ -1643,7 +1767,10 @@ export default function Vagas() {
                                 </IconButton>
                             </label>
                         </Container>
-                        <BtnL loading={loading} dis={disable} handleLogin={handleSubmit} name={"Enviar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                        {curriculo ?
+                            <BtnL loading={loading} dis={disable} handleLogin={handleSubmit} name={"Enviar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                            : <BtnL loading={loading} dis={disable} handleLogin={handleSubmit} name={"Atualizar"} cl={verify ? colors.pm : "white"} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} route={""} />
+                        }
 
                     </Container>
                 </Container>
