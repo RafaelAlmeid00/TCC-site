@@ -61,8 +61,9 @@ const Rota = () => {
     console.log('this is userToken: ', userToken);
 
     if (userToken) {
-      console.log(socket)
+      console.log('conected', socket)
       socket.connect();
+      console.log('conected', socket)
 
       if (socket.connected) {
         console.log('aaa');
@@ -79,7 +80,7 @@ const Rota = () => {
       console.log('sem token sem connect');
 
     }
-  }, [userToken])
+  }, [userToken, socket])
 
   React.useEffect(() => {
     const userToken = localStorage.getItem('token')
