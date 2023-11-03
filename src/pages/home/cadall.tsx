@@ -22,20 +22,20 @@ function Cadall() {
                 height: "85vh",
                 width: "100vw",
                 zIndex: -1,
-               
+
             }}>
                 <Container sx={{
                     height: {
-                        xs: "80%", 
-                        sm: "80%", 
-                        md: "80%", 
+                        xs: "80%",
+                        sm: "80%",
+                        md: "80%",
                         lg: "80%",
-                        xl: "80%", 
+                        xl: "80%",
                     },
                     width: {
                         xs: "70vw",
-                        sm: "70vw", 
-                        md: "70vw", 
+                        sm: "70vw",
+                        md: "70vw",
                         lg: "50vw",
                         xl: "50vw",
                     },
@@ -54,7 +54,7 @@ function Cadall() {
                     paddingRight: 5,
                     paddingLeft: 5,
                     [theme.breakpoints.down('md')]: {
-                        height: "60vh",
+                        height: "80vh",
                     }
                 }}>
                     <Fade cascade damping={0.2} triggerOnce={hasEntered}>
