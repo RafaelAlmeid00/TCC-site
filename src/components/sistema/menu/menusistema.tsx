@@ -83,7 +83,7 @@ export default function MenuSistema() {
         <>
             {isNotificationVisible && <Not />}
             <AppBar sx={{
-                position: 'static',
+                position: 'fixed',
                 top: '0',
                 left: '0',
                 width: '100vw',
