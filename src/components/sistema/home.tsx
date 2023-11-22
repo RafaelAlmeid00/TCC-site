@@ -116,7 +116,10 @@ function Homesistema() {
     console.log(userData)
 
     const handlePag = () => {
-        setPag(true)
+        if (dataCard) {
+            window.open('https://www.asaas.com/c/704450973474', '_blank');
+        }
+
     }
 
     const handlePag2 = () => {

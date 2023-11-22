@@ -1,6 +1,6 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import BadgeIcon from '@mui/icons-material/Badge';
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ModalContext from "../../context/modalcontext";
@@ -17,6 +17,7 @@ import theme from '../../assets/theme';
 
 function CompleteCad() {
     const [cpf, setCpf] = useState("");
+    const [cpfR, setCpfR] = useState("");
     const [rg, setRg] = useState("");
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
@@ -42,6 +43,7 @@ function CompleteCad() {
     const [dadosU, setDados] = useState<UserData | undefined>(undefined);
     const [showErrorCel, setShowErrorCel] = useState(false);
     const [enviobtn, setEnvioBtn] = useState(false);
+    const [menor, setMenor] = useState(false);
 
     const { breakpoints } = theme;
 
@@ -115,10 +117,10 @@ function CompleteCad() {
 
     async function VerifyCPF(cpf: string): Promise<boolean> {
         try {
-            console.log('ta indoooo');
+            console.log('CPFAA, ta indoooo');
 
             const resCPF = await axios.post('https://easypass-iak1.onrender.com/user/cpf', { user_CPF: cpf })
-            console.log('n foooi');
+            console.log('CPFAA n foooi');
             console.log(cpf)
             console.log(resCPF.data)
             if (resCPF.data) {
@@ -136,34 +138,40 @@ function CompleteCad() {
                 return true;
             }
         } catch (error) {
-            console.log('CPF TA OK');
+            console.log('CPFAA CPF TA OK');
             const cpfInvalid = await ValidaCPF(cpf)
-            console.log(cpfInvalid);
+            console.log('CPFAA', cpfInvalid);
 
             if (cpfInvalid) {
                 return false;
             } else {
-                console.log('CPF invalido cria');
+                console.log('CPFAA CPF invalido cria');
                 return true;
             }
         }
         return true
     }
 
-    function VerifyInputs(): boolean {
-        if (date == '') {
-            setShowErrorData(true)
+    async function VerifyInputs(): Promise<boolean> {
+
+        const dataIdade = await validateDate(date)
+        if (dataIdade == 'Menor') {
+            setMenor(true)
+        }
+
+        if (menor && (cpfR == '' || cpfR.length < 11)) {
+            setShowErrorCPF(true)
             setShowErrorNum(false)
             setShowErrorCEP(false)
-            setShowErrorCPF(false)
             setShowErrorNome(false)
             setShowRG(false)
+            setShowErrorData(false)
             setCPFexiste(false)
             setTimeout(() => {
-                setShowErrorData(false)
+                setShowErrorCPF(false)
             }, 2000);
-            console.log('ta aq o eror')
             return true;
+
         } else if (cpf == '' || cpf.length < 11) {
             setShowErrorCPF(true)
             setShowErrorNum(false)
@@ -175,6 +183,19 @@ function CompleteCad() {
             setTimeout(() => {
                 setShowErrorCPF(false)
             }, 2000);
+            return true;
+        } else if (date == '' || !dataIdade) {
+            setShowErrorData(true)
+            setShowErrorNum(false)
+            setShowErrorCEP(false)
+            setShowErrorCPF(false)
+            setShowErrorNome(false)
+            setShowRG(false)
+            setCPFexiste(false)
+            setTimeout(() => {
+                setShowErrorData(false)
+            }, 2000);
+            console.log('ta aq o eror')
             return true;
 
         } else if (name == '') {
@@ -222,7 +243,7 @@ function CompleteCad() {
             }, 2000);
             return true;
 
-        } else if (cep === undefined || cep == '' || cep.length < 8) {
+        } else if (cep === undefined || cep == '' || cep.length < 8 || city == '') {
             setShowErrorCEP(true)
             setShowErrorNum(false)
             setShowErrorCPF(false)
@@ -291,11 +312,30 @@ function CompleteCad() {
             user_status: undefined,
             user_verifycel: undefined,
             user_verifyemail: undefined,
-            user_Background: undefined
+            user_Background: undefined,
+            user_CPFR: cpfR
         };
 
+        const inputsError = VerifyInputs(); // Chama a função diretamente aqui
+
         const cpfError = await VerifyCPF(cpf);
-        console.log(cpfError);
+        const cpfErrorR = await VerifyCPF(cpfR);
+
+        if (menor) {
+            console.log('erro de cpf', cpfErrorR);
+            if (cpfErrorR) {
+                setShowTipo(false); // Há erros, não avança para a próxima etapa
+                setShowErrorCPF(true)
+                setTimeout(() => {
+                    setShowErrorCPF(false)
+                }, 2000);
+                console.log('travo tudo aqq');
+                console.log(dadosUsuario);
+                return
+            }
+        }
+       
+        console.log('erro de cpf', cpfError);
         if (cpfError) {
             setShowTipo(false); // Há erros, não avança para a próxima etapa
             setShowErrorCPF(true)
@@ -304,16 +344,15 @@ function CompleteCad() {
             }, 2000);
             console.log('travo tudo aqq');
             console.log(dadosUsuario);
-
+            return
         }
 
-        const inputsError = VerifyInputs(); // Chama a função diretamente aqui
         console.log('Erro dos input:', inputsError)
-        if (inputsError) {
+        if (await inputsError) {
             setShowTipo(false); // Há erros, não avança para a próxima etapa
             console.log('travo tudo aqq²');
             console.log(dadosUsuario);
-
+            return
         } else {
             setShowTipo(true);
             setDados(dadosUsuario)
@@ -354,6 +393,53 @@ function CompleteCad() {
     console.log(currentScreenSize);
     console.log(enviobtn);
 
+    async function validateDate(dateString: string): Promise<string | boolean> {
+        console.log(dateString);
+
+        const [day, month, year] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        const dataAtual = new Date();
+        const currentYear = dataAtual.getFullYear()
+        const currentDay = dataAtual.getDate();
+        const currentMonth = dataAtual.getMonth() + 1
+        console.debug(date, currentYear, currentMonth, currentDay)
+        const minAgeYear = currentYear - 18;
+        const isYearGreaterThanMinAgeYear = date.getFullYear() > minAgeYear && date.getFullYear() < currentYear;
+        const isYearEqualToCurrentYear = date.getFullYear() === currentYear;
+        const isCurrentYearEqualToMinAgeYear = date.getFullYear() === minAgeYear;
+        const isCurrentMonthGreaterThanDateMonth = currentMonth < date.getMonth() + 1;
+        const isCurrentMonthEqualToDateMonth = currentMonth === date.getMonth() + 1;
+        const isCurrentDayLessThanDateDay = currentDay < date.getDate();
+
+        if (
+            isYearGreaterThanMinAgeYear ||
+            isYearEqualToCurrentYear ||
+            (isCurrentYearEqualToMinAgeYear && isCurrentMonthGreaterThanDateMonth) ||
+            (isCurrentYearEqualToMinAgeYear && isCurrentMonthEqualToDateMonth && isCurrentDayLessThanDateDay)
+        ) {
+            return 'Menor';
+        } else if (
+            month < 1 ||
+            month > 12 ||
+            day < 1 ||
+            day > 31 ||
+            year > currentYear
+        ) {
+            return false
+        }
+
+        return true;
+    }
+
+    useEffect(() => {
+        const a = async () => {
+            const dataIdade = await validateDate(date)
+            if (dataIdade == 'Menor') {
+                setMenor(true)
+            }
+        }
+        a()
+    }, [date])
 
     return (
         <>
@@ -431,6 +517,33 @@ function CompleteCad() {
                                         sx={{ fontSize: '14px' }}
                                     />
                                 </FormControl>
+                                {
+                                    menor && (
+                                        <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
+                                            <InputLabel htmlFor="input-with-icon-adornment">
+                                                CPF Responsável
+                                            </InputLabel>
+                                            <Input
+                                                id="input-with-icon-adornment"
+                                                inputProps={{ maxLength: 11 }}
+                                                required
+                                                value={cpfR}
+                                                placeholder="Insira apenas os números do CPF do responsável"
+                                                onChange={(event) => {
+                                                    const { value } = event.target;
+                                                    const newValue = value.replace(/\D/g, ''); // remove tudo que não é número
+                                                    setCpfR(newValue);
+                                                }}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <AccountCircleIcon />
+                                                    </InputAdornment>
+                                                }
+                                                sx={{ fontSize: '14px' }}
+                                            />
+                                        </FormControl>
+                                    )
+                                }
                                 <FormControl variant="standard" sx={{ width: '80%', mb: 2 }}>
                                     <InputLabel htmlFor="input-with-icon-adornment">
                                         RG
@@ -511,7 +624,7 @@ function CompleteCad() {
                                         sx={{ fontSize: '14px', mb: 2 }}
                                     />
                                 </FormControl>
-                                
+
                                 <Btn name={'Finalizar'} fun={handleclick} cl={verify ? colors.pm : 'white'} route={""} bc={verify ? 'white' : undefined} bch={verify ? 'white' : undefined} vis={undefined} mb={undefined} />
                             </Container>
                             {currentScreenSize !== 'xs' && <CompleteCad2 />}

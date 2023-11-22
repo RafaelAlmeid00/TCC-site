@@ -26,6 +26,7 @@ export interface UserData {
     list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
     user_cel: string;
     user_idcli?: string;
+    user_CPFR?: string;
 }
 
 export interface CardData {

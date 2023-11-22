@@ -14,27 +14,10 @@ import CookiePolicy from "./Cookies.Policy";
 import TermsAndConditions from "./TermsAndConditions";
 import theme from "../../assets/theme";
 import PortalAsaas from "./errorAssas";
+import { UserData } from "../interfaces";
 
 interface Props {
-    dados: {
-        user_CPF: string;
-        user_RG: string;
-        user_nome: string;
-        user_email?: string;
-        user_senha?: string;
-        user_nascimento: string;
-        user_endCEP?: string;
-        user_endUF?: string;
-        user_endbairro?: string;
-        user_endrua?: string;
-        user_endnum?: string;
-        user_endcomplemento?: string;
-        user_endcidade?: string;
-        user_tipo?: string;
-        list_CPF_list_id?: string; // O '?' indica que a propriedade é opcional
-        user_cel: string;
-        user_idcli?: string;
-    } | undefined
+    dados: UserData | undefined
 }
 
 function Tipo({ dados }: Props) {
@@ -52,7 +35,7 @@ function Tipo({ dados }: Props) {
         if (dados) {
             const cliente = {
                 name: dados.user_nome,
-                cpfCnpj: dados.user_CPF,
+                cpfCnpj: dados.userCPFR ? dados.userCPFR : dados.user_CPF,
                 email: dados.user_email,
                 address: `${dados.user_endcidade}, ${dados.user_endrua}`,
                 addressNumber: dados.user_endnum,
@@ -70,7 +53,9 @@ function Tipo({ dados }: Props) {
                 setId(response.data.id)
                 console.log(response.data);
                 console.log(idcli);
-                
+                const cpf = dados && dados.user_CPF
+                handleGetListCpf(cpf)
+
             } catch (error: any) {
                 console.log(error.message)
                 throw new Error("Erro ao criar cliente");
@@ -84,15 +69,12 @@ function Tipo({ dados }: Props) {
     };
 
     React.useEffect(() => {
-        if (dados) {
-            if ('user_CPF' in dados) {
-                const cpf = String(dados.user_CPF)
-                if (cpf) {
-                    handleGetListCpf(cpf)
-                }
+            const cpf = dados && dados.user_CPF
+            if (cpf) {
+                handleGetListCpf(cpf)
+
             }
-        }
-    }, [dados])
+    }, [])
     // Função para fazer a requisição ao servidor com o CPF
     const handleGetListCpf = async (cpf: string) => {
         const list_CPF = cpf
@@ -171,6 +153,13 @@ function Tipo({ dados }: Props) {
     const navigate = useNavigate()
 
     async function cadastrarUsuario(dados: object) {
+        try {
+            await CriarCliente(card);
+
+        } catch (error) {
+            console.log(error);
+            
+        }
 
         if (listid) {
             if ('user_tipo' in dados) {
@@ -181,15 +170,15 @@ function Tipo({ dados }: Props) {
                     const index = Object.values(listid).indexOf(card);
                     console.log(Object.values(listid).indexOf(card));
                     console.log(index);
-                    
+
                     if (index !== -1) {
-                      dados.list_CPF_list_id = Object.keys(listid)[index];
-                      console.log(Object.keys(listid)[index]);
-                      console.log(dados.list_CPF_list_id);
-                      
-                      
+                        dados.list_CPF_list_id = Object.keys(listid)[index];
+                        console.log(Object.keys(listid)[index]);
+                        console.log(dados.list_CPF_list_id);
+
+
                     }
-                  }
+                }
             }
         } else {
             if ('user_tipo' in dados) {
@@ -201,14 +190,13 @@ function Tipo({ dados }: Props) {
             if ('user_idcli' in dados) {
                 dados.user_idcli = idcli;
                 console.log(idcli);
-                
+
             }
         }
 
         console.log(dados);
 
         try {
-            await CriarCliente(card);
             await axios.post('https://easypass-iak1.onrender.com/user', dados);
             setShowSucess(true)
             console.log('foi mlk');

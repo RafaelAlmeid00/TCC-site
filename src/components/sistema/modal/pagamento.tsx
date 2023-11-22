@@ -117,25 +117,26 @@ function Pag(props: any) {
             },
             split: {
                 walletId: "217fd70c-b561-43fc-989a-c2f10761277f",
-                fixedValue: parseFloat(inputValue)
             },
             fine: {
                 value: 20
             }
         }
 
-        console.log(pagamento);
+        console.log('datapag', pagamento);
         try {
             const response = await axios.post('https://easypass-iak1.onrender.com/pagamento', {
                 token: token,
                 pagamento
             });
-            console.log(response);
-            console.log(response.data);
-            console.log(response.data.pagamento);
+            console.log('datapag', response);
+            console.log('datapag',response.data);
+            console.log('datapag',response.data.pagamento);
 
             window.open(response.data.pagamento.invoiceUrl, '_blank');
         } catch (error: any) {
+            console.log('datapag', error);
+
             if (error.response) {
                 console.log('Erro na resposta do servidor:', error.response.status);
                 console.log('Dados da resposta:', error.response.data);
