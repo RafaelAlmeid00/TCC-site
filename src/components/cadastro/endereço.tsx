@@ -30,13 +30,13 @@ function CompleteCad2(screen: any, _onVerifyChange: (arg0: any) => void) {
     }
 
     const handleApiCEP = async () => {
-        const url = `https://cdn.apicep.com/file/apicep/${cep}.json`;
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
         try {
             const response = await axios.get(url);
-            setUF?.(response.data.state);
-            setCity?.(response.data.city);
-            setDistrict?.(response.data.district);
-            setStreet?.(response.data.address);
+            setUF?.(response.data.uf);
+            setCity?.(response.data.localidade);
+            setDistrict?.(response.data.bairro);
+            setStreet?.(response.data.logradouro);
             setIsLoading(true);
 
         } catch (error) {
