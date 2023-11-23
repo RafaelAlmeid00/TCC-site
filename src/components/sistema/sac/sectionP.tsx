@@ -9,7 +9,7 @@ export default function SectionP() {
   const { verify } = React.useContext(ModalContext);
   const { themes } = React.useContext(ModalContext);
   const fundo = themes.palette.background.default
-  const [user, setUser] = useState(false);
+  const [, setUser] = useState(false);
   const [, setIsAdmin] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);;
   socket.connect();
