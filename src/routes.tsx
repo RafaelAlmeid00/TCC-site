@@ -52,7 +52,7 @@ const Rota = () => {
   const [Active, setActive] = React.useState(false);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [alertatopo, setAlertaTopo] = React.useState({})
-
+  const [dispositivo, setDispositivo] = React.useState({})
   
 
   const userToken = localStorage.getItem('token')
@@ -194,9 +194,11 @@ const Rota = () => {
     }
   }
   console.log(checkDevice());
+  
   const [darkMode, setDarkMode] = useState(false);
 
   React.useEffect(() => {
+    setDispositivo(checkDevice())
     const themes = localStorage.getItem('theme');
     setDarkMode(themes === 'dark');
   }, []);
@@ -291,7 +293,8 @@ const Rota = () => {
                   setHasEntered,
                   cpf, setCpf,
                   userData: userData || undefined,
-                  setUserData: (userData: UserData | null) => setUserData(userData)
+                  setUserData: (userData: UserData | null) => setUserData(userData),
+                  dispositivo
                 }}>
                   <Routes>
                     <Route path="/" element={<CadlogLazy />} />
@@ -299,6 +302,7 @@ const Rota = () => {
                     <Route path="/Rec" element={<RecAccountLazy />} />
                     <Route path="/Complemento" element={<CadallLazy />} />
                     <Route path="/Empresa" element={<Escola />} />
+                    <Route path="*" element={<CadlogLazy />} />
                   </Routes>
                 </ModalContext.Provider>
               </React.Fragment>

@@ -38,6 +38,7 @@ interface ModalContextType {
     setRecivedContext?: (MsgContext: any) => void;
     cpf?: any;
     setCpf?: (MsgContext: any) => void;
+    dispositivo?: any;
 }
 const throwNotImplementedError = () => {
     throw new Error('Function not implemented');
@@ -79,7 +80,8 @@ const ModalContext = createContext<ModalContextType>({
     MsgContext: {},
     setRecivedContext: throwNotImplementedError,
     cpf: '',
-    setCpf: throwNotImplementedError
+    setCpf: throwNotImplementedError,
+    dispositivo: ''
 });
 
 export default ModalContext;

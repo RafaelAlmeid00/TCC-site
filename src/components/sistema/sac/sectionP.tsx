@@ -14,11 +14,12 @@ export default function SectionP() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);;
   socket.connect();
   const { userData } = useContext(ModalContext);
-  const [msg, setMsg] = useState<any>([]);
+  const [msg, setMsg] = useState<any>('');
   const [recivedMsg, setRecived] = useState<any>([]);
   const [, setCharCount] = useState(0);
   const maxCharCount = 500;
   const [bool, setBool] = useState(Boolean);
+  const [bool1, setBool1] = useState(true);
 
   const handleInputChange = (event: any) => {
     const inputText = event.target.value;
@@ -41,28 +42,65 @@ export default function SectionP() {
         "userMensage",
         message,
         userData ? userData.user_CPF : '',
+        'send',
         "client",
         (error: any) => {
+          setMsg('');
           console.log("messagem enviada!");
+          setMsg('');
           if (error) {
             console.log(error);
+            setMsg('');
           }
         }
       );
-      socket.on("userMensage", (message) => {
-        console.log("messagem recebida: ", message);
-        setRecived(message);
-        setMsg('');
-        setBool(false)
-      });
 
-
+      setTimeout(() => {
+        socket.on("userMensage", (message) => {
+          console.log("messagem recebida: ", message);
+          setRecived(message);
+          setBool(false)
+        });
+      }, 1000);
+      setMsg('')
     } else {
       alert("A mensagem não pode ter mais de 500 caracteres.");
     }
   };
 
+  setTimeout(() => {
+    console.log("messagem enviada!");
+
+    socket.on("userMensage", (message) => {
+      console.log("messagem recebida: ", message);
+      setRecived(message);
+      setBool(false)
+    });
+  }, 1000);
+
+  if (bool1) {
+    socket.emit(
+      "userMensage",
+      'not',
+      userData ? userData.user_CPF : '',
+      'all',
+      "client",
+      (error: any) => {
+        console.log("messagem enviada!");
+        setBool1(false)
+        if (error) {
+          console.log(error);
+          setMsg('');
+        }
+      }
+    );
+  }
+
   useEffect(() => {
+    console.log("aaaaaaaaaaa");
+    console.log('aaaaa', recivedMsg);
+
+
     setTimeout(() => {
       messagesContainerRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -73,8 +111,10 @@ export default function SectionP() {
           behavior: "smooth",
           block: "end",
         });
-      }, 1000);
+      }, 500);
     }, 1000);
+
+
     if (recivedMsg && recivedMsg.length > 0) {
       const lastMessage = recivedMsg[recivedMsg.length - 1];
 
@@ -112,7 +152,7 @@ export default function SectionP() {
             display: 'flex',
             justifyContent: 'flex-end',
             flexDirection: 'column',
-            alignItems: 'flex-end',
+            alignItems: 'stretch',
             overflowY: "auto",
             height: recivedMsg ? '88%' : '80%'
           }}>
@@ -124,18 +164,18 @@ export default function SectionP() {
                 position: "relative"
               }}
             >
-              {user && recivedMsg.map((message: any, index: any) => (
+              {recivedMsg.map((message: any, index: any) => (
                 <Card
                   key={message.sacmen_id}
                   sx={{
-                    ml: 'auto', // Alinha à direita
+                    ml: message.admin_adm_id ? 7 : 'auto',
+                    mr: message.admin_adm_id ? 'auto' : 7,
                     width: "auto",
                     maxWidth: "100%",
                     display: "table",
-                    backgroundColor: "rgb(50, 50, 50)",
+                    backgroundColor: message.admin_adm_id ? 'rgb(60, 60, 60)' : "rgb(30, 30, 30)",
                     paddingTop: 2,
                     paddingBottom: 2,
-                    mr: 7,
                     mb: index == recivedMsg.length ? 5 : 2,
                     mt: index == 0 ? 5 : 0,
 
@@ -186,7 +226,7 @@ export default function SectionP() {
             />
 
             <Button
-              disabled={bool === undefined ? false : bool }
+              disabled={bool === undefined ? false : bool}
               variant="contained"
               onClick={msgSend}
               endIcon={<SendIcon />}
