@@ -6,7 +6,7 @@ import colors from "../../assets/colors";
 import theme from "../../assets/theme";
 import rafael from "../../assets/rafael.jpg"
 import thamyres from "../../assets/thamyres.jpg"
-import jm from "../../assets/jm.png"
+import jm from "../../assets/jm.jpg"
 import maia from "../../assets/maia.jpg"
 import igao from "../../assets/igao.jpg"
 
