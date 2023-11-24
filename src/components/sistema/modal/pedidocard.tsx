@@ -53,9 +53,9 @@ function Pedido({ userData, onCloseModal, onAlertChange }: Props) {
 
                 if (listTipo === 'student') {
                     cardName = 'Cartão de Estudante';
-                } else if (listTipo === 'worker') {
+                } else {
                     cardName = 'Vale-Transporte';
-                } // Adicionar mais condições conforme necessário para outros tipos
+                } 
 
                 newListCards.push({ name: cardName });
             });
