@@ -6,9 +6,9 @@ import colors from "../../assets/colors";
 import theme from "../../assets/theme";
 import rafael from "../../assets/rafael.jpg"
 import thamyres from "../../assets/thamyres.jpg"
-import jm from "../../assets/jm.jpg"
+import jm from "../../assets/WhatsApp Image 2023-11-24 at 00.41.11 (1).png"
 import maia from "../../assets/maia.jpg"
-import igao from "../../assets/igao.jpg"
+import igao from "../../assets/WhatsApp Image 2023-11-24 at 00.41.11.jpeg"
 
 function EquipeEasyPass() {
     const { verify } = React.useContext(ModalContext);
