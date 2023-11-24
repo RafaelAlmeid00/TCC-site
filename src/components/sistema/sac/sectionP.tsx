@@ -56,10 +56,15 @@ export default function SectionP() {
       );
 
       setTimeout(() => {
-        socket.on("userMensage", (message) => {
+        socket.on("userMensage", (message, data) => {
           console.log("messagem recebida: ", message);
-          setRecived(message);
-          setBool(false)
+
+          if (data == userData?.user_CPF) {
+            setRecived(message);
+            setBool(false)
+          } else {
+            console.log('outro user');
+          }
         });
       }, 1000);
       setMsg('')
@@ -71,10 +76,15 @@ export default function SectionP() {
   setTimeout(() => {
     console.log("messagem enviada!");
 
-    socket.on("userMensage", (message) => {
+    socket.on("userMensage", (message, data) => {
       console.log("messagem recebida: ", message);
-      setRecived(message);
-      setBool(false)
+      if (data == userData?.user_CPF) {
+        setRecived(message);
+        setBool(false)
+      } else {
+        console.log('outro user');
+        
+      }
     });
   }, 1000);
 

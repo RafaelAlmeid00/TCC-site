@@ -7,17 +7,15 @@ import theme from "../../assets/theme";
 import rafael from "../../assets/rafael.jpg"
 import thamyres from "../../assets/thamyres.jpg"
 import maia from "../../assets/maia.jpg"
-import igao from "../../assets/igao.jpg"
-import jm from "../../assets/jm.jpg"
 
 function EquipeEasyPass() {
     const { verify } = React.useContext(ModalContext);
 
     const cards = [
         { nome: 'Rafael', img: rafael },
-        { nome: 'João Marcelo', img: jm },
+        { nome: 'João Marcelo', img: '' },
         { nome: 'Thamyres', img: thamyres },
-        { nome: 'Igor', img: igao },
+        { nome: 'Igor', img: '' },
         { nome: 'Maia', img: maia },
     ]
 
