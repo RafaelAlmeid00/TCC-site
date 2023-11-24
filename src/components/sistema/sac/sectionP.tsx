@@ -59,7 +59,7 @@ export default function SectionP() {
         socket.on("userMensage", (message, data) => {
           console.log("messagem recebida: ", message);
 
-          if (data == userData?.user_CPF) {
+          if (data == userData?.user_CPF || data == 'admin') {
             setRecived(message);
             setBool(false)
           } else {
@@ -78,7 +78,7 @@ export default function SectionP() {
 
     socket.on("userMensage", (message, data) => {
       console.log("messagem recebida: ", message);
-      if (data == userData?.user_CPF) {
+      if (data == userData?.user_CPF || data == 'admin') {
         setRecived(message);
         setBool(false)
       } else {
