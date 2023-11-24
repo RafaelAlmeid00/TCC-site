@@ -4,11 +4,11 @@ import Balancer from "react-wrap-balancer";
 import ModalContext from "../../context/modalcontext";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
-import rafael from "../../assets/rafael.jpg"
-import thamyres from "../../assets/thamyres.jpg"
-import jm from "../../assets/jm.png"
-import maia from "../../assets/maia.jpg"
-import igao from "../../assets/igao.png"
+import rafael from "../../assets/rafaa.jpg"
+import thamyres from "../../assets/taa.jpeg"
+import jm from "../../assets/jmm.jpeg"
+import maia from "../../assets/maiaa.jpeg"
+import igao from "../../assets/igorr.jpeg"
 
 
 function EquipeEasyPass() {
