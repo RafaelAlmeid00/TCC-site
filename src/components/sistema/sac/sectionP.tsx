@@ -16,6 +16,9 @@ export default function SectionP() {
   const { userData } = useContext(ModalContext);
   const [msg, setMsg] = useState<any>('');
   const [recivedMsg, setRecived] = useState<any>([]);
+  const [msgadmn, setMsgadmin] = useState<any>();
+  const [msguser, setMsguser] = useState<any>();
+
   const [, setCharCount] = useState(0);
   const maxCharCount = 500;
   const [bool, setBool] = useState(Boolean);
@@ -59,11 +62,22 @@ export default function SectionP() {
         socket.on("userMensage", (message, data) => {
           console.log("messagem recebida: ", message);
 
-          if (data == userData?.user_CPF || data == 'admin') {
-            setRecived(message);
+          if (data == userData?.user_CPF) {
+            setMsguser(message);
             setBool(false)
           } else {
             console.log('outro user');
+          }
+        });
+
+        socket.on("userMensage", (message, data) => {
+          console.log("messagem recebida: ", message);
+          if (data == 'admin') {
+            setMsgadmin(message);
+            setBool(false)
+          } else {
+            console.log('outro user');
+
           }
         });
       }, 1000);
@@ -78,12 +92,23 @@ export default function SectionP() {
 
     socket.on("userMensage", (message, data) => {
       console.log("messagem recebida: ", message);
-      if (data == userData?.user_CPF || data == 'admin') {
-        setRecived(message);
+      if (data == userData?.user_CPF) {
+        setMsguser(message);
         setBool(false)
       } else {
         console.log('outro user');
-        
+
+      }
+    });
+
+    socket.on("userMensage", (message, data) => {
+      console.log("messagem recebida: ", message);
+      if (data == 'admin') {
+        setMsgadmin(message);
+        setBool(false)
+      } else {
+        console.log('outro user');
+
       }
     });
   }, 1000);
@@ -105,6 +130,28 @@ export default function SectionP() {
       }
     );
   }
+
+  useEffect(() => {
+    const addMissingMessages = () => {
+      if (Array.isArray(msgadmn) && Array.isArray(msguser)) {
+        const receivedIds = recivedMsg.map((msg: { sacmen_id: any; }) => msg.sacmen_id);
+  
+        const newMessages = [...msgadmn, ...msguser].filter(
+          msg => !receivedIds.includes(msg.sacmen_id)
+        );
+  
+        if (newMessages.length > 0) {
+          const updatedReceived = [...recivedMsg, ...newMessages];
+          updatedReceived.sort((a, b) => a.sacmen_id - b.sacmen_id);
+          setRecived(updatedReceived);
+        }
+      }
+    };
+  
+    addMissingMessages();
+  }, [msgadmn, msguser]);
+  
+
 
   useEffect(() => {
     console.log("aaaaaaaaaaa");
