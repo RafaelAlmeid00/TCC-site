@@ -23,6 +23,7 @@ export default function SectionP() {
   const maxCharCount = 500;
   const [bool, setBool] = useState(Boolean);
   const [bool1, setBool1] = useState(true);
+  const [bool2, setBool2] = useState(true);
 
   const handleInputChange = (event: any) => {
     const inputText = event.target.value;
@@ -94,6 +95,10 @@ export default function SectionP() {
       console.log("messagem recebida: ", message);
       if (data == userData?.user_CPF) {
         setMsguser(message);
+        if (bool2) {
+          setRecived(message)
+          setBool2(false)
+        }
         setBool(false)
       } else {
         console.log('outro user');
@@ -141,6 +146,8 @@ export default function SectionP() {
         );
   
         if (newMessages.length > 0) {
+          console.log('aaaaaaaaaaaaaaaaaaaaaa');
+          
           const updatedReceived = [...recivedMsg, ...newMessages];
           updatedReceived.sort((a, b) => a.sacmen_id - b.sacmen_id);
           setRecived(updatedReceived);
@@ -211,7 +218,7 @@ export default function SectionP() {
             flexDirection: 'column',
             alignItems: 'stretch',
             overflowY: "auto",
-            height: recivedMsg ? '88%' : '80%'
+            height: recivedMsg ? '88%' : '80%',
           }}>
 
 
@@ -233,9 +240,8 @@ export default function SectionP() {
                     backgroundColor: message.admin_adm_id ? 'rgb(60, 60, 60)' : "rgb(30, 30, 30)",
                     paddingTop: 2,
                     paddingBottom: 2,
-                    mb: index == recivedMsg.length ? 5 : 2,
+                    mb: 2,
                     mt: index == 0 ? 5 : 0,
-
                   }}
                 >
                   <Container>
@@ -264,8 +270,8 @@ export default function SectionP() {
             display: 'flex',
             alignItems: 'center',
           }}>
-
             <TextField
+              disabled={bool2}
               variant="outlined"
               color="success"
               label="Digite sua Mensagem..."
@@ -283,7 +289,7 @@ export default function SectionP() {
             />
 
             <Button
-              disabled={bool === undefined ? false : bool}
+              disabled={bool2}
               variant="contained"
               onClick={msgSend}
               endIcon={<SendIcon />}
