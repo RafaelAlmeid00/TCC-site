@@ -12,11 +12,11 @@ function EquipeEasyPass() {
     const { verify } = React.useContext(ModalContext);
 
     const cards = [
-        { nome: 'Rafael', img: rafael },
-        { nome: 'João Marcelo', img: '' },
-        { nome: 'Thamyres', img: thamyres },
-        { nome: 'Igor', img: '' },
-        { nome: 'Maia', img: maia },
+        { nome: 'Rafael', img: '' },
+        { nome: 'Matheus Barbosa', img: '' },
+        { nome: 'Evelen', img: '' },
+        { nome: 'Luis Espindola', img: '' },
+        { nome: 'Luan', img: '' },
     ]
 
     return (
