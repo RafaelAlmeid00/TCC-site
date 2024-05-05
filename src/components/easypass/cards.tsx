@@ -4,9 +4,6 @@ import Balancer from "react-wrap-balancer";
 import ModalContext from "../../context/modalcontext";
 import colors from "../../assets/colors";
 import theme from "../../assets/theme";
-import rafael from "../../assets/rafael.jpg"
-import thamyres from "../../assets/thamyres.jpg"
-import maia from "../../assets/maia.jpg"
 
 function EquipeEasyPass() {
     const { verify } = React.useContext(ModalContext);
