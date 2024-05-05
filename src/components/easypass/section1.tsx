@@ -113,7 +113,7 @@ export default function Section1EasyPass() {
                     textAlign: 'center',
                     mt: 2
                   },
-                }}>TCC - FAETEC Amaury César Vieira, Volta Redonda
+                }}>Volta Redonda
                 </Typography>
                 <Typography sx={{ color: verify ? 'white' : 'black',
                   fontSize: { xs: '4vw', sm: '2vw', md: '2w', lg: '1.5vw', xl: '1.5vw' }, 
@@ -130,7 +130,7 @@ export default function Section1EasyPass() {
                     mt: 5
                   },
               }}>
-                  Essa empresa é um projeto de TCC do curso Informática para Internet da FAETEC Volta Redonda
+                  Essa empresa é um projeto nascente dos alunos da FAETEC, UGB e UBM
                 </Typography>
               </Balancer>
             </Slide>
